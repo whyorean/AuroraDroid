@@ -1,0 +1,93 @@
+/*
+ * Aurora Droid
+ * Copyright (C) 2019, Rahul Kumar Patel <whyorean@gmail.com>
+ *
+ * Aurora Droid is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Aurora Droid is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        applicationId "com.aurora.adroid"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 0
+        versionName "1.0.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation group: 'commons-io', name: 'commons-io', version: '2.6'
+
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.preference:preference:1.1.0-alpha05'
+    implementation 'com.google.android.material:material:1.1.0-alpha06'
+
+    //Utils
+    implementation 'com.android.volley:volley:1.1.0'
+    implementation 'androidx.annotation:annotation:1.0.2'
+    implementation 'org.apache.commons:commons-text:1.4'
+    implementation 'commons-validator:commons-validator:1.6'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+    implementation "androidx.room:room-runtime:2.1.0-beta01"
+    annotationProcessor "androidx.room:room-compiler:2.1.0-beta01"
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+
+    //OkHTTP3
+    implementation 'com.squareup.okhttp3:okhttp:3.14.0'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.14.0'
+
+    //RX-Java2
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
+    implementation 'com.jakewharton.rxrelay2:rxrelay:2.1.0'
+
+    //ButterKnife
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
+    //Fetch - Downloader
+    implementation "androidx.tonyodev.fetch2:xfetch2:3.1.0"
+    implementation "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:3.1.0"
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+}

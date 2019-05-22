@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Aurora Droid
+  ~ Copyright (C) 2019, Rahul Kumar Patel <whyorean@gmail.com>
+  ~
+  ~ Aurora Droid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Aurora Droid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:colorBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_sort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/margin_normal"
+            android:paddingTop="@dimen/margin_small"
+            android:paddingEnd="@dimen/margin_xsmall"
+            android:paddingBottom="@dimen/margin_xsmall"
+            android:text="Sort by"
+            android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
+
+        <HorizontalScrollView
+            android:id="@+id/sort_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_sort"
+            android:background="@drawable/gradient_bg">
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/margin_normal"
+                app:checkedChip="@id/sort_name"
+                app:singleLine="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/sort_name"
+                    style="@style/Widget.Aurora.FilterChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/sort_size"
+                    style="@style/Widget.Aurora.FilterChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Size" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/sort_date"
+                    style="@style/Widget.Aurora.FilterChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date Updated" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+
+        </HorizontalScrollView>
+
+        <View
+            android:id="@+id/gradient_view"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_below="@id/sort_view"
+            android:background="@drawable/gradient_bg"
+            android:translationZ="1dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/gradient_view"
+            android:layout_marginTop="-32dp"
+            android:clipToPadding="false"
+            android:paddingTop="16dp"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_installed" />
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

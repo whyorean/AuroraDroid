@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Aurora Droid
+  ~ Copyright (C) 2019, Rahul Kumar Patel <whyorean@gmail.com>
+  ~
+  ~ Aurora Droid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Aurora Droid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ViewSwitcher
+        android:id="@+id/view_switcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/content_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient_bg"
+                android:minHeight="@dimen/min_height"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_update_all"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    android:layout_toStartOf="@id/btn_update_all"
+                    android:maxLines="1"
+                    android:text="@string/title_update_all"
+                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
+                    app:autoSizeMaxTextSize="16sp"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeTextType="uniform" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_update_all"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/margin_medium"
+                    android:paddingEnd="@dimen/margin_medium"
+                    android:text="@string/action_update"
+                    app:cornerRadius="25dp"
+                    app:icon="@drawable/ic_update" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/gradient_view"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:background="@drawable/gradient_bg"
+                android:translationZ="1dp" />
+
+            <com.aurora.adroid.view.CustomSwipeToRefresh
+                android:id="@+id/swipe_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="-32dp"
+                android:clipToPadding="false">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingTop="16dp"
+                    android:scrollbars="vertical"
+                    android:splitMotionEvents="true"
+                    tools:listitem="@layout/item_installed" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            </com.aurora.adroid.view.CustomSwipeToRefresh>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/err_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+    </ViewSwitcher>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

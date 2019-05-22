@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Aurora Droid
+  ~ Copyright (C) 2019, Rahul Kumar Patel <whyorean@gmail.com>
+  ~
+  ~ Aurora Droid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Aurora Droid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+
+    <!--Fallback Accent-->
+    <color name="colorAccent">@color/colorBlue</color>
+
+    <!--LightTheme-->
+    <color name="colorPrimary">@color/colorBlue</color>
+    <color name="colorPrimaryDark">#EEE</color>
+    <color name="colorPrimaryVariant">@color/colorWhite</color>
+    <color name="colorSecondary">@color/colorPrimary</color>
+    <color name="colorSecondaryVariant">@color/colorWhite</color>
+    <color name="colorBackground">@color/colorWhite</color>
+    <color name="colorWindowBackground">@color/colorBackground</color>
+    <color name="colorNavigation">@color/colorPrimaryDark</color>
+
+    <!--Dark Theme-->
+    <color name="colorDarkRipple">#4C5368</color>
+    <color name="colorDarkPrimary">#00bd56</color>
+    <color name="colorDarkPrimaryDark">#0A0A0A</color>
+    <color name="colorDarkPrimaryVariant">@color/colorDarkPrimaryDark</color>
+    <color name="colorDarkSecondary">@color/colorDarkPrimary</color>
+    <color name="colorDarkSecondaryVariant">#121212</color>
+    <color name="colorDarkBackground">#0E0E0E</color>
+    <color name="colorDarkWindowBackground">@color/colorDarkBackground</color>
+    <color name="colorDarkNavigation">@color/colorDarkPrimaryDark</color>
+
+    <!--Blue Theme-->
+    <color name="colorBluePrimary">#cd4545</color>
+    <color name="colorBluePrimaryDark">#0C0A10</color>
+    <color name="colorBluePrimaryVariant">@color/colorBluePrimaryDark</color>
+    <color name="colorBlueSecondary">@color/colorBluePrimary</color>
+    <color name="colorBlueSecondaryVariant">#1F1E24</color>
+    <color name="colorBlueBackground">#100E16</color>
+    <color name="colorBlueWindowBackground">#100E16</color>
+
+    <!--Pitch Black-->
+    <color name="colorBlackAccent">#EE3B34</color>
+
+    <color name="colorWhite">#FFF</color>
+    <color name="colorBlack">#000</color>
+    <color name="colorGreyDark">#545454</color>
+    <color name="colorGreyDarker">#242424</color>
+    <color name="colorGreyLight">#E5E5E5</color>
+
+    <color name="colorScrim">#11000000</color>
+    <color name="colorScrimAccent">#224768FD</color>
+    <color name="colorTransparent">#00000000</color>
+
+    <color name="colorTeal">#31e7b6</color>
+    <color name="colorBlue">#4768FD</color>
+    <color name="colorOrange">#ff6c00</color>
+    <color name="colorPurple">#4527A0</color>
+    <color name="colorCyan">#00BCD4</color>
+    <color name="colorRed">#F44336</color>
+    <color name="colorGreen">#4CAF50</color>
+    <color name="colorGreenAlt">#8BC34A</color>
+    <color name="colorGold">#FFBF00</color>
+    <color name="colorPink">#d81b60</color>
+
+    <!--Shades-->
+
+    <integer-array name="colorShades">
+        <item>@color/colorAccent</item>
+        <item>@color/colorRed</item>
+        <item>@color/colorOrange</item>
+        <item>@color/colorGreen</item>
+        <item>@color/colorCyan</item>
+        <item>@color/colorGreenAlt</item>
+        <item>@color/colorGold</item>
+        <item>@color/colorTeal</item>
+        <item>@color/colorPink</item>
+        <item>@color/colorPurple</item>
+    </integer-array>
+</resources>

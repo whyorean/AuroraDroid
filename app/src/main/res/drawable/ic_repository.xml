@@ -1,0 +1,39 @@
+<!--
+  ~ Aurora Droid
+  ~ Copyright (C) 2019, Rahul Kumar Patel <whyorean@gmail.com>
+  ~
+  ~ Aurora Droid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Aurora Droid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <path
+        android:fillColor="#17DDC0"
+        android:pathData="M396.034,420.5C454.557,420.5 502,373.057 502,314.534c0,-55.452 -42.596,-100.948 -96.851,-105.572c-20.236,-67.93 -83.161,-117.465 -157.665,-117.465c-75.631,0 -139.332,51.043 -158.556,120.557C43.503,224.008 10,265.356 10,314.535c0,58.523 47.443,105.966 105.966,105.966h280.068V420.5z" />
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M256,189.632c-5.523,0 -10,-4.477 -10,-10v-0.131c0,-5.523 4.477,-10 10,-10c5.523,0 10,4.477 10,10v0.131C266,185.156 261.523,189.632 256,189.632z" />
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M100.024,339.001c-3.687,0 -7.233,-2.047 -8.976,-5.578l-0.217,-0.439c-2.443,-4.953 -0.409,-10.949 4.544,-13.393c4.951,-2.443 10.948,-0.41 13.393,4.544l0.217,0.439c2.443,4.953 0.409,10.949 -4.544,13.393C103.019,338.669 101.51,339.001 100.024,339.001z" />
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M302.929,271.426l-36.928,36.928v-96.37c0,-5.523 -4.477,-10 -10,-10s-10,4.477 -10,10v96.372l-36.93,-36.93c-3.905,-3.905 -10.237,-3.905 -14.143,0c-3.905,3.905 -3.905,10.237 0,14.143l54,54c1.953,1.953 4.512,2.929 7.071,2.929s5.119,-0.976 7.071,-2.929l54,-54c3.905,-3.905 3.905,-10.237 0,-14.143C313.166,267.52 306.834,267.52 302.929,271.426z" />
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M481.269,235.906c-18.164,-19.677 -42.303,-32.354 -68.561,-36.138c-11.166,-32.724 -32.29,-62.002 -60.004,-82.984c-30.493,-23.084 -66.877,-35.285 -105.22,-35.285c-76.32,0 -144.027,50.08 -166.603,122.48C32.977,219.139 0,263.804 0,314.535c0,63.944 52.022,115.966 115.966,115.966h280.068c63.944,0 115.966,-52.022 115.966,-115.966C512,285.299 501.086,257.374 481.269,235.906zM396.034,410.5H115.966C63.05,410.5 20,367.45 20,314.535c0,-37.746 22.066,-71.42 55.323,-86.952c-3.968,24.209 -2.843,49.157 3.402,72.921c1.18,4.49 5.231,7.461 9.665,7.461c0.841,0 1.697,-0.107 2.548,-0.331c5.341,-1.404 8.534,-6.872 7.13,-12.213c-6.569,-24.997 -6.769,-51.478 -0.578,-76.575c0.345,-1.396 0.695,-2.751 1.075,-4.125c18.437,-66.664 79.674,-113.223 148.918,-113.223c67.838,0 128.731,45.365 148.082,110.32c1.174,3.94 4.639,6.76 8.735,7.109c49.177,4.191 87.7,46.187 87.7,95.608C492,367.45 448.95,410.5 396.034,410.5z" />
+</vector>

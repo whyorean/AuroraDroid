@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Aurora Droid
+  ~ Copyright (C) 2019, Rahul Kumar Patel <whyorean@gmail.com>
+  ~
+  ~ Aurora Droid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Aurora Droid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <string-array name="pref_themes">
+        <item>@string/pref_ui_theme_light</item>
+        <item>@string/pref_ui_theme_dark</item>
+        <item>@string/pref_ui_theme_darker</item>
+        <item>@string/pref_ui_theme_black</item>
+    </string-array>
+
+    <string-array name="pref_themes_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>darker</item>
+        <item>black</item>
+    </string-array>
+
+    <string-array name="pref_download_strategy">
+        <item>@string/pref_downloads_strategy_sequential</item>
+        <item>@string/pref_downloads_strategy_parallel</item>
+    </string-array>
+
+    <string-array name="pref_download_strategy_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="proxyTypeValues" translatable="false">
+        <item>DIRECT</item>
+        <item>HTTP</item>
+        <item>SOCKS</item>
+    </string-array>
+</resources>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Aurora Droid
+  ~ Copyright (C) 2019, Rahul Kumar Patel <whyorean@gmail.com>
+  ~
+  ~ Aurora Droid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Aurora Droid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/margin_small"
+    android:paddingTop="@dimen/margin_small"
+    android:paddingEnd="@dimen/margin_small"
+    android:paddingBottom="@dimen/margin_small">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_apk"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="@dimen/margin_small"
+        app:srcCompat="@drawable/ic_apk"
+        app:tint="?android:colorAccent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_installed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_apk"
+        android:layout_marginStart="@dimen/margin_xsmall"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:scaleX=".5"
+        android:scaleY=".5"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_indicator"
+        app:tint="@color/colorGreen" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_apk_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/txt_apk_added"
+        android:layout_alignStart="@id/img_download"
+        android:layout_alignEnd="@id/img_download"
+        android:maxLines="1"
+        android:textAlignment="center"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="12sp"
+        tools:text="12 MB" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_download"
+        android:layout_width="56dp"
+        android:layout_height="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/margin_small"
+        android:background="?selectableItemBackground"
+        android:padding="@dimen/margin_xxsmall"
+        app:srcCompat="@drawable/ic_download"
+        app:tint="?colorAccent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_apk_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_xsmall"
+        android:layout_toStartOf="@id/img_download"
+        android:layout_toEndOf="@id/img_apk"
+        android:maxLines="1"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="Version 1.0.0" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_apk_repo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_apk_version"
+        android:layout_alignStart="@id/txt_apk_version"
+        android:layout_alignEnd="@id/txt_apk_version"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAlignment="viewStart"
+        android:textSize="12sp"
+        tools:text="Bromite" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_apk_added"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_apk_repo"
+        android:layout_alignStart="@id/txt_apk_version"
+        android:layout_alignEnd="@id/txt_apk_version"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAlignment="viewStart"
+        android:textSize="12sp"
+        tools:text="20/05/2019" />
+</RelativeLayout>

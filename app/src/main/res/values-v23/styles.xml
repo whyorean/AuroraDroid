@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Aurora Droid
+  ~ Copyright (C) 2019, Rahul Kumar Patel <whyorean@gmail.com>
+  ~
+  ~ Aurora Droid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Aurora Droid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorSurface">@color/colorSecondaryVariant</item>
+        <item name="toolbarStyle">@style/Aurora.MaterialComponents.Toolbar</item>
+        <item name="android:strokeColor">@color/colorGreyLight</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/colorWindowBackground</item>
+        <item name="android:navigationBarColor">@color/colorBlack</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="chipStyle">@style/Widget.Aurora.FilterChip</item>
+        <item name="materialCardViewStyle">@style/Aurora.MaterialComponents.CardView</item>
+        <item name="android:splitMotionEvents">false</item>
+        <item name="android:windowEnableSplitTouch">false</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/colorDarkPrimary</item>
+        <item name="colorPrimaryDark">@color/colorDarkPrimaryDark</item>
+        <item name="colorPrimaryVariant">@color/colorDarkPrimaryVariant</item>
+        <item name="colorSecondary">@color/colorDarkSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorDarkSecondaryVariant</item>
+        <item name="colorSurface">@color/colorDarkSecondaryVariant</item>
+        <item name="toolbarStyle">@style/Aurora.MaterialComponents.Toolbar.Dark</item>
+        <item name="android:strokeColor">@color/colorGreyLight</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">@color/colorDarkWindowBackground</item>
+        <item name="android:navigationBarColor">@color/colorDarkNavigation</item>
+        <item name="android:colorBackground">@color/colorDarkBackground</item>
+        <item name="chipStyle">@style/Widget.Aurora.FilterChip</item>
+        <item name="materialCardViewStyle">@style/Aurora.MaterialComponents.CardView.Dark</item>
+        <item name="android:splitMotionEvents">false</item>
+        <item name="android:windowEnableSplitTouch">false</item>
+    </style>
+
+    <style name="AppTheme.Darker" parent="AppTheme.Dark">
+        <item name="colorPrimary">@color/colorBluePrimary</item>
+        <item name="colorPrimaryDark">@color/colorBluePrimaryDark</item>
+        <item name="colorPrimaryVariant">@color/colorBluePrimaryVariant</item>
+        <item name="colorSecondary">@color/colorBlueSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorBlueSecondaryVariant</item>
+        <item name="colorSurface">@color/colorBlueSecondaryVariant</item>
+        <item name="android:windowBackground">@color/colorBlueWindowBackground</item>
+        <item name="android:colorBackground">@color/colorBlueBackground</item>
+        <item name="materialCardViewStyle">@style/Aurora.MaterialComponents.CardView.Dark</item>
+    </style>
+
+    <style name="AppTheme.Black" parent="AppTheme.Dark">
+        <item name="colorPrimary">@color/colorBlackAccent</item>
+        <item name="colorPrimaryDark">@color/colorBlack</item>
+        <item name="colorPrimaryVariant">@color/colorBlack</item>
+        <item name="colorSecondary">@color/colorBlackAccent</item>
+        <item name="colorSecondaryVariant">@color/colorBlack</item>
+        <item name="colorSurface">@color/colorBlack</item>
+        <item name="android:strokeColor">@color/colorGreyLight</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">@color/colorBlack</item>
+        <item name="android:navigationBarColor">@color/colorBlack</item>
+        <item name="android:colorBackground">@color/colorBlack</item>
+        <item name="materialCardViewStyle">@style/Aurora.MaterialComponents.CardView.Black</item>
+    </style>
+</resources>

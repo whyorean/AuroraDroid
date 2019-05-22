@@ -1,0 +1,29 @@
+<!--
+  ~ Aurora Droid
+  ~ Copyright (C) 2019, Rahul Kumar Patel <whyorean@gmail.com>
+  ~
+  ~ Aurora Droid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Aurora Droid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <string name="app_name">Aurora Droid</string>
+    <string name="app_name_long">Aurora Droid - App store</string>
+    <string name="app_desc">Aurora Droid aka A-Droid, is FOSS client for F-Droid repositories,with an elegant design based of latest MD guidelines
+        \n
+        \nA-Droid aims to bring a simple UX, making it user friendly.
+        \n
+        \n Changelog : v1.0.0
+        \n • Initial release
+    </string>
+</resources>

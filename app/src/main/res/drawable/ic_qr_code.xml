@@ -1,0 +1,69 @@
+<!--
+  ~ Aurora Droid
+  ~ Copyright (C) 2019, Rahul Kumar Patel <whyorean@gmail.com>
+  ~
+  ~ Aurora Droid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Aurora Droid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="682.6667"
+    android:viewportHeight="682">
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m98.289,109.605v173.563c0,6.934 5.621,12.551 12.551,12.551h173.566c6.93,0 12.551,-5.617 12.551,-12.551v-32.91c0,-6.934 -5.621,-12.551 -12.551,-12.551s-12.547,5.617 -12.547,12.551v20.363h-148.469v-148.469h148.469v30.215c0,6.934 5.617,12.555 12.547,12.555s12.551,-5.621 12.551,-12.555v-42.762c0,-6.934 -5.621,-12.551 -12.551,-12.551h-173.566c-6.93,0 -12.551,5.617 -12.551,12.551zM98.289,109.605" />
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m171.59,157.805c-6.934,0 -12.547,5.617 -12.547,12.547v52.07c0,6.93 5.613,12.551 12.547,12.551h52.07c6.93,0 12.551,-5.621 12.551,-12.551v-52.07c0,-6.93 -5.621,-12.547 -12.551,-12.547zM211.113,209.875h-26.973v-26.973h26.973zM211.113,209.875" />
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m284.406,385.344h-173.566c-6.93,0 -12.551,5.617 -12.551,12.547v173.57c0,6.93 5.621,12.547 12.551,12.547h173.566c6.93,0 12.551,-5.617 12.551,-12.547v-173.57c0,-6.93 -5.621,-12.547 -12.551,-12.547zM271.859,558.91h-148.469v-148.469h148.469zM271.859,558.91" />
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m400,295.719h173.57c6.926,0 12.547,-5.617 12.547,-12.551v-173.563c0,-6.934 -5.621,-12.551 -12.547,-12.551h-173.57c-6.93,0 -12.551,5.617 -12.551,12.551v173.563c0,6.934 5.621,12.551 12.551,12.551zM412.547,122.152h148.469v148.469h-148.469zM412.547,122.152" />
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m586.117,571.461v-173.57c0,-6.93 -5.621,-12.547 -12.547,-12.547h-173.57c-6.93,0 -12.551,5.617 -12.551,12.547v173.57c0,6.93 5.621,12.547 12.551,12.547h173.57c6.926,0 12.547,-5.617 12.547,-12.547zM561.016,558.91h-148.469v-148.469h148.469zM561.016,558.91" />
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m573.57,353.84c6.926,0 12.547,-5.621 12.547,-12.551 0,-6.934 -5.621,-12.547 -12.547,-12.547h-220.031v-220.527c0,-6.93 -5.621,-12.551 -12.547,-12.551 -6.938,0 -12.555,5.621 -12.555,12.551v220.527h-166.57c-6.926,0 -12.547,5.617 -12.547,12.547 0,6.934 5.621,12.551 12.547,12.551h166.57v217.621c0,6.93 5.617,12.547 12.555,12.547 6.926,0 12.547,-5.617 12.547,-12.547v-217.621zM573.57,353.84" />
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m171.59,524.195h52.07c6.93,0 12.551,-5.621 12.551,-12.551v-52.07c0,-6.934 -5.621,-12.547 -12.551,-12.547h-52.07c-6.934,0 -12.547,5.613 -12.547,12.547v52.07c0,6.93 5.613,12.551 12.547,12.551zM184.141,472.125h26.973v26.973h-26.973zM184.141,472.125" />
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m512.816,157.805h-52.07c-6.93,0 -12.551,5.617 -12.551,12.547v52.07c0,6.93 5.621,12.551 12.551,12.551h52.07c6.934,0 12.551,-5.621 12.551,-12.551v-52.07c0,-6.93 -5.617,-12.547 -12.551,-12.547zM500.266,209.875h-26.965v-26.973h26.965zM500.266,209.875" />
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m460.746,524.195h52.07c6.934,0 12.551,-5.621 12.551,-12.551v-52.07c0,-6.934 -5.617,-12.547 -12.551,-12.547h-52.07c-6.93,0 -12.551,5.613 -12.551,12.547v52.07c0,6.93 5.621,12.551 12.551,12.551zM473.301,472.125h26.965v26.973h-26.965zM473.301,472.125" />
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m108.301,328.793 l-0.676,0.156c-6.746,1.594 -10.926,8.352 -9.336,15.098 1.363,5.777 6.516,9.676 12.203,9.676 0.957,0 1.922,-0.113 2.891,-0.344l0.672,-0.156c6.75,-1.59 10.93,-8.348 9.336,-15.094 -1.586,-6.742 -8.344,-10.922 -15.09,-9.336zM108.301,328.793" />
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m281.879,188.789 l-0.676,0.16c-6.746,1.582 -10.93,8.336 -9.348,15.086 1.352,5.785 6.508,9.688 12.207,9.688 0.945,0 1.906,-0.109 2.875,-0.34l0.672,-0.156c6.75,-1.582 10.934,-8.34 9.352,-15.082 -1.582,-6.746 -8.34,-10.938 -15.082,-9.355zM281.879,188.789" />
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m33.547,124.125c6.938,0 12.551,-5.617 12.551,-12.547v-65.148h62.777c6.934,0 12.555,-5.613 12.555,-12.547 0,-6.93 -5.621,-12.551 -12.555,-12.551h-75.328c-6.926,0 -12.547,5.621 -12.547,12.551v77.695c0,6.93 5.621,12.547 12.547,12.547zM33.547,124.125" />
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m648.453,21.332h-75.328c-6.934,0 -12.555,5.621 -12.555,12.551 0,6.934 5.621,12.547 12.555,12.547h62.777v65.148c0,6.93 5.613,12.547 12.551,12.547 6.926,0 12.547,-5.617 12.547,-12.547v-77.695c0,-6.93 -5.621,-12.551 -12.547,-12.551zM648.453,21.332" />
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m108.875,635.695h-62.777v-65.145c0,-6.926 -5.613,-12.547 -12.551,-12.547 -6.926,0 -12.547,5.621 -12.547,12.547v77.695c0,6.93 5.621,12.551 12.547,12.551h75.328c6.934,0 12.555,-5.621 12.555,-12.551 0,-6.934 -5.621,-12.551 -12.555,-12.551zM108.875,635.695" />
+    <path
+        android:fillColor="?android:attr/colorForeground"
+        android:pathData="m648.453,558.004c-6.938,0 -12.551,5.621 -12.551,12.547v65.145h-62.777c-6.934,0 -12.555,5.617 -12.555,12.551 0,6.93 5.621,12.551 12.555,12.551h75.328c6.926,0 12.547,-5.621 12.547,-12.551v-77.695c0,-6.926 -5.621,-12.547 -12.547,-12.547zM648.453,558.004" />
+</vector>
