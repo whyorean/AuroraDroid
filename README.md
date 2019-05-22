@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/A8blqeT.png" height="152" alt="Aurora Logo"><br/><img src="https://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL v3 Logo">
+<img src="https://i.imgur.com/kSApIjL.png" height="256" alt="Aurora Logo"><br/><img src="https://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL v3 Logo">
 
 # Aurora Droid : a F-Droid client for Android
 
