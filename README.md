@@ -1,6 +1,7 @@
 <img src="https://i.imgur.com/kSApIjL.png" height="256" alt="Aurora Logo"><br/><img src="https://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL v3 Logo">
 
-# Aurora Droid : a F-Droid client for Android
+# Aurora Droid
+Aurora Droid aka A-Droid is a F-Droid client for android, based on latest MD guidelines, it aims to provide an elegant design with great UX
 
 # Screenshots
 
@@ -20,6 +21,13 @@
 * Better repo management
   -- You can select your choice of repositories from a built in list & easy add new repositories by scanning QR code
 
+`Aurora Droid is still in development! Bugs are to be expected! Any bug reports are appreciated`
+
+# Links
+* AndroidFileHost - [Downloads](https://androidfilehost.com/?w=files&flid=294487)
+* XDA Forum - [Thread](https://forum.xda-developers.com/android/apps-games/app-aurora-droid-fdroid-client-t3932663)
+* XDA Labs - [Link](https://labs.xda-developers.com/store/app/com.aurora.adroid)
+* Support Group - [Telegram](https://t.me/AuroraDroid)
 
 # Aurora Droid uses the following Open Source libraries:
 
