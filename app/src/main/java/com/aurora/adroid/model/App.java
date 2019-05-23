@@ -26,6 +26,7 @@ import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 
+import com.aurora.adroid.util.PackageUtil;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -145,7 +146,7 @@ public class App {
     }
 
     public void setPackageList(List<Package> packageList) {
-        this.setAppPackage(packageList.get(0));
+        this.setAppPackage(PackageUtil.getOptimumPackage(packageList));
         this.packageList = packageList;
     }
 
