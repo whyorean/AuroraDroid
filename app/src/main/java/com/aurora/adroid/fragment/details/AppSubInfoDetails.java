@@ -67,7 +67,7 @@ public class AppSubInfoDetails extends AbstractDetails {
         chipSize.setText(Util.humanReadableByteValue(app.getAppPackage().getSize(), true));
         chipRepo.setText(TextUtils.isEmpty(app.getRepoName()) ? "unknown" : app.getRepoName());
 
-        if (app.getCategories()!= null) {
+        if (app.getCategories()!= null && !app.getCategories().isEmpty()) {
             chipCategory.setText(app.getCategories().get(0));
             setupCluster(app.getCategories().get(0));
         } else
