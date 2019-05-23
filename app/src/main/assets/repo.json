@@ -197,5 +197,13 @@
     "repoMirrors": [],
     "repoFingerprint": "74 BB 58 0F 26 3E C8 9E 15 C2 07 29 8D EC 86 1B 50 69 51 75 50 FE 0F 1D 85 2F 16 FA 61 1D 2D 26",
     "repoDescription": "FOSS apps made by Frostnerd.com"
+  },
+  {
+    "repoId": "25",
+    "repoName": "Zeronet",
+    "repoUrl": "https://f-droid.mkg20001.io/repos/jVVkbOD2it_bf_UxFIGGh1qa950KrUsq/repo",
+    "repoMirrors": [],
+    "repoFingerprint": "00 5E 88 8A 5A 20 3D 40 E2 8F 37 2B 93 9B 8E 59 95 FB 29 08 1E FC 84 5D B9 9A 8D 4C 14 B5 09 E2",
+    "repoDescription": "ZeroNet Android App Nightlies & Stable Releases"
   }
 ]
