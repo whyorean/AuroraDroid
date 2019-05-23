@@ -20,6 +20,7 @@ package com.aurora.adroid.manager;
 
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.graphics.Color;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
@@ -48,6 +49,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.Observable;

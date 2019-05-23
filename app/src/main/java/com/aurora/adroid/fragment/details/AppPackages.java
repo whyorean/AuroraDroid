@@ -25,17 +25,11 @@ import android.widget.RelativeLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aurora.adroid.ArchType;
 import com.aurora.adroid.R;
 import com.aurora.adroid.adapter.PackageAdapter;
 import com.aurora.adroid.fragment.DetailsFragment;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.model.Package;
-import com.aurora.adroid.util.Log;
-import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.ViewUtil;
-
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -56,18 +50,7 @@ public class AppPackages extends AbstractDetails {
 
     @Override
     public void draw() {
-        List<Package> segregatedList = app.getPackageList();
-        ArchType archTypeSystem = PackageUtil.getSystemArch();
-        for (Package pkg : app.getPackageList()) {
-            if (PackageUtil.isArchSpecificPackage(pkg)) {
-                segregatedList.clear();
-                ArchType archTypePackage = PackageUtil.getPackageArch(pkg);
-                if (archTypeSystem == archTypePackage) {
-                    segregatedList.add(pkg);
-                }
-            }
-        }
-        recyclerView.setAdapter(new PackageAdapter(context, segregatedList));
+        recyclerView.setAdapter(new PackageAdapter(context, app.getPackageList()));
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
         layoutExpand.setOnClickListener(v -> {
             if (layoutVersion.getVisibility() == View.GONE) {

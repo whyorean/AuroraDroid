@@ -102,4 +102,20 @@ public class PackageUtil {
                 return ArchType.ARM;
         }
     }
+
+    public static boolean isSupportedPackage(Package pkg) {
+        boolean archSpecific = PackageUtil.isArchSpecificPackage(pkg);
+        if (!archSpecific)
+            return true;
+        ArchType pkgArch = getPackageArch(pkg);
+        ArchType systemArch = getSystemArch();
+        if (pkgArch == ArchType.ARM64 && systemArch == ArchType.ARM64)
+            return true;
+        else if (pkgArch == ArchType.ARM && systemArch == ArchType.ARM || systemArch == ArchType.ARM64)
+            return true;
+        else if (pkgArch == ArchType.x86 && systemArch == ArchType.x86)
+            return true;
+        else
+            return false;
+    }
 }

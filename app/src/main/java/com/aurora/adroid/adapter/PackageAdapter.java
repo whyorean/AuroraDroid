@@ -43,6 +43,8 @@ import com.tonyodev.fetch2.EnqueueAction;
 import com.tonyodev.fetch2.Fetch;
 import com.tonyodev.fetch2.Request;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -70,10 +72,12 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final Package pkg = packages.get(position);
         final boolean installed = PackageUtil.isInstalledVersion(context, pkg);
+        final boolean isArchDependent = PackageUtil.isArchSpecificPackage(pkg);
         holder.txtApkVersion.setText(new StringBuilder()
                 .append(pkg.getVersionName())
                 .append(".")
-                .append(pkg.getVersionCode()));
+                .append(pkg.getVersionCode())
+                .append(isArchDependent ? StringUtils.SPACE + PackageUtil.getPackageArch(pkg) : ""));
         holder.imgInstalled.setVisibility(installed ? View.VISIBLE : View.GONE);
         holder.imgDownload.setVisibility(installed ? View.GONE : View.VISIBLE);
         holder.txtApkSize.setVisibility(installed ? View.GONE : View.VISIBLE);
