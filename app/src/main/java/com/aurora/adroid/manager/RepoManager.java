@@ -20,7 +20,6 @@ package com.aurora.adroid.manager;
 
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.graphics.Color;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
@@ -49,7 +48,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -95,8 +93,9 @@ public class RepoManager extends ContextWrapper {
                     super.onCompleted(download);
                     if (request.getId() == download.getId()) {
                         Log.i("Downloaded : %s", download.getUrl());
-                        RxBus.publish(new LogEvent(download.getTag() + " - " + getString(R.string.download_completed)));
-                        extractRepo(download);
+                        final Repo repo = RepoListManager.getRepoById(context, download.getTag());
+                        RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_completed)));
+                        extractRepo(download, repo);
                     }
                 }
 
@@ -113,7 +112,7 @@ public class RepoManager extends ContextWrapper {
         }
     }
 
-    private void extractRepo(Download download) {
+    private synchronized void extractRepo(Download download, Repo repo) {
         final String jarFile = download.getFile();
         final String repoId = download.getTag();
 
@@ -122,21 +121,21 @@ public class RepoManager extends ContextWrapper {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(success -> {
-                    RxBus.publish(new LogEvent(repoId + " - " + getString(R.string.extract_completed)));
+                    RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.extract_completed)));
                     final File tempJson = new File(PathUtil.getRepoDirectory(this) + repoId + ".json");
-                    parseJson(FileUtils.openInputStream(tempJson), repoId);
+                    parseJson(FileUtils.openInputStream(tempJson), repo);
                     fetch.delete(download.getId());
                 }, err -> {
                     Log.e(err.getMessage());
-                    RxBus.publish(new LogEvent(repoId + " - " + getString(R.string.extract_failed)));
+                    RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.extract_failed)));
                     updateCount();
                     fetch.delete(download.getId());
                 }));
     }
 
-    private void parseJson(InputStream inputStream, String repoId) {
+    private synchronized void parseJson(InputStream inputStream, Repo repo) {
         disposable.add(Observable.fromCallable(() -> new JsonParserTask(this)
-                .parse(inputStream, repoId))
+                .parse(inputStream, repo.getRepoId()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((success) -> {
@@ -144,16 +143,16 @@ public class RepoManager extends ContextWrapper {
                         PrefUtil.putBoolean(getApplicationContext(), Constants.DATABASE_AVAILABLE, true);
                     }
                     QuickNotification.show(this,
-                            repoId,
+                            repo.getRepoName(),
                             success ? getString(R.string.sync_completed) : getString(R.string.sync_failed),
                             null);
-                    RxBus.publish(new LogEvent(repoId + " - " + getString(R.string.sync_completed)));
+                    RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_completed)));
                     updateCount();
-                    PathUtil.deleteFile(context, repoId);
+                    PathUtil.deleteFile(context, repo.getRepoId());
                 }, err -> {
                     Log.e(err.getMessage());
                     updateCount();
-                    PathUtil.deleteFile(context, repoId);
+                    PathUtil.deleteFile(context, repo.getRepoId());
                 }));
     }
 
