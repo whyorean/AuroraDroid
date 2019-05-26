@@ -34,7 +34,7 @@ public interface AppDao {
     @Query("SELECT * FROM app")
     List<App> getAllApps();
 
-    @Query("SELECT * FROM app WHERE packageName IN (:packageName)")
+    @Query("SELECT DISTINCT * FROM app WHERE packageName IN (:packageName)")
     List<App> getAppsByPackageName(List<String> packageName);
 
     @Query("SELECT * FROM app WHERE packageName = :packageName")
@@ -43,19 +43,19 @@ public interface AppDao {
     @Query("SELECT * FROM app WHERE name = :appName")
     App getAppByName(String appName);
 
-    @Query("SELECT * FROM app WHERE name LIKE :pattern LIMIT 20")
+    @Query("SELECT DISTINCT * FROM app WHERE name LIKE :pattern LIMIT 20")
     List<App> findAppsByName(String pattern);
 
-    @Query("SELECT * FROM app WHERE :refTime - lastUpdated <= :weekCount * 604800000 ORDER BY lastUpdated DESC")
+    @Query("SELECT DISTINCT * FROM app WHERE :refTime - lastUpdated <= :weekCount * 604800000 ORDER BY lastUpdated DESC")
     List<App> getLatestUpdatedApps(Long refTime, int weekCount);
 
-    @Query("SELECT * FROM app WHERE :refTime - added <= :weekCount * 604800000 ORDER BY added DESC LIMIT 30")
+    @Query("SELECT DISTINCT * FROM app WHERE :refTime - added <= :weekCount * 604800000 ORDER BY added DESC LIMIT 30")
     List<App> getLatestAddedApps(Long refTime, int weekCount);
 
-    @Query("SELECT * FROM app WHERE name LIKE :query LIMIT 20")
+    @Query("SELECT DISTINCT * FROM app WHERE name LIKE :query LIMIT 20")
     List<App> searchApps(String query);
 
-    @Query("SELECT * FROM app WHERE categories LIKE :category")
+    @Query("SELECT DISTINCT * FROM app WHERE categories LIKE :category")
     List<App> searchAppsByCategory(String category);
 
     @Query("SELECT `en-US-phoneScreenshots` FROM app WHERE packageName =:packageName")
