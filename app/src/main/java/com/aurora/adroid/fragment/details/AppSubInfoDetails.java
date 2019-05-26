@@ -24,7 +24,9 @@ import android.widget.LinearLayout;
 import com.aurora.adroid.R;
 import com.aurora.adroid.fragment.DetailsFragment;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.model.Package;
 import com.aurora.adroid.sheet.MoreInfoSheet;
+import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.view.ClusterView;
@@ -46,6 +48,10 @@ public class AppSubInfoDetails extends AbstractDetails {
     Chip chipCategory;
     @BindView(R.id.txt_size)
     Chip chipSize;
+    @BindView(R.id.txt_arch)
+    Chip chipArch;
+    @BindView(R.id.txt_sdk)
+    Chip chipSdk;
     @BindView(R.id.txt_licence)
     Chip chipLicense;
     @BindView(R.id.chip_description)
@@ -62,12 +68,15 @@ public class AppSubInfoDetails extends AbstractDetails {
     @Override
     public void draw() {
         final DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        final Package pkg = app.getAppPackage();
         chipUpdated.setText(dateFormat.format(new Date(app.getLastUpdated())));
         chipLicense.setText(TextUtils.isEmpty(app.getLicense()) ? "unknown" : app.getLicense());
-        chipSize.setText(Util.humanReadableByteValue(app.getAppPackage().getSize(), true));
+        chipSize.setText(Util.humanReadableByteValue(pkg.getSize(), true));
+        chipArch.setText(PackageUtil.getPackageArchName(pkg));
+        chipSdk.setText(String.format(Locale.getDefault(), "Min SDK %s", pkg.getMinSdkVersion()));
         chipRepo.setText(TextUtils.isEmpty(app.getRepoName()) ? "unknown" : app.getRepoName());
 
-        if (app.getCategories()!= null && !app.getCategories().isEmpty()) {
+        if (app.getCategories() != null && !app.getCategories().isEmpty()) {
             chipCategory.setText(app.getCategories().get(0));
             setupCluster(app.getCategories().get(0));
         } else

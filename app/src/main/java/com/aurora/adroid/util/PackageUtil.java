@@ -99,6 +99,20 @@ public class PackageUtil {
             return ArchType.ARM;
     }
 
+    public static String getPackageArchName(Package pkg) {
+        final String apkName = pkg.getApkName().toLowerCase();
+        if (apkName.contains("arm64-v8a") || apkName.contains("arm64"))
+            return "ARM64";
+        else if (apkName.contains("armeabi-v7a") || apkName.contains("arm"))
+            return "ARM";
+        else if (apkName.contains("x86-64"))
+            return "x86-64";
+        else if (apkName.contains("x86"))
+            return "x86";
+        else
+            return "ARM";
+    }
+
     public static ArchType getSystemArch() {
         switch (Build.SUPPORTED_ABIS[0]) {
             case "arm64-v8a":
