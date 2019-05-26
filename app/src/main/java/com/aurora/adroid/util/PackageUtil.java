@@ -114,19 +114,24 @@ public class PackageUtil {
         }
     }
 
+    public static boolean isSdkCompatible(Package pkg) {
+        return Build.VERSION.SDK_INT >= Util.parseInt(pkg.getMinSdkVersion(), 21);
+    }
+
     public static boolean isSupportedPackage(Package pkg) {
-        boolean archSpecific = PackageUtil.isArchSpecificPackage(pkg);
-        if (!archSpecific)
+        boolean archSpecific = isArchSpecificPackage(pkg);
+        boolean sdkCompatible = isSdkCompatible(pkg);
+        if (!archSpecific && sdkCompatible)
             return true;
         ArchType pkgArch = getPackageArch(pkg);
         ArchType systemArch = getSystemArch();
-        if (pkgArch == ArchType.ARM64 && systemArch == ArchType.ARM64)
+        if (pkgArch == ArchType.ARM64 && systemArch == ArchType.ARM64 && sdkCompatible)
             return true;
-        else if (pkgArch == ArchType.ARM && (systemArch == ArchType.ARM || systemArch == ArchType.ARM64))
+        else if (pkgArch == ArchType.ARM && (systemArch == ArchType.ARM || systemArch == ArchType.ARM64) && sdkCompatible)
             return true;
         if (pkgArch == ArchType.x86_64 && systemArch == ArchType.x86_64)
             return true;
-        else if (pkgArch == ArchType.x86 && (systemArch == ArchType.x86 || systemArch == ArchType.x86_64))
+        else if (pkgArch == ArchType.x86 && (systemArch == ArchType.x86 || systemArch == ArchType.x86_64) && sdkCompatible)
             return true;
         else
             return false;
