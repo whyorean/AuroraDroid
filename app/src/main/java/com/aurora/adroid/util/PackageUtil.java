@@ -27,9 +27,19 @@ import com.aurora.adroid.ArchType;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PackageUtil {
+
+    private static final List<String> archList = new ArrayList<>();
+
+    static {
+        archList.add("arm64-v8a");
+        archList.add("armeabi-v7a");
+        archList.add("x86");
+        archList.add("x86_64");
+    }
 
     public static boolean isInstalledVersion(Context context, Package pkg) {
         try {
@@ -76,41 +86,30 @@ public class PackageUtil {
     }
 
     public static boolean isArchSpecificPackage(Package pkg) {
-        final String apkName = pkg.getApkName().toLowerCase();
-        return apkName.contains("arm")
-                || apkName.contains("armeabi-v7a")
-                || apkName.contains("arm64")
-                || apkName.contains("arm64-v8a")
-                || apkName.contains("x86")
-                || apkName.contains("x86-64");
+        return !pkg.getNativecode().isEmpty() && !pkg.getNativecode().containsAll(archList);
     }
 
-    public static ArchType getPackageArch(Package pkg) {
-        final String apkName = pkg.getApkName().toLowerCase();
-        if (apkName.contains("arm64-v8a") || apkName.contains("arm64"))
-            return ArchType.ARM64;
-        else if (apkName.contains("armeabi-v7a") || apkName.contains("arm"))
-            return ArchType.ARM;
-        else if (apkName.contains("x86-64"))
-            return ArchType.x86_64;
-        else if (apkName.contains("x86"))
-            return ArchType.x86;
-        else
-            return ArchType.ARM;
-    }
 
     public static String getPackageArchName(Package pkg) {
-        final String apkName = pkg.getApkName().toLowerCase();
-        if (apkName.contains("arm64-v8a") || apkName.contains("arm64"))
-            return "ARM64";
-        else if (apkName.contains("armeabi-v7a") || apkName.contains("arm"))
-            return "ARM";
-        else if (apkName.contains("x86-64"))
-            return "x86-64";
-        else if (apkName.contains("x86"))
-            return "x86";
+        if (!isArchSpecificPackage(pkg))
+            return "Universal";
         else
-            return "ARM";
+            return pkg.getNativecode().get(0);
+    }
+
+    public static ArchType getArchFromNativeCode(String nativeCode) {
+        switch (nativeCode) {
+            case "arm64-v8a":
+                return ArchType.ARM64;
+            case "armeabi-v7a":
+                return ArchType.ARM;
+            case "x86-64":
+                return ArchType.x86_64;
+            case "x86":
+                return ArchType.x86;
+            default:
+                return ArchType.UNIVERSAL;
+        }
     }
 
     public static ArchType getSystemArch() {
@@ -133,22 +132,15 @@ public class PackageUtil {
     }
 
     public static boolean isSupportedPackage(Package pkg) {
-        boolean archSpecific = isArchSpecificPackage(pkg);
-        boolean sdkCompatible = isSdkCompatible(pkg);
-        if (!archSpecific && sdkCompatible)
-            return true;
-        ArchType pkgArch = getPackageArch(pkg);
-        ArchType systemArch = getSystemArch();
-        if (pkgArch == ArchType.ARM64 && systemArch == ArchType.ARM64 && sdkCompatible)
-            return true;
-        else if (pkgArch == ArchType.ARM && (systemArch == ArchType.ARM || systemArch == ArchType.ARM64) && sdkCompatible)
-            return true;
-        if (pkgArch == ArchType.x86_64 && systemArch == ArchType.x86_64)
-            return true;
-        else if (pkgArch == ArchType.x86 && (systemArch == ArchType.x86 || systemArch == ArchType.x86_64) && sdkCompatible)
-            return true;
-        else
+        if (!isSdkCompatible(pkg))
             return false;
+        if (!isArchSpecificPackage(pkg))
+            return true;
+
+        final List<String> nativeCodeList = pkg.getNativecode();
+        final ArchType pkgArch = getArchFromNativeCode(nativeCodeList.get(0));
+        final ArchType systemArch = getSystemArch();
+        return pkgArch == systemArch;
     }
 
     public static Package getOptimumPackage(List<Package> packageList) {

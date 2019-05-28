@@ -23,18 +23,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground"
+    android:background="@drawable/generic_padded_bg"
     android:orientation="horizontal"
-    android:paddingStart="@dimen/margin_small"
-    android:paddingTop="@dimen/margin_small"
-    android:paddingEnd="@dimen/margin_small"
-    android:paddingBottom="@dimen/margin_small">
+    android:layout_margin="@dimen/margin_xxsmall">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_apk"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         app:srcCompat="@drawable/ic_apk"
         app:tint="?android:colorAccent" />
 
@@ -43,11 +39,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/img_apk"
-        android:layout_marginStart="@dimen/margin_xsmall"
+        android:layout_marginStart="@dimen/margin_small"
         android:layout_marginEnd="@dimen/margin_small"
         android:scaleX=".5"
         android:scaleY=".5"
-        android:visibility="gone"
+        android:visibility="visible"
         app:srcCompat="@drawable/ic_indicator"
         app:tint="@color/colorGreen" />
 
@@ -67,11 +63,11 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_download"
         android:layout_width="56dp"
-        android:layout_height="32dp"
+        android:layout_height="56dp"
+        android:padding="@dimen/margin_normal"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="@dimen/margin_small"
         android:background="?selectableItemBackground"
-        android:padding="@dimen/margin_xxsmall"
         app:srcCompat="@drawable/ic_download"
         app:tint="?colorAccent" />
 
@@ -89,10 +85,25 @@
         tools:text="Version 1.0.0" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_apk_repo"
+        android:id="@+id/txt_apk_arch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txt_apk_version"
+        android:layout_alignStart="@id/txt_apk_version"
+        android:layout_alignEnd="@id/txt_apk_version"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAlignment="viewStart"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="12sp"
+        tools:text="arm64-v8" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_apk_repo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_apk_arch"
         android:layout_alignStart="@id/txt_apk_version"
         android:layout_alignEnd="@id/txt_apk_version"
         android:ellipsize="end"

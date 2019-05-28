@@ -43,8 +43,6 @@ import com.tonyodev.fetch2.EnqueueAction;
 import com.tonyodev.fetch2.Fetch;
 import com.tonyodev.fetch2.Request;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.List;
 
 import butterknife.BindView;
@@ -76,11 +74,11 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
         holder.txtApkVersion.setText(new StringBuilder()
                 .append(pkg.getVersionName())
                 .append(".")
-                .append(pkg.getVersionCode())
-                .append(isArchDependent ? StringUtils.SPACE + PackageUtil.getPackageArch(pkg) : ""));
+                .append(pkg.getVersionCode()));
         holder.imgInstalled.setVisibility(installed ? View.VISIBLE : View.GONE);
         holder.imgDownload.setVisibility(installed ? View.GONE : View.VISIBLE);
         holder.txtApkSize.setVisibility(installed ? View.GONE : View.VISIBLE);
+        holder.txtApkArch.setText(isArchDependent ? pkg.getNativecode().get(0) : "Universal");
         holder.txtApkRepo.setText(pkg.getRepoName());
         holder.txtApkAdded.setText(Util.getDateFromMilli(pkg.getAdded()));
         holder.txtApkSize.setText(Util.humanReadableByteValue(pkg.getSize(), true));
@@ -116,6 +114,8 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
         TextView txtApkRepo;
         @BindView(R.id.txt_apk_added)
         TextView txtApkAdded;
+        @BindView(R.id.txt_apk_arch)
+        TextView txtApkArch;
         @BindView(R.id.txt_apk_size)
         TextView txtApkSize;
 

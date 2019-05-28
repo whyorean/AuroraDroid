@@ -25,9 +25,9 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "package")
@@ -56,6 +56,9 @@ public class Package {
     @SerializedName("minSdkVersion")
     @Expose
     private String minSdkVersion;
+    @SerializedName("nativecode")
+    @Expose
+    private List<String> nativecode = new ArrayList<>();
     @SerializedName("packageName")
     @Expose
     @NonNull
@@ -80,10 +83,10 @@ public class Package {
     private List<List<String>> usesPermission = null;
     @SerializedName("versionCode")
     @Expose
-    private Long versionCode=0L;
+    private Long versionCode = 0L;
     @SerializedName("versionName")
     @Expose
-    private String versionName="null";
+    private String versionName = "null";
 
     public Package() {
     }
@@ -143,6 +146,14 @@ public class Package {
 
     public void setMinSdkVersion(String minSdkVersion) {
         this.minSdkVersion = minSdkVersion;
+    }
+
+    public List<String> getNativecode() {
+        return nativecode;
+    }
+
+    public void setNativecode(List<String> nativecode) {
+        this.nativecode = nativecode;
     }
 
     @NotNull
