@@ -52,7 +52,7 @@ public interface AppDao {
     @Query("SELECT DISTINCT * FROM app WHERE :refTime - added <= :weekCount * 604800000 ORDER BY added DESC LIMIT 30")
     List<App> getLatestAddedApps(Long refTime, int weekCount);
 
-    @Query("SELECT DISTINCT * FROM app WHERE name LIKE :query LIMIT 20")
+    @Query("SELECT DISTINCT * FROM app WHERE (name LIKE :query) OR (summary LIKE :query) LIMIT 30")
     List<App> searchApps(String query);
 
     @Query("SELECT DISTINCT * FROM app WHERE categories LIKE :category")
