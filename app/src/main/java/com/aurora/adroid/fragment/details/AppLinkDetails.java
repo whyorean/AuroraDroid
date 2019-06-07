@@ -30,6 +30,7 @@ import com.aurora.adroid.fragment.DetailsFragment;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.sheet.PermissionBottomSheet;
 import com.aurora.adroid.util.Log;
+import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.view.LinkView;
 
 import butterknife.BindView;
@@ -90,6 +91,7 @@ public class AppLinkDetails extends AbstractDetails {
         donationLinkView.build();
 
         LinkView settingsLinkView = new LinkView(context);
+        settingsLinkView.setVisibility(PackageUtil.isInstalled(context, app.getPackageName()) ? View.VISIBLE : View.GONE);
         settingsLinkView.setLinkText("Settings");
         settingsLinkView.setLinkImageId(R.drawable.ic_settings_link);
         settingsLinkView.setColor(R.color.colorGreen);
