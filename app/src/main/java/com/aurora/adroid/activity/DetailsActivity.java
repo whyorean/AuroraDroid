@@ -36,6 +36,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.fragment.DetailsFragment;
+import com.aurora.adroid.manager.FavouriteListManager;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.ThemeUtil;
 
@@ -54,6 +55,7 @@ public class DetailsActivity extends AppCompatActivity {
     private String packageName;
     private DetailsFragment detailsFragment;
     private ThemeUtil themeUtil = new ThemeUtil();
+    private FavouriteListManager favouriteListManager;
 
     static public Intent getDetailsIntent(Context context, String packageName) {
         Intent intent = new Intent(context, DetailsActivity.class);
@@ -68,6 +70,7 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
         setupActionBar();
+        favouriteListManager = new FavouriteListManager(this);
         onNewIntent(getIntent());
     }
 
@@ -94,6 +97,16 @@ public class DetailsActivity extends AppCompatActivity {
 
             case R.id.action_share:
                 getShareIntent();
+                return true;
+
+            case R.id.action_favourites:
+                if (favouriteListManager.contains(packageName)) {
+                    favouriteListManager.remove(packageName);
+                    menuItem.setIcon(R.drawable.ic_fav);
+                } else {
+                    favouriteListManager.add(packageName);
+                    menuItem.setIcon(R.drawable.ic_favourite_red);
+                }
                 return true;
         }
         return super.onOptionsItemSelected(menuItem);

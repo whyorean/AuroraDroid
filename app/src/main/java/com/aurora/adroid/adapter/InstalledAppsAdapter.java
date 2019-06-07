@@ -38,6 +38,7 @@ import com.aurora.adroid.R;
 import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.activity.DetailsActivity;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.sheet.AppMenuSheet;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.PackageUtil;
 
@@ -53,10 +54,12 @@ public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdap
     private List<App> appList = new ArrayList<>();
     private Context context;
     private PackageManager packageManager;
+    private AppMenuSheet menuSheet;
 
     public InstalledAppsAdapter(Context context) {
         this.context = context;
         this.packageManager = context.getPackageManager();
+        this.menuSheet = new AppMenuSheet();
     }
 
     public void add(int position, App app) {
@@ -78,6 +81,11 @@ public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdap
     public void remove(int position) {
         appList.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void remove(App app) {
+        appList.remove(app);
+        notifyDataSetChanged();
     }
 
     public void clearData() {
@@ -112,6 +120,13 @@ public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdap
             Intent intent = new Intent(context, DetailsActivity.class);
             intent.putExtra("INTENT_APK_FILE_NAME", app.getPackageName());
             context.startActivity(intent);
+        });
+
+        holder.itemView.setOnLongClickListener(v -> {
+            menuSheet.setApp(app);
+            menuSheet.setAdapter(this);
+            menuSheet.show(getFragmentManager(), "BOTTOM_MENU_SHEET");
+            return false;
         });
 
         GlideApp

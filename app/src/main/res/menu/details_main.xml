@@ -27,6 +27,13 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/action_favourites"
+        android:icon="@drawable/ic_fav"
+        android:orderInCategory="1"
+        android:title="@string/action_favourites"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_downloads"
         android:icon="@drawable/ic_download"
         android:orderInCategory="1"

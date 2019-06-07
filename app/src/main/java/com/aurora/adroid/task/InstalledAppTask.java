@@ -23,6 +23,7 @@ import android.content.ContextWrapper;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import com.aurora.adroid.manager.BlacklistManager;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.CertUtil;
 import com.aurora.adroid.util.PackageUtil;
@@ -63,6 +64,10 @@ public class InstalledAppTask extends ContextWrapper {
         return updatableList;
     }
 
+    public List<App> getAllApps() {
+        return fetchAppsTask.getAppsByPackageName(getAllPackages());
+    }
+
     public List<App> getInstalledApps(boolean showSystem) {
         return fetchAppsTask.getAppsByPackageName(getInstalledPackages(showSystem));
     }
@@ -80,6 +85,24 @@ public class InstalledAppTask extends ContextWrapper {
                 continue;*/
             packageList.add(packageName);
         }
+        packageList = filterBlacklistedApps(packageList);
+        return packageList;
+    }
+
+    private List<String> getAllPackages() {
+        List<String> packageList = new ArrayList<>();
+        PackageManager pm = context.getPackageManager();
+        for (PackageInfo packageInfo : pm.getInstalledPackages(0)) {
+            final String packageName = packageInfo.packageName;
+            if (null != packageInfo.applicationInfo && !packageInfo.applicationInfo.enabled)
+                continue;
+            packageList.add(packageName);
+        }
+        return packageList;
+    }
+
+    public List<String> filterBlacklistedApps(List<String> packageList) {
+        packageList.removeAll(new BlacklistManager(context).get());
         return packageList;
     }
 }

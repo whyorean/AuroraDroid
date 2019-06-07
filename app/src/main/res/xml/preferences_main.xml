@@ -19,9 +19,19 @@
 <androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
+        app:fragment="com.aurora.adroid.fragment.preference.BlacklistFragment"
+        app:icon="@drawable/ic_blacklist"
+        app:title="@string/action_blacklist" />
+
+    <Preference
         app:fragment="com.aurora.adroid.fragment.preference.DownloaderFragment"
         app:icon="@drawable/ic_downloads"
         app:title="@string/pref_downloads" />
+
+    <Preference
+        app:fragment="com.aurora.adroid.fragment.preference.FavouriteFragment"
+        app:icon="@drawable/ic_fav"
+        app:title="@string/action_favourites" />
 
     <Preference
         app:fragment="com.aurora.adroid.fragment.preference.InstallationFragment"

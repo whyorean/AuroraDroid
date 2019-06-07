@@ -41,11 +41,15 @@ public class PathUtil {
             return getBaseApkDirectory(context);
     }
 
+    static public File getApkCopyPath(String apkName) {
+        return new File(getBaseCopyDirectory(), apkName + ".apk");
+    }
+
     public static String getBaseApkDirectory(Context context) {
         /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P *//*&& Util.isRootInstallEnabled(context)*//*) {
             return context.getFilesDir().getPath();
         } else*/
-            return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid";
+        return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid";
     }
 
     public static String getApkPath(Context context, String apkName) {
@@ -71,6 +75,19 @@ public class PathUtil {
     }
 
     static public String getBaseCopyDirectory() {
-        return Environment.getExternalStorageDirectory().getPath() + "/Aurora/Copy/APK";
+        return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid/Copy/APK";
+    }
+
+    static public String getBaseFavDirectory() {
+        return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid/Files/";
+    }
+
+    public static boolean checkBaseFavDirectory() {
+        boolean success = new File(getBaseFavDirectory()).exists();
+        return success || createBaseFavDirectory();
+    }
+
+    public static boolean createBaseFavDirectory() {
+        return new File(getBaseFavDirectory()).mkdir();
     }
 }

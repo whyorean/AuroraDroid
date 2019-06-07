@@ -20,23 +20,33 @@
     <string name="action_add">Add</string>
     <string name="action_add_repo">Add Repository</string>
     <string name="action_ask">Ask</string>
+    <string name="action_blacklist">Blacklist</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_clear">Clear</string>
+    <string name="action_clear_all">Clear all</string>
     <string name="action_close">Close</string>
     <string name="action_download">Download</string>
     <string name="action_downloads">Downloads</string>
+    <string name="action_export">Export</string>
     <string name="action_finish">Finish</string>
+    <string name="action_favourites">Favourite apps</string>
+    <string name="action_favourite_add">Add to favourites</string>
+    <string name="action_favourite_remove">Remove from favourites</string>
+    <string name="action_get_local_apk">Get local APK</string>
     <string name="action_home">Home</string>
+    <string name="action_import">Import</string>
     <string name="action_install">Install</string>
     <string name="action_installing">Installing</string>
     <string name="action_installed">Installed</string>
     <string name="action_later">Later</string>
+    <string name="action_manual">Manual download</string>
     <string name="action_more">More</string>
     <string name="action_next">Next</string>
     <string name="action_open">Open</string>
     <string name="action_pause">Pause</string>
     <string name="action_recheck">Recheck</string>
     <string name="action_recheck_ing">Rechecking</string>
+    <string name="action_remove">Remove</string>
     <string name="action_restart">Restart</string>
     <string name="action_resume">Resume</string>
     <string name="action_retry">Retry</string>
@@ -50,6 +60,7 @@
     <string name="action_update">Update</string>
     <string name="action_updates">Updates</string>
     <string name="action_unsupported">Incompatible App</string>
+    <string name="action_whitelist">Whitelist</string>
 
     <string name="details_more">Read more</string>
     <string name="details_no_description">No description provided by the developer</string>
@@ -67,6 +78,28 @@
     <string name="download_repo_progress">Downloading repositories</string>
     <string name="download_queued">Queued</string>
     <string name="download_resume">Resume</string>
+
+    <string name="list_app_blacklisted_empty">No Apps Blacklisted</string>
+    <string name="list_app_depends_on_gsf">GSF dependent</string>
+    <string name="list_app_has_ads">has ads</string>
+    <string name="list_app_independent_from_gsf">GSF independent</string>
+    <string name="list_app_no_ads">no ads</string>
+    <string name="list_app_system">System app</string>
+    <string name="list_app_user">User app</string>
+    <string name="list_blacklist">Blacklisted apps</string>
+    <string name="list_blacklist_none">No apps blacklisted</string>
+    <string name="list_bulk_install">app(s) queued for bulk install"</string>
+    <string name="list_empty_fav">No favourites</string>
+    <string name="list_empty_query">No recent searches</string>
+    <string name="list_empty_updates">No updates available</string>
+    <string name="list_installed">Installed</string>
+    <string name="list_installed_system">Show user apps only</string>
+    <string name="list_not_installd">Not installed</string>
+    <string name="list_selected">Apps selected</string>
+    <string name="list_update_all">Update all</string>
+    <string name="list_update_all_txt">update(s) available"</string>
+    <string name="list_update_all_queue_txt">update(s) queued</string>
+    <string name="list_updating">Updating</string>
 
     <string name="extract_completed">Extracted</string>
     <string name="extract_failed">Extraction failed</string>
@@ -155,4 +188,10 @@
     <string name="notification_installation_progress">Installing</string>
     <string name="notification_installation_auto">Downloaded, click to install</string>
     <string name="notification_installation_manual">Bundled Apk, manual action required</string>
+
+    <string name="toast_apk_blacklisted">Blacklisted</string>
+    <string name="toast_apk_whitelisted">Whitelisted</string>
+    <string name="toast_apk_copy_success">APK copied successfully</string>
+    <string name="toast_apk_copy_failure">Failed to copy APK</string>
+    <string name="toast_loading_apps">Loading more apps..</string>
 </resources>

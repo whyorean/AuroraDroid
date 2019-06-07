@@ -29,7 +29,10 @@ public class Constants {
     public static final String DATABASE_AVAILABLE = "DATABASE_AVAILABLE";
     public static final String DATABASE_LATEST = "DATABASE_LATEST";
     public static final String APP_SHARE_URL = "https://f-droid.org/app/";
+    public static final String FILES = "Files";
 
+    public static final String PREFERENCE_BLACKLIST_APPS_LIST = "PREFERENCE_BLACKLIST_APPS_LIST";
+    public static final String PREFERENCE_FAVOURITE_LIST = "PREFERENCE_FAVOURITE_LIST";
     public static final String PREFERENCE_INCLUDE_SYSTEM = "PREFERENCE_INCLUDE_SYSTEM";
     public static final String PREFERENCE_INSTALLATION_AUTO = "PREFERENCE_INSTALLATION_AUTO";
     public static final String PREFERENCE_INSTALLATION_TYPE = "PREFERENCE_INSTALLATION_TYPE";

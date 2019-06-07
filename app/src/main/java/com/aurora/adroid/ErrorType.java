@@ -25,6 +25,7 @@ public enum ErrorType {
     NO_UPDATES,
     NO_SEARCH,
     NO_DOWNLOADS,
+    IMPORT,
     UNKNOWN,
     MALFORMED
 }

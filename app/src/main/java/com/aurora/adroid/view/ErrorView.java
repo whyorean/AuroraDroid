@@ -79,6 +79,11 @@ public class ErrorView extends RelativeLayout {
                 imgError.setImageDrawable(context.getDrawable(R.drawable.ic_search_alt));
                 txtError.setText(R.string.error_search_not_found);
                 break;
+            case IMPORT:
+                btnError.setText(context.getString(R.string.action_import));
+                imgError.setImageDrawable(context.getDrawable(R.drawable.ic_empty_box));
+                txtError.setText(R.string.list_empty_fav);
+                break;
             case UNKNOWN:
                 imgError.setImageDrawable(context.getDrawable(R.drawable.ic_unknown));
                 txtError.setText(R.string.error_unknown);

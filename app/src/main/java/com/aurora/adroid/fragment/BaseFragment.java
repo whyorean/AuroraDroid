@@ -81,6 +81,7 @@ public abstract class BaseFragment extends Fragment {
             case NO_INSTALLED_APPS:
             case NO_APPS:
             case NO_UPDATES:
+            case IMPORT:
                 return errRetry();
             default:
                 return null;
