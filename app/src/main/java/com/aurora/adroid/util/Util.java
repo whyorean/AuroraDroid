@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
@@ -141,6 +142,22 @@ public class Util {
 
     public static boolean shouldAutoInstallApk(Context context) {
         return getPrefs(context).getBoolean(Constants.PREFERENCE_INSTALLATION_AUTO, false);
+    }
+
+    public static boolean shouldDeleteApk(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && Util.isRootInstallEnabled(context)) {
+            return true;
+        } else
+            return getPrefs(context).getBoolean(Constants.PREFERENCE_INSTALLATION_DELETE, false);
+    }
+
+    public static boolean isNativeInstallerEnforced(Context context) {
+        return getPrefs(context).getBoolean(Constants.PREFERENCE_INSTALLATION_TYPE, false);
+    }
+
+    public static boolean isRootInstallEnabled(Context context) {
+        String installMethod = getPrefs(context).getString(Constants.PREFERENCE_INSTALLATION_METHOD, "0");
+        return installMethod.equals("1");
     }
 
     public static List<String> arrayToList(String[] inputArray) {

@@ -174,7 +174,7 @@ public class AppActionDetails extends AbstractDetails {
         return v -> {
             btnPositive.setText(R.string.action_installing);
             btnPositive.setEnabled(false);
-            new Installer(context).install(app.getAppPackage().getApkName());
+            new Installer(context).install(app);
         };
     }
 

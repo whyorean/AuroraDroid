@@ -19,9 +19,12 @@
 package com.aurora.adroid.util;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+
+import androidx.annotation.NonNull;
 
 import com.aurora.adroid.ArchType;
 import com.aurora.adroid.model.App;
@@ -82,6 +85,17 @@ public class PackageUtil {
                     PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS);
         } catch (PackageManager.NameNotFoundException e) {
             return null;
+        }
+    }
+
+    @NonNull
+    public static String getDisplayName(Context context, String packageName) {
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            ApplicationInfo appInfo = packageManager.getApplicationInfo(packageName, 0);
+            return packageManager.getApplicationLabel(appInfo).toString();
+        } catch (Exception e) {
+            return "";
         }
     }
 
