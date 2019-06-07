@@ -25,7 +25,6 @@ import android.content.pm.PackageManager;
 
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.CertUtil;
-import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PackageUtil;
 
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class InstalledAppTask extends ContextWrapper {
 
     public List<App> getUpdatableApps() {
         List<App> updatableList = new ArrayList<>();
-        for (App app : getInstalledApps()) {
+        for (App app : getInstalledApps(true)) {
             final PackageInfo packageInfo = PackageUtil.getPackageInfo(packageManager, app.getPackageName());
             final App tempApp = fetchAppsTask.getAppByPackageName(app.getPackageName());
             if (packageInfo != null && tempApp != null) {
@@ -64,16 +63,18 @@ public class InstalledAppTask extends ContextWrapper {
         return updatableList;
     }
 
-    public List<App> getInstalledApps() {
-        return fetchAppsTask.getAppsByPackageName(getInstalledPackages());
+    public List<App> getInstalledApps(boolean showSystem) {
+        return fetchAppsTask.getAppsByPackageName(getInstalledPackages(showSystem));
     }
 
-    private List<String> getInstalledPackages() {
+    private List<String> getInstalledPackages(boolean showSystem) {
         List<String> packageList = new ArrayList<>();
         PackageManager pm = context.getPackageManager();
         for (PackageInfo packageInfo : pm.getInstalledPackages(0)) {
             final String packageName = packageInfo.packageName;
             if (null != packageInfo.applicationInfo && !packageInfo.applicationInfo.enabled)
+                continue;
+            if (PackageUtil.isSystemApp(pm, packageName) && !showSystem)
                 continue;
             /*if (!CertUtil.isFDroidApp(context, packageName))
                 continue;*/

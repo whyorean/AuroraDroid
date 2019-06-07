@@ -130,7 +130,9 @@ public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdap
         PackageInfo packageInfo = PackageUtil.getPackageInfo(packageManager, app.getPackageName());
         if (packageInfo != null)
             versionList.add(packageInfo.versionName + "." + packageInfo.versionCode);
-        extraList.add(app.isSystemApp() ? "System App" : "User App");
+        extraList.add(PackageUtil.isSystemApp(packageManager, app.getPackageName()) ?
+                "System App"
+                : "User App");
     }
 
     private void setText(TextView textView, String text) {

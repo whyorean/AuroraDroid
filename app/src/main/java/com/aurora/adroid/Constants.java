@@ -30,6 +30,7 @@ public class Constants {
     public static final String DATABASE_LATEST = "DATABASE_LATEST";
     public static final String APP_SHARE_URL = "https://f-droid.org/app/";
 
+    public static final String PREFERENCE_INCLUDE_SYSTEM = "PREFERENCE_INCLUDE_SYSTEM";
     public static final String PREFERENCE_INSTALLATION_AUTO = "PREFERENCE_INSTALLATION_AUTO";
     public static final String PREFERENCE_INSTALLATION_TYPE = "PREFERENCE_INSTALLATION_TYPE";
     public static final String PREFERENCE_INSTALLATION_METHOD = "PREFERENCE_INSTALLATION_METHOD";

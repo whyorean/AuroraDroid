@@ -65,6 +65,15 @@ public class PackageUtil {
         }
     }
 
+    public static boolean isSystemApp(PackageManager packageManager, String packageName) {
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(packageName, 0);
+            return (packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
     public static App getAppByPackage(PackageManager packageManager, String packageName) {
         try {
             final PackageInfo packageInfo = packageManager.getPackageInfo(packageName,

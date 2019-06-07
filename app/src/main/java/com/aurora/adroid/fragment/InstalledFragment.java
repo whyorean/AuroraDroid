@@ -31,15 +31,18 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.ErrorType;
 import com.aurora.adroid.R;
 import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.adapter.InstalledAppsAdapter;
 import com.aurora.adroid.task.InstalledAppTask;
 import com.aurora.adroid.util.Log;
+import com.aurora.adroid.util.PrefUtil;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.view.CustomSwipeToRefresh;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +57,9 @@ public class InstalledFragment extends BaseFragment {
     CustomSwipeToRefresh customSwipeToRefresh;
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
+    @BindView(R.id.switch_system)
+    SwitchMaterial switchSystem;
+
 
     private Context context;
     private BottomNavigationView bottomNavigationView;
@@ -98,6 +104,15 @@ public class InstalledFragment extends BaseFragment {
         customSwipeToRefresh.setOnRefreshListener(() -> fetchData());
         if (getActivity() instanceof AuroraActivity)
             bottomNavigationView = ((AuroraActivity) getActivity()).getBottomNavigationView();
+
+        switchSystem.setChecked(PrefUtil.getBoolean(context, Constants.PREFERENCE_INCLUDE_SYSTEM));
+        switchSystem.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked)
+                PrefUtil.putBoolean(context, Constants.PREFERENCE_INCLUDE_SYSTEM, true);
+            else
+                PrefUtil.putBoolean(context, Constants.PREFERENCE_INCLUDE_SYSTEM, false);
+            fetchData();
+        });
     }
 
     @Override
@@ -115,7 +130,7 @@ public class InstalledFragment extends BaseFragment {
 
     private void fetchData() {
         disposable.add(Observable.fromCallable(() -> new InstalledAppTask(context)
-                .getInstalledApps())
+                .getInstalledApps(switchSystem.isChecked()))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(subscription -> customSwipeToRefresh.setRefreshing(true))
