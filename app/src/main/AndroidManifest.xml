@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Aurora Droid
   ~ Copyright (C) 2019, Rahul Kumar Patel <whyorean@gmail.com>
   ~
@@ -48,7 +47,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.DetailsActivity" />
+        <activity android:name=".activity.DetailsActivity">
+            <intent-filter
+                android:autoVerify="true"
+                tools:ignore="UnusedAttribute">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https" />
+                <data android:host="f-droid.org" />
+                <data android:host="www.f-droid.org" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.FullscreenImageActivity" />
         <activity android:name=".activity.QRActivity" />
         <activity android:name=".activity.IntroActivity" />

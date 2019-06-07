@@ -20,8 +20,10 @@ package com.aurora.adroid.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
@@ -31,6 +33,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.fragment.DetailsFragment;
 import com.aurora.adroid.util.Log;
@@ -88,9 +91,20 @@ public class DetailsActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
+
+            case R.id.action_share:
+                getShareIntent();
+                return true;
         }
         return super.onOptionsItemSelected(menuItem);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.details_main, menu);
+        return true;
+    }
+
 
     @Override
     protected void onResume() {
@@ -124,10 +138,10 @@ public class DetailsActivity extends AppCompatActivity {
         if (intent.hasExtra(INTENT_PACKAGE_NAME)) {
             return intent.getStringExtra(INTENT_PACKAGE_NAME);
         } else if (intent.getScheme() != null
-                && (intent.getScheme().equals("market")
-                || intent.getScheme().equals("http")
-                || intent.getScheme().equals("https"))) {
-            return intent.getData().getQueryParameter("id");
+                && intent.getScheme().equals("https")
+                && intent.getData() != null) {
+            Uri data = intent.getData();
+            return data.getLastPathSegment();
         } else if (intent.getExtras() != null) {
             Bundle bundle = intent.getExtras();
             return bundle.getString(INTENT_PACKAGE_NAME);
@@ -150,5 +164,13 @@ public class DetailsActivity extends AppCompatActivity {
     public void redrawButtons() {
         if (detailsFragment != null)
             detailsFragment.drawButtons();
+    }
+
+    private void getShareIntent() {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_SUBJECT, DetailsFragment.app.getName());
+        i.putExtra(Intent.EXTRA_TEXT, Constants.APP_SHARE_URL + DetailsFragment.app.getPackageName());
+        startActivity(Intent.createChooser(i, getString(R.string.action_share)));
     }
 }
