@@ -232,7 +232,7 @@ public class FavouriteFragment extends BaseFragment implements FavouriteViewHold
 
     private boolean verifyDirectory() {
         PathUtil.checkBaseFavDirectory();
-        File directory = new File(PathUtil.getBaseApkDirectory(context) + Constants.FILES);
+        File directory = new File(PathUtil.getBaseFavDirectory());
         if (!directory.exists())
             directory.mkdir();
         return (directory.exists());

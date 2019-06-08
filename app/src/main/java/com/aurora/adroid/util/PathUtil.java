@@ -19,6 +19,7 @@
 package com.aurora.adroid.util;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Environment;
 
 import com.aurora.adroid.Constants;
@@ -46,10 +47,10 @@ public class PathUtil {
     }
 
     public static String getBaseApkDirectory(Context context) {
-        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P *//*&& Util.isRootInstallEnabled(context)*//*) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && Util.isRootInstallEnabled(context)) {
             return context.getFilesDir().getPath();
-        } else*/
-        return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid";
+        } else
+            return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid";
     }
 
     public static String getApkPath(Context context, String apkName) {
