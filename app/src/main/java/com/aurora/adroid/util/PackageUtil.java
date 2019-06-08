@@ -156,6 +156,7 @@ public class PackageUtil {
     public static ArchType getArchFromNativeCode(String nativeCode) {
         switch (nativeCode) {
             case "arm64-v8a":
+            case "arm64":
                 return ArchType.ARM64;
             case "armeabi-v7a":
             case "armeabi":
