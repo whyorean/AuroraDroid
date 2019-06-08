@@ -105,7 +105,6 @@
                 android:scrollbars="vertical"
                 tools:listitem="@layout/item_installed" />
         </com.aurora.adroid.view.CustomSwipeToRefresh>
-
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

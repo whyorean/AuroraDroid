@@ -36,6 +36,8 @@ import com.aurora.adroid.R;
 import com.aurora.adroid.Sort;
 import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.adapter.GenericAppsAdapter;
+import com.aurora.adroid.manager.RepoListManager;
+import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.task.FetchAppsTask;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.ViewUtil;
@@ -50,7 +52,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class CategoryAppsFragment extends Fragment {
+public class RepositoryAppsFragment extends Fragment {
 
     @BindView(R.id.swipe_layout)
     CustomSwipeToRefresh customSwipeToRefresh;
@@ -64,7 +66,8 @@ public class CategoryAppsFragment extends Fragment {
     Chip chipDate;
 
     private Context context;
-    private String categoryName;
+    private String repoId;
+    private Repo repo;
     private ActionBar actionBar;
     private BottomNavigationView bottomNavigationView;
     private GenericAppsAdapter genericAppsAdapter;
@@ -86,13 +89,14 @@ public class CategoryAppsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_category_apps, container, false);
+        View view = inflater.inflate(R.layout.fragment_repository_apps, container, false);
         ButterKnife.bind(this, view);
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-            categoryName = arguments.getString("CATEGORY_NAME");
-            fetchData(categoryName);
+            repoId = arguments.getString("REPO_ID");
+            repo = RepoListManager.getRepoById(context, repoId);
+            fetchData(repoId);
         }
 
         return view;
@@ -107,9 +111,9 @@ public class CategoryAppsFragment extends Fragment {
             bottomNavigationView = ((AuroraActivity) getActivity()).getBottomNavigationView();
             actionBar = ((AuroraActivity) getActivity()).getDroidActionBar();
             ViewUtil.hideBottomNav(bottomNavigationView, true);
-            actionBar.setTitle(categoryName);
+            actionBar.setTitle(repo.getRepoName());
         }
-        customSwipeToRefresh.setOnRefreshListener(() -> fetchData(categoryName));
+        customSwipeToRefresh.setOnRefreshListener(() -> fetchData(repoId));
     }
 
     @Override
@@ -128,9 +132,9 @@ public class CategoryAppsFragment extends Fragment {
         }
     }
 
-    private void fetchData(String categoryName) {
+    private void fetchData(String repoId) {
         disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
-                .getAppsByCategory(categoryName))
+                .getAppsByRepository(repoId))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(d -> customSwipeToRefresh.setRefreshing(true))

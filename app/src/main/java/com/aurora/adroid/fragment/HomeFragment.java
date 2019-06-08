@@ -31,11 +31,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.R;
+import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.adapter.CategoriesAdapter;
 import com.aurora.adroid.adapter.ClusterAppsAdapter;
 import com.aurora.adroid.adapter.LatestUpdatedAdapter;
+import com.aurora.adroid.adapter.RepositoriesAdapter;
+import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.task.CategoriesTask;
 import com.aurora.adroid.task.FetchAppsTask;
 import com.aurora.adroid.util.Log;
@@ -53,6 +55,8 @@ public class HomeFragment extends Fragment {
 
     @BindView(R.id.recycler_cat)
     RecyclerView recyclerViewCat;
+    @BindView(R.id.recycler_repo)
+    RecyclerView recyclerViewRepo;
     @BindView(R.id.recycler_latest)
     RecyclerView recyclerViewLatest;
     @BindView(R.id.recycler_new)
@@ -65,6 +69,7 @@ public class HomeFragment extends Fragment {
     private CategoriesAdapter categoriesAdapter;
     private ClusterAppsAdapter clusterAppsAdapter;
     private LatestUpdatedAdapter latestUpdatedAdapter;
+    private RepositoriesAdapter repositoriesAdapter;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -91,6 +96,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupCategories();
+        setupRepository();
         setupUpdatedApps();
         setupNewApps();
         if (getActivity() instanceof AuroraActivity)
@@ -101,6 +107,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         fetchCategories();
+        fetchRepositories();
         fetchNewApps();
         fetchLatestApps();
     }
@@ -116,6 +123,13 @@ public class HomeFragment extends Fragment {
         recyclerViewCat.setAdapter(categoriesAdapter);
         recyclerViewCat.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
         recyclerViewCat.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(context, R.anim.anim_slideright));
+    }
+
+    private void setupRepository() {
+        repositoriesAdapter = new RepositoriesAdapter(context);
+        recyclerViewRepo.setAdapter(repositoriesAdapter);
+        recyclerViewRepo.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+        recyclerViewRepo.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(context, R.anim.anim_slideright));
     }
 
     private void setupNewApps() {
@@ -158,6 +172,10 @@ public class HomeFragment extends Fragment {
                     Log.e(err.getMessage());
                     err.printStackTrace();
                 }));
+    }
+
+    private void fetchRepositories() {
+        repositoriesAdapter.addData(RepoListManager.getSyncedRepos(context));
     }
 
     private void fetchNewApps() {

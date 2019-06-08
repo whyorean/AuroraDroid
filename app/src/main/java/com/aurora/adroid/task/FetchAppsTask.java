@@ -68,6 +68,16 @@ public class FetchAppsTask extends ContextWrapper {
         return appList;
     }
 
+    public List<App> getAppsByRepository(String repoId) {
+        AppDatabase appDatabase = AppDatabase.getAppDatabase(this);
+        AppDao appDao = appDatabase.appDao();
+        List<App> appList = appDao.searchAppsByRepository("%" + repoId + "%");
+        appList = removeDuplicates(appList);
+        for (App app : appList)
+            app.setAppPackage(getPackageByName(app.getPackageName()));
+        return appList;
+    }
+
     public App getAppByName(String name) {
         AppDatabase appDatabase = AppDatabase.getAppDatabase(this);
         AppDao appDao = appDatabase.appDao();

@@ -39,6 +39,7 @@ import java.util.Set;
 public class RepoListManager {
 
     private static final String REPO_LIST = "REPO_LIST";
+    private static final String SYNCED_LIST = "SYNCED_LIST";
     private static final String CUSTOM_REPO_LIST = "CUSTOM_REPO_LIST";
 
     private Context context;
@@ -122,6 +123,16 @@ public class RepoListManager {
         return repoList;
     }
 
+    public static List<Repo> getSyncedRepos(Context context) {
+        List<Repo> repoList = new ArrayList<>();
+        List<String> savedList = PrefUtil.getListString(context, SYNCED_LIST);
+        for (Repo repo : getAllRepoList(context)) {
+            if (savedList.contains(repo.getRepoId()))
+                repoList.add(repo);
+        }
+        return repoList;
+    }
+
     public static Repo getRepoById(Context context, String repoId) {
         Repo tempRepo = new Repo();
         for (Repo repo : getAllRepoList(context)) {
@@ -137,6 +148,12 @@ public class RepoListManager {
         boolean result = addAll(arrayList);
         save();
         return result;
+    }
+
+    public void synced(String s) {
+        ArrayList<String> syncedList = PrefUtil.getListString(context, SYNCED_LIST);
+        syncedList.add(s);
+        PrefUtil.putListString(context, SYNCED_LIST, repoList);
     }
 
     public boolean addAll(ArrayList<String> arrayList) {
@@ -175,5 +192,9 @@ public class RepoListManager {
 
     private void save() {
         PrefUtil.putListString(context, REPO_LIST, repoList);
+    }
+
+    public void clearSynced() {
+        PrefUtil.putListString(context, SYNCED_LIST, new ArrayList<>());
     }
 }

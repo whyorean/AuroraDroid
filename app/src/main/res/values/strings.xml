@@ -124,6 +124,7 @@
     <string name="title_latest_updated">Latest updated</string>
     <string name="title_repo_add">Add new repository</string>
     <string name="title_perm">Permissions</string>
+    <string name="title_repositories">Repositories</string>
     <string name="title_search">Search apps &amp; games</string>
     <string name="title_sync_repo">Sync Repositories</string>
     <string name="title_update_all">Update All Apps</string>

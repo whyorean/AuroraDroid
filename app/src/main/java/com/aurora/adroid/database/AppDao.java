@@ -58,6 +58,9 @@ public interface AppDao {
     @Query("SELECT DISTINCT * FROM app WHERE categories LIKE :category")
     List<App> searchAppsByCategory(String category);
 
+    @Query("SELECT DISTINCT * FROM app WHERE repoId LIKE :repoId")
+    List<App> searchAppsByRepository(String repoId);
+
     @Query("SELECT `en-US-phoneScreenshots` FROM app WHERE packageName =:packageName")
     String getPhoneScreenshots(String packageName);
 

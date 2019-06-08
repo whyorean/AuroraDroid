@@ -42,6 +42,7 @@ import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.Events;
 import com.aurora.adroid.event.LogEvent;
 import com.aurora.adroid.event.RxBus;
+import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.manager.RepoManager;
 import com.aurora.adroid.task.DatabaseTask;
 import com.google.android.material.button.MaterialButton;
@@ -132,6 +133,7 @@ public class RepoFragment extends Fragment {
     }
 
     private void syncDatabase() {
+        new RepoListManager(context).clearSynced();
         clearDatabase();
         RxBus.publish(new LogEvent(getString(R.string.database_cleared)));
         RepoManager repoManager = new RepoManager(context);

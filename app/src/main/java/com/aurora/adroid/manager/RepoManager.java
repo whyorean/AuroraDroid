@@ -148,6 +148,7 @@ public class RepoManager extends ContextWrapper {
                             success ? getString(R.string.sync_completed) : getString(R.string.sync_failed),
                             null);
                     RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_completed)));
+                    repoListManager.synced(repo.getRepoId());
                     updateCount();
                     PathUtil.deleteFile(context, repo.getRepoId());
                 }, err -> {
