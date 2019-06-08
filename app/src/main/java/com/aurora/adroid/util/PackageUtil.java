@@ -37,6 +37,8 @@ import java.util.Map;
 public class PackageUtil {
 
     private static final List<String> archList = new ArrayList<>();
+    private static final String PSEUDO_PACKAGE_MAP = "PSEUDO_PACKAGE_MAP";
+    private static final String PSEUDO_URL_MAP = "PSEUDO_URL_MAP";
 
     static {
         archList.add("arm64-v8a");
@@ -44,9 +46,6 @@ public class PackageUtil {
         archList.add("x86");
         archList.add("x86_64");
     }
-
-    private static final String PSEUDO_PACKAGE_MAP = "PSEUDO_PACKAGE_MAP";
-    private static final String PSEUDO_URL_MAP = "PSEUDO_URL_MAP";
 
     public static String getAppDisplayName(Context context, String packageName) {
         Map<String, String> pseudoMap = getPseudoPackageMap(context);
@@ -159,6 +158,7 @@ public class PackageUtil {
             case "arm64-v8a":
                 return ArchType.ARM64;
             case "armeabi-v7a":
+            case "armeabi":
                 return ArchType.ARM;
             case "x86-64":
                 return ArchType.x86_64;
