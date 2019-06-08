@@ -150,6 +150,19 @@ public class PackageUtil {
         }
     }
 
+    public static ArchType getAltSystemArch() {
+        switch (Build.SUPPORTED_ABIS[0]) {
+            case "arm64-v8a":
+            case "armeabi-v7a":
+                return ArchType.ARM;
+            case "x86-64":
+            case "x86":
+                return ArchType.x86;
+            default:
+                return ArchType.ARM;
+        }
+    }
+
     public static boolean isSdkCompatible(Package pkg) {
         return Build.VERSION.SDK_INT >= Util.parseInt(pkg.getMinSdkVersion(), 21);
     }
@@ -163,12 +176,20 @@ public class PackageUtil {
         final List<String> nativeCodeList = pkg.getNativecode();
         final ArchType pkgArch = getArchFromNativeCode(nativeCodeList.get(0));
         final ArchType systemArch = getSystemArch();
-        return pkgArch == systemArch;
+        final ArchType systemArch2 = getAltSystemArch();
+        return pkgArch == systemArch || pkgArch == systemArch2;
     }
 
     public static Package getOptimumPackage(List<Package> packageList) {
         for (Package pkg : packageList) {
             if (isSupportedPackage(pkg))
+                return pkg;
+        }
+
+        for (Package pkg : packageList) {
+            final ArchType pkgArch = getArchFromNativeCode(pkg.getNativecode().get(0));
+            final ArchType systemArch = getAltSystemArch();
+            if (pkgArch == systemArch)
                 return pkg;
         }
         return packageList.get(0);
