@@ -20,6 +20,7 @@ package com.aurora.adroid.download;
 
 import android.content.Context;
 
+import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.util.PathUtil;
 import com.aurora.adroid.util.Util;
@@ -37,6 +38,8 @@ public class RequestBuilder {
     public static List<Request> buildRequest(Context context, List<Repo> repoList) {
         List<Request> requestList = new ArrayList<>();
         for (Repo repo : repoList) {
+            if (RepoListManager.isSynced(context, repo.getRepoId()))
+                continue;
             final Request request = new Request(repo.getRepoUrl() + REPO_FILE, PathUtil.getRepoDirectory(context) + repo.getRepoId() + EXT_JAR);
             request.setGroupId(1337);
             request.setTag(repo.getRepoId());

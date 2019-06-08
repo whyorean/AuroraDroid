@@ -142,18 +142,27 @@ public class RepoListManager {
         return tempRepo;
     }
 
+    public static boolean isSynced(Context context, String s) {
+        ArrayList<String> syncedList = PrefUtil.getListString(context, SYNCED_LIST);
+        return syncedList.contains(s);
+    }
+
+    public static void clearSynced(Context context) {
+        PrefUtil.putListString(context, SYNCED_LIST, new ArrayList<>());
+    }
+
+    public static void setSynced(Context context, String s) {
+        ArrayList<String> syncedList = PrefUtil.getListString(context, SYNCED_LIST);
+        syncedList.add(s);
+        PrefUtil.putListString(context, SYNCED_LIST, syncedList);
+    }
+
     public boolean add(String s) {
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add(s);
         boolean result = addAll(arrayList);
         save();
         return result;
-    }
-
-    public void synced(String s) {
-        ArrayList<String> syncedList = PrefUtil.getListString(context, SYNCED_LIST);
-        syncedList.add(s);
-        PrefUtil.putListString(context, SYNCED_LIST, repoList);
     }
 
     public boolean addAll(ArrayList<String> arrayList) {
@@ -192,9 +201,5 @@ public class RepoListManager {
 
     private void save() {
         PrefUtil.putListString(context, REPO_LIST, repoList);
-    }
-
-    public void clearSynced() {
-        PrefUtil.putListString(context, SYNCED_LIST, new ArrayList<>());
     }
 }

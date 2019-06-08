@@ -59,6 +59,7 @@ public class RepoManager extends ContextWrapper {
 
     private Context context;
     private RepoListManager repoListManager;
+    private List<Request> requestList;
     private CompositeDisposable disposable = new CompositeDisposable();
     private Fetch fetch;
     private int count = 0;
@@ -78,7 +79,7 @@ public class RepoManager extends ContextWrapper {
         List<Repo> repoList = RepoListManager.getSelectedRepos(context);
         QuickNotification.show(context, getString(R.string.app_name),
                 getString(R.string.download_repo_progress), null);
-        final List<Request> requestList = RequestBuilder.buildRequest(context, repoList);
+        requestList = RequestBuilder.buildRequest(context, repoList);
 
         for (Request request : requestList) {
             fetch.enqueue(request, updatedRequest -> {
@@ -122,10 +123,12 @@ public class RepoManager extends ContextWrapper {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(success -> {
-                    RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.extract_completed)));
-                    final File tempJson = new File(PathUtil.getRepoDirectory(this) + repoId + ".json");
-                    parseJson(FileUtils.openInputStream(tempJson), repo);
-                    fetch.delete(download.getId());
+                    if (success) {
+                        RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.extract_completed)));
+                        final File tempJson = new File(PathUtil.getRepoDirectory(this) + repoId + ".json");
+                        parseJson(FileUtils.openInputStream(tempJson), repo);
+                        fetch.delete(download.getId());
+                    }
                 }, err -> {
                     Log.e(err.getMessage());
                     RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.extract_failed)));
@@ -142,14 +145,14 @@ public class RepoManager extends ContextWrapper {
                 .subscribe((success) -> {
                     if (success) {
                         PrefUtil.putBoolean(getApplicationContext(), Constants.DATABASE_AVAILABLE, true);
+                        RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_completed)));
+                        RepoListManager.setSynced(context, repo.getRepoId());
+                        updateCount();
                     }
                     QuickNotification.show(this,
                             repo.getRepoName(),
                             success ? getString(R.string.sync_completed) : getString(R.string.sync_failed),
                             null);
-                    RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_completed)));
-                    repoListManager.synced(repo.getRepoId());
-                    updateCount();
                     PathUtil.deleteFile(context, repo.getRepoId());
                 }, err -> {
                     Log.e(err.getMessage());
@@ -160,6 +163,7 @@ public class RepoManager extends ContextWrapper {
 
     private synchronized void updateCount() {
         count++;
+        RxBus.publish(new Event(Events.SYNC_PROGRESS));
         if (count == getRepoCount())
             RxBus.publish(new Event(Events.SYNC_COMPLETED));
     }

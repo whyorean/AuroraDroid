@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -64,12 +65,19 @@ public class RepoFragment extends Fragment {
     RelativeLayout repoLayout;
     @BindView(R.id.txtLog)
     TextView txtLog;
-    @BindView(R.id.btn_clear)
-    MaterialButton btnClear;
     @BindView(R.id.btn_sync)
     MaterialButton btnSync;
+    @BindView(R.id.progress_layout)
+    RelativeLayout progressLayout;
+    @BindView(R.id.progress_sync)
+    ProgressBar progressBar;
+    @BindView(R.id.txt_progress)
+    TextView txtProgress;
+    @BindView(R.id.txt_status)
+    TextView txtStatus;
 
     private Context context;
+    private int count = 0;
     private CompositeDisposable disposable = new CompositeDisposable();
 
     @Override
@@ -85,11 +93,14 @@ public class RepoFragment extends Fragment {
                         Events eventEnum = ((Event) event).getEvent();
                         switch (eventEnum) {
                             case LOG:
-
+                                break;
                             case SYNC_COMPLETED:
                                 finalizeSync();
                                 break;
                             case NET_DISCONNECTED:
+                                break;
+                            case SYNC_PROGRESS:
+                                updateProgress();
                                 break;
                         }
                     }
@@ -128,12 +139,11 @@ public class RepoFragment extends Fragment {
                         .addToBackStack(null)
                         .commitAllowingStateLoss();
         });
-        btnClear.setOnClickListener(v -> clearDatabase());
         btnSync.setOnClickListener(v -> syncDatabase());
     }
 
     private void syncDatabase() {
-        new RepoListManager(context).clearSynced();
+        RepoListManager.clearSynced(context);
         clearDatabase();
         RxBus.publish(new LogEvent(getString(R.string.database_cleared)));
         RepoManager repoManager = new RepoManager(context);
@@ -141,6 +151,8 @@ public class RepoFragment extends Fragment {
             notifyAction(getString(R.string.toast_no_repo_selected));
         else {
             repoManager.fetchRepo();
+            progressLayout.setVisibility(View.VISIBLE);
+            progressBar.setMax(repoManager.getRepoCount());
             btnSync.setEnabled(false);
             btnSync.setText(getString(R.string.sync_progress));
         }
@@ -155,10 +167,10 @@ public class RepoFragment extends Fragment {
     }
 
     private void finalizeSync() {
-        notifyAction(getString(R.string.sync_completed_all));
         RxBus.clearLogEvents();
         btnSync.setText(getString(R.string.action_finish));
         btnSync.setEnabled(true);
+        txtStatus.setText(getString(R.string.sync_completed));
         if (getActivity() instanceof IntroActivity)
             btnSync.setOnClickListener(v -> {
                 getActivity().startActivity(new Intent(context, AuroraActivity.class));
@@ -168,6 +180,19 @@ public class RepoFragment extends Fragment {
             btnSync.setOnClickListener(v -> {
                 getActivity().onBackPressed();
             });
+    }
+
+    private void updateProgress() {
+        progressBar.setProgress(++count);
+        txtStatus.setText(getString(R.string.sync_progress));
+        txtProgress.setText(new StringBuilder()
+                .append(getProgress(progressBar.getProgress(), progressBar.getMax()))
+                .append("%"));
+    }
+
+    private float getProgress(int current, int max) {
+        float percent = ((float) current / (float) max) * 100.0f;
+        return ((int) percent);
     }
 
     private void notifyAction(String message) {

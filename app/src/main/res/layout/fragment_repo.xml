@@ -18,6 +18,7 @@
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -126,27 +127,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:gravity="center"
+            android:orientation="vertical"
             android:padding="@dimen/margin_small">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_clear"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="56dp"
-                android:layout_margin="@dimen/margin_xxsmall"
-                android:maxLines="1"
-                android:paddingStart="@dimen/margin_large"
-                android:paddingEnd="@dimen/margin_large"
-                android:text="@string/action_clear"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress_layout"
                 android:visibility="gone"
-                app:backgroundTint="@color/colorGreyDark" />
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_small">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:textSize="14sp"
+                    tools:text="Syncing" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="14sp"
+                    tools:text="25%" />
+
+                <ProgressBar
+                    android:id="@+id/progress_sync"
+                    android:layout_below="@id/txt_status"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="100" />
+            </RelativeLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_sync"
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 android:layout_width="200dp"
                 android:layout_height="56dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_margin="@dimen/margin_xxsmall"
                 android:maxLines="1"
                 android:paddingStart="@dimen/margin_large"

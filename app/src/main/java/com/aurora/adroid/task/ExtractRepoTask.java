@@ -40,14 +40,8 @@ public class ExtractRepoTask extends ContextWrapper {
         this.jsonFile = jsonFileName;
     }
 
-    public boolean extract() {
-        try {
-            FileUtil.unzipJar(jarFile, PathUtil.getRepoDirectory(context), jsonFile);
-            Log.i("Jar extracted successfully");
-            return true;
-        } catch (IOException e) {
-            Log.e("Jar extraction failed");
-            return false;
-        }
+    public boolean extract() throws IOException {
+        FileUtil.unzipJar(jarFile, PathUtil.getRepoDirectory(context), jsonFile);
+        return true;
     }
 }
