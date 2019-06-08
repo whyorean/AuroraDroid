@@ -47,6 +47,7 @@ import com.aurora.adroid.notification.QuickNotification;
 import com.aurora.adroid.task.FetchAppsTask;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.Log;
+import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.PathUtil;
 import com.aurora.adroid.view.CustomSwipeToRefresh;
 import com.tonyodev.fetch2.EnqueueAction;
@@ -163,32 +164,32 @@ public class FavouriteFragment extends BaseFragment implements FavouriteViewHold
     }
 
     private View.OnClickListener bulkInstallListener() {
-        return v -> {
-            disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
-                    .getAppsByPackageName(favouriteList))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((appList) -> {
-                        for (App app : appList) {
-                            Request request = new Request(DatabaseUtil.getDownloadURl(app),
-                                    PathUtil.getApkPath(context, app.getAppPackage().getApkName()));
-                            request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
-                            request.setTag(app.getPackageName());
-                            requestList.add(request);
-                        }
-                        fetch.enqueue(requestList, updatedRequestList -> {
-                            String bulkInstallText = new StringBuilder()
-                                    .append(selectedApps.size())
-                                    .append(StringUtils.SPACE)
-                                    .append(context.getString(R.string.list_bulk_install)).toString();
-                            QuickNotification.show(
-                                    context,
-                                    context.getString(R.string.app_name),
-                                    bulkInstallText,
-                                    null);
-                        });
-                    }, err -> Log.e(err.getMessage())));
-        };
+        return v -> disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
+                .getAppsByPackageName(favouriteList))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((appList) -> {
+                    for (App app : appList) {
+                        Request request = new Request(DatabaseUtil.getDownloadURl(app),
+                                PathUtil.getApkPath(context, app.getAppPackage().getApkName()));
+                        request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
+                        request.setTag(app.getPackageName());
+                        requestList.add(request);
+                        PackageUtil.addToPseudoPackageMap(context, app.getPackageName(), app.getName());
+                        PackageUtil.addToPseudoURLMap(context, app.getPackageName(), DatabaseUtil.getImageUrl(app));
+                    }
+                    fetch.enqueue(requestList, updatedRequestList -> {
+                        String bulkInstallText = new StringBuilder()
+                                .append(selectedApps.size())
+                                .append(StringUtils.SPACE)
+                                .append(context.getString(R.string.list_bulk_install)).toString();
+                        QuickNotification.show(
+                                context,
+                                context.getString(R.string.app_name),
+                                bulkInstallText,
+                                null);
+                    });
+                }, err -> Log.e(err.getMessage())));
     }
 
     private void exportList() {

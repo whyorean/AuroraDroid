@@ -260,6 +260,9 @@ public class AppActionDetails extends AbstractDetails {
         else
             fetch.enqueue(request, updatedRequest -> Log.i("Downloading : %s",
                     app.getPackageName()), error -> Log.e("Unknown error occurred"));
+
+        PackageUtil.addToPseudoPackageMap(context, app.getPackageName(), app.getName());
+        PackageUtil.addToPseudoURLMap(context, app.getPackageName(), DatabaseUtil.getImageUrl(app));
     }
 
     private FetchListener getFetchListener() {

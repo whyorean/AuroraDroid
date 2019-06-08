@@ -35,11 +35,8 @@ import com.aurora.adroid.R;
 import com.aurora.adroid.activity.DetailsActivity;
 import com.aurora.adroid.activity.DownloadsActivity;
 import com.aurora.adroid.download.DownloadManager;
-import com.aurora.adroid.model.App;
 import com.aurora.adroid.sheet.DownloadMenuSheet;
-import com.aurora.adroid.task.FetchAppsTask;
-import com.aurora.adroid.util.DatabaseUtil;
-import com.aurora.adroid.util.Log;
+import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -59,20 +56,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsAdapter.ViewHolder> {
 
     private List<Download> downloadList = new ArrayList<>();
-    private List<App> appList = new ArrayList<>();
-    private List<String> packageNameList = new ArrayList<>();
     private Context context;
     private Fetch fetch;
     private DownloadMenuSheet menuSheet;
-    private CompositeDisposable disposable = new CompositeDisposable();
 
     public DownloadsAdapter(Context context) {
         this.context = context;
@@ -84,20 +74,7 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsAdapter.View
     private void fetchData() {
         fetch.getDownloads(fetchDownloadList -> {
             downloadList = fetchDownloadList;
-            for (Download download : downloadList)
-                packageNameList.add(download.getTag());
-
-            disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
-                    .getAppsByPackageName(packageNameList))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((fetchAppList) -> {
-                        appList = fetchAppList;
-                        notifyDataSetChanged();
-                    }, err -> {
-                        Log.e(err.getMessage());
-                        err.printStackTrace();
-                    }));
+            notifyDataSetChanged();
         });
     }
 
@@ -116,9 +93,8 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         final Download download = downloadList.get(position);
-        final App app = appList.get(position);
-        final String displayName = app.getName();
-        final String iconURL = DatabaseUtil.getImageUrl(app);
+        final String displayName = PackageUtil.getAppDisplayName(context, download.getTag());
+        final String iconURL = PackageUtil.getIconURL(context, download.getTag());
 
         fetch.addListener(getFetchListener(download.getId(), viewHolder));
 
@@ -148,7 +124,7 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsAdapter.View
 
         viewHolder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailsActivity.class);
-            intent.putExtra("INTENT_APK_FILE_NAME", app.getPackageName());
+            intent.putExtra("INTENT_APK_FILE_NAME", download.getTag());
             context.startActivity(intent);
         });
 
