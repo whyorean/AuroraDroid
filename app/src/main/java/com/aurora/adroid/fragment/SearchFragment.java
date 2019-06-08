@@ -33,9 +33,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.R;
 import com.aurora.adroid.Sort;
+import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.adapter.GenericAppsAdapter;
 import com.aurora.adroid.task.FetchAppsTask;
 import com.aurora.adroid.util.Log;
@@ -67,8 +67,10 @@ public class SearchFragment extends Fragment {
     Chip chipSizeMin;
     @BindView(R.id.sort_size_max)
     Chip chipSizeMax;
-    @BindView(R.id.sort_date)
-    Chip chipDate;
+    @BindView(R.id.sort_date_updated)
+    Chip chipDateUpdated;
+    @BindView(R.id.sort_date_added)
+    Chip chipDateAdded;
 
     private Context context;
     private BottomNavigationView bottomNavigationView;
@@ -162,7 +164,8 @@ public class SearchFragment extends Fragment {
             chipNameZA.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.NAME_ZA));
             chipSizeMin.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MIN));
             chipSizeMax.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MAX));
-            chipDate.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.DATE));
+            chipDateUpdated.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.DATE_UPDATED));
+            chipDateAdded.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.DATE_ADDED));
         }
     }
 

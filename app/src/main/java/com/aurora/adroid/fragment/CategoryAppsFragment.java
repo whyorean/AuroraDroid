@@ -64,8 +64,10 @@ public class CategoryAppsFragment extends Fragment {
     Chip chipSizeMin;
     @BindView(R.id.sort_size_max)
     Chip chipSizeMax;
-    @BindView(R.id.sort_date)
-    Chip chipDate;
+    @BindView(R.id.sort_date_updated)
+    Chip chipDateUpdated;
+    @BindView(R.id.sort_date_added)
+    Chip chipDateAdded;
 
     private Context context;
     private String categoryName;
@@ -130,7 +132,8 @@ public class CategoryAppsFragment extends Fragment {
             chipNameZA.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.NAME_ZA));
             chipSizeMin.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MIN));
             chipSizeMax.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MAX));
-            chipDate.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.DATE));
+            chipDateUpdated.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.DATE_UPDATED));
+            chipDateAdded.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.DATE_ADDED));
         }
     }
 

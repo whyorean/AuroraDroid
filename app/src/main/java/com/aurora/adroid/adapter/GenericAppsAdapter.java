@@ -107,9 +107,14 @@ public class GenericAppsAdapter extends RecyclerView.Adapter<GenericAppsAdapter.
                         App2.getAppPackage().getSize().compareTo(App1.getAppPackage().getSize()));
                 notifyDataSetChanged();
                 break;
-            case DATE:
+            case DATE_UPDATED:
                 Collections.sort(this.appList, (App1, App2) ->
-                        App1.getLastUpdated().compareTo(App2.getLastUpdated()));
+                        App2.getLastUpdated().compareTo(App1.getLastUpdated()));
+                notifyDataSetChanged();
+                break;
+            case DATE_ADDED:
+                Collections.sort(this.appList, (App1, App2) ->
+                        App2.getAdded().compareTo(App1.getAdded()));
                 notifyDataSetChanged();
                 break;
         }

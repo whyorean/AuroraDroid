@@ -61,11 +61,19 @@
             android:text="@string/filter_size_max" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/sort_date"
+            android:id="@+id/sort_date_updated"
             style="@style/Widget.Aurora.FilterChip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filter_date_updated" />
+
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/sort_date_added"
+            style="@style/Widget.Aurora.FilterChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_date_added" />
 
     </com.google.android.material.chip.ChipGroup>
 

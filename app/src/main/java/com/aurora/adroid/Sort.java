@@ -23,5 +23,6 @@ public enum Sort {
     NAME_ZA,
     SIZE_MIN,
     SIZE_MAX,
-    DATE,
+    DATE_UPDATED,
+    DATE_ADDED
 }

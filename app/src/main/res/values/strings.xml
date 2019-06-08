@@ -92,6 +92,7 @@
     <string name="filter_size_min">Size Min</string>
     <string name="filter_size_max">Size Max</string>
     <string name="filter_date_updated">Date Updated</string>
+    <string name="filter_date_added">Date Added</string>
 
     <string name="list_app_blacklisted_empty">No Apps Blacklisted</string>
     <string name="list_app_depends_on_gsf">GSF dependent</string>
