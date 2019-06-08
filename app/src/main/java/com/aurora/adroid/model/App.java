@@ -386,5 +386,17 @@ public class App {
         this.webSite = webSite;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof App))
+            return false;
+
+        return packageName.equals(((App) obj).getPackageName());
+    }
+
+    @Override
+    public int hashCode() {
+        return (packageName.isEmpty()) ? 0 : packageName.hashCode();
+    }
 }
 

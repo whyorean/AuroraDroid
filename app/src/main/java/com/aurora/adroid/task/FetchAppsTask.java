@@ -27,8 +27,11 @@ import com.aurora.adroid.database.PackageDao;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class FetchAppsTask extends ContextWrapper {
 
@@ -39,13 +42,16 @@ public class FetchAppsTask extends ContextWrapper {
     public List<App> fetchAllApps() {
         AppDatabase appDatabase = AppDatabase.getAppDatabase(this);
         AppDao appDao = appDatabase.appDao();
-        return appDao.getAllApps();
+        List<App> appList = appDao.getAllApps();
+        appList = removeDuplicates(appList);
+        return appList;
     }
 
     public List<App> searchApps(String query) {
         AppDatabase appDatabase = AppDatabase.getAppDatabase(this);
         AppDao appDao = appDatabase.appDao();
         List<App> appList = appDao.searchApps("%" + query + "%");
+        appList = removeDuplicates(appList);
         for (App app : appList)
             app.setAppPackage(getPackageByName(app.getPackageName()));
         return appList;
@@ -56,6 +62,7 @@ public class FetchAppsTask extends ContextWrapper {
         AppDatabase appDatabase = AppDatabase.getAppDatabase(this);
         AppDao appDao = appDatabase.appDao();
         List<App> appList = appDao.searchAppsByCategory("%" + category + "%");
+        appList = removeDuplicates(appList);
         for (App app : appList)
             app.setAppPackage(getPackageByName(app.getPackageName()));
         return appList;
@@ -79,6 +86,7 @@ public class FetchAppsTask extends ContextWrapper {
         AppDatabase appDatabase = AppDatabase.getAppDatabase(this);
         AppDao appDao = appDatabase.appDao();
         List<App> appList = appDao.getAppsByPackageName(packageNames);
+        appList = removeDuplicates(appList);
         for (App app : appList)
             app.setAppPackage(getPackageByName(app.getPackageName()));
         return appList;
@@ -106,6 +114,7 @@ public class FetchAppsTask extends ContextWrapper {
         AppDatabase appDatabase = AppDatabase.getAppDatabase(this);
         AppDao appDao = appDatabase.appDao();
         List<App> appList = appDao.getLatestUpdatedApps(Calendar.getInstance().getTimeInMillis(), weekCount);
+        appList = removeDuplicates(appList);
         for (App app : appList)
             app.setAppPackage(getPackageByName(app.getPackageName()));
         return appList;
@@ -115,6 +124,7 @@ public class FetchAppsTask extends ContextWrapper {
         AppDatabase appDatabase = AppDatabase.getAppDatabase(this);
         AppDao appDao = appDatabase.appDao();
         List<App> appList = appDao.getLatestAddedApps(Calendar.getInstance().getTimeInMillis(), weekCount);
+        appList = removeDuplicates(appList);
         for (App app : appList) {
             app.setAppPackage(getPackageByName(app.getPackageName()));
         }
@@ -125,5 +135,11 @@ public class FetchAppsTask extends ContextWrapper {
         AppDatabase appDatabase = AppDatabase.getAppDatabase(this);
         PackageDao packageDao = appDatabase.packageDao();
         return packageDao.getPackageByPackageName(packageName);
+    }
+
+    public List<App> removeDuplicates(List<App> appList) {
+        Set<App> unique = new LinkedHashSet<App>(appList);
+        appList = new ArrayList<App>(unique);
+        return appList;
     }
 }
