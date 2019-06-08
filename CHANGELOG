@@ -1,0 +1,15 @@
+Changelog : 1.0.2
+
+* Added download manager
+* Added blacklist & favourite list
+* Added root install method
+* Improved search results
+* Bug fixes & improvements
+
+Notes:
+* You may require to do a clean install, as the database schema has changed
+* Download manager may show garbage data due to old installations, clear the list from menu to remove old data
+
+Changelog : 1.0.1
+
+* Initial release
