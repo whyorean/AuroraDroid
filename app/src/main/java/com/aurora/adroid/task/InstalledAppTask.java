@@ -52,11 +52,12 @@ public class InstalledAppTask extends ContextWrapper {
             if (packageInfo != null && tempApp != null) {
                 final String RSA256 = CertUtil.getSHA256(context, app.getPackageName());
                 if (packageInfo.versionName.compareTo(tempApp.getAppPackage().getVersionName()) < 0
-                        && RSA256.equals(app.getAppPackage().getSigner())) {
+                        && RSA256.equals(app.getAppPackage().getSigner()) && PackageUtil.isSupportedPackage(app.getAppPackage())) {
                     updatableList.add(tempApp);
                 } else if (packageInfo.versionName.compareTo(tempApp.getAppPackage().getVersionName()) == 0
                         && packageInfo.versionCode < tempApp.getAppPackage().getVersionCode()
-                        && RSA256.equals(app.getAppPackage().getSigner())) {
+                        && RSA256.equals(app.getAppPackage().getSigner())
+                        && PackageUtil.isSupportedPackage(app.getAppPackage())) {
                     updatableList.add(tempApp);
                 }
             }
