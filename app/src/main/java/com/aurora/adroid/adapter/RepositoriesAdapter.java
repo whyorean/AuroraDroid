@@ -29,7 +29,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.FragmentTransaction;
@@ -37,13 +36,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.activity.AuroraActivity;
-import com.aurora.adroid.fragment.CategoryAppsFragment;
 import com.aurora.adroid.fragment.RepositoryAppsFragment;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.util.ThemeUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -82,8 +79,8 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        final Repo repo =repoList.get(position);
-        @ColorInt final int color = colorShades[position + 3 % colorShades.length];
+        final Repo repo = repoList.get(position);
+        @ColorInt final int color = colorShades[(position + 3) % colorShades.length];
 
         viewHolder.itemView.setBackgroundTintList(ColorStateList.valueOf(
                 ColorUtils.setAlphaComponent(color, isTransparent ? 60 : 255)));
