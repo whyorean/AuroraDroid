@@ -52,18 +52,18 @@ dependencies {
     implementation group: 'commons-io', name: 'commons-io', version: '2.6'
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.preference:preference:1.1.0-alpha05'
-    implementation 'com.google.android.material:material:1.1.0-alpha06'
+    implementation 'androidx.preference:preference:1.1.0-beta01'
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
 
     //Utils
     implementation 'com.android.volley:volley:1.1.0'
-    implementation 'androidx.annotation:annotation:1.0.2'
+    implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'org.apache.commons:commons-text:1.4'
     implementation 'commons-validator:commons-validator:1.6'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
-    implementation "androidx.room:room-runtime:2.1.0-beta01"
-    annotationProcessor "androidx.room:room-compiler:2.1.0-beta01"
+    implementation "androidx.room:room-runtime:2.1.0-rc01"
+    annotationProcessor "androidx.room:room-compiler:2.1.0-rc01"
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
     implementation 'org.apache.commons:commons-text:1.4'
     implementation 'com.scottyab:rootbeer-lib:0.0.7'
