@@ -49,7 +49,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.disposables.CompositeDisposable;
 
 public class AuroraActivity extends AppCompatActivity {
 
@@ -101,9 +100,10 @@ public class AuroraActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.action_settings:
-                startActivity(new Intent(this,SettingsActivity.class));
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.action_downloads:
+                startActivity(new Intent(this, DownloadsActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(menuItem);

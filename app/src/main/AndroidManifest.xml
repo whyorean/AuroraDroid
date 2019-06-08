@@ -65,6 +65,7 @@
         <activity android:name=".activity.QRActivity" />
         <activity android:name=".activity.IntroActivity" />
         <activity android:name=".activity.SettingsActivity" />
+        <activity android:name=".activity.DownloadsActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

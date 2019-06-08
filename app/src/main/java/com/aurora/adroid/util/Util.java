@@ -20,6 +20,8 @@ package com.aurora.adroid.util;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,10 +31,13 @@ import android.os.IBinder;
 import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.aurora.adroid.Constants;
+import com.aurora.adroid.R;
 import com.aurora.adroid.activity.AuroraActivity;
+import com.tonyodev.fetch2.Status;
 import com.tonyodev.fetch2core.Downloader;
 
 import org.apache.commons.lang3.StringUtils;
@@ -87,6 +92,25 @@ public class Util {
         int styledColor = arr.getColor(0, -1);
         arr.recycle();
         return styledColor;
+    }
+
+    @NonNull
+    public static String getETAString(@NonNull final Context context, final long etaInMilliSeconds) {
+        if (etaInMilliSeconds < 0) {
+            return "";
+        }
+        int seconds = (int) (etaInMilliSeconds / 1000);
+        long hours = seconds / 3600;
+        seconds -= hours * 3600;
+        long minutes = seconds / 60;
+        seconds -= minutes * 60;
+        if (hours > 0) {
+            return context.getString(R.string.download_eta_hrs, hours, minutes, seconds);
+        } else if (minutes > 0) {
+            return context.getString(R.string.download_eta_min, minutes, seconds);
+        } else {
+            return context.getString(R.string.download_eta_sec, seconds);
+        }
     }
 
     public static String humanReadableByteSpeed(long bytes, boolean si) {
@@ -230,5 +254,38 @@ public class Util {
             default:
                 return Downloader.FileDownloaderType.PARALLEL;
         }
+    }
+
+    public static String getStatus(Status status) {
+        switch (status) {
+            case NONE:
+                return "None";
+            case ADDED:
+                return "Added";
+            case FAILED:
+                return "Failed";
+            case PAUSED:
+                return "Paused";
+            case QUEUED:
+                return "Queued";
+            case DELETED:
+                return "Deleted";
+            case REMOVED:
+                return "Removed";
+            case CANCELLED:
+                return "Cancelled";
+            case COMPLETED:
+                return "Completed";
+            case DOWNLOADING:
+                return "Downloading";
+            default:
+                return "--";
+        }
+    }
+
+    public static void copyToClipBoard(Context context, String dataToCopy) {
+        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Apk Url", dataToCopy);
+        clipboard.setPrimaryClip(clip);
     }
 }
