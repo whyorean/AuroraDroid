@@ -104,7 +104,8 @@ public class RepoManager extends ContextWrapper {
                     super.onError(download, error, throwable);
                     if (request.getId() == download.getId()) {
                         Log.i("Download Failed : %s", download.getUrl());
-                        RxBus.publish(new LogEvent(download.getTag() + " - " + getString(R.string.download_failed)));
+                        final Repo repo = RepoListManager.getRepoById(context, download.getTag());
+                        RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_failed)));
                         updateCount();
                     }
                 }
