@@ -106,21 +106,17 @@
 
         </RelativeLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtLog"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/action_layout"
             android:layout_below="@+id/repo_list"
             android:layout_margin="@dimen/margin_normal"
             android:background="@drawable/generic_padded_bg"
-            android:overScrollMode="never">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtLog"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/sys_log" />
-        </androidx.core.widget.NestedScrollView>
+            android:gravity="bottom"
+            android:maxLines="8"
+            android:text="@string/sys_log" />
 
         <LinearLayout
             android:id="@+id/action_layout"
@@ -131,12 +127,12 @@
             android:padding="@dimen/margin_small">
 
             <RelativeLayout
+                android:id="@+id/progress_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/progress_layout"
-                android:visibility="gone"
                 android:layout_marginStart="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_small">
+                android:layout_marginEnd="@dimen/margin_small"
+                android:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_status"
@@ -156,10 +152,10 @@
 
                 <ProgressBar
                     android:id="@+id/progress_sync"
-                    android:layout_below="@id/txt_status"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_status"
                     android:max="100" />
             </RelativeLayout>
 
