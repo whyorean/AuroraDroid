@@ -19,7 +19,9 @@
 package com.aurora.adroid;
 
 public enum Sort {
-    NAME,
-    SIZE,
+    NAME_AZ,
+    NAME_ZA,
+    SIZE_MIN,
+    SIZE_MAX,
     DATE,
 }

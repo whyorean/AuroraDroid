@@ -87,6 +87,12 @@
     <string name="download_repo_progress">Downloading repositories</string>
     <string name="download_resume_all">Resume all</string>
 
+    <string name="filter_name_az">Name A-Z</string>
+    <string name="filter_name_za">Name Z-A</string>
+    <string name="filter_size_min">Size Min</string>
+    <string name="filter_size_max">Size Max</string>
+    <string name="filter_date_updated">Date Updated</string>
+
     <string name="list_app_blacklisted_empty">No Apps Blacklisted</string>
     <string name="list_app_depends_on_gsf">GSF dependent</string>
     <string name="list_app_has_ads">has ads</string>

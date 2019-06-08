@@ -58,10 +58,14 @@ public class RepositoryAppsFragment extends Fragment {
     CustomSwipeToRefresh customSwipeToRefresh;
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
-    @BindView(R.id.sort_name)
-    Chip chipName;
-    @BindView(R.id.sort_size)
-    Chip chipSize;
+    @BindView(R.id.sort_name_az)
+    Chip chipNameAZ;
+    @BindView(R.id.sort_name_za)
+    Chip chipNameZA;
+    @BindView(R.id.sort_size_min)
+    Chip chipSizeMin;
+    @BindView(R.id.sort_size_max)
+    Chip chipSizeMax;
     @BindView(R.id.sort_date)
     Chip chipDate;
 
@@ -126,8 +130,10 @@ public class RepositoryAppsFragment extends Fragment {
 
     private void setupChip() {
         if (genericAppsAdapter != null) {
-            chipName.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.NAME));
-            chipSize.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE));
+            chipNameAZ.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.NAME_AZ));
+            chipNameZA.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.NAME_ZA));
+            chipSizeMin.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MIN));
+            chipSizeMax.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MAX));
             chipDate.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.DATE));
         }
     }

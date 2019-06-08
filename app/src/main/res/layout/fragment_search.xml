@@ -57,45 +57,7 @@
             android:text="Sort by"
             android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
 
-        <HorizontalScrollView
-            android:id="@+id/sort_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_sort">
-
-            <com.google.android.material.chip.ChipGroup
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingStart="@dimen/margin_normal"
-                app:checkedChip="@id/sort_name"
-                app:singleLine="true"
-                app:singleSelection="true">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/sort_name"
-                    style="@style/Widget.Aurora.FilterChip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Name" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/sort_size"
-                    style="@style/Widget.Aurora.FilterChip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Size" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/sort_date"
-                    style="@style/Widget.Aurora.FilterChip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Date Updated" />
-
-            </com.google.android.material.chip.ChipGroup>
-
-
-        </HorizontalScrollView>
+        <include layout="@layout/include_filters"/>
 
         <View
             android:id="@+id/gradient_view"

@@ -30,8 +30,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,10 +59,14 @@ public class SearchFragment extends Fragment {
     SearchView searchView;
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
-    @BindView(R.id.sort_name)
-    Chip chipName;
-    @BindView(R.id.sort_size)
-    Chip chipSize;
+    @BindView(R.id.sort_name_az)
+    Chip chipNameAZ;
+    @BindView(R.id.sort_name_za)
+    Chip chipNameZA;
+    @BindView(R.id.sort_size_min)
+    Chip chipSizeMin;
+    @BindView(R.id.sort_size_max)
+    Chip chipSizeMax;
     @BindView(R.id.sort_date)
     Chip chipDate;
 
@@ -156,8 +158,10 @@ public class SearchFragment extends Fragment {
 
     private void setupChip() {
         if (genericAppsAdapter != null) {
-            chipName.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.NAME));
-            chipSize.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE));
+            chipNameAZ.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.NAME_AZ));
+            chipNameZA.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.NAME_ZA));
+            chipSizeMin.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MIN));
+            chipSizeMax.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MAX));
             chipDate.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.DATE));
         }
     }

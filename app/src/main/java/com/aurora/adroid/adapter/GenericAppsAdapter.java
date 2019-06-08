@@ -87,14 +87,24 @@ public class GenericAppsAdapter extends RecyclerView.Adapter<GenericAppsAdapter.
 
     public void sortBy(Sort sort) {
         switch (sort) {
-            case NAME:
+            case NAME_AZ:
                 Collections.sort(this.appList, (App1, App2) ->
                         App1.getName().compareTo(App2.getName()));
                 notifyDataSetChanged();
                 break;
-            case SIZE:
+            case NAME_ZA:
+                Collections.sort(this.appList, (App1, App2) ->
+                        App2.getName().compareTo(App1.getName()));
+                notifyDataSetChanged();
+                break;
+            case SIZE_MIN:
                 Collections.sort(this.appList, (App1, App2) ->
                         App1.getAppPackage().getSize().compareTo(App2.getAppPackage().getSize()));
+                notifyDataSetChanged();
+                break;
+            case SIZE_MAX:
+                Collections.sort(this.appList, (App1, App2) ->
+                        App2.getAppPackage().getSize().compareTo(App1.getAppPackage().getSize()));
                 notifyDataSetChanged();
                 break;
             case DATE:
