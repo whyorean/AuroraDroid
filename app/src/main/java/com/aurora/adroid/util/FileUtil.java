@@ -26,6 +26,9 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import static com.aurora.adroid.Constants.DATA_FILE_NAME;
+import static com.aurora.adroid.Constants.JSON;
+
 public class FileUtil {
 
     public static void unzipJar(String source, String destination, String fileName) throws IOException {
@@ -36,8 +39,8 @@ public class FileUtil {
         for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements(); ) {
             JarEntry entry = enums.nextElement();
             String tempName = destination + entry.getName();
-            if (entry.getName().equals("index-v1.json"))
-                tempName = destination + fileName + ".json";
+            if (entry.getName().equals(DATA_FILE_NAME))
+                tempName = destination + fileName + JSON;
             FileUtils.copyToFile(jar.getInputStream(entry), new File(tempName));
         }
     }

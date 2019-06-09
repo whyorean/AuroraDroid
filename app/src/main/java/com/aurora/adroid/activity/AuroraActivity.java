@@ -24,6 +24,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
@@ -34,21 +36,29 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
 
+import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
 import com.aurora.adroid.adapter.ViewPagerAdapter;
 import com.aurora.adroid.database.AppDatabase;
+import com.aurora.adroid.event.Event;
+import com.aurora.adroid.event.Events;
 import com.aurora.adroid.fragment.AppsFragment;
 import com.aurora.adroid.fragment.HomeFragment;
 import com.aurora.adroid.fragment.SearchFragment;
+import com.aurora.adroid.manager.RepoManager;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.ThemeUtil;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.view.CustomViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class AuroraActivity extends AppCompatActivity {
 
@@ -58,9 +68,10 @@ public class AuroraActivity extends AppCompatActivity {
     CustomViewPager viewPager;
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
+
     private ActionBar actionBar;
-    private ViewPagerAdapter viewPagerAdapter;
     private ThemeUtil themeUtil = new ThemeUtil();
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     @Nullable
     public ActionBar getDroidActionBar() {
@@ -85,6 +96,21 @@ public class AuroraActivity extends AppCompatActivity {
             checkPermissions();
             init();
         }
+
+        disposable.add(AuroraApplication.getRxBus()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(event -> {
+                    if (event instanceof Event) {
+                        Events eventEnum = ((Event) event).getEvent();
+                        switch (eventEnum) {
+                            case SYNC_COMPLETED:
+                                findViewById(R.id.action_sync).clearAnimation();
+                                showSyncCompletedDialog();
+                                break;
+                        }
+                    }
+                }));
     }
 
     @Override
@@ -104,6 +130,9 @@ public class AuroraActivity extends AppCompatActivity {
                 return true;
             case R.id.action_downloads:
                 startActivity(new Intent(this, DownloadsActivity.class));
+                return true;
+            case R.id.action_sync:
+                showSyncDialog();
                 return true;
         }
         return super.onOptionsItemSelected(menuItem);
@@ -125,6 +154,9 @@ public class AuroraActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         AppDatabase.destroyInstance();
+        disposable.clear();
+        if (!disposable.isDisposed())
+            disposable.dispose();
         super.onDestroy();
     }
 
@@ -145,7 +177,7 @@ public class AuroraActivity extends AppCompatActivity {
     }
 
     private void setupViewPager() {
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(0, new HomeFragment());
         viewPagerAdapter.addFragment(1, new AppsFragment());
         viewPagerAdapter.addFragment(2, new SearchFragment());
@@ -176,6 +208,38 @@ public class AuroraActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
+
+    protected void showSyncDialog() {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.sync_anim);
+        MaterialAlertDialogBuilder mBuilder = new MaterialAlertDialogBuilder(this)
+                .setTitle(getString(R.string.dialog_sync_title))
+                .setMessage(getString(R.string.dialog_sync_desc))
+                .setPositiveButton(getString(R.string.dialog_sync_positive), (dialog, which) -> {
+                    findViewById(R.id.action_sync).startAnimation(animation);
+                    RepoManager repoManager = new RepoManager(this);
+                    repoManager.fetchRepo();
+                })
+                .setNegativeButton(getString(R.string.action_later), (dialog, which) -> {
+                    dialog.dismiss();
+                });
+        mBuilder.create();
+        mBuilder.show();
+    }
+
+    protected void showSyncCompletedDialog() {
+        MaterialAlertDialogBuilder mBuilder = new MaterialAlertDialogBuilder(this)
+                .setTitle(getString(R.string.dialog_sync_title))
+                .setMessage(getString(R.string.dialog_sync_completed_desc))
+                .setPositiveButton(getString(R.string.dialog_sync_complete_positive), (dialog, which) -> {
+                    Util.restartApp(this);
+                })
+                .setNegativeButton(getString(R.string.action_later), (dialog, which) -> {
+                    dialog.dismiss();
+                });
+        ;
+        mBuilder.create();
+        mBuilder.show();
     }
 
     private void checkPermissions() {

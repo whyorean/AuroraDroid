@@ -20,28 +20,31 @@ package com.aurora.adroid.download;
 
 import android.content.Context;
 
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.util.PathUtil;
 import com.aurora.adroid.util.Util;
+import com.tonyodev.fetch2.EnqueueAction;
 import com.tonyodev.fetch2.NetworkType;
 import com.tonyodev.fetch2.Request;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestBuilder {
+import static com.aurora.adroid.Constants.SIGNED_FILE_NAME;
 
-    public static final String EXT_JAR = ".jar";
-    public static final String REPO_FILE = "/index-v1" + EXT_JAR;
+public class RequestBuilder {
 
     public static List<Request> buildRequest(Context context, List<Repo> repoList) {
         List<Request> requestList = new ArrayList<>();
         for (Repo repo : repoList) {
             if (RepoListManager.isSynced(context, repo.getRepoId()))
                 continue;
-            final Request request = new Request(repo.getRepoUrl() + REPO_FILE, PathUtil.getRepoDirectory(context) + repo.getRepoId() + EXT_JAR);
+            final Request request = new Request(repo.getRepoUrl() + "/" + SIGNED_FILE_NAME,
+                    PathUtil.getRepoDirectory(context) + repo.getRepoId() + Constants.JAR);
             request.setGroupId(1337);
+            request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
             request.setTag(repo.getRepoId());
             if (Util.isDownloadWifiOnly(context))
                 request.setNetworkType(NetworkType.WIFI_ONLY);

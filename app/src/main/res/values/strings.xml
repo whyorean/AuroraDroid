@@ -71,12 +71,18 @@
     <string name="details_permissions_desc">Aurora Store uses following permissions</string>
     <string name="details_repo_desc">Select F-Droid repositories to sync</string>
 
+    <string name="dialog_sync_title">Repo Sync</string>
+    <string name="dialog_sync_desc">Do you wish to clear database and sync all the selected repositories ?</string>
+    <string name="dialog_sync_completed_desc">All repos synced, it is recommended to restart the app after sync.</string>
+    <string name="dialog_sync_positive">Sync now</string>
+    <string name="dialog_sync_complete_positive">Restart now</string>
+
     <string name="menu_downloads">Downloads</string>
     <string name="download_cancel_all">Cancel all</string>
     <string name="download_canceled">Canceled</string>
     <string name="download_clear_completed">Clear completed</string>
-    <string name="download_completed">Completed</string>
-    <string name="download_failed">Failed</string>
+    <string name="download_completed">Downloaded</string>
+    <string name="download_failed">Download Failed</string>
     <string name="download_force_clear_all">Force clear all</string>
     <string name="download_none">No downloads</string>
     <string name="download_pause_all">Pause all</string>
@@ -85,6 +91,7 @@
     <string name="download_queued">Queued</string>
     <string name="download_resume">Resume</string>
     <string name="download_repo_progress">Downloading repositories</string>
+    <string name="download_repo_synced">All repositories synced</string>
     <string name="download_resume_all">Resume all</string>
 
     <string name="filter_name_az">Name A-Z</string>

@@ -20,16 +20,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_settings"
+        android:id="@+id/action_downloads"
+        android:icon="@drawable/ic_download"
         android:orderInCategory="0"
-        android:title="@string/action_settings"
+        android:title="@string/action_downloads"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_downloads"
-        android:icon="@drawable/ic_download"
+        android:id="@+id/action_sync"
+        android:icon="@drawable/ic_sync"
         android:orderInCategory="1"
-        android:title="@string/action_downloads"
+        android:title="@string/action_sync"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings"
+        android:orderInCategory="2"
+        android:title="@string/action_settings"
         app:showAsAction="ifRoom" />
 </menu>

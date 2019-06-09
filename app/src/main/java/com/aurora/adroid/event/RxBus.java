@@ -25,8 +25,8 @@ import io.reactivex.Observable;
 
 public class RxBus {
 
+    private static final Relay<Object> bus = PublishRelay.create().toSerialized();
     public static volatile RxBus instance;
-    private final Relay<Object> bus = PublishRelay.create().toSerialized();
 
     public RxBus() {
         if (instance != null) {
@@ -44,14 +44,12 @@ public class RxBus {
     }
 
     public static void publish(Object event) {
-        RxBus auroraBus = RxBus.get();
-        auroraBus.bus.accept(event);
+        bus.accept(event);
     }
 
     public static void clearLogEvents() {
-        RxBus auroraBus = RxBus.get();
-        auroraBus.bus
-                .filter(event -> event instanceof Event)
+        bus
+                .filter(event -> event instanceof Event || event instanceof LogEvent)
                 .subscribe();
     }
 

@@ -20,15 +20,24 @@ package com.aurora.adroid;
 
 import android.app.Application;
 
+import com.aurora.adroid.event.RxBus;
 import com.aurora.adroid.util.Log;
 
+import io.reactivex.Observable;
 import io.reactivex.plugins.RxJavaPlugins;
 
 public class AuroraApplication extends Application {
+
+    public static RxBus rxBus;
+
+    public static Observable<Object> getRxBus() {
+        return rxBus.toObservable();
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         RxJavaPlugins.setErrorHandler(err -> Log.e(err.getMessage()));
+        rxBus = RxBus.get();
     }
 }

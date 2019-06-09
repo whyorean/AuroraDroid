@@ -36,6 +36,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
 import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.activity.IntroActivity;
@@ -44,16 +45,15 @@ import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.Events;
 import com.aurora.adroid.event.LogEvent;
 import com.aurora.adroid.event.RxBus;
-import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.manager.RepoManager;
-import com.aurora.adroid.task.DatabaseTask;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -82,11 +82,9 @@ public class RepoFragment extends Fragment {
     private CompositeDisposable disposable = new CompositeDisposable();
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-
-        disposable.add(RxBus.get().toObservable()
+    public void onStart() {
+        super.onStart();
+        disposable.add(AuroraApplication.getRxBus()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(event -> {
@@ -113,6 +111,12 @@ public class RepoFragment extends Fragment {
                 }));
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -126,6 +130,14 @@ public class RepoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        disposable.clear();
+        if (!disposable.isDisposed())
+            disposable.isDisposed();
     }
 
     private void init() {
@@ -145,9 +157,6 @@ public class RepoFragment extends Fragment {
     }
 
     private void syncDatabase() {
-        RepoListManager.clearSynced(context);
-        clearDatabase();
-        RxBus.publish(new LogEvent(getString(R.string.database_cleared)));
         RepoManager repoManager = new RepoManager(context);
         if (repoManager.getRepoCount() == 0)
             notifyAction(getString(R.string.toast_no_repo_selected));
@@ -160,19 +169,12 @@ public class RepoFragment extends Fragment {
         }
     }
 
-    private void clearDatabase() {
-        disposable.add(Observable.fromCallable(() -> new DatabaseTask(context)
-                .clearAllTables())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe());
-    }
-
     private void finalizeSync() {
-        RxBus.clearLogEvents();
         btnSync.setText(getString(R.string.action_finish));
         btnSync.setEnabled(true);
         txtStatus.setText(getString(R.string.sync_completed));
+        txtProgress.setText(String.format(Locale.getDefault(), "%s", "100%"));
+        progressBar.setProgress(progressBar.getMax());
         if (getActivity() instanceof IntroActivity)
             btnSync.setOnClickListener(v -> {
                 getActivity().startActivity(new Intent(context, AuroraActivity.class));

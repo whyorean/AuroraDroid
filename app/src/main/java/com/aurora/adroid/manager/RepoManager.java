@@ -31,6 +31,7 @@ import com.aurora.adroid.event.LogEvent;
 import com.aurora.adroid.event.RxBus;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.notification.QuickNotification;
+import com.aurora.adroid.task.DatabaseTask;
 import com.aurora.adroid.task.ExtractRepoTask;
 import com.aurora.adroid.task.JsonParserTask;
 import com.aurora.adroid.util.Log;
@@ -43,6 +44,7 @@ import com.tonyodev.fetch2.Fetch;
 import com.tonyodev.fetch2.Request;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -55,14 +57,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.aurora.adroid.Constants.JAR;
+import static com.aurora.adroid.Constants.JSON;
+
 public class RepoManager extends ContextWrapper {
 
     private Context context;
     private RepoListManager repoListManager;
-    private List<Request> requestList;
     private CompositeDisposable disposable = new CompositeDisposable();
     private Fetch fetch;
+    private AbstractFetchListener abstractFetchListener;
     private int count = 0;
+    private int downloadCount = 0;
+    private int failedDownloadCount = 0;
 
     public RepoManager(Context context) {
         super(context);
@@ -76,65 +83,56 @@ public class RepoManager extends ContextWrapper {
     }
 
     public void fetchRepo() {
-        List<Repo> repoList = RepoListManager.getSelectedRepos(context);
-        QuickNotification.show(context, getString(R.string.app_name),
-                getString(R.string.download_repo_progress), null);
-        requestList = RequestBuilder.buildRequest(context, repoList);
-
-        for (Request request : requestList) {
-            fetch.enqueue(request, updatedRequest -> {
-                Log.i("Downloading : %s", request.getUrl());
-            }, error -> {
-                Log.e("Failed to download : %s", request.getUrl());
-            });
-
-            fetch.addListener(new AbstractFetchListener() {
-                @Override
-                public void onCompleted(@NotNull Download download) {
-                    super.onCompleted(download);
-                    if (request.getId() == download.getId()) {
-                        Log.i("Downloaded : %s", download.getUrl());
-                        final Repo repo = RepoListManager.getRepoById(context, download.getTag());
-                        RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_completed)));
-                        extractRepo(download, repo);
-                    }
-                }
-
-                @Override
-                public void onError(@NotNull Download download, @NotNull Error error, @Nullable Throwable throwable) {
-                    super.onError(download, error, throwable);
-                    if (request.getId() == download.getId()) {
-                        Log.i("Download Failed : %s", download.getUrl());
-                        final Repo repo = RepoListManager.getRepoById(context, download.getTag());
-                        RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_failed)));
-                        updateCount();
-                    }
-                }
-            });
-        }
-    }
-
-    private synchronized void extractRepo(Download download, Repo repo) {
-        final String jarFile = download.getFile();
-        final String repoId = download.getTag();
-
-        disposable.add(Observable.fromCallable(() -> new ExtractRepoTask(this, jarFile, repoId)
-                .extract())
+        RepoListManager.clearSynced(context);
+        RxBus.publish(new LogEvent(getString(R.string.database_cleared)));
+        disposable.add(Observable.fromCallable(() -> new DatabaseTask(context)
+                .clearAllTables())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(success -> {
-                    if (success) {
-                        RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.extract_completed)));
-                        final File tempJson = new File(PathUtil.getRepoDirectory(this) + repoId + ".json");
-                        parseJson(FileUtils.openInputStream(tempJson), repo);
-                        fetch.delete(download.getId());
-                    }
-                }, err -> {
-                    Log.e(err.getMessage());
-                    RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.extract_failed)));
-                    updateCount();
-                    fetch.delete(download.getId());
-                }));
+                .subscribe());
+
+        List<Repo> repoList = RepoListManager.getSelectedRepos(context);
+        List<Request> requestList = RequestBuilder.buildRequest(context, repoList);
+
+        abstractFetchListener = getFetchListener();
+        fetch.addListener(abstractFetchListener);
+        fetch.enqueue(requestList, result -> {
+            QuickNotification.show(context, getString(R.string.app_name),
+                    getString(R.string.download_repo_progress), null);
+        });
+    }
+
+    private void extractAllRepos() {
+        String baseRepoDirectory = PathUtil.getRepoDirectory(context);
+        File repoDirectory = new File(baseRepoDirectory);
+        File[] files = repoDirectory.listFiles();
+
+        for (File file : files) {
+            if (file.getName().endsWith(JAR)) {
+                final String jarFile = file.getPath();
+                final String repoId = FilenameUtils.getBaseName(file.getName());
+                final Repo repo = RepoListManager.getRepoById(context, repoId);
+                disposable.add(Observable.fromCallable(() -> new ExtractRepoTask(this, jarFile, repoId)
+                        .extract())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(success -> {
+                            if (success) {
+                                RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.extract_completed)));
+                                final File jsonFile = new File(baseRepoDirectory + repoId + JSON);
+                                parseJson(FileUtils.openInputStream(jsonFile), repo);
+                            } else {
+                                RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.extract_failed)));
+                                RxBus.publish(new Event(Events.SYNC_FAILED));
+                                updateProgress();
+                            }
+                        }, err -> {
+                            RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.extract_failed)));
+                            RxBus.publish(new Event(Events.SYNC_FAILED));
+                            updateProgress();
+                        }));
+            }
+        }
     }
 
     private synchronized void parseJson(InputStream inputStream, Repo repo) {
@@ -147,25 +145,57 @@ public class RepoManager extends ContextWrapper {
                         PrefUtil.putBoolean(getApplicationContext(), Constants.DATABASE_AVAILABLE, true);
                         RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_completed)));
                         RepoListManager.setSynced(context, repo.getRepoId());
-                        updateCount();
                     }
-                    QuickNotification.show(this,
-                            repo.getRepoName(),
-                            success ? getString(R.string.sync_completed) : getString(R.string.sync_failed),
-                            null);
+                    updateProgress();
                     PathUtil.deleteFile(context, repo.getRepoId());
                 }, err -> {
-                    Log.e(err.getMessage());
-                    updateCount();
+                    updateProgress();
+                    RxBus.publish(new Event(Events.SYNC_FAILED));
                     PathUtil.deleteFile(context, repo.getRepoId());
                 }));
     }
 
-    private synchronized void updateCount() {
+    private synchronized void updateProgress() {
         count++;
         RxBus.publish(new Event(Events.SYNC_PROGRESS));
-        if (count == getRepoCount())
+        if (count == getRepoCount() - failedDownloadCount) {
             RxBus.publish(new Event(Events.SYNC_COMPLETED));
+            QuickNotification.show(context, getString(R.string.app_name),
+                    getString(R.string.download_repo_synced), null);
+        }
+    }
+
+    private synchronized void updateDownloads() {
+        downloadCount++;
+        if (downloadCount == getRepoCount()) {
+            fetch.removeListener(abstractFetchListener);
+            fetch.removeGroup(1337);
+            extractAllRepos();
+        }
+    }
+
+    private AbstractFetchListener getFetchListener() {
+        return new AbstractFetchListener() {
+            @Override
+            public void onCompleted(@NotNull Download download) {
+                super.onCompleted(download);
+                final Repo repo = RepoListManager.getRepoById(context, download.getTag());
+                Log.i("Downloaded : %s", repo.getRepoUrl());
+                RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_completed)));
+                updateDownloads();
+            }
+
+            @Override
+            public void onError(@NotNull Download download, @NotNull Error error, @Nullable Throwable throwable) {
+                super.onError(download, error, throwable);
+                final Repo repo = RepoListManager.getRepoById(context, download.getTag());
+                Log.e("Download Failed : %s", download.getUrl());
+                RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_failed)));
+                RxBus.publish(new Event(Events.SYNC_FAILED));
+                failedDownloadCount++;
+                updateDownloads();
+            }
+        };
     }
 }
 
