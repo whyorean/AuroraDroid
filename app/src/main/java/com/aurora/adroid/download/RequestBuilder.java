@@ -39,10 +39,10 @@ public class RequestBuilder {
     public static List<Request> buildRequest(Context context, List<Repo> repoList) {
         List<Request> requestList = new ArrayList<>();
         for (Repo repo : repoList) {
-            if (RepoListManager.isSynced(context, repo.getRepoId()))
-                continue;
+            /*if (RepoListManager.isSynced(context, repo.getRepoId()))
+                continue;*/
             final Request request = new Request(repo.getRepoUrl() + "/" + SIGNED_FILE_NAME,
-                    PathUtil.getRepoDirectory(context) + repo.getRepoId() + Constants.JAR);
+                    PathUtil.getRepoDirectory(context) + repo.getRepoId() + "." + Constants.JAR);
             request.setGroupId(1337);
             request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
             request.setTag(repo.getRepoId());

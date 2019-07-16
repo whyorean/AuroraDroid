@@ -32,9 +32,7 @@ import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 public class RepoListManager {
 
@@ -53,13 +51,7 @@ public class RepoListManager {
     public synchronized static void addRepoToCustomList(Context context, Repo repo) {
         Gson gson = new Gson();
         List<Repo> repoList = getCustomRepoList(context);
-        //Remove Old copy & add new if already present
-        Iterator<Repo> iterator = repoList.iterator();
-        while (iterator.hasNext()) {
-            Repo tempRepo = iterator.next();
-            if (tempRepo.getRepoUrl().equals(repo.getRepoUrl()))
-                iterator.remove();
-        }
+        repoList.remove(repo);
         repoList.add(repo);
         String json = gson.toJson(repoList);
         PrefUtil.putString(context, CUSTOM_REPO_LIST, json);
@@ -68,12 +60,9 @@ public class RepoListManager {
     public synchronized static void removeRepoFromCustomList(Context context, Repo repo) {
         Gson gson = new Gson();
         List<Repo> repoList = getCustomRepoList(context);
-        Iterator<Repo> iterator = repoList.iterator();
-        while (iterator.hasNext()) {
-            Repo tempRepo = iterator.next();
-            if (tempRepo.getRepoUrl().equals(repo.getRepoUrl()))
-                iterator.remove();
-        }
+        repoList.remove(repo);
+        for (Repo repo1 : repoList)
+            Log.e(repo1.getRepoName());
         String json = gson.toJson(repoList);
         PrefUtil.putString(context, CUSTOM_REPO_LIST, json);
     }
@@ -157,20 +146,9 @@ public class RepoListManager {
         PrefUtil.putListString(context, SYNCED_LIST, syncedList);
     }
 
-    public boolean add(String s) {
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add(s);
-        boolean result = addAll(arrayList);
-        save();
-        return result;
-    }
-
-    public boolean addAll(ArrayList<String> arrayList) {
+    public synchronized boolean addAll(ArrayList<String> arrayList) {
         repoList.clear();
-        boolean result = repoList.addAll(arrayList);
-        Set<String> repoSet = new HashSet<>(repoList);
-        repoList.clear();
-        repoList.addAll(repoSet);
+        boolean result = repoList.addAll(new HashSet<>(arrayList));
         save();
         return result;
     }

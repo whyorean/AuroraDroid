@@ -26,6 +26,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +42,7 @@ import com.aurora.adroid.adapter.RepoAdapter;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.sheet.RepoAddSheet;
+import com.aurora.adroid.util.ViewUtil;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.List;
@@ -58,6 +61,10 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
     RecyclerView recyclerView;
     @BindView(R.id.fab_repo_add)
     ExtendedFloatingActionButton fabAdd;
+    @BindView(R.id.txt_selection)
+    TextView txtSelection;
+    @BindView(R.id.btn_clear_all)
+    Button btnClearAll;
 
     private Context context;
     private RepoAdapter repoAdapter;
@@ -94,6 +101,7 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupFab();
+        setupClearAll();
         setupRecycler(fetchData());
     }
 
@@ -110,12 +118,36 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
         disposable.clear();
     }
 
+    private void clearBlackListedApps() {
+        if (repoAdapter != null) {
+            repoAdapter.removeSelectionsFromRepoList();
+            repoAdapter.notifyDataSetChanged();
+            txtSelection.setText(getString(R.string.list_blacklist_none));
+        }
+    }
+
     private void setupFab() {
         fabAdd.setOnClickListener(v -> {
             RepoAddSheet repoAddSheet = new RepoAddSheet();
             repoAddSheet.setTargetFragment(RepoListFragment.this, RESULT_CODE);
             repoAddSheet.show(getFragmentManager(), SHEET_TAG);
         });
+    }
+
+    private void setupClearAll() {
+        btnClearAll.setOnClickListener(v -> {
+            clearBlackListedApps();
+        });
+    }
+
+    private void updateCount() {
+        int count = repoAdapter.getSelectedCount();
+        String txtCount = new StringBuilder()
+                .append(getResources().getString(R.string.list_repo_select))
+                .append(" : ")
+                .append(count).toString();
+        txtSelection.setText(count > 0 ? txtCount : getString(R.string.list_repo_none));
+        ViewUtil.setVisibility(btnClearAll, count > 0, true);
     }
 
     private List<Repo> fetchData() {
@@ -142,12 +174,14 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
                 return false;
             }
         });
+        updateCount();
     }
 
     @Override
     public void onItemClicked(int position) {
         repoAdapter.toggleSelection(position);
         repoAdapter.addSelectionsToRepoList();
+        updateCount();
     }
 
     @Override

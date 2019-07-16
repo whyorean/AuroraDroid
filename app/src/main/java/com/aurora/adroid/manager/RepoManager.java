@@ -21,7 +21,6 @@ package com.aurora.adroid.manager;
 import android.content.Context;
 import android.content.ContextWrapper;
 
-import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.download.RequestBuilder;
@@ -34,22 +33,21 @@ import com.aurora.adroid.notification.QuickNotification;
 import com.aurora.adroid.task.DatabaseTask;
 import com.aurora.adroid.task.ExtractRepoTask;
 import com.aurora.adroid.task.JsonParserTask;
+import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PathUtil;
-import com.aurora.adroid.util.PrefUtil;
 import com.tonyodev.fetch2.AbstractFetchListener;
 import com.tonyodev.fetch2.Download;
 import com.tonyodev.fetch2.Error;
 import com.tonyodev.fetch2.Fetch;
 import com.tonyodev.fetch2.Request;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -58,7 +56,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.aurora.adroid.Constants.JAR;
-import static com.aurora.adroid.Constants.JSON;
 
 public class RepoManager extends ContextWrapper {
 
@@ -83,76 +80,54 @@ public class RepoManager extends ContextWrapper {
     }
 
     public void fetchRepo() {
-        RepoListManager.clearSynced(context);
-        RxBus.publish(new LogEvent(getString(R.string.database_cleared)));
-        disposable.add(Observable.fromCallable(() -> new DatabaseTask(context)
-                .clearAllTables())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe());
-
         List<Repo> repoList = RepoListManager.getSelectedRepos(context);
         List<Request> requestList = RequestBuilder.buildRequest(context, repoList);
 
         abstractFetchListener = getFetchListener();
         fetch.addListener(abstractFetchListener);
-        fetch.enqueue(requestList, result -> {
-            QuickNotification.show(context, getString(R.string.app_name),
-                    getString(R.string.download_repo_progress), null);
-        });
+        fetch.enqueue(requestList, result -> QuickNotification.show(context, getString(R.string.app_name),
+                getString(R.string.download_repo_progress), null));
     }
 
     private void extractAllRepos() {
-        String baseRepoDirectory = PathUtil.getRepoDirectory(context);
-        File repoDirectory = new File(baseRepoDirectory);
-        File[] files = repoDirectory.listFiles();
+        DatabaseUtil.setDatabaseAvailable(context, false);
+        RepoListManager.clearSynced(context);
+        disposable.add(Observable.fromCallable(() -> new DatabaseTask(context)
+                .clearAllTables())
+                .subscribeOn(Schedulers.io())
+                .subscribe());
 
-        for (File file : files) {
-            if (file.getName().endsWith(JAR)) {
-                final String jarFile = file.getPath();
-                final String repoId = FilenameUtils.getBaseName(file.getName());
-                final Repo repo = RepoListManager.getRepoById(context, repoId);
-                disposable.add(Observable.fromCallable(() -> new ExtractRepoTask(this, jarFile, repoId)
-                        .extract())
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(success -> {
-                            if (success) {
-                                RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.extract_completed)));
-                                final File jsonFile = new File(baseRepoDirectory + repoId + JSON);
-                                parseJson(FileUtils.openInputStream(jsonFile), repo);
-                            } else {
-                                RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.extract_failed)));
-                                RxBus.publish(new Event(Events.SYNC_FAILED));
-                                updateProgress();
-                            }
-                        }, err -> {
-                            RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.extract_failed)));
-                            RxBus.publish(new Event(Events.SYNC_FAILED));
-                            updateProgress();
-                        }));
-            }
-        }
-    }
+        final File repoDirectory = new File(PathUtil.getRepoDirectory(context));
+        final File[] files = repoDirectory.listFiles();
 
-    private synchronized void parseJson(InputStream inputStream, Repo repo) {
-        disposable.add(Observable.fromCallable(() -> new JsonParserTask(this)
-                .parse(inputStream, repo.getRepoId()))
+        disposable.add(Observable.fromIterable(Arrays.asList(files))
+                .filter(file -> FilenameUtils.getExtension(file.getName()).equals(JAR))
+                .flatMap(file -> new ExtractRepoTask(this, file).extract())
+                .flatMap(file -> new JsonParserTask(this, file).parse())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((success) -> {
-                    if (success) {
-                        PrefUtil.putBoolean(getApplicationContext(), Constants.DATABASE_AVAILABLE, true);
+                .doOnNext(repoBundle -> {
+                    final Repo repo = repoBundle.getRepo();
+                    if (repoBundle.getStatus()) {
                         RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_completed)));
                         RepoListManager.setSynced(context, repo.getRepoId());
+                    } else {
+                        RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_failed)));
+                        RxBus.publish(new Event(Events.SYNC_FAILED));
                     }
                     updateProgress();
                     PathUtil.deleteFile(context, repo.getRepoId());
-                }, err -> {
-                    updateProgress();
+                })
+                .doOnComplete(() -> {
+                    DatabaseUtil.setDatabaseAvailable(context, true);
+                    Log.i("Sync completed");
+                })
+                .doOnError(throwable -> {
                     RxBus.publish(new Event(Events.SYNC_FAILED));
-                    PathUtil.deleteFile(context, repo.getRepoId());
-                }));
+                    updateProgress();
+                    Log.e("Error : %s", throwable.getMessage());
+                })
+                .subscribe());
     }
 
     private synchronized void updateProgress() {

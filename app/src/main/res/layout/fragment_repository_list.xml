@@ -29,10 +29,41 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:id="@+id/top_controls"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_selection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_toStartOf="@id/btn_clear_all"
+                android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_clear_all"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:maxLines="1"
+                android:text="@string/action_clear_all"
+                android:visibility="visible" />
+        </RelativeLayout>
+
         <View
             android:id="@+id/gradient_view"
             android:layout_width="match_parent"
             android:layout_height="32dp"
+            android:layout_below="@id/top_controls"
             android:background="@drawable/gradient_bg"
             android:translationZ="1dp" />
 

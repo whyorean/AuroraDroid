@@ -122,6 +122,8 @@
     <string name="list_update_all_txt">update(s) available"</string>
     <string name="list_update_all_queue_txt">update(s) queued</string>
     <string name="list_updating">Updating</string>
+    <string name="list_repo_select">Selected Repos(s)</string>
+    <string name="list_repo_none">No repository selected</string>
 
     <string name="extract_completed">Extracted</string>
     <string name="extract_failed">Extraction failed</string>

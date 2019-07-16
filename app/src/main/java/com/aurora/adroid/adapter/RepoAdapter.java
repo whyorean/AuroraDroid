@@ -66,9 +66,8 @@ public class RepoAdapter extends SelectableAdapter<RepoAdapter.ViewHolder> {
     public synchronized void deleteRepo(int position) {
         Repo repo = repoList.get(position);
         RepoListManager.removeRepoFromCustomList(context, repo);
+        toggleSelection(position);
         repoList.remove(position);
-        repoListManager.remove(repo.getRepoUrl());
-        notifyDataSetChanged();
     }
 
     public void updateRepos(List<Repo> repoList) {

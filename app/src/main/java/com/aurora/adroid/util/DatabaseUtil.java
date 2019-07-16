@@ -39,6 +39,10 @@ public class DatabaseUtil {
         return PrefUtil.getBoolean(context, Constants.DATABASE_AVAILABLE);
     }
 
+    public static void setDatabaseAvailable(Context context, boolean available) {
+        PrefUtil.putBoolean(context, Constants.DATABASE_AVAILABLE, available);
+    }
+
     public static boolean isDatabaseLatest(Context context) {
         return PrefUtil.getBoolean(context, Constants.DATABASE_LATEST);
     }

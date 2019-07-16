@@ -27,12 +27,12 @@ import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.NotNull;
 
 @Entity(tableName = "repo")
-public class Repo {
+public class Repo implements Comparable<Repo> {
     @PrimaryKey
     @SerializedName("repoId")
     @NotNull
     @Expose
-    private String repoId="00";
+    private String repoId = "00";
     @SerializedName("repoName")
     @Expose
     private String repoName = "";
@@ -57,6 +57,7 @@ public class Repo {
         this.repoMirrors = repoMirrors;
     }
 
+    @NotNull
     public String getRepoId() {
         return repoId;
     }
@@ -95,5 +96,17 @@ public class Repo {
 
     public void setRepoFingerprint(String repoFingerprint) {
         this.repoFingerprint = repoFingerprint;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Repo))
+            return false;
+        return repoId.equalsIgnoreCase(((Repo) obj).getRepoId());
+    }
+
+    @Override
+    public int compareTo(Repo repo) {
+        return getRepoId().compareToIgnoreCase(repo.getRepoId());
     }
 }

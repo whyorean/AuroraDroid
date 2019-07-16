@@ -22,85 +22,98 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.database.sqlite.SQLiteConstraintException;
 
-import com.aurora.adroid.ArchType;
 import com.aurora.adroid.database.AppDao;
 import com.aurora.adroid.database.AppDatabase;
 import com.aurora.adroid.database.PackageDao;
+import com.aurora.adroid.manager.RepoBundle;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 import com.aurora.adroid.model.Repo;
-import com.aurora.adroid.util.PackageUtil;
+import com.aurora.adroid.util.PathUtil;
 import com.google.gson.Gson;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import io.reactivex.Observable;
+
+import static com.aurora.adroid.Constants.JSON;
+
 public class JsonParserTask extends ContextWrapper {
 
-    private Context context;
+    private File file;
+    private String repoDir;
 
-    public JsonParserTask(Context context) {
+    public JsonParserTask(Context context, File file) {
         super(context);
-        this.context = context;
+        this.file = file;
+        this.repoDir = PathUtil.getRepoDirectory(context);
     }
 
-    public synchronized boolean parse(InputStream inputStream, String repoId) {
-        final Gson gson = new Gson();
-        final Repo repo = RepoListManager.getRepoById(context, repoId);
-        final AppDatabase appDatabase = AppDatabase.getAppDatabase(context);
-        final AppDao appDao = appDatabase.appDao();
-        final PackageDao packageDao = appDatabase.packageDao();
-        try {
-            final String jsonString = IOUtils.toString(inputStream, "UTF-8");
-            final JSONObject jsonObject = new JSONObject(jsonString);
-            final JSONArray jsonArrayApp = jsonObject.getJSONArray("apps");
+    public Observable<RepoBundle> parse() {
+        return Observable.create(emitter -> {
+            boolean status = false;
 
-            for (int i = 0; i < jsonArrayApp.length(); i++) {
-                final JSONObject appObj = jsonArrayApp.getJSONObject(i);
-                final App app = gson.fromJson(appObj.toString(), App.class);
-                app.setRepoId(repo.getRepoId());
-                app.setRepoName(repo.getRepoName());
-                app.setRepoUrl(repo.getRepoUrl());
-                appDao.insert(app);
-            }
+            final Repo repo = RepoListManager.getRepoById(this, FilenameUtils.getBaseName(file.getName()));
+            final File jsonFile = new File(repoDir + repo.getRepoId() + JSON);
+            final Gson gson = new Gson();
+            final AppDatabase appDatabase = AppDatabase.getAppDatabase(this);
+            final AppDao appDao = appDatabase.appDao();
+            final PackageDao packageDao = appDatabase.packageDao();
+            try {
+                final String jsonString = IOUtils.toString(FileUtils.openInputStream(jsonFile), "UTF-8");
+                final JSONObject jsonObject = new JSONObject(jsonString);
+                final JSONArray jsonArrayApp = jsonObject.getJSONArray("apps");
 
-            final JSONObject jsonArrayPackage = jsonObject.getJSONObject("packages");
-
-            final Iterator<String> packageIterator = jsonArrayPackage.keys();
-            List<String> packageList = new ArrayList<>();
-            while (packageIterator.hasNext()) {
-                packageList.add(packageIterator.next());
-            }
-
-            for (int i = 0; i < jsonArrayPackage.length(); i++) {
-                final JSONArray jsonArray = jsonArrayPackage.getJSONArray(packageList.get(i));
-                for (int index = 0; index < jsonArray.length(); index++) {
-                    final JSONObject packageObj = jsonArray.getJSONObject(index);
-                    final Package pkg = gson.fromJson(packageObj.toString(), Package.class);
-                    pkg.setRepoName(repo.getRepoName());
-                    pkg.setRepoUrl(repo.getRepoUrl());
-                    packageDao.insert(pkg);
+                for (int i = 0; i < jsonArrayApp.length(); i++) {
+                    final JSONObject appObj = jsonArrayApp.getJSONObject(i);
+                    final App app = gson.fromJson(appObj.toString(), App.class);
+                    app.setRepoId(repo.getRepoId());
+                    app.setRepoName(repo.getRepoName());
+                    app.setRepoUrl(repo.getRepoUrl());
+                    appDao.insert(app);
                 }
+
+                final JSONObject jsonArrayPackage = jsonObject.getJSONObject("packages");
+
+                final Iterator<String> packageIterator = jsonArrayPackage.keys();
+                List<String> packageList = new ArrayList<>();
+                while (packageIterator.hasNext()) {
+                    packageList.add(packageIterator.next());
+                }
+
+                for (int i = 0; i < jsonArrayPackage.length(); i++) {
+                    final JSONArray jsonArray = jsonArrayPackage.getJSONArray(packageList.get(i));
+                    for (int index = 0; index < jsonArray.length(); index++) {
+                        final JSONObject packageObj = jsonArray.getJSONObject(index);
+                        final Package pkg = gson.fromJson(packageObj.toString(), Package.class);
+                        pkg.setRepoName(repo.getRepoName());
+                        pkg.setRepoUrl(repo.getRepoUrl());
+                        packageDao.insert(pkg);
+                    }
+                }
+                status = true;
+            } catch (JSONException | IOException e) {
+                e.printStackTrace();
+            } catch (SQLiteConstraintException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            return true;
-        } catch (JSONException | IOException e) {
-            e.printStackTrace();
-            return false;
-        } catch (SQLiteConstraintException e) {
-            e.printStackTrace();
-            return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+            emitter.onNext(new RepoBundle(status, repo));
+            emitter.onComplete();
+        });
+
     }
 }

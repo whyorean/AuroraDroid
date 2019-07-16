@@ -22,26 +22,28 @@ import android.content.Context;
 import android.content.ContextWrapper;
 
 import com.aurora.adroid.util.FileUtil;
-import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PathUtil;
 
-import java.io.IOException;
+import java.io.File;
+
+import io.reactivex.Observable;
 
 public class ExtractRepoTask extends ContextWrapper {
 
-    private Context context;
-    private String jarFile;
-    private String jsonFile;
+    private File file;
+    private String repoDir;
 
-    public ExtractRepoTask(Context context, String fileName, String jsonFileName) {
+    public ExtractRepoTask(Context context, File file) {
         super(context);
-        this.context = context;
-        this.jarFile = fileName;
-        this.jsonFile = jsonFileName;
+        this.file = file;
+        this.repoDir = PathUtil.getRepoDirectory(context);
     }
 
-    public boolean extract() throws IOException {
-        FileUtil.unzipJar(jarFile, PathUtil.getRepoDirectory(context), jsonFile);
-        return true;
+    public Observable<File> extract() {
+        return Observable.create(emitter -> {
+            FileUtil.unzipJar(file, repoDir);
+            emitter.onNext(file);
+            emitter.onComplete();
+        });
     }
 }

@@ -19,6 +19,7 @@
 package com.aurora.adroid.util;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,17 +32,15 @@ import static com.aurora.adroid.Constants.JSON;
 
 public class FileUtil {
 
-    public static void unzipJar(String source, String destination, String fileName) throws IOException {
-
-        File file = new File(source);
-        JarFile jar = new JarFile(file);
-
-        for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements(); ) {
+    public static synchronized void unzipJar(File source, String destination) throws IOException {
+        final JarFile jarFile = new JarFile(source);
+        final String fileName = FilenameUtils.getBaseName(source.getName());
+        for (Enumeration<JarEntry> enums = jarFile.entries(); enums.hasMoreElements(); ) {
             JarEntry entry = enums.nextElement();
-            String tempName = destination + entry.getName();
-            if (entry.getName().equals(DATA_FILE_NAME))
-                tempName = destination + fileName + JSON;
-            FileUtils.copyToFile(jar.getInputStream(entry), new File(tempName));
+            if (entry.getName().equals(DATA_FILE_NAME)) {
+                final File jsonFile = new File(destination + fileName + JSON);
+                FileUtils.copyToFile(jarFile.getInputStream(entry), jsonFile);
+            }
         }
     }
 }
