@@ -114,7 +114,7 @@ public class AppActionDetails extends AbstractDetails {
 
         fetch.getFetchGroup(hashCode, fetchGroup -> {
             if (fetchGroup.getGroupDownloadProgress() == 100) {
-                if (!app.isInstalled() && PathUtil.fileExists(context, app.getAppPackage().getApkName()))
+                if (!isInstalled && PathUtil.fileExists(context, app.getAppPackage().getApkName()))
                     btnPositive.setOnClickListener(installAppListener());
             } else if (fetchGroup.getDownloadingDownloads().size() > 0) {
                 switchViews(true);

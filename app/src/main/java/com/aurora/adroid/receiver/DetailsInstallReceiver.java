@@ -18,14 +18,19 @@
 
 package com.aurora.adroid.receiver;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.text.TextUtils;
 
+import com.aurora.adroid.R;
 import com.aurora.adroid.activity.DetailsActivity;
+import com.aurora.adroid.notification.QuickNotification;
+import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.PathUtil;
+import com.aurora.adroid.util.Util;
 
 public class DetailsInstallReceiver extends BroadcastReceiver {
 
@@ -54,7 +59,29 @@ public class DetailsInstallReceiver extends BroadcastReceiver {
                 || action.equals(Intent.ACTION_PACKAGE_INSTALL)
                 || action.equals(Intent.ACTION_PACKAGE_FULLY_REMOVED)
                 || action.equals(Intent.ACTION_PACKAGE_REMOVED)) {
-            PathUtil.deleteFile(context, packageName);
+            QuickNotification.show(
+                    context,
+                    PackageUtil.getAppDisplayName(context, packageName),
+                    context.getString(R.string.notification_installation_complete),
+                    getContentIntent(context, packageName));
+            if (Util.shouldDeleteApk(context))
+                PathUtil.deleteApkFile(context, packageName);
+        }
+
+        if (action.equals(Intent.ACTION_PACKAGE_FULLY_REMOVED) || action.equals(Intent.ACTION_PACKAGE_REMOVED)) {
+            QuickNotification.show(
+                    context,
+                    PackageUtil.getAppDisplayName(context, packageName),
+                    context.getString(R.string.notification_uninstallation_complete),
+                    getContentIntent(context, packageName));
+        }
+
+        if (action.equals(Intent.ACTION_INSTALL_FAILURE)) {
+            QuickNotification.show(
+                    context,
+                    PackageUtil.getAppDisplayName(context, packageName),
+                    context.getString(R.string.notification_installation_failed),
+                    getContentIntent(context, packageName));
         }
     }
 
@@ -71,5 +98,11 @@ public class DetailsInstallReceiver extends BroadcastReceiver {
         filter.addAction(ACTION_PACKAGE_INSTALLATION_FAILED);
         filter.addAction(ACTION_UNINSTALL_PACKAGE_FAILED);
         return filter;
+    }
+
+    private PendingIntent getContentIntent(Context context, String packageName) {
+        Intent intent = new Intent(context, DetailsActivity.class);
+        intent.putExtra("INTENT_PACKAGE_NAME", packageName);
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }

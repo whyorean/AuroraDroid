@@ -67,6 +67,12 @@ public class PathUtil {
                 file.delete();
     }
 
+    public static synchronized void deleteApkFile(Context context, String fileName) {
+        for (File file : new File(getBaseApkDirectory(context)).listFiles())
+            if (file.getName().startsWith(fileName))
+                file.delete();
+    }
+
     static private boolean isCustomPath(Context context) {
         return (!getCustomPath(context).isEmpty());
     }

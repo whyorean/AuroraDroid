@@ -42,8 +42,8 @@ import com.aurora.adroid.fragment.details.AppSubInfoDetails;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.receiver.DetailsInstallReceiver;
 import com.aurora.adroid.task.FetchAppsTask;
+import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
-import com.aurora.adroid.util.PackageUtil;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -78,17 +78,14 @@ public class DetailsFragment extends Fragment {
                     if (event instanceof Event) {
                         Events eventEnum = ((Event) event).getEvent();
                         switch (eventEnum) {
-                            case DOWNLOAD_INITIATED:
-                                drawButtons();
-                                break;
                             case DOWNLOAD_FAILED:
-                                notifyAction(getString(R.string.download_failed));
+                                ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_failed)));
                                 break;
                             case DOWNLOAD_CANCELLED:
-                                notifyAction(getString(R.string.download_canceled));
+                                ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_canceled)));
                                 break;
                             case DOWNLOAD_COMPLETED:
-                                notifyAction(getString(R.string.download_completed));
+                                ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_completed)));
                                 break;
                         }
                     }
@@ -130,8 +127,6 @@ public class DetailsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         context.registerReceiver(detailsInstallReceiver, detailsInstallReceiver.getFilter());
-        if (appActionDetails != null)
-            appActionDetails.draw();
     }
 
     @Override
@@ -139,6 +134,7 @@ public class DetailsFragment extends Fragment {
         super.onDestroy();
         try {
             context.unregisterReceiver(detailsInstallReceiver);
+            appActionDetails = null;
             disposable.clear();
         } catch (Exception ignored) {
         }
@@ -149,26 +145,27 @@ public class DetailsFragment extends Fragment {
                 .getFullAppByPackageName(packageName))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((dbApp) -> {
-                    if (dbApp != null) {
-                        app = dbApp;
-                        drawButtons();
-                        new AppInfoDetails(this, app).draw();
-                        new AppSubInfoDetails(this, app).draw();
-                        new AppLinkDetails(this, app).draw();
-                        new AppScreenshotsDetails(this, app).draw();
-                        new AppPackages(this, app).draw();
+                .subscribe((mApp) -> {
+                    if (mApp != null) {
+                        draw(mApp);
                     }
                 }, err -> {
                     Log.e(err.getMessage());
-                    err.printStackTrace();
                 }));
     }
 
-    public void drawButtons() {
-        if (PackageUtil.isInstalled(context, app.getPackageName()))
-            app.setInstalled(true);
+    private void draw(App mApp) {
+        app = mApp;
         appActionDetails = new AppActionDetails(this, app);
+        drawButtons();
+        new AppInfoDetails(this, app).draw();
+        new AppSubInfoDetails(this, app).draw();
+        new AppLinkDetails(this, app).draw();
+        new AppScreenshotsDetails(this, app).draw();
+        new AppPackages(this, app).draw();
+    }
+
+    public void drawButtons() {
         appActionDetails.draw();
     }
 

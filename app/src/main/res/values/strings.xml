@@ -216,6 +216,7 @@
     <string name="notification_installation_progress">Installing</string>
     <string name="notification_installation_auto">Downloaded, click to install</string>
     <string name="notification_installation_manual">Bundled Apk, manual action required</string>
+    <string name="notification_uninstallation_complete">Successfully uninstalled</string>
 
     <string name="toast_apk_blacklisted">Blacklisted</string>
     <string name="toast_apk_whitelisted">Whitelisted</string>
