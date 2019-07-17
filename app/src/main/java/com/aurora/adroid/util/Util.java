@@ -195,7 +195,7 @@ public class Util {
     }
 
     public static boolean isNativeInstallerEnforced(Context context) {
-        return getPrefs(context).getBoolean(Constants.PREFERENCE_INSTALLATION_TYPE, false);
+        return getPrefs(context).getBoolean(Constants.PREFERENCE_INSTALLATION_TYPE, true);
     }
 
     public static boolean isRootInstallEnabled(Context context) {

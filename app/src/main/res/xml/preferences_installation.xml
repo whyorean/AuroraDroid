@@ -32,7 +32,7 @@
         app:title="@string/pref_install_delete_title" />
 
     <SwitchPreferenceCompat
-        app:defaultValue="false"
+        app:defaultValue="true"
         app:disableDependentsState="true"
         app:key="PREFERENCE_INSTALLATION_TYPE"
         app:summary="@string/pref_install_type_summary"
