@@ -39,6 +39,7 @@ import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.adapter.GenericAppsAdapter;
 import com.aurora.adroid.task.FetchAppsTask;
 import com.aurora.adroid.util.Log;
+import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.chip.Chip;
@@ -129,6 +130,7 @@ public class SearchFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 if (!query.isEmpty())
                     fetchData(query);
+                Util.toggleSoftInput(context, false);
                 return true;
             }
 
