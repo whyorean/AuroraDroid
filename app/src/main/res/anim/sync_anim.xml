@@ -20,7 +20,7 @@
 
 <rotate xmlns:android="http://schemas.android.com/apk/res/android"
     android:fromDegrees="0"
-    android:toDegrees="360"
+    android:toDegrees="-360"
     android:pivotY="50%"
     android:pivotX="50%"
     android:repeatCount="infinite"
