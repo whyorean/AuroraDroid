@@ -152,7 +152,7 @@ public class PackageUtil {
             return pkg.getNativecode().get(0);
     }
 
-    public static ArchType getArchFromNativeCode(String nativeCode) {
+    private static ArchType getArchFromNativeCode(String nativeCode) {
         switch (nativeCode) {
             case "arm64-v8a":
             case "arm64":
@@ -169,7 +169,7 @@ public class PackageUtil {
         }
     }
 
-    public static ArchType getSystemArch() {
+    private static ArchType getSystemArch() {
         switch (Build.SUPPORTED_ABIS[0]) {
             case "arm64-v8a":
                 return ArchType.ARM64;
@@ -184,7 +184,7 @@ public class PackageUtil {
         }
     }
 
-    public static ArchType getAltSystemArch() {
+    private static ArchType getAltSystemArch() {
         switch (Build.SUPPORTED_ABIS[0]) {
             case "arm64-v8a":
             case "armeabi-v7a":
@@ -197,8 +197,20 @@ public class PackageUtil {
         }
     }
 
-    public static boolean isSdkCompatible(Package pkg) {
+    private static boolean isSdkCompatible(Package pkg) {
         return Build.VERSION.SDK_INT >= Util.parseInt(pkg.getMinSdkVersion(), 21);
+    }
+
+    public static boolean isBestFitSupportedPackage(Package pkg) {
+        if (!isSdkCompatible(pkg))
+            return false;
+        if (!isArchSpecificPackage(pkg))
+            return true;
+
+        final List<String> nativeCodeList = pkg.getNativecode();
+        final ArchType pkgArch = getArchFromNativeCode(nativeCodeList.get(0));
+        final ArchType systemArch = getSystemArch();
+        return pkgArch == systemArch;
     }
 
     public static boolean isSupportedPackage(Package pkg) {
@@ -215,6 +227,11 @@ public class PackageUtil {
     }
 
     public static Package getOptimumPackage(List<Package> packageList) {
+        for (Package pkg : packageList) {
+            if (isBestFitSupportedPackage(pkg))
+                return pkg;
+        }
+
         for (Package pkg : packageList) {
             if (isSupportedPackage(pkg))
                 return pkg;

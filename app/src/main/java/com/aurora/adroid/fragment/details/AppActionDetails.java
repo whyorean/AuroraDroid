@@ -190,7 +190,8 @@ public class AppActionDetails extends AbstractDetails {
     }
 
     private View.OnClickListener downloadAppListener() {
-        boolean supportedPackage = PackageUtil.isSupportedPackage(app.getAppPackage());
+        boolean supportedPackage = PackageUtil.isBestFitSupportedPackage(app.getAppPackage())
+                || PackageUtil.isSupportedPackage(app.getAppPackage());
         if (!supportedPackage) {
             btnPositive.setText(R.string.action_unsupported);
             btnPositive.setEnabled(false);
