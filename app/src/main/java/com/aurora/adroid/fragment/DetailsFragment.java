@@ -65,6 +65,7 @@ public class DetailsFragment extends Fragment {
     private CompositeDisposable disposable = new CompositeDisposable();
     private DetailsInstallReceiver detailsInstallReceiver;
     private AppActionDetails appActionDetails;
+    private AppPackages appPackages;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -164,12 +165,13 @@ public class DetailsFragment extends Fragment {
         new AppSubInfoDetails(this, app).draw();
         new AppLinkDetails(this, app).draw();
         new AppScreenshotsDetails(this, app).draw();
-        new AppPackages(this, app).draw();
     }
 
     public void drawButtons() {
         appActionDetails = new AppActionDetails(this, app);
+        appPackages = new AppPackages(this, app);
         appActionDetails.draw();
+        appPackages.draw();
     }
 
     private void notifyAction(String message) {
