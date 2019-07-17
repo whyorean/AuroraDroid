@@ -35,13 +35,11 @@ import android.widget.ViewSwitcher;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.download.DownloadManager;
-import com.aurora.adroid.event.Event;
-import com.aurora.adroid.event.Events;
-import com.aurora.adroid.event.RxBus;
 import com.aurora.adroid.fragment.DetailsFragment;
 import com.aurora.adroid.installer.Installer;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.notification.GeneralNotification;
+import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PackageUtil;
@@ -49,11 +47,12 @@ import com.aurora.adroid.util.PathUtil;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
 import com.google.android.material.button.MaterialButton;
-import com.tonyodev.fetch2.AbstractFetchListener;
+import com.tonyodev.fetch2.AbstractFetchGroupListener;
 import com.tonyodev.fetch2.Download;
 import com.tonyodev.fetch2.EnqueueAction;
 import com.tonyodev.fetch2.Error;
 import com.tonyodev.fetch2.Fetch;
+import com.tonyodev.fetch2.FetchGroup;
 import com.tonyodev.fetch2.FetchListener;
 import com.tonyodev.fetch2.Request;
 import com.tonyodev.fetch2core.DownloadBlock;
@@ -61,6 +60,7 @@ import com.tonyodev.fetch2core.DownloadBlock;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -86,12 +86,12 @@ public class AppActionDetails extends AbstractDetails {
     @BindView(R.id.btn_cancel)
     ImageButton btnCancel;
 
+    private boolean isPaused = false;
+    private int hashCode;
+
     private Fetch fetch;
     private FetchListener fetchListener;
-    private Request request;
     private GeneralNotification notification;
-    private int requestId;
-    private boolean isPaused;
 
     public AppActionDetails(DetailsFragment fragment, App app) {
         super(fragment, app);
@@ -99,42 +99,30 @@ public class AppActionDetails extends AbstractDetails {
 
     @Override
     public void draw() {
-        boolean installed = PackageUtil.isInstalled(context, app.getPackageName());
-        ViewUtil.setVisibility(btnNegative, installed);
+        boolean isInstalled = PackageUtil.isInstalled(context, app.getPackageName());
+        hashCode = app.getPackageName().hashCode();
+        ViewUtil.setVisibility(btnNegative, isInstalled);
         btnNegative.setOnClickListener(uninstallAppListener());
         btnPositive.setOnClickListener(downloadAppListener());
         btnCancel.setOnClickListener(cancelDownloadListener());
-        app.setInstalled(PackageUtil.isInstalled(context, app.getPackageName()));
 
-        if (installed)
+        if (isInstalled)
             runOrUpdate();
 
         fetch = DownloadManager.getFetchInstance(context);
         notification = new GeneralNotification(context, app);
 
-        fetch.getDownloads(downloadList -> {
-            for (Download download : downloadList) {
-                if (download.getTag() != null && download.getTag().equals(app.getPackageName())) {
-                    request = download.getRequest();
-                    requestId = download.getId();
-                    switch (download.getStatus()) {
-                        case COMPLETED:
-                            if (!installed && PathUtil.fileExists(context, app.getAppPackage().getApkName()))
-                                btnPositive.setOnClickListener(installAppListener());
-                            break;
-                        case DOWNLOADING:
-                        case QUEUED: {
-                            switchViews(true);
-                            fetch.addListener(fetchListener = getFetchListener());
-                        }
-                        break;
-                        case PAUSED: {
-                            isPaused = true;
-                            btnPositive.setOnClickListener(resumeAppListener());
-                        }
-                        break;
-                    }
-                }
+        fetch.getFetchGroup(hashCode, fetchGroup -> {
+            if (fetchGroup.getGroupDownloadProgress() == 100) {
+                if (!app.isInstalled() && PathUtil.fileExists(context, app.getAppPackage().getApkName()))
+                    btnPositive.setOnClickListener(installAppListener());
+            } else if (fetchGroup.getDownloadingDownloads().size() > 0) {
+                switchViews(true);
+                fetchListener = getFetchListener();
+                fetch.addListener(fetchListener);
+            } else if (fetchGroup.getPausedDownloads().size() > 0) {
+                isPaused = true;
+                btnPositive.setOnClickListener(resumeAppListener());
             }
         });
     }
@@ -188,13 +176,13 @@ public class AppActionDetails extends AbstractDetails {
             switchViews(true);
             fetchListener = getFetchListener();
             fetch.addListener(fetchListener);
-            fetch.resume(requestId);
+            fetch.resumeGroup(hashCode);
         };
     }
 
     private View.OnClickListener cancelDownloadListener() {
         return v -> {
-            fetch.cancel(request.getId());
+            fetch.cancelGroup(hashCode);
             if (notification != null)
                 notification.notifyCancelled();
             switchViews(false);
@@ -215,7 +203,7 @@ public class AppActionDetails extends AbstractDetails {
             switchViews(true);
             //Remove any previous requests
             if (!isPaused)
-                fetch.delete(requestId);
+                fetch.deleteGroup(hashCode);
             initDownload();
         };
     }
@@ -251,119 +239,136 @@ public class AppActionDetails extends AbstractDetails {
 
     private void initDownload() {
         final String apkName = app.getAppPackage().getApkName();
-        request = new Request(DatabaseUtil.getDownloadURl(app), PathUtil.getApkPath(context, apkName));
+        final Request request = new Request(DatabaseUtil.getDownloadURl(app), PathUtil.getApkPath(context, apkName));
         request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
+        request.setGroupId(app.getPackageName().hashCode());
         request.setTag(app.getPackageName());
-        fetch.addListener(getFetchListener());
-        if (isPaused)
-            fetch.remove(requestId);
-        else
-            fetch.enqueue(request, updatedRequest -> Log.i("Downloading : %s",
-                    app.getPackageName()), error -> Log.e("Unknown error occurred"));
 
+        List<Request> requestList = new ArrayList<>();
+        requestList.add(request);
+
+        fetchListener = getFetchListener();
+        fetch.addListener(fetchListener);
+
+        fetch.enqueue(requestList, updatedRequestList ->
+                Log.i("Downloading Apks : %s", app.getPackageName()));
+
+        //Add <PackageName,DisplayName> and <PackageName,IconURL> to PseudoMaps
         PackageUtil.addToPseudoPackageMap(context, app.getPackageName(), app.getName());
         PackageUtil.addToPseudoURLMap(context, app.getPackageName(), DatabaseUtil.getImageUrl(app));
     }
 
     private FetchListener getFetchListener() {
-        return new AbstractFetchListener() {
+        return new AbstractFetchGroupListener() {
 
             @Override
-            public void onStarted(@NotNull Download download,
-                                  @NotNull List<? extends DownloadBlock> list, int i) {
-                if (download.getId() == request.getId()) {
-                    progressBar.setIndeterminate(false);
-                    switchViews(true);
-                    progressStatus.setText(R.string.download_queued);
-                }
-            }
-
-            @Override
-            public void onResumed(@NotNull Download download) {
-                if (download.getId() == request.getId()) {
-                    int progress = download.getProgress();
-                    if (progress < 0)
-                        progress = 0;
-                    notification.notifyProgress(progress, 0,
-                            request.getId());
-                    progressBar.setIndeterminate(false);
-                }
-            }
-
-            @Override
-            public void onQueued(@NotNull Download download, boolean waitingOnNetwork) {
-                if (waitingOnNetwork)
-                    Log.d("Waiting on network");
-                if (download.getId() == request.getId()) {
+            public void onQueued(int groupId, @NotNull Download download, boolean waitingNetwork, @NotNull FetchGroup fetchGroup) {
+                if (groupId == hashCode) {
+                    ContextUtil.runOnUiThread(() -> {
+                        progressBar.setIndeterminate(true);
+                        progressStatus.setText(R.string.download_queued);
+                    });
                     notification.notifyQueued();
-                    progressStatus.setText(R.string.download_queued);
                 }
             }
 
             @Override
-            public void onProgress(@NotNull Download download, long etaInMilliSeconds,
-                                   long downloadedBytesPerSecond) {
-                if (download.getId() == request.getId()) {
-                    int progress = download.getProgress();
+            public void onStarted(int groupId, @NotNull Download download, @NotNull List<? extends DownloadBlock> downloadBlocks, int totalBlocks, @NotNull FetchGroup fetchGroup) {
+                if (groupId == hashCode) {
+                    ContextUtil.runOnUiThread(() -> {
+                        progressBar.setIndeterminate(true);
+                        progressStatus.setText(R.string.download_queued);
+                        switchViews(true);
+                    });
+                }
+            }
+
+            @Override
+            public void onResumed(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
+                if (groupId == hashCode) {
+                    int progress = fetchGroup.getGroupDownloadProgress();
                     if (progress < 0)
                         progress = 0;
-                    btnCancel.setVisibility(View.VISIBLE);
-                    notification.notifyProgress(progress, downloadedBytesPerSecond,
-                            request.getId());
-                    //Set intermediate to false, just in case xD
-                    if (progressBar.isIndeterminate())
+                    notification.notifyProgress(progress, 0, hashCode);
+                    ContextUtil.runOnUiThread(() -> {
+                        progressStatus.setText(R.string.download_progress);
                         progressBar.setIndeterminate(false);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        progressBar.setProgress(progress, true);
-                    } else
-                        progressBar.setProgress(progress);
-                    progressStatus.setText(R.string.download_progress);
-                    progressTxt.setText(new StringBuilder().append(progress).append("%"));
+                    });
                 }
             }
 
             @Override
-            public void onPaused(@NotNull Download download) {
-                if (download.getId() == request.getId()) {
-                    notification.notifyResume(request.getId());
-                    progressStatus.setText(R.string.download_paused);
+            public void onProgress(int groupId, @NotNull Download download, long etaInMilliSeconds, long downloadedBytesPerSecond, @NotNull FetchGroup fetchGroup) {
+                if (groupId == hashCode) {
+                    final int progress = fetchGroup.getGroupDownloadProgress();
+                    ContextUtil.runOnUiThread(() -> {
+                        btnCancel.setVisibility(View.VISIBLE);
+                        //Set intermediate to false, just in case xD
+                        if (progressBar.isIndeterminate())
+                            progressBar.setIndeterminate(false);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            progressBar.setProgress(progress, true);
+                        } else
+                            progressBar.setProgress(progress);
+                        progressStatus.setText(R.string.download_progress);
+                        progressTxt.setText(new StringBuilder().append(progress).append("%"));
+                    });
+                    notification.notifyProgress(progress, downloadedBytesPerSecond, hashCode);
                 }
             }
 
             @Override
-            public void onCompleted(@NotNull Download download) {
-                if (download.getId() == request.getId()) {
+            public void onPaused(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
+                if (groupId == hashCode) {
+                    notification.notifyResume(hashCode);
+                    ContextUtil.runOnUiThread(() -> {
+                        switchViews(false);
+                        progressStatus.setText(R.string.download_paused);
+                    });
+                }
+            }
+
+            @Override
+            public void onError(int groupId, @NotNull Download download, @NotNull Error error, @Nullable Throwable throwable, @NotNull FetchGroup fetchGroup) {
+                if (groupId == hashCode) {
+                    notification.notifyFailed();
+                }
+            }
+
+            @Override
+            public void onCompleted(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
+                if (groupId == hashCode && fetchGroup.getGroupDownloadProgress() == 100) {
                     notification.notifyCompleted();
-                    progressStatus.setText(R.string.download_completed);
-                    switchViews(false);
-                    btnPositive.setOnClickListener(installAppListener());
+                    ContextUtil.runOnUiThread(() -> {
+                        switchViews(false);
+                        progressStatus.setText(R.string.download_completed);
+                        btnPositive.setOnClickListener(installAppListener());
+                    });
 
-                    // Check for AutoInstall & Disable InstallButton
                     if (Util.shouldAutoInstallApk(context)) {
-                        btnPositive.setText(R.string.action_installing);
-                        btnPositive.setEnabled(false);
-                        new Installer(context).install(app.getAppPackage().getApkName());
+                        ContextUtil.runOnUiThread(() -> {
+                            btnPositive.setText(R.string.action_installing);
+                            btnPositive.setEnabled(false);
+                        });
+                        //Call the installer
+                        new Installer(context).install(app);
                     }
-                    RxBus.publish(new Event(Events.DOWNLOAD_COMPLETED));
+                    if (fetchListener != null) {
+                        fetch.removeListener(fetchListener);
+                        fetchListener = null;
+                    }
                 }
             }
 
             @Override
-            public void onCancelled(@NotNull Download download) {
-                if (download.getId() == request.getId()) {
+            public void onCancelled(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
+                if (groupId == hashCode) {
                     notification.notifyCancelled();
-                    progressBar.setIndeterminate(true);
-                    progressStatus.setText(R.string.download_canceled);
-                    switchViews(false);
-                    RxBus.publish(new Event(Events.DOWNLOAD_CANCELLED));
-                }
-            }
-
-            @Override
-            public void onError(@NotNull Download download, @NotNull Error error, @Nullable Throwable throwable) {
-                super.onError(download, error, throwable);
-                if (download.getId() == request.getId()) {
-                    RxBus.publish(new Event(Events.DOWNLOAD_FAILED));
+                    ContextUtil.runOnUiThread(() -> {
+                        switchViews(false);
+                        progressBar.setIndeterminate(true);
+                        progressStatus.setText(R.string.download_canceled);
+                    });
                 }
             }
         };
