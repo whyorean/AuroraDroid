@@ -38,8 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/gradient_bg"
-                android:minHeight="@dimen/min_height"
-                android:visibility="gone">
+                android:minHeight="@dimen/min_height">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_update_all"
@@ -59,7 +58,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_update_all"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -67,12 +66,7 @@
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_small"
                     android:maxLines="1"
-                    android:paddingStart="@dimen/margin_medium"
-                    android:paddingEnd="@dimen/margin_medium"
-                    android:text="@string/action_update"
-                    app:cornerRadius="25dp"
-                    app:icon="@drawable/ic_update" />
-
+                    android:text="@string/list_update_all" />
             </RelativeLayout>
 
             <View

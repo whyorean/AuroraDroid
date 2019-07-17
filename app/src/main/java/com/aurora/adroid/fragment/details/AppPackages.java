@@ -50,7 +50,7 @@ public class AppPackages extends AbstractDetails {
 
     @Override
     public void draw() {
-        recyclerView.setAdapter(new PackageAdapter(context, app.getPackageList()));
+        recyclerView.setAdapter(new PackageAdapter(context, app));
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
         layoutExpand.setOnClickListener(v -> {
             if (layoutVersion.getVisibility() == View.GONE) {

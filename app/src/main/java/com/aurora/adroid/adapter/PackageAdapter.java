@@ -33,16 +33,27 @@ import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.Events;
 import com.aurora.adroid.event.RxBus;
+import com.aurora.adroid.installer.Installer;
+import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
+import com.aurora.adroid.notification.GeneralNotification;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.PathUtil;
 import com.aurora.adroid.util.Util;
+import com.tonyodev.fetch2.AbstractFetchGroupListener;
+import com.tonyodev.fetch2.Download;
 import com.tonyodev.fetch2.EnqueueAction;
+import com.tonyodev.fetch2.Error;
 import com.tonyodev.fetch2.Fetch;
+import com.tonyodev.fetch2.FetchGroup;
 import com.tonyodev.fetch2.Request;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -50,12 +61,18 @@ import butterknife.ButterKnife;
 
 public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHolder> {
 
+    private App app;
     private List<Package> packages;
     private Context context;
+    private Fetch fetch;
+    private GeneralNotification notification;
 
-    public PackageAdapter(Context context, List<Package> packages) {
+    public PackageAdapter(Context context, App app) {
         this.context = context;
-        this.packages = packages;
+        this.app = app;
+        this.packages = app.getPackageList();
+        this.fetch = DownloadManager.getFetchInstance(context);
+        this.notification = new GeneralNotification(context, app);
     }
 
     @NonNull
@@ -83,24 +100,75 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
         holder.txtApkAdded.setText(Util.getDateFromMilli(pkg.getAdded()));
         holder.txtApkSize.setText(Util.humanReadableByteValue(pkg.getSize(), true));
         holder.imgDownload.setOnClickListener(v -> {
-            final String apkName = pkg.getApkName();
-            Request request = new Request(DatabaseUtil.getDownloadURl(pkg), PathUtil.getApkPath(context, apkName));
-            request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
-            request.setTag(pkg.getPackageName());
-            Fetch fetch = DownloadManager.getFetchInstance(context);
-            fetch.enqueue(request, updatedRequest -> {
-                Log.i("Downloading : %s", pkg.getApkName());
-                RxBus.publish(new Event(Events.DOWNLOAD_INITIATED));
-            }, error -> {
-                Log.e("Unknown error occurred");
-                RxBus.publish(new Event(Events.DOWNLOAD_FAILED));
-            });
+            holder.imgDownload.setEnabled(false);
+            holder.imgDownload.setImageDrawable(context.getDrawable(R.drawable.ic_checked));
+            initDownload(pkg);
+        });
+    }
+
+    private void initDownload(Package pkg) {
+        final String apkName = pkg.getApkName();
+        final Request request = new Request(DatabaseUtil.getDownloadURl(pkg), PathUtil.getApkPath(context, apkName));
+        request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
+        request.setGroupId(pkg.hashCode());
+        request.setTag(pkg.getPackageName());
+        List<Request> requestList = new ArrayList<>();
+        requestList.add(request);
+        fetch.addListener(getAbstractFetchGroupListener(pkg));
+        fetch.enqueue(requestList, result -> {
+            Log.i("Downloading : %s", app.getName());
         });
     }
 
     @Override
     public int getItemCount() {
         return packages.size();
+    }
+
+    private AbstractFetchGroupListener getAbstractFetchGroupListener(Package pkg) {
+        return new AbstractFetchGroupListener() {
+            @Override
+            public void onQueued(int groupId, @NotNull Download download, boolean waitingNetwork, @NotNull FetchGroup fetchGroup) {
+                if (groupId == pkg.hashCode()) {
+                    RxBus.publish(new Event(Events.DOWNLOAD_INITIATED));
+                    notification.notifyQueued();
+                }
+            }
+
+            @Override
+            public void onProgress(int groupId, @NotNull Download download, long etaInMilliSeconds, long downloadedBytesPerSecond, @NotNull FetchGroup fetchGroup) {
+                if (groupId == pkg.hashCode()) {
+                    final int progress = fetchGroup.getGroupDownloadProgress();
+                    notification.notifyProgress(progress, downloadedBytesPerSecond, pkg.hashCode());
+                }
+            }
+
+            @Override
+            public void onCompleted(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
+                if (groupId == pkg.hashCode()) {
+                    RxBus.publish(new Event(Events.DOWNLOAD_COMPLETED));
+                    notification.notifyCompleted();
+                    new Installer(context).install(pkg.getApkName());
+                }
+            }
+
+            @Override
+            public void onCancelled(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
+                super.onCancelled(groupId, download, fetchGroup);
+                if (groupId == pkg.hashCode()) {
+                    RxBus.publish(new Event(Events.DOWNLOAD_CANCELLED));
+                    notification.notifyCancelled();
+                }
+            }
+
+            @Override
+            public void onError(int groupId, @NotNull Download download, @NotNull Error error, @Nullable Throwable throwable, @NotNull FetchGroup fetchGroup) {
+                if (groupId == pkg.hashCode()) {
+                    RxBus.publish(new Event(Events.DOWNLOAD_FAILED));
+                    notification.notifyFailed();
+                }
+            }
+        };
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

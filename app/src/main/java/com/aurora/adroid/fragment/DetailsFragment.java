@@ -78,6 +78,9 @@ public class DetailsFragment extends Fragment {
                     if (event instanceof Event) {
                         Events eventEnum = ((Event) event).getEvent();
                         switch (eventEnum) {
+                            case DOWNLOAD_INITIATED:
+                                ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_progress)));
+                                break;
                             case DOWNLOAD_FAILED:
                                 ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_failed)));
                                 break;
@@ -156,7 +159,6 @@ public class DetailsFragment extends Fragment {
 
     private void draw(App mApp) {
         app = mApp;
-        appActionDetails = new AppActionDetails(this, app);
         drawButtons();
         new AppInfoDetails(this, app).draw();
         new AppSubInfoDetails(this, app).draw();
@@ -166,6 +168,7 @@ public class DetailsFragment extends Fragment {
     }
 
     public void drawButtons() {
+        appActionDetails = new AppActionDetails(this, app);
         appActionDetails.draw();
     }
 
