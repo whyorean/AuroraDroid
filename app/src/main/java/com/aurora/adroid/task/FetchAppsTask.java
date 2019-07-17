@@ -21,6 +21,8 @@ package com.aurora.adroid.task;
 import android.content.Context;
 import android.content.ContextWrapper;
 
+import androidx.sqlite.db.SimpleSQLiteQuery;
+
 import com.aurora.adroid.database.AppDao;
 import com.aurora.adroid.database.AppDatabase;
 import com.aurora.adroid.database.PackageDao;
@@ -47,10 +49,19 @@ public class FetchAppsTask extends ContextWrapper {
         return appList;
     }
 
-    public List<App> searchApps(String query) {
+    public synchronized List<App> searchApps(String query) {
+        final String rawQuery = "%" + query + "%";
+        final String sqlQuery = "SELECT * FROM app WHERE (name like ?) OR (summary like ?) OR (`en-US-summary` like ?);";
+
+        List<String> args = new ArrayList<>();
+        args.add(rawQuery);
+        args.add(rawQuery);
+        args.add(rawQuery);
+        SimpleSQLiteQuery sqLiteQuery = new SimpleSQLiteQuery(sqlQuery, args.toArray());
+
         AppDatabase appDatabase = AppDatabase.getAppDatabase(this);
         AppDao appDao = appDatabase.appDao();
-        List<App> appList = appDao.searchApps("%" + query + "%");
+        List<App> appList = appDao.searchApps(sqLiteQuery);
         appList = removeDuplicates(appList);
         for (App app : appList)
             app.setAppPackage(getPackageByName(app.getPackageName()));

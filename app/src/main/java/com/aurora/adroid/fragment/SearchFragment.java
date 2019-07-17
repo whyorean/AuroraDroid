@@ -126,17 +126,15 @@ public class SearchFragment extends Fragment {
     private void setupSearch() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextChange(String query) {
+            public boolean onQueryTextSubmit(String query) {
                 if (!query.isEmpty())
                     fetchData(query);
                 return true;
             }
 
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                if (!query.isEmpty())
-                    fetchData(query);
-                return true;
+            public boolean onQueryTextChange(String newText) {
+                return false;
             }
         });
     }

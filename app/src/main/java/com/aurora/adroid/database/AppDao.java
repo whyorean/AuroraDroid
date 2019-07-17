@@ -23,7 +23,9 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.aurora.adroid.model.App;
 
@@ -54,6 +56,9 @@ public interface AppDao {
 
     @Query("SELECT DISTINCT * FROM app WHERE (name LIKE :query) OR (summary LIKE :query) LIMIT 30")
     List<App> searchApps(String query);
+
+    @RawQuery()
+    List<App> searchApps(SupportSQLiteQuery query);
 
     @Query("SELECT DISTINCT * FROM app WHERE categories LIKE :category")
     List<App> searchAppsByCategory(String category);
