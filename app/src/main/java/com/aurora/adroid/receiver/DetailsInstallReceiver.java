@@ -18,6 +18,7 @@
 
 package com.aurora.adroid.receiver;
 
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -56,9 +57,8 @@ public class DetailsInstallReceiver extends BroadcastReceiver {
         assert action != null;
         if (action.equals(Intent.ACTION_PACKAGE_ADDED)
                 || action.equals(Intent.ACTION_PACKAGE_REPLACED)
-                || action.equals(Intent.ACTION_PACKAGE_INSTALL)
-                || action.equals(Intent.ACTION_PACKAGE_FULLY_REMOVED)
-                || action.equals(Intent.ACTION_PACKAGE_REMOVED)) {
+                || action.equals(Intent.ACTION_PACKAGE_INSTALL)) {
+            clearNotification(context, packageName);
             QuickNotification.show(
                     context,
                     PackageUtil.getAppDisplayName(context, packageName),
@@ -77,6 +77,7 @@ public class DetailsInstallReceiver extends BroadcastReceiver {
         }
 
         if (action.equals(Intent.ACTION_INSTALL_FAILURE)) {
+            clearNotification(context, packageName);
             QuickNotification.show(
                     context,
                     PackageUtil.getAppDisplayName(context, packageName),
@@ -104,5 +105,11 @@ public class DetailsInstallReceiver extends BroadcastReceiver {
         Intent intent = new Intent(context, DetailsActivity.class);
         intent.putExtra("INTENT_PACKAGE_NAME", packageName);
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private void clearNotification(Context context, String packageName) {
+        NotificationManager notificationManager = (NotificationManager)
+                context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(packageName.hashCode());
     }
 }
