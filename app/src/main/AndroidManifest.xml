@@ -32,14 +32,15 @@
     <application
         android:name=".AuroraApplication"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".activity.AuroraActivity"
+            android:configChanges="locale|orientation"
             android:label="@string/app_name"
             android:launchMode="singleTop">
             <intent-filter>
@@ -95,6 +96,7 @@
         <activity android:name=".activity.DetailsActivity">
             <intent-filter
                 android:autoVerify="true"
+                android:configChanges="locale|orientation"
                 tools:ignore="UnusedAttribute">
                 <action android:name="android.intent.action.VIEW" />
 
