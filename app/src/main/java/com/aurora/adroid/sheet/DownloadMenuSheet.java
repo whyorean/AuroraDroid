@@ -30,7 +30,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.adapter.DownloadsAdapter;
 import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.util.Util;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -61,17 +60,8 @@ public class DownloadMenuSheet extends BottomSheetDialogFragment {
     private Context context;
     private Fetch fetch;
     private Download download;
-    private DownloadsAdapter downloadsAdapter;
 
     public DownloadMenuSheet() {
-    }
-
-    public DownloadsAdapter getDownloadsAdapter() {
-        return downloadsAdapter;
-    }
-
-    public void setDownloadsAdapter(DownloadsAdapter downloadsAdapter) {
-        this.downloadsAdapter = downloadsAdapter;
     }
 
     public Download getDownload() {
@@ -158,7 +148,6 @@ public class DownloadMenuSheet extends BottomSheetDialogFragment {
     }
 
     private void notifyAndDismiss() {
-        getDownloadsAdapter().refreshList();
         dismissAllowingStateLoss();
     }
 }

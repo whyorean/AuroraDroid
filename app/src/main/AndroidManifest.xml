@@ -113,7 +113,10 @@
         <activity android:name=".activity.QRActivity" />
         <activity android:name=".activity.IntroActivity" />
         <activity android:name=".activity.SettingsActivity" />
-        <activity android:name=".activity.DownloadsActivity" />
+        <activity
+            android:name=".activity.DownloadsActivity"
+            android:configChanges="orientation|locale"
+            android:launchMode="singleTop" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

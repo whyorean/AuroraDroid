@@ -47,6 +47,7 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -112,6 +113,24 @@ public class Util {
             return context.getString(R.string.download_eta_sec, seconds);
         }
     }
+
+    @NonNull
+    public static String getDownloadSpeedString(@NonNull Context context, long downloadedBytesPerSecond) {
+        if (downloadedBytesPerSecond < 0) {
+            return "";
+        }
+        double kb = (double) downloadedBytesPerSecond / (double) 1000;
+        double mb = kb / (double) 1000;
+        final DecimalFormat decimalFormat = new DecimalFormat(".##");
+        if (mb >= 1) {
+            return context.getString(R.string.download_speed_mb, decimalFormat.format(mb));
+        } else if (kb >= 1) {
+            return context.getString(R.string.download_speed_kb, decimalFormat.format(kb));
+        } else {
+            return context.getString(R.string.download_speed_bytes, downloadedBytesPerSecond);
+        }
+    }
+
 
     public static String humanReadableByteSpeed(long bytes, boolean si) {
         int unit = si ? 1000 : 1024;
