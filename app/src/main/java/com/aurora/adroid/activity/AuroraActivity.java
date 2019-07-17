@@ -45,8 +45,11 @@ import com.aurora.adroid.event.Events;
 import com.aurora.adroid.fragment.AppsFragment;
 import com.aurora.adroid.fragment.HomeFragment;
 import com.aurora.adroid.fragment.SearchFragment;
+import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.manager.RepoManager;
+import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.util.DatabaseUtil;
+import com.aurora.adroid.util.TextUtil;
 import com.aurora.adroid.util.ThemeUtil;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
@@ -111,6 +114,8 @@ public class AuroraActivity extends AppCompatActivity {
                         }
                     }
                 }));
+
+        onNewIntent(getIntent());
     }
 
     @Override
@@ -136,6 +141,40 @@ public class AuroraActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null && !TextUtil.isEmpty(intent.getDataString())) {
+            String repoDataString = intent.getDataString();
+            if (repoDataString.contains("fingerprint") || repoDataString.contains("FINGERPRINT")) {
+                try {
+                    String[] ss = repoDataString.split("\\?");
+                    Repo repo = new Repo();
+                    repo.setRepoName(Util.getDomainName(ss[0]));
+                    repo.setRepoId(String.valueOf(repo.getRepoName().hashCode()));
+                    repo.setRepoUrl(ss[0]);
+                    ss[1] = ss[1].replace("fingerprint=", "");
+                    ss[1] = ss[1].replace("FINGERPRINT=", "");
+                    repo.setRepoFingerprint(ss[1]);
+                    showAddRepoDialog(repo);
+                } catch (Exception ignored) {
+                }
+            } else if (intent.getData() != null
+                    && intent.getData().getLastPathSegment() != null) {
+                if (intent.getData().getLastPathSegment().equalsIgnoreCase("repo")) {
+                    try {
+                        Repo repo = new Repo();
+                        repo.setRepoName(intent.getData().getPath());
+                        repo.setRepoId(String.valueOf(repo.getRepoName().hashCode()));
+                        repo.setRepoUrl(intent.getDataString());
+                        showAddRepoDialog(repo);
+                    } catch (Exception ignored) {
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -235,6 +274,25 @@ public class AuroraActivity extends AppCompatActivity {
                     Util.restartApp(this);
                 })
                 .setNegativeButton(getString(R.string.action_later), (dialog, which) -> {
+                    dialog.dismiss();
+                });
+        ;
+        mBuilder.create();
+        mBuilder.show();
+    }
+
+    protected void showAddRepoDialog(Repo repo) {
+        MaterialAlertDialogBuilder mBuilder = new MaterialAlertDialogBuilder(this)
+                .setTitle(getString(R.string.dialog_repo_title))
+                .setMessage(new StringBuilder()
+                        .append(getString(R.string.dialog_repo_desc))
+                        .append(" ")
+                        .append(repo.getRepoName())
+                        .append(" ?"))
+                .setPositiveButton(getString(R.string.action_add), (dialog, which) -> {
+                    RepoListManager.addRepoToCustomList(this, repo);
+                })
+                .setNegativeButton(getString(R.string.action_cancel), (dialog, which) -> {
                     dialog.dismiss();
                 });
         ;

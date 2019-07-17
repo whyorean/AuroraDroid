@@ -61,15 +61,16 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
     public void handleResult(Result rawResult) {
         mScannerView.stopCameraPreview();
         mScannerView.stopCamera();
-        Log.i(rawResult.toString());
-        if (rawResult.getText().contains("fingerprint")||rawResult.getText().contains("FINGERPRINT")) {
+        if (rawResult.getText().contains("fingerprint") || rawResult.getText().contains("FINGERPRINT")) {
             try {
                 String[] ss = rawResult.getText().split("\\?");
                 Repo repo = new Repo();
                 repo.setRepoName(Util.getDomainName(ss[0]));
+                repo.setRepoId(String.valueOf(repo.getRepoName().hashCode()));
                 repo.setRepoUrl(ss[0]);
-                repo.setRepoFingerprint(ss[1].replace("fingerprint=", ""));
-                repo.setRepoFingerprint(ss[1].replace("FINGERPRINT=", ""));
+                ss[1] = ss[1].replace("fingerprint=", "");
+                ss[1] = ss[1].replace("FINGERPRINT=", "");
+                repo.setRepoFingerprint(ss[1]);
                 RepoListManager.addRepoToCustomList(this, repo);
                 Toast.makeText(this, "Repo Added Successfully", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {

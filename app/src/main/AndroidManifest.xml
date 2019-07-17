@@ -40,11 +40,56 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".activity.AuroraActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="http" />
+                <data
+                    android:scheme="HTTP"
+                    tools:ignore="AppLinkUrlError" />
+                <data android:scheme="https" />
+                <data
+                    android:scheme="HTTPS"
+                    tools:ignore="AppLinkUrlError" />
+
+                <data android:host="*" />
+
+                <data android:path="/fdroid/repo" />
+                <data android:pathPattern="/fdroid/repo/*" />
+                <data android:pathPattern="/.*/fdroid/repo" />
+                <data android:pathPattern="/.*/fdroid/repo/*" />
+                <data android:pathPattern="/.*/.*/fdroid/repo" />
+                <data android:pathPattern="/.*/.*/fdroid/repo/*" />
+                <data android:pathPattern="/.*/.*/.*/fdroid/repo" />
+                <data android:pathPattern="/.*/.*/.*/fdroid/repo/*" />
+                <data android:pathPattern="/.*/.*/.*/.*/fdroid/repo" />
+                <data android:pathPattern="/.*/.*/.*/.*/fdroid/repo/*" />
+
+                <data android:path="/fdroid/archive" />
+                <data android:pathPattern="/fdroid/archive/*" />
+                <data android:pathPattern="/.*/fdroid/archive" />
+                <data android:pathPattern="/.*/fdroid/archive/*" />
+                <data android:pathPattern="/.*/.*/fdroid/archive" />
+                <data android:pathPattern="/.*/.*/fdroid/archive/*" />
+                <data android:pathPattern="/.*/.*/.*/fdroid/archive" />
+                <data android:pathPattern="/.*/.*/.*/fdroid/archive/*" />
+                <data android:pathPattern="/.*/.*/.*/.*/fdroid/archive" />
+                <data android:pathPattern="/.*/.*/.*/.*/fdroid/archive/*" />
+
+                <data android:path="/FDROID/REPO" />
+                <data android:pathPattern="/.*/FDROID/REPO" />
+                <data android:pathPattern="/.*/.*/FDROID/REPO" />
+                <data android:pathPattern="/.*/.*/.*/FDROID/REPO" />
             </intent-filter>
         </activity>
         <activity android:name=".activity.DetailsActivity">
@@ -58,6 +103,7 @@
 
                 <data android:scheme="https" />
                 <data android:host="f-droid.org" />
+                <data android:host="staging.f-droid.org" />
                 <data android:host="www.f-droid.org" />
             </intent-filter>
         </activity>

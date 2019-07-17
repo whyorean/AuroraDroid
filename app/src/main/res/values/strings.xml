@@ -76,6 +76,8 @@
     <string name="dialog_sync_completed_desc">All repos synced, it is recommended to restart the app after sync.</string>
     <string name="dialog_sync_positive">Sync now</string>
     <string name="dialog_sync_complete_positive">Restart now</string>
+    <string name="dialog_repo_title">Add Repository</string>
+    <string name="dialog_repo_desc">Do you really wish to add</string>
 
     <string name="menu_downloads">Downloads</string>
     <string name="download_cancel_all">Cancel all</string>
