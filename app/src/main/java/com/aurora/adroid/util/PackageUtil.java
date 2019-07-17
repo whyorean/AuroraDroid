@@ -44,7 +44,6 @@ public class PackageUtil {
         archList.add("arm64-v8a");
         archList.add("armeabi-v7a");
         archList.add("x86");
-        archList.add("x86_64");
     }
 
     public static String getAppDisplayName(Context context, String packageName) {
