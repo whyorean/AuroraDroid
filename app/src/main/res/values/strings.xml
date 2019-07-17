@@ -130,7 +130,7 @@
     <string name="sync_completed">Synced</string>
     <string name="sync_completed_all">All repositories synced</string>
     <string name="sync_progress">Syncing</string>
-    <string name="sync_failed">Failed to process</string>
+    <string name="sync_failed">Sync failed</string>
     <string name="database_cleared">Database cleared</string>
 
     <string name="title_home">Aurora Droid</string>

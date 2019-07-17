@@ -32,15 +32,21 @@ import static com.aurora.adroid.Constants.JSON;
 
 public class FileUtil {
 
-    public static synchronized void unzipJar(File source, String destination) throws IOException {
-        final JarFile jarFile = new JarFile(source);
-        final String fileName = FilenameUtils.getBaseName(source.getName());
-        for (Enumeration<JarEntry> enums = jarFile.entries(); enums.hasMoreElements(); ) {
-            JarEntry entry = enums.nextElement();
-            if (entry.getName().equals(DATA_FILE_NAME)) {
-                final File jsonFile = new File(destination + fileName + JSON);
-                FileUtils.copyToFile(jarFile.getInputStream(entry), jsonFile);
+    public static synchronized boolean unzipJar(File source, String destination) {
+        try {
+            final JarFile jarFile = new JarFile(source);
+            final String fileName = FilenameUtils.getBaseName(source.getName());
+            for (Enumeration<JarEntry> enums = jarFile.entries(); enums.hasMoreElements(); ) {
+                JarEntry entry = enums.nextElement();
+                if (entry.getName().equals(DATA_FILE_NAME)) {
+                    final File jsonFile = new File(destination + fileName + JSON);
+                    FileUtils.copyToFile(jarFile.getInputStream(entry), jsonFile);
+                }
             }
+            return true;
+        } catch (IOException e) {
+            Log.e("Failed to extract %s", source.getName());
+            return false;
         }
     }
 }

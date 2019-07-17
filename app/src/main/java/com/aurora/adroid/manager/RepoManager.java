@@ -113,7 +113,6 @@ public class RepoManager extends ContextWrapper {
                         RepoListManager.setSynced(context, repo.getRepoId());
                     } else {
                         RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_failed)));
-                        RxBus.publish(new Event(Events.SYNC_FAILED));
                     }
                     updateProgress();
                     PathUtil.deleteFile(context, repo.getRepoId());
@@ -155,7 +154,7 @@ public class RepoManager extends ContextWrapper {
             public void onCompleted(@NotNull Download download) {
                 super.onCompleted(download);
                 final Repo repo = RepoListManager.getRepoById(context, download.getTag());
-                Log.i("Downloaded : %s", repo.getRepoUrl());
+                Log.i("Downloaded : %s", download.getUrl());
                 RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_completed)));
                 updateDownloads();
             }
@@ -166,7 +165,6 @@ public class RepoManager extends ContextWrapper {
                 final Repo repo = RepoListManager.getRepoById(context, download.getTag());
                 Log.e("Download Failed : %s", download.getUrl());
                 RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_failed)));
-                RxBus.publish(new Event(Events.SYNC_FAILED));
                 failedDownloadCount++;
                 updateDownloads();
             }

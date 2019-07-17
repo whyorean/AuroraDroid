@@ -20,7 +20,7 @@ package com.aurora.adroid.task;
 
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.database.sqlite.SQLiteConstraintException;
+import android.database.sqlite.SQLiteException;
 
 import com.aurora.adroid.database.AppDao;
 import com.aurora.adroid.database.AppDatabase;
@@ -30,6 +30,7 @@ import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PathUtil;
 import com.google.gson.Gson;
 
@@ -41,6 +42,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -104,10 +106,14 @@ public class JsonParserTask extends ContextWrapper {
                     }
                 }
                 status = true;
-            } catch (JSONException | IOException e) {
-                e.printStackTrace();
-            } catch (SQLiteConstraintException e) {
-                e.printStackTrace();
+            } catch (JSONException e) {
+                Log.e("Error processing JSON : %s", jsonFile.getName());
+            } catch (FileNotFoundException e) {
+                Log.e("File not found : %s", jsonFile.getName());
+            } catch (IOException e) {
+                Log.e(e.getMessage());
+            } catch (SQLiteException e) {
+                Log.e(e.getMessage());
             } catch (Exception e) {
                 e.printStackTrace();
             }

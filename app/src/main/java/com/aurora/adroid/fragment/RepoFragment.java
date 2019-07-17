@@ -44,7 +44,6 @@ import com.aurora.adroid.activity.SettingsActivity;
 import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.Events;
 import com.aurora.adroid.event.LogEvent;
-import com.aurora.adroid.event.RxBus;
 import com.aurora.adroid.manager.RepoManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -91,12 +90,11 @@ public class RepoFragment extends Fragment {
                     if (event instanceof Event) {
                         Events eventEnum = ((Event) event).getEvent();
                         switch (eventEnum) {
-                            case LOG:
-                                break;
                             case SYNC_COMPLETED:
-                                finalizeSync();
+                                syncCompleted();
                                 break;
-                            case NET_DISCONNECTED:
+                            case SYNC_FAILED:
+                                syncFailed();
                                 break;
                             case SYNC_PROGRESS:
                                 updateProgress();
@@ -164,12 +162,13 @@ public class RepoFragment extends Fragment {
             repoManager.fetchRepo();
             progressLayout.setVisibility(View.VISIBLE);
             progressBar.setMax(repoManager.getRepoCount());
+            txtStatus.setText(getString(R.string.download_progress));
             btnSync.setEnabled(false);
             btnSync.setText(getString(R.string.sync_progress));
         }
     }
 
-    private void finalizeSync() {
+    private void syncCompleted() {
         btnSync.setText(getString(R.string.action_finish));
         btnSync.setEnabled(true);
         txtStatus.setText(getString(R.string.sync_completed));
@@ -184,6 +183,16 @@ public class RepoFragment extends Fragment {
             btnSync.setOnClickListener(v -> {
                 getActivity().onBackPressed();
             });
+    }
+
+    private void syncFailed() {
+        btnSync.setText(getString(R.string.action_sync));
+        btnSync.setEnabled(true);
+        txtLog.setText(getString(R.string.sys_log));
+        txtStatus.setText(getString(R.string.sync_failed));
+        txtProgress.setText(String.format(Locale.getDefault(), "%s", "0%"));
+        progressBar.setProgress(0);
+        btnSync.setOnClickListener(v -> syncDatabase());
     }
 
     private void updateProgress() {
