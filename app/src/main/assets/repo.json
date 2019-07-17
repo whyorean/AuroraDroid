@@ -205,5 +205,13 @@
     "repoMirrors": [],
     "repoFingerprint": "00 5E 88 8A 5A 20 3D 40 E2 8F 37 2B 93 9B 8E 59 95 FB 29 08 1E FC 84 5D B9 9A 8D 4C 14 B5 09 E2",
     "repoDescription": "ZeroNet Android App Nightlies & Stable Releases"
+  },
+  {
+    "repoId": "26",
+    "repoName": "Kali Nethunter",
+    "repoUrl": "https://store.nethunter.com/repo",
+    "repoMirrors": [],
+    "repoFingerprint": "7E 41 8D 34 C3 AD 4F 3C 37 D7 E6 B0 FA CE 13 33 23 64 45 9C 86 21 34 EB 09 9A 3B DA 2C CF 44 94",
+    "repoDescription": "Kali NetHunter, apps in this repository are official binaries built by the original application developers."
   }
 ]
