@@ -161,6 +161,7 @@ public class RepoFragment extends Fragment {
         else {
             repoManager.fetchRepo();
             progressLayout.setVisibility(View.VISIBLE);
+            progressBar.setIndeterminate(true);
             progressBar.setMax(repoManager.getRepoCount());
             txtStatus.setText(getString(R.string.download_progress));
             btnSync.setEnabled(false);
@@ -196,6 +197,7 @@ public class RepoFragment extends Fragment {
     }
 
     private void updateProgress() {
+        progressBar.setIndeterminate(false);
         progressBar.setProgress(++count);
         txtStatus.setText(getString(R.string.sync_progress));
         txtProgress.setText(new StringBuilder()
