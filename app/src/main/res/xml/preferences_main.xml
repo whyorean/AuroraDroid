@@ -53,4 +53,9 @@
         app:fragment="com.aurora.adroid.fragment.preference.UIFragment"
         app:icon="@drawable/ic_ui"
         app:title="@string/pref_ui" />
+
+    <Preference
+        app:fragment="com.aurora.adroid.fragment.preference.UpdatesFragment"
+        app:icon="@drawable/ic_update"
+        app:title="@string/pref_updates_title" />
 </androidx.preference.PreferenceScreen>

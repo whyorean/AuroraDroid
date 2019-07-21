@@ -92,12 +92,17 @@ public class AuroraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        if (!DatabaseUtil.isDatabaseAvailable(this)) {
+        init();
+
+        if (Util.isFirstLaunch(this)) {
             startActivity(new Intent(this, IntroActivity.class));
             finish();
+        } else if (!DatabaseUtil.isDatabaseAvailable(this)) {
+            showSyncDialog(false);
+        } else if (DatabaseUtil.isDatabaseObsolete(this)) {
+            showSyncDialog(true);
         } else {
             checkPermissions();
-            init();
         }
 
         disposable.add(AuroraApplication.getRxBus()
@@ -137,7 +142,7 @@ public class AuroraActivity extends AppCompatActivity {
                 startActivity(new Intent(this, DownloadsActivity.class));
                 return true;
             case R.id.action_sync:
-                showSyncDialog();
+                showSyncDialog(false);
                 return true;
         }
         return super.onOptionsItemSelected(menuItem);
@@ -249,11 +254,11 @@ public class AuroraActivity extends AppCompatActivity {
         });
     }
 
-    protected void showSyncDialog() {
+    protected void showSyncDialog(boolean obsolete) {
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.sync_anim);
         MaterialAlertDialogBuilder mBuilder = new MaterialAlertDialogBuilder(this)
                 .setTitle(getString(R.string.dialog_sync_title))
-                .setMessage(getString(R.string.dialog_sync_desc))
+                .setMessage(obsolete ? getString(R.string.dialog_sync_desc_alt) : getString(R.string.dialog_sync_desc))
                 .setPositiveButton(getString(R.string.dialog_sync_positive), (dialog, which) -> {
                     findViewById(R.id.action_sync).startAnimation(animation);
                     RepoManager repoManager = new RepoManager(this);

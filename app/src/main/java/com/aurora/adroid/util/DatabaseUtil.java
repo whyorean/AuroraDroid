@@ -27,7 +27,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class DatabaseUtil {
 
@@ -43,8 +45,24 @@ public class DatabaseUtil {
         PrefUtil.putBoolean(context, Constants.DATABASE_AVAILABLE, available);
     }
 
-    public static boolean isDatabaseLatest(Context context) {
-        return PrefUtil.getBoolean(context, Constants.DATABASE_LATEST);
+    public static boolean isDatabaseObsolete(Context context) {
+        try {
+            long interval = Long.parseLong(PrefUtil.getString(context, Constants.PREFERENCE_REPO_UPDATE_INTERVAL));
+            if (interval == 0)
+                return false;
+
+            long lastSyncDate = Long.parseLong(PrefUtil.getString(context, Constants.DATABASE_DATE));
+            long currentSyncDate = Calendar.getInstance().getTimeInMillis();
+            long diffDatesInMillis = currentSyncDate - lastSyncDate;
+            long diffInDays = TimeUnit.MILLISECONDS.toDays(diffDatesInMillis);
+            return diffInDays > interval;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static void setDatabaseSyncTime(Context context, Long dateInMillis) {
+        PrefUtil.putString(context, Constants.DATABASE_DATE, String.valueOf(dateInMillis));
     }
 
     public static String getImageUrl(App app) {

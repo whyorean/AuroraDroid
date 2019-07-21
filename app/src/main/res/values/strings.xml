@@ -74,6 +74,7 @@
 
     <string name="dialog_sync_title">Repo Sync</string>
     <string name="dialog_sync_desc">Do you wish to clear database and sync all the selected repositories ?</string>
+    <string name="dialog_sync_desc_alt">Old data detected,there may be new updates, do you wish to sync all repositories ?</string>
     <string name="dialog_sync_completed_desc">All repos synced, it is recommended to restart the app after sync.</string>
     <string name="dialog_sync_positive">Sync now</string>
     <string name="dialog_sync_complete_positive">Restart now</string>
@@ -192,6 +193,15 @@
     <string name="pref_proxy_host">Proxy host</string>
     <string name="pref_proxy_port">Proxy port</string>
     <string name="pref_proxy_type">Proxy type</string>
+    <string name="pref_updates_title">Updates</string>
+    <string name="pref_updates_repo_title">Repo Updates</string>
+    <string name="pref_updates_app_title">App Updates</string>
+    <string name="pref_updates_repo_interval">Updates interval</string>
+    <string name="pref_updates_manual">Manual</string>
+    <string name="pref_updates_daily">1 day</string>
+    <string name="pref_updates_2days">2 days</string>
+    <string name="pref_updates_3days">3 days</string>
+    <string name="pref_updates_7days">7 days</string>
 
     <string name="repo_list">Repository list</string>
     <string name="repo_list_select">Select the repositories you wish to sync</string>

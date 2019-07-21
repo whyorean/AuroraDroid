@@ -48,6 +48,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -119,6 +120,7 @@ public class RepoManager extends ContextWrapper {
                 })
                 .doOnComplete(() -> {
                     DatabaseUtil.setDatabaseAvailable(context, true);
+                    DatabaseUtil.setDatabaseSyncTime(context, Calendar.getInstance().getTimeInMillis());
                     Log.i("Sync completed");
                 })
                 .doOnError(throwable -> {

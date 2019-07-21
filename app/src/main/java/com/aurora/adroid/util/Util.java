@@ -182,6 +182,11 @@ public class Util {
         }
     }
 
+    public static boolean isFirstLaunch(Context context) {
+        boolean first = getPrefs(context).getBoolean(Constants.PREFERENCE_FIRST_LAUNCH, true);
+        PrefUtil.putBoolean(context, Constants.PREFERENCE_FIRST_LAUNCH, false);
+        return first;
+    }
 
     public static boolean shouldAutoInstallApk(Context context) {
         return getPrefs(context).getBoolean(Constants.PREFERENCE_INSTALLATION_AUTO, false);

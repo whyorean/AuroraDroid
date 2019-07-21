@@ -28,11 +28,14 @@ public class Constants {
     public static final String REPO_AVAILABLE = "REPO_AVAILABLE";
     public static final String DATABASE_AVAILABLE = "DATABASE_AVAILABLE";
     public static final String DATABASE_LATEST = "DATABASE_LATEST";
+    public static final String DATABASE_DATE = "DATABASE_DATE";
     public static final String APP_SHARE_URL = "https://f-droid.org/app/";
     public static final String FILES = "Files";
     public static final String JAR = "jar";
     public static final String JSON = ".json";
 
+
+    public static final String PREFERENCE_FIRST_LAUNCH = "PREFERENCE_FIRST_LAUNCH";
     public static final String PREFERENCE_BLACKLIST_APPS_LIST = "PREFERENCE_BLACKLIST_APPS_LIST";
     public static final String PREFERENCE_FAVOURITE_LIST = "PREFERENCE_FAVOURITE_LIST";
     public static final String PREFERENCE_INCLUDE_SYSTEM = "PREFERENCE_INCLUDE_SYSTEM";
@@ -56,4 +59,5 @@ public class Constants {
     public static final String PREFERENCE_PROXY_HOST = "PREFERENCE_PROXY_HOST";
     public static final String PREFERENCE_PROXY_PORT = "PREFERENCE_PROXY_PORT";
     public static final String PREFERENCE_PROXY_TYPE = "PREFERENCE_PROXY_TYPE";
+    public static final String PREFERENCE_REPO_UPDATE_INTERVAL = "PREFERENCE_REPO_UPDATE_INTERVAL";
 }
