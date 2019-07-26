@@ -60,4 +60,5 @@ public class Constants {
     public static final String PREFERENCE_PROXY_PORT = "PREFERENCE_PROXY_PORT";
     public static final String PREFERENCE_PROXY_TYPE = "PREFERENCE_PROXY_TYPE";
     public static final String PREFERENCE_REPO_UPDATE_INTERVAL = "PREFERENCE_REPO_UPDATE_INTERVAL";
+    public static final String PREFERENCE_MIRROR_CHECKED = "PREFERENCE_MIRROR_CHECKED";
 }

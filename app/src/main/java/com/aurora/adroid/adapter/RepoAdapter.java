@@ -41,6 +41,7 @@ import com.aurora.adroid.sheet.RepoDetailsSheet;
 import com.aurora.adroid.util.ViewUtil;
 import com.google.android.material.checkbox.MaterialCheckBox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,12 +50,11 @@ import butterknife.ButterKnife;
 public class RepoAdapter extends SelectableAdapter<RepoAdapter.ViewHolder> {
 
     private Context context;
-    private List<Repo> repoList;
+    private List<Repo> repoList = new ArrayList<>();
     private ItemClickListener itemClickListener;
 
-    public RepoAdapter(Context context, List<Repo> repoList, ItemClickListener itemClickListener) {
+    public RepoAdapter(Context context, ItemClickListener itemClickListener) {
         super(context);
-        this.repoList = repoList;
         this.context = context;
         this.itemClickListener = itemClickListener;
     }

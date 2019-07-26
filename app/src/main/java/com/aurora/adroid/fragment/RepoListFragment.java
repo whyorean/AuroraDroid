@@ -102,7 +102,7 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
         super.onViewCreated(view, savedInstanceState);
         setupFab();
         setupClearAll();
-        setupRecycler(fetchData());
+        setupRecycler();
     }
 
     @Override
@@ -154,8 +154,8 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
         return RepoListManager.getAllRepoList(context);
     }
 
-    private void setupRecycler(List<Repo> repoList) {
-        repoAdapter = new RepoAdapter(context, repoList, this);
+    private void setupRecycler() {
+        repoAdapter = new RepoAdapter(context, this);
         recyclerView.setAdapter(repoAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
         recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(context, R.anim.anim_falldown));

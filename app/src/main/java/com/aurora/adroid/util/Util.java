@@ -208,6 +208,19 @@ public class Util {
         return installMethod.equals("1");
     }
 
+    public static ArrayList<String> getMirrorCheckedList(Context context) {
+        return PrefUtil.getListString(context, Constants.PREFERENCE_MIRROR_CHECKED);
+    }
+
+    public static void putMirrorCheckedList(Context context, ArrayList<String> stringList) {
+        PrefUtil.putListString(context, Constants.PREFERENCE_MIRROR_CHECKED, stringList);
+    }
+
+    public static boolean isMirrorChecked(Context context, String repoId) {
+        ArrayList<String> arrayList = getMirrorCheckedList(context);
+        return arrayList.contains(repoId);
+    }
+
     public static List<String> arrayToList(String[] inputArray) {
         List<String> stringList = new ArrayList<>();
         Collections.addAll(stringList, inputArray);

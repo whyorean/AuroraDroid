@@ -32,9 +32,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.util.Util;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -42,6 +44,8 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,9 +64,14 @@ public class RepoDetailsSheet extends BottomSheetDialogFragment {
     TextView txtFingerPrint;
     @BindView(R.id.txt_description)
     TextView txtDescription;
+    @BindView(R.id.switch_mirror)
+    SwitchCompat mirrorSwitch;
+    @BindView(R.id.txt_mirror_url)
+    TextView txtMirrorUrl;
 
     private Context context;
     private Repo repo;
+    private ArrayList<String> mirrorCheckedList = new ArrayList<>();
 
     public RepoDetailsSheet() {
     }
@@ -87,15 +96,32 @@ public class RepoDetailsSheet extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mirrorCheckedList = Util.getMirrorCheckedList(context);
         txtName.setText(repo.getRepoName());
         txtUrl.setText(repo.getRepoUrl());
+        txtMirrorUrl.setText(repo.getRepoMirrors()[0]);
         txtFingerPrint.setText(repo.getRepoFingerprint());
         txtDescription.setText(repo.getRepoDescription());
-        setupSearch();
+
+        if (repo.getRepoMirrors().length == 0)
+            mirrorSwitch.setVisibility(View.GONE);
+        if (mirrorCheckedList.contains(repo.getRepoId()))
+            mirrorSwitch.setChecked(true);
+
+        mirrorSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (mirrorSwitch.isChecked()) {
+                mirrorCheckedList.add(repo.getRepoId());
+                Util.putMirrorCheckedList(context, mirrorCheckedList);
+            } else {
+                mirrorCheckedList.remove(repo.getRepoId());
+                Util.putMirrorCheckedList(context, mirrorCheckedList);
+            }
+        });
+        setupShare();
         generateQR();
     }
 
-    private void setupSearch() {
+    private void setupShare() {
         imgShare.setOnClickListener(v -> {
             String fingerprint = repo.getRepoFingerprint();
             fingerprint = StringUtils.deleteWhitespace(fingerprint);

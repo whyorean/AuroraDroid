@@ -2,9 +2,9 @@
   {
     "repoId": "01",
     "repoName": "F-Droid ",
-    "repoUrl": "https://mirror.cyberbits.eu/fdroid/repo",
+    "repoUrl": "https://f-droid.org/repo",
     "repoMirrors": [
-      "https://f-droid.org/repo",
+      "https://mirror.cyberbits.eu/fdroid/repo",
       "https://fdroid.tetaneutral.net/fdroid/repo",
       "https://bubu1.eu/fdroid/repo"
     ],

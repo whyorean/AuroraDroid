@@ -62,6 +62,7 @@
     <string name="action_uninstall">Uninstall</string>
     <string name="action_update">Update</string>
     <string name="action_updates">Updates</string>
+    <string name="action_use_mirror">Use mirror URL</string>
     <string name="action_unsupported">Incompatible App</string>
     <string name="action_whitelist">Whitelist</string>
 

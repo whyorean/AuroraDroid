@@ -21,7 +21,6 @@ package com.aurora.adroid.download;
 import android.content.Context;
 
 import com.aurora.adroid.Constants;
-import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.util.PathUtil;
 import com.aurora.adroid.util.Util;
@@ -41,7 +40,11 @@ public class RequestBuilder {
         for (Repo repo : repoList) {
             /*if (RepoListManager.isSynced(context, repo.getRepoId()))
                 continue;*/
-            final Request request = new Request(repo.getRepoUrl() + "/" + SIGNED_FILE_NAME,
+
+            String Url = repo.getRepoUrl();
+            if (Util.isMirrorChecked(context, repo.getRepoId()) && repo.getRepoMirrors().length > 0)
+                Url = repo.getRepoMirrors()[0];
+            final Request request = new Request(Url + "/" + SIGNED_FILE_NAME,
                     PathUtil.getRepoDirectory(context) + repo.getRepoId() + "." + Constants.JAR);
             request.setGroupId(1337);
             request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);

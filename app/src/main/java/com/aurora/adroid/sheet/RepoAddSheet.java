@@ -93,7 +93,7 @@ public class RepoAddSheet extends BottomSheetDialogFragment {
         if (inpRepoId.getText() == null || inpRepoId.getText().toString().isEmpty())
             inpRepoId.setError("Required");
         else
-            repoId = Util.emptyIfNull(inpRepoId.getText().toString());
+            repoId = Util.emptyIfNull(String.valueOf(inpRepoId.getText().hashCode()));
 
         if (inpRepoName.getText() == null || inpRepoName.getText().toString().isEmpty())
             inpRepoName.setError("Required");
