@@ -21,10 +21,21 @@
     <string name="app_name_long">Aurora Droid - App store</string>
     <string name="app_desc">Aurora Droid aka A-Droid, is FOSS client for F-Droid repositories,with an elegant design based of latest MD guidelines
         \n
-        \nA-Droid aims to bring a simple UX, making it user friendly.
         \n
-        \n Changelog : v1.0.0
+        \n Changelog : v1.0.3
+        \n • Added root/services install method
+        \n • Bug fixes and improvements
+        \n
+        \n Changelog : v1.0.2
+        \n • Added download manager
+        \n • Added blacklist and favourite list
+        \n • Added root install method
+        \n • Improved search results
+        \n • Bug fixes and improvements
+        \n
+        \n Changelog : v1.0.2
         \n • Initial release
+        \n
     </string>
     <string name="download_eta_hrs" translatable="false">%1$dh %2$dm %3$ds left</string>
     <string name="download_eta_min" translatable="false">%1$dm %2$ds left</string>
