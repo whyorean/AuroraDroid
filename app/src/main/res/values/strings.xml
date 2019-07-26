@@ -41,6 +41,7 @@
     <string name="action_install">Install</string>
     <string name="action_installing">Installing</string>
     <string name="action_installed">Installed</string>
+    <string name="action_installations">Installations</string>
     <string name="action_later">Later</string>
     <string name="action_manual">Manual download</string>
     <string name="action_more">More</string>
@@ -106,6 +107,17 @@
     <string name="filter_date_updated">Date Updated</string>
     <string name="filter_date_added">Date Added</string>
 
+    <string name="installer_status_failure">Installation failed</string>
+    <string name="installer_status_failure_aborted">Installation cancelled</string>
+    <string name="installer_status_failure_blocked">Installation was blocked</string>
+    <string name="installer_status_failure_conflict">Conflicting package exists</string>
+    <string name="installer_status_failure_incompatible">Incompatible app</string>
+    <string name="installer_status_failure_invalid">Invalid or corrupted APK</string>
+    <string name="installer_status_failure_storage">Insufficient memory space</string>
+    <string name="installer_status_success">Successfully installed</string>
+    <string name="installer_status_unknown">Unknown</string>
+    <string name="installer_status_user_action">Waiting for user confirmation</string>
+
     <string name="list_app_blacklisted_empty">No Apps Blacklisted</string>
     <string name="list_app_depends_on_gsf">GSF dependent</string>
     <string name="list_app_has_ads">has ads</string>
@@ -168,8 +180,11 @@
     <string name="pref_install_mode_title">Installation method</string>
     <string name="pref_install_mode_native">Native</string>
     <string name="pref_install_mode_root">Root</string>
+    <string name="pref_install_mode_services">Aurora Services</string>
     <string name="pref_install_mode_no_root">Root access not available, make sure your device is rooted</string>
     <string name="pref_install_mode_root_warn">Root install method requires the apk to be downloaded in app data, in order to install via adb shell, Android Pie +</string>
+    <string name="pref_install_mode_no_services">Aurora Services not installed, kindly install services first</string>
+    <string name="pref_install_mode_offline_services">Aurora Services not connected, kindly make sure its enabled and you have correct version of app</string>
     <string name="pref_ui">User Interface</string>
     <string name="pref_ui_theme_title">Theme</string>
     <string name="pref_ui_theme_light">Light</string>
@@ -203,6 +218,9 @@
     <string name="pref_updates_2days">2 days</string>
     <string name="pref_updates_3days">3 days</string>
     <string name="pref_updates_7days">7 days</string>
+    <string name="pref_services_title">Aurora Services</string>
+    <string name="pref_services_desc">Launch Aurora services</string>
+    <string name="pref_services_desc_alt">Aurora services unavailable</string>
 
     <string name="repo_list">Repository list</string>
     <string name="repo_list_select">Select the repositories you wish to sync</string>

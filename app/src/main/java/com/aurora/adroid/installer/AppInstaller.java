@@ -33,18 +33,30 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-public class SplitPackageInstaller extends SplitPackageInstallerAbstract {
+public class AppInstaller extends AppInstallerAbstract {
 
-    public SplitPackageInstaller(Context context) {
+    private static volatile AppInstaller instance;
+
+    private AppInstaller(Context context) {
         super(context);
+        instance = this;
+    }
+
+    public static AppInstaller getInstance(Context context) {
+        if (instance == null) {
+            synchronized (AppInstaller.class) {
+                if (instance == null)
+                    instance = new AppInstaller(context);
+            }
+        }
+        return instance;
     }
 
     @Override
     protected void installApkFiles(List<File> apkFiles) {
         PackageInstaller packageInstaller = getContext().getPackageManager().getPackageInstaller();
         try {
-            PackageInstaller.SessionParams sessionParams =
-                    new PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL);
+            PackageInstaller.SessionParams sessionParams = new PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL);
             int sessionID = packageInstaller.createSession(sessionParams);
             PackageInstaller.Session session = packageInstaller.openSession(sessionID);
             for (File apkFile : apkFiles) {
@@ -55,8 +67,12 @@ public class SplitPackageInstaller extends SplitPackageInstallerAbstract {
                 inputStream.close();
                 outputStream.close();
             }
-            Intent callbackIntent = new Intent(getContext(), SplitService.class);
-            PendingIntent pendingIntent = PendingIntent.getService(getContext(), 0, callbackIntent, 0);
+            Intent callbackIntent = new Intent(getContext(), InstallerService.class);
+            PendingIntent pendingIntent = PendingIntent.getService(
+                    getContext(),
+                    sessionID,
+                    callbackIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
             session.commit(pendingIntent.getIntentSender());
             session.close();
         } catch (Exception e) {

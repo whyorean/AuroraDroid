@@ -274,6 +274,19 @@ public class Util {
         return getPrefs(context).getBoolean(Constants.PREFERENCE_ENABLE_PROXY, false);
     }
 
+    public static boolean isPrivilegedInstall(Context context) {
+        String prefValue = PrefUtil.getString(context, Constants.PREFERENCE_INSTALLATION_METHOD);
+        switch (prefValue) {
+            case "0":
+                return false;
+            case "1":
+            case "2":
+                return true;
+            default:
+                return false;
+        }
+    }
+
     public static Proxy getNetworkProxy(Context context) {
         String proxyHost = getPrefs(context).getString(Constants.PREFERENCE_PROXY_HOST, "127.0.0.1");
         String proxyPort = getPrefs(context).getString(Constants.PREFERENCE_PROXY_PORT, "8118");

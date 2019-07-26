@@ -33,10 +33,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
 import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.fragment.DetailsFragment;
-import com.aurora.adroid.installer.Installer;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.notification.GeneralNotification;
 import com.aurora.adroid.util.ContextUtil;
@@ -162,12 +162,12 @@ public class AppActionDetails extends AbstractDetails {
         return v -> {
             btnPositive.setText(R.string.action_installing);
             btnPositive.setEnabled(false);
-            new Installer(context).install(app);
+            AuroraApplication.getInstaller().install(app);
         };
     }
 
     private View.OnClickListener uninstallAppListener() {
-        return v -> new Installer(context).uninstall(app);
+        return v -> AuroraApplication.getUninstaller().uninstall(app);
     }
 
     private View.OnClickListener resumeAppListener() {
@@ -352,7 +352,7 @@ public class AppActionDetails extends AbstractDetails {
                             btnPositive.setEnabled(false);
                         });
                         //Call the installer
-                        new Installer(context).install(app);
+                        AuroraApplication.getInstaller().install(app);
                     }
                     if (fetchListener != null) {
                         fetch.removeListener(fetchListener);

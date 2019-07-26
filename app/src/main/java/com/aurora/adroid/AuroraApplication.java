@@ -18,9 +18,14 @@
 
 package com.aurora.adroid;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.IntentFilter;
 
 import com.aurora.adroid.event.RxBus;
+import com.aurora.adroid.installer.Installer;
+import com.aurora.adroid.installer.InstallerService;
+import com.aurora.adroid.installer.Uninstaller;
 import com.aurora.adroid.util.Log;
 
 import io.reactivex.Observable;
@@ -29,6 +34,18 @@ import io.reactivex.plugins.RxJavaPlugins;
 public class AuroraApplication extends Application {
 
     public static RxBus rxBus;
+    @SuppressLint("StaticFieldLeak")
+    public static Installer installer;
+    @SuppressLint("StaticFieldLeak")
+    public static Uninstaller uninstaller;
+
+    public static Uninstaller getUninstaller() {
+        return uninstaller;
+    }
+
+    public static Installer getInstaller() {
+        return installer;
+    }
 
     public static Observable<Object> getRxBus() {
         return rxBus.toObservable();
@@ -39,5 +56,20 @@ public class AuroraApplication extends Application {
         super.onCreate();
         RxJavaPlugins.setErrorHandler(err -> Log.e(err.getMessage()));
         rxBus = RxBus.get();
+        installer = new Installer(this);
+        uninstaller = new Uninstaller(this);
+        registerReceiver(installer.getPackageInstaller().getBroadcastReceiver(),
+                new IntentFilter(InstallerService.ACTION_INSTALLATION_STATUS_NOTIFICATION));
+        RxJavaPlugins.setErrorHandler(err -> {
+        });
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        try {
+            unregisterReceiver(installer.getPackageInstaller().getBroadcastReceiver());
+        } catch (Exception ignored) {
+        }
     }
 }

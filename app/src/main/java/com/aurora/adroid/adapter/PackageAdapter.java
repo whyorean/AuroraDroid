@@ -28,12 +28,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
 import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.Events;
 import com.aurora.adroid.event.RxBus;
-import com.aurora.adroid.installer.Installer;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 import com.aurora.adroid.notification.GeneralNotification;
@@ -148,7 +148,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
                 if (groupId == pkg.hashCode()) {
                     RxBus.publish(new Event(Events.DOWNLOAD_COMPLETED));
                     notification.notifyCompleted();
-                    new Installer(context).install(pkg.getApkName());
+                    AuroraApplication.getInstaller().install(pkg.getApkName());
                 }
             }
 

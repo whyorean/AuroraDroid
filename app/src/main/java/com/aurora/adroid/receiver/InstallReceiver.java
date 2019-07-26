@@ -23,7 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.aurora.adroid.installer.Installer;
+import com.aurora.adroid.AuroraApplication;
 
 import static com.aurora.adroid.notification.NotificationBase.INTENT_APK_FILE_NAME;
 
@@ -34,7 +34,7 @@ public class InstallReceiver extends BroadcastReceiver {
         if ((extras != null)) {
             final String apkFileName = extras.getString(INTENT_APK_FILE_NAME, "");
             if (!apkFileName.isEmpty()) {
-                new Installer(context).install(apkFileName);
+                AuroraApplication.getInstaller().install(apkFileName);
             }
         }
     }

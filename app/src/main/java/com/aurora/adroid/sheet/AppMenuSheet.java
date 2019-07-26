@@ -33,10 +33,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
 import com.aurora.adroid.adapter.InstalledAppsAdapter;
 import com.aurora.adroid.adapter.UpdatableAppsAdapter;
-import com.aurora.adroid.installer.Installer;
 import com.aurora.adroid.manager.BlacklistManager;
 import com.aurora.adroid.manager.FavouriteListManager;
 import com.aurora.adroid.model.App;
@@ -154,7 +154,7 @@ public class AppMenuSheet extends BottomSheetDialogFragment {
         });
 
         btnUninstall.setOnClickListener(v -> {
-            new Installer(context).uninstall(app);
+            AuroraApplication.getUninstaller().uninstall(app);
             dismissAllowingStateLoss();
         });
 

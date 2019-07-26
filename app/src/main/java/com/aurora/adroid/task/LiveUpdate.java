@@ -3,8 +3,8 @@ package com.aurora.adroid.task;
 import android.content.Context;
 import android.content.ContextWrapper;
 
+import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.download.DownloadManager;
-import com.aurora.adroid.installer.Installer;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.notification.GeneralNotification;
 import com.aurora.adroid.util.DatabaseUtil;
@@ -105,7 +105,7 @@ public class LiveUpdate extends ContextWrapper {
             public void onCompleted(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
                 if (groupId == hashCode && fetchGroup.getGroupDownloadProgress() == 100) {
                     notification.notifyCompleted();
-                    new Installer(context).install(app);
+                    AuroraApplication.getInstaller().install(app);
                     if (fetchListener != null) {
                         fetch.removeListener(fetchListener);
                         fetchListener = null;

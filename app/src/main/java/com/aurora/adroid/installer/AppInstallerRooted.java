@@ -19,11 +19,13 @@
 package com.aurora.adroid.installer;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
+import android.content.pm.PackageInstaller;
 
-import com.aurora.adroid.InstallationStatus;
+import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.Root;
+
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.util.List;
@@ -31,24 +33,38 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SplitPackageInstallerRooted extends SplitPackageInstaller {
+public class AppInstallerRooted extends AppInstallerAbstract {
 
-    private Root root;
+    private static volatile AppInstallerRooted instance;
+    private static Root root;
 
-    public SplitPackageInstallerRooted(Context context) {
+    private AppInstallerRooted(Context context) {
         super(context);
-        root = new Root();
+        instance = this;
+    }
+
+    public static AppInstallerRooted getInstance(Context context) {
+        if (instance == null) {
+            synchronized (AppInstallerRooted.class) {
+                if (instance == null) {
+                    instance = new AppInstallerRooted(context);
+                    root = new Root();
+                }
+            }
+        }
+        return instance;
     }
 
     @Override
     protected void installApkFiles(List<File> apkFiles) {
         try {
+
+            final String packageName = getPackageName(apkFiles.get(0));
             if (root.isTerminated() || !root.isAcquired()) {
-                root = new Root();
+                Root.requestRoot();
                 if (!root.isAcquired()) {
-                    dispatchCurrentSessionUpdate(InstallationStatus.INSTALLATION_FAILED,
-                            "No Root Available");
-                    installationCompleted();
+                    ContextUtil.toastLong(getContext(), "Root access not available");
+                    dispatchSessionUpdate(PackageInstaller.STATUS_FAILURE, packageName);
                     return;
                 }
             }
@@ -79,13 +95,9 @@ public class SplitPackageInstallerRooted extends SplitPackageInstaller {
                     sessionId)));
 
             if (result.toLowerCase().contains("success"))
-                dispatchCurrentSessionUpdate(InstallationStatus.INSTALLATION_SUCCEED,
-                        getPackageNameFromApk(apkFiles));
+                dispatchSessionUpdate(PackageInstaller.STATUS_SUCCESS, packageName);
             else
-                dispatchCurrentSessionUpdate(InstallationStatus.INSTALLATION_FAILED,
-                        String.format(Locale.getDefault(), "Error Root : %s", result));
-
-            installationCompleted();
+                dispatchSessionUpdate(PackageInstaller.STATUS_FAILURE, packageName);
         } catch (Exception e) {
             Log.w(e.getMessage());
         }
@@ -97,13 +109,13 @@ public class SplitPackageInstallerRooted extends SplitPackageInstaller {
         return result;
     }
 
-    private String getPackageNameFromApk(List<File> apkFiles) {
-        for (File apkFile : apkFiles) {
-            PackageInfo packageInfo = getContext().getPackageManager()
-                    .getPackageArchiveInfo(apkFile.getAbsolutePath(), 0);
-            if (packageInfo != null)
-                return packageInfo.packageName;
-        }
-        return "null";
+    private String getPackageName(File fileName) {
+        final String baseName = FilenameUtils.getBaseName(fileName.getName());
+        Pattern pattern = Pattern.compile("[.a-z]*[^.0-9]");
+        Matcher matcher = pattern.matcher(baseName);
+        if (matcher.find())
+            return matcher.group(0);
+        else
+            return "unknown";
     }
 }

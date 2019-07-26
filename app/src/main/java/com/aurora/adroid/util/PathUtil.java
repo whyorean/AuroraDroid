@@ -50,7 +50,7 @@ public class PathUtil {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && Util.isRootInstallEnabled(context)) {
             return context.getFilesDir().getPath();
         } else
-            return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid";
+            return getExtBaseDirectory();
     }
 
     public static String getApkPath(Context context, String apkName) {
@@ -83,6 +83,10 @@ public class PathUtil {
 
     static public String getBaseCopyDirectory() {
         return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid/Copy/APK";
+    }
+
+    static public String getExtBaseDirectory() {
+        return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid";
     }
 
     static public String getBaseFavDirectory() {

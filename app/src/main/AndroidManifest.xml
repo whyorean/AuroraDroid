@@ -143,7 +143,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".installer.SplitService" />
+        <service android:name=".installer.InstallerService" />
     </application>
 
 </manifest>

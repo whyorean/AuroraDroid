@@ -22,7 +22,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.pm.PackageInstaller;
 import android.net.Uri;
 import android.os.Build;
 
@@ -36,27 +36,36 @@ import com.aurora.adroid.notification.QuickNotification;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PathUtil;
 import com.aurora.adroid.util.PrefUtil;
+import com.aurora.adroid.util.TextUtil;
 import com.aurora.adroid.util.Util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Installer {
 
     private Context context;
-    private App app;
+    private Map<String, App> appHashMap = new HashMap<>();
+    private AppInstallerAbstract packageInstaller;
 
     public Installer(Context context) {
         this.context = context;
+        packageInstaller = getInstallationMethod(context.getApplicationContext());
     }
 
     public void install(App app) {
-        this.app = app;
+        appHashMap.put(app.getPackageName(), app);
         if (Util.isNativeInstallerEnforced(context))
             install(app.getAppPackage().getApkName());
         else
-            installSplit(app.getAppPackage().getApkName());
+            installSplit(app);
+    }
+
+    public AppInstallerAbstract getPackageInstaller() {
+        return packageInstaller;
     }
 
     public void install(String apkName) {
@@ -75,8 +84,10 @@ public class Installer {
         context.startActivity(intent);
     }
 
-    public void installSplit(String apkName) {
+    private void installSplit(App app) {
         Log.i("Split Installer Called");
+        String apkName = app.getAppPackage().getApkName();
+        Log.e(apkName);
         List<File> apkFiles = new ArrayList<>();
         File apkDirectory = new File(PathUtil.getRootApkPath(context));
         for (File splitApk : apkDirectory.listFiles()) {
@@ -86,61 +97,59 @@ public class Installer {
             }
         }
 
-        SplitPackageInstallerAbstract installer = getInstallationMethod(context.getApplicationContext());
-        context.getApplicationContext().registerReceiver(installer.getBroadcastReceiver(),
-                new IntentFilter(SplitService.ACTION_INSTALLATION_STATUS_NOTIFICATION));
-        long sessionID = installer.createInstallationSession(apkFiles);
-        installer.startInstallationSession(sessionID);
-        installer.addStatusListener((installationID, installationStatus, packageNameOrErrorDescription) -> {
-            switch (installationStatus) {
-                case INSTALLATION_FAILED:
-                    clearNotification(apkName);
+        packageInstaller.addInstallationStatusListener((statusCode, intentPackageName) -> {
+            final String status = getStatusString(statusCode);
+            final App app1 = appHashMap.get(intentPackageName);
+            final String displayName = (app1 != null)
+                    ? TextUtil.emptyIfNull(app.getName())
+                    : TextUtil.emptyIfNull(intentPackageName);
+
+            Log.i("Package Installer -> %s : %s", displayName, TextUtil.emptyIfNull(status));
+
+            if (app1 != null)
+                clearNotification(intentPackageName);
+
+            switch (statusCode) {
+                case PackageInstaller.STATUS_FAILURE:
+                case PackageInstaller.STATUS_FAILURE_ABORTED:
+                case PackageInstaller.STATUS_FAILURE_BLOCKED:
+                case PackageInstaller.STATUS_FAILURE_CONFLICT:
+                case PackageInstaller.STATUS_FAILURE_INCOMPATIBLE:
+                case PackageInstaller.STATUS_FAILURE_INVALID:
+                case PackageInstaller.STATUS_FAILURE_STORAGE:
                     QuickNotification.show(
                             context,
-                            app.getName(),
-                            context.getString(R.string.notification_installation_failed),
-                            getContentIntent(apkName));
-                    unregisterReceiver(installer);
+                            displayName,
+                            status,
+                            getContentIntent(intentPackageName));
                     break;
-                case QUEUED:
-                    clearNotification(app.getPackageName());
-                    break;
-                case INSTALLATION_SUCCEED:
+                case PackageInstaller.STATUS_SUCCESS:
                     QuickNotification.show(
                             context,
-                            app.getName(),
-                            context.getString(R.string.notification_installation_complete),
-                            getContentIntent(apkName));
-                    if (Util.shouldDeleteApk(context))
-                        PathUtil.deleteApkFile(context, apkName);
-                    unregisterReceiver(installer);
+                            displayName,
+                            status,
+                            getContentIntent(intentPackageName));
+                    if (app1 != null) {
+                        PathUtil.deleteApkFile(context, intentPackageName);
+                        appHashMap.remove(intentPackageName);
+                    }
                     break;
             }
         });
+        packageInstaller.installApkFiles(apkFiles);
     }
 
-    public void uninstall(App app) {
-        Uri uri = Uri.fromParts("package", app.getPackageName(), null);
-        Intent intent = new Intent();
-        intent.setData(uri);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-            intent.setAction(Intent.ACTION_DELETE);
-        } else {
-            intent.setAction(Intent.ACTION_UNINSTALL_PACKAGE);
-            intent.putExtra(Intent.EXTRA_RETURN_RESULT, true);
-        }
-        context.startActivity(intent);
-    }
-
-    private SplitPackageInstallerAbstract getInstallationMethod(Context context) {
+    private AppInstallerAbstract getInstallationMethod(Context context) {
         String prefValue = PrefUtil.getString(context, Constants.PREFERENCE_INSTALLATION_METHOD);
         switch (prefValue) {
             case "0":
-                return new SplitPackageInstaller(context);
+                return AppInstaller.getInstance(context);
             case "1":
-                return new SplitPackageInstallerRooted(context);
+                return AppInstallerRooted.getInstance(context);
+            case "2":
+                return AppInstallerPrivileged.getInstance(context);
             default:
-                return new SplitPackageInstaller(context);
+                return AppInstaller.getInstance(context);
         }
     }
 
@@ -150,16 +159,34 @@ public class Installer {
         notificationManager.cancel(packageName.hashCode());
     }
 
-    private void unregisterReceiver(SplitPackageInstallerAbstract mInstaller) {
-        try {
-            context.getApplicationContext().unregisterReceiver(mInstaller.getBroadcastReceiver());
-        } catch (Exception ignored) {
-        }
-    }
-
     private PendingIntent getContentIntent(String packageName) {
         Intent intent = new Intent(context, DetailsActivity.class);
         intent.putExtra("INTENT_PACKAGE_NAME", packageName);
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private String getStatusString(int status) {
+        switch (status) {
+            case PackageInstaller.STATUS_FAILURE:
+                return context.getString(R.string.installer_status_failure);
+            case PackageInstaller.STATUS_FAILURE_ABORTED:
+                return context.getString(R.string.installer_status_failure_aborted);
+            case PackageInstaller.STATUS_FAILURE_BLOCKED:
+                return context.getString(R.string.installer_status_failure_blocked);
+            case PackageInstaller.STATUS_FAILURE_CONFLICT:
+                return context.getString(R.string.installer_status_failure_conflict);
+            case PackageInstaller.STATUS_FAILURE_INCOMPATIBLE:
+                return context.getString(R.string.installer_status_failure_incompatible);
+            case PackageInstaller.STATUS_FAILURE_INVALID:
+                return context.getString(R.string.installer_status_failure_invalid);
+            case PackageInstaller.STATUS_FAILURE_STORAGE:
+                return context.getString(R.string.installer_status_failure_storage);
+            case PackageInstaller.STATUS_PENDING_USER_ACTION:
+                return context.getString(R.string.installer_status_user_action);
+            case PackageInstaller.STATUS_SUCCESS:
+                return context.getString(R.string.installer_status_success);
+            default:
+                return context.getString(R.string.installer_status_unknown);
+        }
     }
 }

@@ -20,6 +20,7 @@ package com.aurora.adroid;
 
 public class Constants {
     public static final String SHARED_PREFERENCES_KEY = "com.aurora.store";
+    public static final String SERVICE_PACKAGE = "com.aurora.services";
     public static final String TAG = "A-Droid";
     public static final String REPO_BASE = "https://mirror.cyberbits.eu/fdroid/repo/";
     public static final String IMG_URL_PREFIX = "/icons-640/";
@@ -34,6 +35,8 @@ public class Constants {
     public static final String JAR = "jar";
     public static final String JSON = ".json";
 
+    public static final String PRIVILEGED_EXTENSION_PACKAGE_NAME = "com.aurora.services";
+    public static final String PRIVILEGED_EXTENSION_SERVICE_INTENT = "com.aurora.services.IPrivilegedService";
 
     public static final String PREFERENCE_FIRST_LAUNCH = "PREFERENCE_FIRST_LAUNCH";
     public static final String PREFERENCE_BLACKLIST_APPS_LIST = "PREFERENCE_BLACKLIST_APPS_LIST";
@@ -61,4 +64,5 @@ public class Constants {
     public static final String PREFERENCE_PROXY_TYPE = "PREFERENCE_PROXY_TYPE";
     public static final String PREFERENCE_REPO_UPDATE_INTERVAL = "PREFERENCE_REPO_UPDATE_INTERVAL";
     public static final String PREFERENCE_MIRROR_CHECKED = "PREFERENCE_MIRROR_CHECKED";
+    public static final String PREFERENCE_LAUNCH_SERVICES = "PREFERENCE_LAUNCH_SERVICES";
 }
