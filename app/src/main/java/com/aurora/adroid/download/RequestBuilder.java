@@ -40,9 +40,8 @@ public class RequestBuilder {
         for (Repo repo : repoList) {
             /*if (RepoListManager.isSynced(context, repo.getRepoId()))
                 continue;*/
-
             String Url = repo.getRepoUrl();
-            if (Util.isMirrorChecked(context, repo.getRepoId()) && repo.getRepoMirrors().length > 0)
+            if (Util.isMirrorChecked(context, repo.getRepoId()) && repo.getRepoMirrors() != null)
                 Url = repo.getRepoMirrors()[0];
             final Request request = new Request(Url + "/" + SIGNED_FILE_NAME,
                     PathUtil.getRepoDirectory(context) + repo.getRepoId() + "." + Constants.JAR);

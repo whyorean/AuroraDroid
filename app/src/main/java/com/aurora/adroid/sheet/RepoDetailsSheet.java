@@ -72,6 +72,7 @@ public class RepoDetailsSheet extends BottomSheetDialogFragment {
     private Context context;
     private Repo repo;
     private ArrayList<String> mirrorCheckedList = new ArrayList<>();
+    private boolean hasMirror;
 
     public RepoDetailsSheet() {
     }
@@ -97,14 +98,17 @@ public class RepoDetailsSheet extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mirrorCheckedList = Util.getMirrorCheckedList(context);
+        hasMirror = repo.getRepoMirrors() != null && repo.getRepoMirrors().length >= 1;
         txtName.setText(repo.getRepoName());
         txtUrl.setText(repo.getRepoUrl());
-        txtMirrorUrl.setText(repo.getRepoMirrors()[0]);
+        if (hasMirror)
+            txtMirrorUrl.setText(repo.getRepoMirrors()[0]);
         txtFingerPrint.setText(repo.getRepoFingerprint());
         txtDescription.setText(repo.getRepoDescription());
 
-        if (repo.getRepoMirrors().length == 0)
+        if (!hasMirror)
             mirrorSwitch.setVisibility(View.GONE);
+
         if (mirrorCheckedList.contains(repo.getRepoId()))
             mirrorSwitch.setChecked(true);
 
