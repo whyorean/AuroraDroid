@@ -23,18 +23,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <View
-        android:id="@+id/gradient_view"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:background="@drawable/gradient_bg"
-        android:translationZ="1dp" />
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingTop="24dp"
+        android:overScrollMode="never"
         android:scrollbars="none">
 
         <LinearLayout

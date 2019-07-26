@@ -34,7 +34,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.ErrorType;
 import com.aurora.adroid.R;
-import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.adapter.UpdatableAppsAdapter;
 import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.model.App;
@@ -43,7 +42,6 @@ import com.aurora.adroid.task.LiveUpdate;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.view.CustomSwipeToRefresh;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tonyodev.fetch2.Fetch;
 
 import org.apache.commons.lang3.StringUtils;
@@ -74,7 +72,6 @@ public class UpdatesFragment extends BaseFragment {
     private Context context;
     private Fetch fetch;
     private boolean onGoingUpdate = false;
-    private BottomNavigationView bottomNavigationView;
     private UpdatableAppsAdapter updatableAppsAdapter;
     private List<App> updatableAppList = new ArrayList<>();
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -111,8 +108,6 @@ public class UpdatesFragment extends BaseFragment {
         setErrorView(ErrorType.UNKNOWN);
         setupRecycler();
         customSwipeToRefresh.setOnRefreshListener(() -> fetchData());
-        if (getActivity() instanceof AuroraActivity)
-            bottomNavigationView = ((AuroraActivity) getActivity()).getBottomNavigationView();
     }
 
     @Override
@@ -162,19 +157,6 @@ public class UpdatesFragment extends BaseFragment {
         recyclerView.setAdapter(updatableAppsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
         recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(context, R.anim.anim_falldown));
-        recyclerView.setOnFlingListener(new RecyclerView.OnFlingListener() {
-            @Override
-            public boolean onFling(int velocityX, int velocityY) {
-                if (velocityY < 0) {
-                    if (bottomNavigationView != null)
-                        ViewUtil.showBottomNav(bottomNavigationView, true);
-                } else if (velocityY > 0) {
-                    if (bottomNavigationView != null)
-                        ViewUtil.hideBottomNav(bottomNavigationView, true);
-                }
-                return false;
-            }
-        });
     }
 
     private void setupUpdateAll() {

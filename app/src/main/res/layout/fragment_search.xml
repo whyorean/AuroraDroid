@@ -57,27 +57,19 @@
             android:text="Sort by"
             android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
 
-        <include layout="@layout/include_filters"/>
-
-        <View
-            android:id="@+id/gradient_view"
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_below="@id/sort_view"
-            android:background="@drawable/gradient_bg"
-            android:translationZ="1dp" />
+        <include layout="@layout/include_filters" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/gradient_view"
-            android:layout_marginTop="-32dp"
+            android:layout_below="@id/sort_view"
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:paddingTop="16dp"
+            android:paddingBottom="@dimen/margin_bottom"
             android:scrollbars="vertical"
-            android:splitMotionEvents="true"
+            android:splitMotionEvents="false"
             tools:listitem="@layout/item_installed" />
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

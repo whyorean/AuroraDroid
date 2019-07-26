@@ -35,13 +35,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.Sort;
-import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.adapter.GenericAppsAdapter;
 import com.aurora.adroid.task.FetchAppsTask;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -74,7 +72,6 @@ public class SearchFragment extends Fragment {
     Chip chipDateAdded;
 
     private Context context;
-    private BottomNavigationView bottomNavigationView;
     private GenericAppsAdapter genericAppsAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -105,8 +102,6 @@ public class SearchFragment extends Fragment {
         setupSearch();
         setupRecycler();
         setupChip();
-        if (getActivity() instanceof AuroraActivity)
-            bottomNavigationView = ((AuroraActivity) getActivity()).getBottomNavigationView();
     }
 
     @Override
@@ -175,30 +170,16 @@ public class SearchFragment extends Fragment {
         recyclerView.setAdapter(genericAppsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
         recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(context, R.anim.anim_falldown));
-        recyclerView.setOnFlingListener(new RecyclerView.OnFlingListener() {
-            @Override
-            public boolean onFling(int velocityX, int velocityY) {
-                if (velocityY < 0) {
-                    if (bottomNavigationView != null)
-                        ViewUtil.showBottomNav(bottomNavigationView, true);
-                } else if (velocityY > 0) {
-                    if (bottomNavigationView != null)
-                        ViewUtil.hideBottomNav(bottomNavigationView, true);
-                }
-                return false;
-            }
-        });
     }
 
     private void notifyAction(String message) {
-        ViewUtil.hideBottomNav(bottomNavigationView, true);
         Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
         snackbar.setDuration(BaseTransientBottomBar.LENGTH_SHORT);
         snackbar.show();
         snackbar.addCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
-                ViewUtil.showBottomNav(bottomNavigationView, true);
+                ViewUtil.showBottomNav(null, true);
             }
         });
     }

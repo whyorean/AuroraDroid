@@ -34,14 +34,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.ErrorType;
 import com.aurora.adroid.R;
-import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.adapter.InstalledAppsAdapter;
 import com.aurora.adroid.task.InstalledAppTask;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PrefUtil;
-import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.view.CustomSwipeToRefresh;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import butterknife.BindView;
@@ -62,7 +59,6 @@ public class InstalledFragment extends BaseFragment {
 
 
     private Context context;
-    private BottomNavigationView bottomNavigationView;
     private InstalledAppsAdapter installedAppsAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -102,9 +98,6 @@ public class InstalledFragment extends BaseFragment {
         setErrorView(ErrorType.UNKNOWN);
         setupRecycler();
         customSwipeToRefresh.setOnRefreshListener(() -> fetchData());
-        if (getActivity() instanceof AuroraActivity)
-            bottomNavigationView = ((AuroraActivity) getActivity()).getBottomNavigationView();
-
         switchSystem.setChecked(PrefUtil.getBoolean(context, Constants.PREFERENCE_INCLUDE_SYSTEM));
         switchSystem.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked)
@@ -154,18 +147,5 @@ public class InstalledFragment extends BaseFragment {
         recyclerView.setAdapter(installedAppsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
         recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(context, R.anim.anim_falldown));
-        recyclerView.setOnFlingListener(new RecyclerView.OnFlingListener() {
-            @Override
-            public boolean onFling(int velocityX, int velocityY) {
-                if (velocityY < 0) {
-                    if (bottomNavigationView != null)
-                        ViewUtil.showBottomNav(bottomNavigationView, true);
-                } else if (velocityY > 0) {
-                    if (bottomNavigationView != null)
-                        ViewUtil.hideBottomNav(bottomNavigationView, true);
-                }
-                return false;
-            }
-        });
     }
 }
