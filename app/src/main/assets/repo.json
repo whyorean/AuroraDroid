@@ -213,5 +213,13 @@
     "repoMirrors": [],
     "repoFingerprint": "7E 41 8D 34 C3 AD 4F 3C 37 D7 E6 B0 FA CE 13 33 23 64 45 9C 86 21 34 EB 09 9A 3B DA 2C CF 44 94",
     "repoDescription": "Kali NetHunter, apps in this repository are official binaries built by the original application developers."
+  },
+  {
+    "repoId": "27",
+    "repoName": "Bitwarden",
+    "repoUrl": "https://mobileapp.bitwarden.com/fdroid/repo",
+    "repoMirrors": [],
+    "repoFingerprint": "BC 54 EA 6F D1 CD 51 75 BC CC C4 7C 56 1C 57 26 E1 C3 ED 7E 68 6B 6D B4 B1 8B AC 84 3A 3E FE 6C",
+    "repoDescription": "Bitwarden repository"
   }
 ]
