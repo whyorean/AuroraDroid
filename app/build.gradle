@@ -19,12 +19,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "com.aurora.adroid"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 3
         versionName "1.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -71,8 +71,8 @@ dependencies {
     implementation 'com.scottyab:rootbeer-lib:0.0.7'
 
     //OkHTTP3
-    implementation 'com.squareup.okhttp3:okhttp:3.14.0'
-    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.14.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.0.1'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.0.1'
 
     //RX-Java2
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
