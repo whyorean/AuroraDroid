@@ -225,9 +225,8 @@ public class AuroraActivity extends AppCompatActivity {
         viewPagerAdapter.addFragment(0, new HomeFragment());
         viewPagerAdapter.addFragment(1, new AppsFragment());
         viewPagerAdapter.addFragment(2, new SearchFragment());
-        viewPager.setAdapter(viewPagerAdapter);
-        viewPager.setOffscreenPageLimit(3);
         viewPager.enableScroll(false);
+        viewPager.setAdapter(viewPagerAdapter);
     }
 
     private void setupBottomNavigation() {
@@ -272,7 +271,7 @@ public class AuroraActivity extends AppCompatActivity {
     }
 
     protected void showSyncCompletedDialog() {
-        MaterialAlertDialogBuilder mBuilder = new MaterialAlertDialogBuilder(this)
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(getString(R.string.dialog_sync_title))
                 .setMessage(getString(R.string.dialog_sync_completed_desc))
                 .setPositiveButton(getString(R.string.dialog_sync_complete_positive), (dialog, which) -> {
@@ -282,8 +281,8 @@ public class AuroraActivity extends AppCompatActivity {
                     dialog.dismiss();
                 });
         ;
-        mBuilder.create();
-        mBuilder.show();
+        builder.create();
+        builder.show();
     }
 
     protected void showAddRepoDialog(Repo repo) {

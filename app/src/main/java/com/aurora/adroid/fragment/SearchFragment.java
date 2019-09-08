@@ -81,12 +81,6 @@ public class SearchFragment extends Fragment {
         this.context = context;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -105,18 +99,17 @@ public class SearchFragment extends Fragment {
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            if (searchView != null)
-                searchView.requestFocus();
-        }
+    public void onResume() {
+        super.onResume();
+        if (searchView != null)
+            searchView.requestFocus();
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        searchView = null;
         disposable.clear();
+        super.onDestroy();
     }
 
     private void setupSearch() {
@@ -139,7 +132,7 @@ public class SearchFragment extends Fragment {
     private void fetchData(String query) {
         disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
                 .searchApps(query))
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((appList) -> {
                     if (appList.isEmpty()) {

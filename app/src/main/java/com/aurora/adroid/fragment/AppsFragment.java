@@ -72,7 +72,6 @@ public class AppsFragment extends Fragment {
         tabAdapter.addFragment(new InstalledFragment(), getString(R.string.action_installed));
 
         viewPager.setAdapter(tabAdapter);
-        viewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(viewPager);
     }
 }

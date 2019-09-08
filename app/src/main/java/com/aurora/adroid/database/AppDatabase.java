@@ -26,20 +26,22 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.model.Index;
 import com.aurora.adroid.model.Package;
 
-@Database(entities = {App.class, Package.class}, version = 1, exportSchema = false)
+@Database(entities = {App.class, Package.class, Index.class}, version = 2, exportSchema = false)
 @TypeConverters(DatabaseConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
+
 
     private static final String DATABASE_NAME = "app";
     private static AppDatabase instance;
 
     public static synchronized AppDatabase getAppDatabase(Context context) {
         if (instance == null) {
-            instance = Room.databaseBuilder(
-                    context.getApplicationContext(),
-                    AppDatabase.class, AppDatabase.DATABASE_NAME).build();
+            instance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, AppDatabase.DATABASE_NAME)
+                    .fallbackToDestructiveMigration()
+                    .build();
         }
         return instance;
     }
@@ -54,4 +56,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract AppDao appDao();
 
     public abstract PackageDao packageDao();
+
+    public abstract IndexDao indexDao();
 }

@@ -131,7 +131,7 @@ public class RepoManager extends ContextWrapper {
                 .subscribe());
     }
 
-    private synchronized void updateProgress() {
+    private void updateProgress() {
         count++;
         RxBus.publish(new Event(Events.SYNC_PROGRESS));
         if (count == getRepoCount() - failedDownloadCount) {
@@ -141,7 +141,7 @@ public class RepoManager extends ContextWrapper {
         }
     }
 
-    private synchronized void updateDownloads() {
+    private void updateDownloads() {
         downloadCount++;
         if (downloadCount == getRepoCount()) {
             fetch.removeListener(abstractFetchListener);

@@ -147,7 +147,7 @@ public class DetailsFragment extends Fragment {
     private void fetchApp() {
         disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
                 .getFullAppByPackageName(packageName))
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((mApp) -> {
                     if (mApp != null) {

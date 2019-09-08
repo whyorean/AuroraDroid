@@ -21,10 +21,16 @@ package com.aurora.adroid.task;
 import android.content.Context;
 import android.content.ContextWrapper;
 
-import com.aurora.adroid.util.FileUtil;
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.util.PathUtil;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.File;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import io.reactivex.Observable;
 
@@ -41,7 +47,18 @@ public class ExtractRepoTask extends ContextWrapper {
 
     public Observable<File> extract() {
         return Observable.create(emitter -> {
-            FileUtil.unzipJar(file, repoDir);
+            try {
+                final JarFile jarFile = new JarFile(file);
+                final String fileName = FilenameUtils.getBaseName(file.getName());
+                for (Enumeration<JarEntry> enums = jarFile.entries(); enums.hasMoreElements(); ) {
+                    JarEntry entry = enums.nextElement();
+                    if (entry.getName().equals(Constants.DATA_FILE_NAME)) {
+                        final File jsonFile = new File(repoDir + fileName + Constants.JSON);
+                        FileUtils.copyToFile(jarFile.getInputStream(entry), jsonFile);
+                    }
+                }
+            } catch (Exception ignored) {
+            }
             emitter.onNext(file);
             emitter.onComplete();
         });

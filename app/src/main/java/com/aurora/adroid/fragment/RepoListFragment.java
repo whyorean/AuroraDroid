@@ -167,9 +167,9 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
             @Override
             public boolean onFling(int velocityX, int velocityY) {
                 if (velocityY < 0) {
-                    fabAdd.show(true);
+                    fabAdd.show();
                 } else if (velocityY > 0) {
-                    fabAdd.hide(true);
+                    fabAdd.hide();
                 }
                 return false;
             }

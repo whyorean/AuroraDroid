@@ -112,7 +112,7 @@ public class BlacklistFragment extends BaseFragment implements BlacklistAdapter.
     private void fetchData() {
         disposable.add(Observable.fromCallable(() -> new InstalledAppTask(context)
                 .getAllApps())
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(subscription -> customSwipeToRefresh.setRefreshing(true))
                 .doOnComplete(() -> customSwipeToRefresh.setRefreshing(false))

@@ -25,28 +25,26 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.aurora.adroid.model.Index;
 import com.aurora.adroid.model.Package;
 
 import java.util.List;
 
 @Dao
-public interface PackageDao {
+public interface IndexDao {
 
-    @Query("SELECT * FROM Package WHERE packageName = :packageName ORDER BY added DESC")
-    Package getPackageByPackageName(String packageName);
-
-    @Query("SELECT * FROM Package WHERE packageName = :packageName ORDER BY added DESC")
-    List<Package> getPackageListByPackageName(String packageName);
+    @Query("SELECT * FROM `index` WHERE repoId = :repoId LIMIT 1")
+    Index getRepoByRepoId(String repoId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Package> packageList);
+    void insertAll(List<Index> indexList);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Package appPackage);
+    void insert(Index index);
 
     @Delete
-    void delete(Package user);
+    void delete(Index index);
 
     @Update
-    void update(Package appPackage);
+    void update(Index index);
 }

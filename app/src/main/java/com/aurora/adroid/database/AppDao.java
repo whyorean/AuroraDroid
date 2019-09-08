@@ -45,32 +45,32 @@ public interface AppDao {
     @Query("SELECT * FROM app WHERE name = :appName")
     App getAppByName(String appName);
 
-    @Query("SELECT DISTINCT * FROM app WHERE name LIKE :pattern LIMIT 20")
+    @Query("SELECT * FROM app WHERE name LIKE :pattern LIMIT 20")
     List<App> findAppsByName(String pattern);
 
-    @Query("SELECT DISTINCT * FROM app WHERE :refTime - lastUpdated <= :weekCount * 604800000 ORDER BY lastUpdated DESC")
+    @Query("SELECT * FROM app WHERE :refTime - lastUpdated <= :weekCount * 604800000 ORDER BY lastUpdated DESC")
     List<App> getLatestUpdatedApps(Long refTime, int weekCount);
 
-    @Query("SELECT DISTINCT * FROM app WHERE :refTime - added <= :weekCount * 604800000 ORDER BY added DESC LIMIT 30")
+    @Query("SELECT * FROM app WHERE :refTime - added <= :weekCount * 604800000 ORDER BY added DESC LIMIT 30")
     List<App> getLatestAddedApps(Long refTime, int weekCount);
 
-    @Query("SELECT DISTINCT * FROM app WHERE (name LIKE :query) OR (summary LIKE :query) LIMIT 30")
+    @Query("SELECT * FROM app WHERE (name LIKE :query) OR (summary LIKE :query) LIMIT 30")
     List<App> searchApps(String query);
 
     @RawQuery()
     List<App> searchApps(SupportSQLiteQuery query);
 
-    @Query("SELECT DISTINCT * FROM app WHERE categories LIKE :category")
+    @Query("SELECT * FROM app WHERE categories LIKE :category")
     List<App> searchAppsByCategory(String category);
 
-    @Query("SELECT DISTINCT * FROM app WHERE repoId LIKE :repoId")
+    @Query("SELECT * FROM app WHERE repoId LIKE :repoId")
     List<App> searchAppsByRepository(String repoId);
 
     @Query("SELECT `en-US-phoneScreenshots` FROM app WHERE packageName =:packageName")
     String getPhoneScreenshots(String packageName);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(App... apps);
+    void insertAll(List<App> appList);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(App app);

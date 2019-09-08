@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -77,12 +76,6 @@ public class HomeFragment extends Fragment {
         this.context = context;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -93,57 +86,56 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         setupCategories();
         setupRepository();
         setupUpdatedApps();
         setupNewApps();
+
+        fetchCategories();
+        fetchRepositories();
+        fetchNewApps();
+        fetchLatestApps();
+
         if (getActivity() instanceof AuroraActivity)
             bottomNavigationView = ((AuroraActivity) getActivity()).getBottomNavigationView();
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        fetchCategories();
-        fetchRepositories();
-        fetchNewApps();
-        fetchLatestApps();
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         disposable.clear();
+        super.onDestroy();
     }
 
     private void setupCategories() {
         categoriesAdapter = new CategoriesAdapter(context);
         recyclerViewCat.setAdapter(categoriesAdapter);
         recyclerViewCat.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
-        recyclerViewCat.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(context, R.anim.anim_slideright));
     }
 
     private void setupRepository() {
         repositoriesAdapter = new RepositoriesAdapter(context);
         recyclerViewRepo.setAdapter(repositoriesAdapter);
         recyclerViewRepo.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
-        recyclerViewRepo.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(context, R.anim.anim_slideright));
     }
 
     private void setupNewApps() {
         clusterAppsAdapter = new ClusterAppsAdapter(context);
         recyclerViewNew.setAdapter(clusterAppsAdapter);
         recyclerViewNew.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
-        recyclerViewNew.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(context, R.anim.anim_slideright));
     }
 
     private void setupUpdatedApps() {
         latestUpdatedAdapter = new LatestUpdatedAdapter(context);
         recyclerViewLatest.setAdapter(latestUpdatedAdapter);
         recyclerViewLatest.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-        recyclerViewLatest.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(context, R.anim.anim_falldown));
         recyclerViewLatest.setOnFlingListener(new RecyclerView.OnFlingListener() {
             @Override
             public boolean onFling(int velocityX, int velocityY) {
@@ -162,15 +154,14 @@ public class HomeFragment extends Fragment {
     private void fetchCategories() {
         disposable.add(Observable.fromCallable(() -> new CategoriesTask(context)
                 .getCategories())
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((categoryList) -> {
+                .subscribe(categoryList -> {
                     if (!categoryList.isEmpty()) {
                         categoriesAdapter.addData(categoryList);
                     }
                 }, err -> {
                     Log.e(err.getMessage());
-                    err.printStackTrace();
                 }));
     }
 
@@ -181,31 +172,28 @@ public class HomeFragment extends Fragment {
     private void fetchNewApps() {
         disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
                 .getLatestAddedApps(3))
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((appList) -> {
+                .subscribe(appList -> {
                     if (!appList.isEmpty()) {
                         clusterAppsAdapter.addData(appList);
                     }
                 }, err -> {
                     Log.e(err.getMessage());
-                    err.printStackTrace();
                 }));
     }
 
     private void fetchLatestApps() {
         disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
                 .getLatestUpdatedApps(1))
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((appList) -> {
+                .subscribe(appList -> {
                     if (!appList.isEmpty()) {
                         latestUpdatedAdapter.addData(appList);
                     }
                 }, err -> {
                     Log.e(err.getMessage());
-                    err.printStackTrace();
                 }));
     }
-
 }

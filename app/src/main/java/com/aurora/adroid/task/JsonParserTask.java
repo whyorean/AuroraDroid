@@ -24,10 +24,12 @@ import android.database.sqlite.SQLiteException;
 
 import com.aurora.adroid.database.AppDao;
 import com.aurora.adroid.database.AppDatabase;
+import com.aurora.adroid.database.IndexDao;
 import com.aurora.adroid.database.PackageDao;
 import com.aurora.adroid.manager.RepoBundle;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.model.Index;
 import com.aurora.adroid.model.Package;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.util.Log;
@@ -45,7 +47,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -67,16 +68,31 @@ public class JsonParserTask extends ContextWrapper {
         return Observable.create(emitter -> {
             boolean status = false;
 
-            final Repo repo = RepoListManager.getRepoById(this, FilenameUtils.getBaseName(file.getName()));
-            final File jsonFile = new File(repoDir + repo.getRepoId() + JSON);
-            final Gson gson = new Gson();
             final AppDatabase appDatabase = AppDatabase.getAppDatabase(this);
             final AppDao appDao = appDatabase.appDao();
             final PackageDao packageDao = appDatabase.packageDao();
+            final IndexDao indexDao = appDatabase.indexDao();
+
+            final Repo repo = RepoListManager.getRepoById(this, FilenameUtils.getBaseName(file.getName()));
+            final Index index = indexDao.getRepoByRepoId(repo.getRepoId());
+
+            final File jsonFile = new File(repoDir + repo.getRepoId() + JSON);
+            final Gson gson = new Gson();
+
             try {
                 final String jsonString = IOUtils.toString(FileUtils.openInputStream(jsonFile), "UTF-8");
                 final JSONObject jsonObject = new JSONObject(jsonString);
+
                 final JSONArray jsonArrayApp = jsonObject.getJSONArray("apps");
+                final JSONObject jsonObjectIndex = jsonObject.getJSONObject("repo");
+                final JSONObject jsonArrayPackage = jsonObject.getJSONObject("packages");
+
+                final Index indexRepo = gson.fromJson(jsonObjectIndex.toString(), Index.class);
+                indexRepo.setRepoId(repo.getRepoId());
+                indexDao.insert(indexRepo);
+
+                final List<App> appList = new ArrayList<>();
+                final List<Package> packageList = new ArrayList<>();
 
                 for (int i = 0; i < jsonArrayApp.length(); i++) {
                     final JSONObject appObj = jsonArrayApp.getJSONObject(i);
@@ -84,27 +100,19 @@ public class JsonParserTask extends ContextWrapper {
                     app.setRepoId(repo.getRepoId());
                     app.setRepoName(repo.getRepoName());
                     app.setRepoUrl(repo.getRepoUrl());
-                    appDao.insert(app);
-                }
+                    appList.add(app);
 
-                final JSONObject jsonArrayPackage = jsonObject.getJSONObject("packages");
-
-                final Iterator<String> packageIterator = jsonArrayPackage.keys();
-                List<String> packageList = new ArrayList<>();
-                while (packageIterator.hasNext()) {
-                    packageList.add(packageIterator.next());
-                }
-
-                for (int i = 0; i < jsonArrayPackage.length(); i++) {
-                    final JSONArray jsonArray = jsonArrayPackage.getJSONArray(packageList.get(i));
-                    for (int index = 0; index < jsonArray.length(); index++) {
-                        final JSONObject packageObj = jsonArray.getJSONObject(index);
+                    final JSONArray jsonArray = jsonArrayPackage.getJSONArray(app.getPackageName());
+                    for (int j = 0; j < jsonArray.length(); j++) {
+                        final JSONObject packageObj = jsonArray.getJSONObject(j);
                         final Package pkg = gson.fromJson(packageObj.toString(), Package.class);
                         pkg.setRepoName(repo.getRepoName());
                         pkg.setRepoUrl(repo.getRepoUrl());
-                        packageDao.insert(pkg);
+                        packageList.add(pkg);
                     }
                 }
+                appDao.insertAll(appList);
+                packageDao.insertAll(packageList);
                 status = true;
             } catch (JSONException e) {
                 Log.e("Error processing JSON : %s", jsonFile.getName());

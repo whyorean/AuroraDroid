@@ -124,7 +124,7 @@ public class InstalledFragment extends BaseFragment {
     private void fetchData() {
         disposable.add(Observable.fromCallable(() -> new InstalledAppTask(context)
                 .getInstalledApps(switchSystem.isChecked()))
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(subscription -> customSwipeToRefresh.setRefreshing(true))
                 .doOnComplete(() -> customSwipeToRefresh.setRefreshing(false))
