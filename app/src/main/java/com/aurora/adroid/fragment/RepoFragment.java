@@ -20,6 +20,7 @@ package com.aurora.adroid.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
@@ -44,7 +45,8 @@ import com.aurora.adroid.activity.SettingsActivity;
 import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.Events;
 import com.aurora.adroid.event.LogEvent;
-import com.aurora.adroid.manager.RepoManager;
+import com.aurora.adroid.manager.RepoListManager;
+import com.aurora.adroid.service.RepoSyncService;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -77,6 +79,7 @@ public class RepoFragment extends Fragment {
     TextView txtStatus;
 
     private Context context;
+    private RepoListManager repoListManager;
     private int count = 0;
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -90,6 +93,9 @@ public class RepoFragment extends Fragment {
                     if (event instanceof Event) {
                         Events eventEnum = ((Event) event).getEvent();
                         switch (eventEnum) {
+                            case SYNC_EMPTY:
+                                notifyAction(getString(R.string.toast_no_repo_selected));
+                                break;
                             case SYNC_COMPLETED:
                                 syncCompleted();
                                 break;
@@ -125,48 +131,59 @@ public class RepoFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        repoListManager = new RepoListManager(context);
         init();
     }
 
     @Override
     public void onStop() {
+        try {
+            disposable.clear();
+            disposable.dispose();
+        } catch (Exception ignored) {
+        }
         super.onStop();
-        disposable.clear();
-        if (!disposable.isDisposed())
-            disposable.isDisposed();
     }
 
     private void init() {
-        repoLayout.setOnClickListener(v -> {
-            RepoListFragment fragment = new RepoListFragment();
-            FragmentManager fragmentManager = getFragmentManager();
-            if (fragmentManager != null)
-                fragmentManager
-                        .beginTransaction()
-                        .add(R.id.coordinator, fragment)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .addToBackStack(null)
-                        .commitAllowingStateLoss();
-        });
-        btnSync.setOnClickListener(v -> syncDatabase());
+        repoLayout.setOnClickListener(v -> openRepoListFragment());
+        btnSync.setOnClickListener(v -> startRepoSyncService());
         txtLog.setMovementMethod(new ScrollingMovementMethod());
+        if (RepoSyncService.isServiceRunning())
+            blockSync();
     }
 
-    private void syncDatabase() {
-        RepoManager repoManager = new RepoManager(context);
-        if (repoManager.getRepoCount() == 0)
-            notifyAction(getString(R.string.toast_no_repo_selected));
-        else {
-            repoManager.fetchRepo();
-            progressLayout.setVisibility(View.VISIBLE);
-            progressBar.setIndeterminate(true);
-            progressBar.setMax(repoManager.getRepoCount());
-            txtStatus.setText(getString(R.string.download_progress));
-            btnSync.setEnabled(false);
-            btnSync.setText(getString(R.string.sync_progress));
+    private void openRepoListFragment() {
+        RepoListFragment fragment = new RepoListFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager != null)
+            fragmentManager
+                    .beginTransaction()
+                    .add(R.id.coordinator, fragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss();
+    }
+
+    private void startRepoSyncService() {
+        Intent intent = new Intent(context, RepoSyncService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(intent);
+        } else {
+            context.startService(intent);
         }
+        blockSync();
+    }
+
+    private void blockSync() {
+        progressLayout.setVisibility(View.VISIBLE);
+        progressBar.setIndeterminate(true);
+        progressBar.setMax(repoListManager.getRepoCount());
+        txtStatus.setText(getString(R.string.download_progress));
+        btnSync.setEnabled(false);
+        btnSync.setText(getString(R.string.sync_progress));
     }
 
     private void syncCompleted() {
@@ -175,6 +192,7 @@ public class RepoFragment extends Fragment {
         txtStatus.setText(getString(R.string.sync_completed));
         txtProgress.setText(String.format(Locale.getDefault(), "%s", "100%"));
         progressBar.setProgress(progressBar.getMax());
+
         if (getActivity() instanceof IntroActivity)
             btnSync.setOnClickListener(v -> {
                 getActivity().startActivity(new Intent(context, AuroraActivity.class));
@@ -193,7 +211,7 @@ public class RepoFragment extends Fragment {
         txtStatus.setText(getString(R.string.sync_failed));
         txtProgress.setText(String.format(Locale.getDefault(), "%s", "0%"));
         progressBar.setProgress(0);
-        btnSync.setOnClickListener(v -> syncDatabase());
+        btnSync.setOnClickListener(v -> startRepoSyncService());
     }
 
     private void updateProgress() {

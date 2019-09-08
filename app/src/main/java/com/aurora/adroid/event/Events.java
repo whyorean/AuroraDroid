@@ -19,6 +19,7 @@
 package com.aurora.adroid.event;
 
 public enum Events {
+    SYNC_EMPTY,
     SYNC_COMPLETED,
     SYNC_FAILED,
     SYNC_PROGRESS,

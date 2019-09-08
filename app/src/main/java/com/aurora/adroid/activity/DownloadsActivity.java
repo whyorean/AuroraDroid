@@ -181,6 +181,8 @@ public class DownloadsActivity extends AppCompatActivity {
                 return;
             }
             for (Download download : list) {
+                if (download.getGroup() == 1337)
+                    continue; /*Exclude repository downloads from download  manager*/
                 downloadsAdapter.addDownload(download);
             }
         }).addListener(fetchListener);

@@ -144,6 +144,7 @@
         </receiver>
 
         <service android:name=".installer.InstallerService" />
+        <service android:name=".service.RepoSyncService" />
     </application>
 
 </manifest>

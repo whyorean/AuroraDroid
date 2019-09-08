@@ -21,9 +21,11 @@ package com.aurora.adroid.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -46,14 +48,16 @@ import com.aurora.adroid.fragment.AppsFragment;
 import com.aurora.adroid.fragment.HomeFragment;
 import com.aurora.adroid.fragment.SearchFragment;
 import com.aurora.adroid.manager.RepoListManager;
-import com.aurora.adroid.manager.RepoManager;
 import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.service.RepoSyncService;
+import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.TextUtil;
 import com.aurora.adroid.util.ThemeUtil;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.view.CustomViewPager;
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -92,8 +96,6 @@ public class AuroraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        init();
-
         if (Util.isFirstLaunch(this)) {
             startActivity(new Intent(this, IntroActivity.class));
             finish();
@@ -105,6 +107,8 @@ public class AuroraActivity extends AppCompatActivity {
             checkPermissions();
         }
 
+        init();
+
         disposable.add(AuroraApplication.getRxBus()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -113,8 +117,12 @@ public class AuroraActivity extends AppCompatActivity {
                         Events eventEnum = ((Event) event).getEvent();
                         switch (eventEnum) {
                             case SYNC_COMPLETED:
-                                findViewById(R.id.action_sync).clearAnimation();
+                                clearSyncAnim();
                                 showSyncCompletedDialog();
+                                break;
+                            case SYNC_EMPTY:
+                                clearSyncAnim();
+                                ContextUtil.toastLong(this, "Select at least one repo to sync");
                                 break;
                         }
                     }
@@ -126,6 +134,7 @@ public class AuroraActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_sync);
         return true;
     }
 
@@ -197,10 +206,13 @@ public class AuroraActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        AppDatabase.destroyInstance();
-        disposable.clear();
-        if (!disposable.isDisposed())
+        try {
+            AppDatabase.destroyInstance();
+            Glide.with(this).pauseAllRequests();
+            disposable.clear();
             disposable.dispose();
+        } catch (Exception ignored) {
+        }
         super.onDestroy();
     }
 
@@ -254,20 +266,20 @@ public class AuroraActivity extends AppCompatActivity {
     }
 
     protected void showSyncDialog(boolean obsolete) {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.sync_anim);
-        MaterialAlertDialogBuilder mBuilder = new MaterialAlertDialogBuilder(this)
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(getString(R.string.dialog_sync_title))
                 .setMessage(obsolete ? getString(R.string.dialog_sync_desc_alt) : getString(R.string.dialog_sync_desc))
                 .setPositiveButton(getString(R.string.dialog_sync_positive), (dialog, which) -> {
-                    findViewById(R.id.action_sync).startAnimation(animation);
-                    RepoManager repoManager = new RepoManager(this);
-                    repoManager.fetchRepo();
+                    if (RepoSyncService.isServiceRunning())
+                        return;
+                    startRepoSyncService();
+                    startSyncAnim();
                 })
                 .setNegativeButton(getString(R.string.action_later), (dialog, which) -> {
                     dialog.dismiss();
                 });
-        mBuilder.create();
-        mBuilder.show();
+        builder.create();
+        builder.show();
     }
 
     protected void showSyncCompletedDialog() {
@@ -286,7 +298,7 @@ public class AuroraActivity extends AppCompatActivity {
     }
 
     protected void showAddRepoDialog(Repo repo) {
-        MaterialAlertDialogBuilder mBuilder = new MaterialAlertDialogBuilder(this)
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(getString(R.string.dialog_repo_title))
                 .setMessage(new StringBuilder()
                         .append(getString(R.string.dialog_repo_desc))
@@ -300,8 +312,30 @@ public class AuroraActivity extends AppCompatActivity {
                     dialog.dismiss();
                 });
         ;
-        mBuilder.create();
-        mBuilder.show();
+        builder.create();
+        builder.show();
+    }
+
+    private void startSyncAnim() {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.sync_anim);
+        View view = findViewById(R.id.action_sync);
+        if (view != null)
+            view.startAnimation(animation);
+    }
+
+    private void clearSyncAnim() {
+        View view = findViewById(R.id.action_sync);
+        if (view != null)
+            view.clearAnimation();
+    }
+
+    private void startRepoSyncService() {
+        Intent intent = new Intent(this, RepoSyncService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+        } else {
+            startService(intent);
+        }
     }
 
     private void checkPermissions() {
