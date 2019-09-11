@@ -66,8 +66,6 @@ public class FetchAppsTask extends ContextWrapper {
 
         List<App> appList = appDao.searchApps(sqLiteQuery);
         appList = removeDuplicates(appList);
-        for (App app : appList)
-            app.setAppPackage(getPackageByName(app.getPackageName()));
         return appList;
     }
 
@@ -75,16 +73,12 @@ public class FetchAppsTask extends ContextWrapper {
         category = category.replace("&", "%");
         List<App> appList = appDao.searchAppsByCategory("%" + category + "%");
         appList = removeDuplicates(appList);
-        for (App app : appList)
-            app.setAppPackage(getPackageByName(app.getPackageName()));
         return appList;
     }
 
     public List<App> getAppsByRepository(String repoId) {
         List<App> appList = appDao.searchAppsByRepository("%" + repoId + "%");
         appList = removeDuplicates(appList);
-        for (App app : appList)
-            app.setAppPackage(getPackageByName(app.getPackageName()));
         return appList;
     }
 
@@ -101,8 +95,6 @@ public class FetchAppsTask extends ContextWrapper {
     public List<App> getAppsByPackageName(List<String> packageNames) {
         List<App> appList = appDao.getAppsByPackageName(packageNames);
         appList = removeDuplicates(appList);
-        for (App app : appList)
-            app.setAppPackage(getPackageByName(app.getPackageName()));
         return appList;
     }
 
@@ -122,17 +114,12 @@ public class FetchAppsTask extends ContextWrapper {
     public List<App> getLatestUpdatedApps(int weekCount) {
         List<App> appList = appDao.getLatestUpdatedApps(Calendar.getInstance().getTimeInMillis(), weekCount);
         appList = removeDuplicates(appList);
-        for (App app : appList)
-            app.setAppPackage(getPackageByName(app.getPackageName()));
         return appList;
     }
 
     public List<App> getLatestAddedApps(int weekCount) {
         List<App> appList = appDao.getLatestAddedApps(Calendar.getInstance().getTimeInMillis(), weekCount);
         appList = removeDuplicates(appList);
-        for (App app : appList) {
-            app.setAppPackage(getPackageByName(app.getPackageName()));
-        }
         return appList;
     }
 

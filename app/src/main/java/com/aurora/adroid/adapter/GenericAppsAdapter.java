@@ -36,8 +36,8 @@ import com.aurora.adroid.Sort;
 import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.activity.DetailsActivity;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.model.Package;
 import com.aurora.adroid.util.DatabaseUtil;
+import com.aurora.adroid.util.TextUtil;
 import com.aurora.adroid.util.Util;
 
 import java.util.ArrayList;
@@ -135,18 +135,23 @@ public class GenericAppsAdapter extends RecyclerView.Adapter<GenericAppsAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final App app = appList.get(position);
-        final Package pkg = app.getAppPackage();
         holder.AppTitle.setText(app.getName());
-        holder.AppVersion.setText(new StringBuilder()
-                .append(pkg.getVersionName())
-                .append(".")
-                .append(pkg.getVersionCode()));
-        holder.AppExtra.setText(Util.humanReadableByteValue(pkg.getSize(), true));
+        holder.AppVersion.setText(Util.getDateFromMilli(app.getLastUpdated()));
+        String summary = null;
+        if (app.getLocalized() != null
+                && app.getLocalized().getEnUS() != null
+                && app.getLocalized().getEnUS().getSummary() != null) {
+            summary = TextUtil.emptyIfNull(app.getLocalized().getEnUS().getSummary());
+        } else
+            summary = TextUtil.emptyIfNull(app.getSummary());
+
+        holder.AppExtra.setText(summary);
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailsActivity.class);
             intent.putExtra("INTENT_APK_FILE_NAME", app.getPackageName());
             context.startActivity(intent);
         });
+
         GlideApp
                 .with(context)
                 .asBitmap()

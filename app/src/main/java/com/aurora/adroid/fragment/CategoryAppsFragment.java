@@ -130,8 +130,10 @@ public class CategoryAppsFragment extends Fragment {
         if (genericAppsAdapter != null) {
             chipNameAZ.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.NAME_AZ));
             chipNameZA.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.NAME_ZA));
-            chipSizeMin.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MIN));
-            chipSizeMax.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MAX));
+            /*chipSizeMin.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MIN));
+            chipSizeMax.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MAX));*/
+            chipSizeMax.setVisibility(View.GONE);
+            chipSizeMin.setVisibility(View.GONE);
             chipDateUpdated.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.DATE_UPDATED));
             chipDateAdded.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.DATE_ADDED));
         }

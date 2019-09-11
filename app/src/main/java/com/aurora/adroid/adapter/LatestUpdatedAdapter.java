@@ -33,8 +33,8 @@ import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
 import com.aurora.adroid.activity.DetailsActivity;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.model.Package;
 import com.aurora.adroid.util.DatabaseUtil;
+import com.aurora.adroid.util.TextUtil;
 import com.aurora.adroid.util.Util;
 
 import java.util.ArrayList;
@@ -74,14 +74,16 @@ public class LatestUpdatedAdapter extends RecyclerView.Adapter<LatestUpdatedAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final App app = appList.get(position);
-        final Package pkg = app.getAppPackage();
         holder.txtTitle.setText(app.getName());
-        if (pkg != null)
-            holder.txtVersion.setText(new StringBuilder()
-                    .append(app.getAppPackage().getVersionName())
-                    .append(".")
-                    .append(app.getAppPackage().getVersionCode()));
-        holder.txtExtra.setText(Util.getDateFromMilli(app.getLastUpdated()));
+        holder.txtVersion.setText(Util.getDateFromMilli(app.getLastUpdated()));
+        String summary = null;
+        if (app.getLocalized() != null
+                && app.getLocalized().getEnUS() != null
+                && app.getLocalized().getEnUS().getSummary() != null) {
+            summary = TextUtil.emptyIfNull(app.getLocalized().getEnUS().getSummary());
+        } else
+            summary = TextUtil.emptyIfNull(app.getSummary());
+        holder.txtExtra.setText(summary);
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailsActivity.class);
             intent.putExtra("INTENT_APK_FILE_NAME", app.getPackageName());
