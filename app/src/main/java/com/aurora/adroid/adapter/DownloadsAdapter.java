@@ -37,7 +37,6 @@ import com.aurora.adroid.activity.DownloadsActivity;
 import com.aurora.adroid.sheet.DownloadMenuSheet;
 import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.Util;
-import com.aurora.adroid.util.ViewUtil;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tonyodev.fetch2.Download;
 import com.tonyodev.fetch2.Status;
@@ -153,22 +152,13 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsAdapter.View
             case CANCELLED:
             case COMPLETED: {
                 viewHolder.txtStatus.setText(Util.getStatus(status));
-                ViewUtil.hideWithAnimation(viewHolder.txtSpeed);
-                ViewUtil.hideWithAnimation(viewHolder.txtETA);
+                viewHolder.txtSpeed.setVisibility(View.INVISIBLE);
+                viewHolder.txtETA.setVisibility(View.INVISIBLE);
                 break;
             }
-            case PAUSED: {
-                viewHolder.txtStatus.setText(Util.getStatus(status));
-                break;
-            }
-            case DOWNLOADING: {
-                viewHolder.txtStatus.setText(Util.getStatus(status));
-                break;
-            }
-            case QUEUED: {
-                viewHolder.txtStatus.setText(Util.getStatus(status));
-                break;
-            }
+            case PAUSED:
+            case DOWNLOADING:
+            case QUEUED:
             case ADDED: {
                 viewHolder.txtStatus.setText(Util.getStatus(status));
                 break;

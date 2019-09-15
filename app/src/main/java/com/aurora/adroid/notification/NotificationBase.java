@@ -33,7 +33,6 @@ import com.aurora.adroid.receiver.DownloadCancelReceiver;
 import com.aurora.adroid.receiver.DownloadPauseReceiver;
 import com.aurora.adroid.receiver.DownloadResumeReceiver;
 import com.aurora.adroid.receiver.InstallReceiver;
-import com.aurora.adroid.receiver.NotificationDeleteReceiver;
 
 
 public class NotificationBase {
@@ -60,12 +59,12 @@ public class NotificationBase {
     protected NotificationCompat.Builder getBuilder() {
         return new NotificationCompat.Builder(context, app.getPackageName())
                 .setAutoCancel(true)
+                .setOngoing(true)
                 .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                 .setColorized(true)
                 .setColor(context.getResources().getColor(R.color.colorAccent))
                 .setContentIntent(getContentIntent())
                 .setContentTitle(app.getName())
-                .setDeleteIntent(getDeleteIntent())
                 .setOnlyAlertOnce(true)
                 .setSmallIcon(R.drawable.ic_notifications)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
@@ -90,12 +89,6 @@ public class NotificationBase {
     protected PendingIntent getInstallIntent() {
         Intent intent = new Intent(context, InstallReceiver.class);
         intent.putExtra(INTENT_APK_FILE_NAME, app.getAppPackage().getApkName());
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
-
-    protected PendingIntent getDeleteIntent() {
-        Intent intent = new Intent(context, NotificationDeleteReceiver.class);
-        intent.putExtra(INTENT_APK_FILE_NAME, app.getPackageName());
         return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 

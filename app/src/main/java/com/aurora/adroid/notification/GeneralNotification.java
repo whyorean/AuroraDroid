@@ -27,7 +27,6 @@ import android.os.Build;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.DatabaseUtil;
-import com.aurora.adroid.util.NotificationUtil;
 import com.aurora.adroid.util.Util;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -48,7 +47,7 @@ public class GeneralNotification extends NotificationBase {
     }
 
     public void notifyResume(int requestId) {
-        builder = getBuilder();
+        builder.mActions.clear();
         builder.setContentText(context.getString(R.string.download_paused));
         builder.addAction(R.drawable.ic_resume, context.getString(R.string.action_resume),
                 getResumeIntent(requestId));
@@ -58,58 +57,56 @@ public class GeneralNotification extends NotificationBase {
     }
 
     public void notifyProgress(int progress, long downloadedBytesPerSecond, int requestId) {
-        if (NotificationUtil.shouldNotify(context, app.getPackageName())) {
-            builder = getBuilder();
-            builder.setProgress(100, progress, false);
-            builder.setSubText(new StringBuilder().append(Util.humanReadableByteSpeed(downloadedBytesPerSecond, true)));
-            builder.setContentText(new StringBuilder().append(progress).append("%"));
-            builder.addAction(R.drawable.ic_resume, context.getString(R.string.action_pause),
-                    getPauseIntent(requestId));
-            builder.addAction(R.drawable.ic_cancel, context.getString(R.string.action_cancel),
-                    getCancelIntent(requestId));
-            show();
-        }
+        builder.mActions.clear();
+        builder.setProgress(100, progress, false);
+        builder.setSubText(new StringBuilder().append(Util.humanReadableByteSpeed(downloadedBytesPerSecond, true)));
+        builder.setContentText(new StringBuilder().append(progress).append("%"));
+        builder.addAction(R.drawable.ic_resume, context.getString(R.string.action_pause),
+                getPauseIntent(requestId));
+        builder.addAction(R.drawable.ic_cancel, context.getString(R.string.action_cancel),
+                getCancelIntent(requestId));
+        show();
     }
 
     public void notifyQueued() {
-        builder = getBuilder();
+        builder.mActions.clear();
         builder.setContentText(context.getString(R.string.download_queued));
         show();
     }
 
     public void notifyFailed() {
-        builder = getBuilder();
+        builder.mActions.clear();
+        builder.setOngoing(false);
         builder.setContentText(context.getString(R.string.download_failed));
         show();
-        NotificationUtil.updateDNDNotificationMap(context, app.getPackageName(), "");
     }
 
     public void notifyCompleted() {
-        builder = getBuilder();
+        builder.mActions.clear();
+        builder.setOngoing(false);
         builder.setContentText(context.getString(R.string.download_completed));
         builder.setProgress(0, 0, false);
         if (!Util.isPrivilegedInstall(context))
             builder.addAction(R.drawable.ic_installation, context.getString(R.string.action_install), getInstallIntent());
         builder.setAutoCancel(true);
         show();
-        NotificationUtil.updateDNDNotificationMap(context, app.getPackageName(), "");
     }
 
     public void notifyCancelled() {
-        builder = getBuilder();
+        builder.mActions.clear();
+        builder.setOngoing(false);
         builder.setContentText(context.getString(R.string.download_canceled));
         builder.setProgress(0, 0, false);
         show();
-        NotificationUtil.updateDNDNotificationMap(context, app.getPackageName(), "");
     }
 
     public void show() {
-        if (NotificationUtil.isNotificationEnabled(context)) {
+        if (Util.isNotificationEnabled(context)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 channel = new NotificationChannel(context.getPackageName(),
                         context.getString(R.string.app_name),
                         NotificationManager.IMPORTANCE_DEFAULT);
-                channel.setDescription("Aurora Store Notification Channel");
+                channel.setDescription("Aurora Droid Notification Channel");
                 manager.createNotificationChannel(channel);
                 builder.setChannelId(channel.getId());
             }
