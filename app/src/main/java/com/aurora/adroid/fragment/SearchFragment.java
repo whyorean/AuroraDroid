@@ -123,7 +123,9 @@ public class SearchFragment extends Fragment {
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextChange(String query) {
+                if (!query.isEmpty())
+                    fetchData(query);
                 return false;
             }
         });
