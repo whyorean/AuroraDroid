@@ -26,7 +26,6 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -45,13 +44,10 @@ import com.aurora.adroid.activity.SettingsActivity;
 import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.Events;
 import com.aurora.adroid.event.LogEvent;
-import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.service.RepoSyncService;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,18 +65,8 @@ public class RepoFragment extends Fragment {
     TextView txtLog;
     @BindView(R.id.btn_sync)
     MaterialButton btnSync;
-    @BindView(R.id.progress_layout)
-    RelativeLayout progressLayout;
-    @BindView(R.id.progress_sync)
-    ProgressBar progressBar;
-    @BindView(R.id.txt_progress)
-    TextView txtProgress;
-    @BindView(R.id.txt_status)
-    TextView txtStatus;
 
     private Context context;
-    private RepoListManager repoListManager;
-    private int count = 0;
     private CompositeDisposable disposable = new CompositeDisposable();
 
     @Override
@@ -103,7 +89,7 @@ public class RepoFragment extends Fragment {
                                 syncFailed();
                                 break;
                             case SYNC_PROGRESS:
-                                updateProgress();
+
                                 break;
                         }
                     }
@@ -133,7 +119,6 @@ public class RepoFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        repoListManager = new RepoListManager(context);
         init();
     }
 
@@ -178,20 +163,14 @@ public class RepoFragment extends Fragment {
     }
 
     private void blockSync() {
-        progressLayout.setVisibility(View.VISIBLE);
-        progressBar.setIndeterminate(true);
-        progressBar.setMax(repoListManager.getRepoCount());
-        txtStatus.setText(getString(R.string.download_progress));
         btnSync.setEnabled(false);
         btnSync.setText(getString(R.string.sync_progress));
     }
 
     private void syncCompleted() {
+        txtLog.append("\n" + getString(R.string.sync_completed_all));
         btnSync.setText(getString(R.string.action_finish));
         btnSync.setEnabled(true);
-        txtStatus.setText(getString(R.string.sync_completed));
-        txtProgress.setText(String.format(Locale.getDefault(), "%s", "100%"));
-        progressBar.setProgress(progressBar.getMax());
 
         if (getActivity() instanceof IntroActivity)
             btnSync.setOnClickListener(v -> {
@@ -208,19 +187,7 @@ public class RepoFragment extends Fragment {
         btnSync.setText(getString(R.string.action_sync));
         btnSync.setEnabled(true);
         txtLog.setText(getString(R.string.sys_log));
-        txtStatus.setText(getString(R.string.sync_failed));
-        txtProgress.setText(String.format(Locale.getDefault(), "%s", "0%"));
-        progressBar.setProgress(0);
         btnSync.setOnClickListener(v -> startRepoSyncService());
-    }
-
-    private void updateProgress() {
-        progressBar.setIndeterminate(false);
-        progressBar.setProgress(++count);
-        txtStatus.setText(getString(R.string.sync_progress));
-        txtProgress.setText(new StringBuilder()
-                .append(getProgress(progressBar.getProgress(), progressBar.getMax()))
-                .append("%"));
     }
 
     private float getProgress(int current, int max) {

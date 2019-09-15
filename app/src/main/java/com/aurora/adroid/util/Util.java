@@ -182,6 +182,14 @@ public class Util {
         }
     }
 
+    public static long getMilliFromDate(String data, long Default) {
+        try {
+            return Date.parse(data);
+        } catch (Exception e) {
+        }
+        return Default;
+    }
+
     public static boolean isFirstLaunch(Context context) {
         boolean first = getPrefs(context).getBoolean(Constants.PREFERENCE_FIRST_LAUNCH, true);
         PrefUtil.putBoolean(context, Constants.PREFERENCE_FIRST_LAUNCH, false);

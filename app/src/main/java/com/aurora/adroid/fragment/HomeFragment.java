@@ -36,7 +36,7 @@ import com.aurora.adroid.adapter.CategoriesAdapter;
 import com.aurora.adroid.adapter.ClusterAppsAdapter;
 import com.aurora.adroid.adapter.LatestUpdatedAdapter;
 import com.aurora.adroid.adapter.RepositoriesAdapter;
-import com.aurora.adroid.manager.RepoListManager;
+import com.aurora.adroid.manager.SyncManager;
 import com.aurora.adroid.task.CategoriesTask;
 import com.aurora.adroid.task.FetchAppsTask;
 import com.aurora.adroid.util.Log;
@@ -166,7 +166,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchRepositories() {
-        repositoriesAdapter.addData(RepoListManager.getSyncedRepos(context));
+        repositoriesAdapter.addData(new SyncManager(context).getSyncedRepos());
     }
 
     private void fetchNewApps() {

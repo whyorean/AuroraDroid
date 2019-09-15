@@ -69,6 +69,9 @@ public interface AppDao {
     @Query("SELECT `en-US-phoneScreenshots` FROM app WHERE packageName =:packageName")
     String getPhoneScreenshots(String packageName);
 
+    @Query("DELETE FROM app WHERE repoId =:repoID")
+    void clearRepo(String repoID);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<App> appList);
 

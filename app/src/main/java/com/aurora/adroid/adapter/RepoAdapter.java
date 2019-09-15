@@ -38,20 +38,29 @@ import com.aurora.adroid.activity.SettingsActivity;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.sheet.RepoDetailsSheet;
+import com.aurora.adroid.task.CheckRepoUpdatesTask;
+import com.aurora.adroid.task.DatabaseTask;
+import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.ViewUtil;
 import com.google.android.material.checkbox.MaterialCheckBox;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class RepoAdapter extends SelectableAdapter<RepoAdapter.ViewHolder> {
 
     private Context context;
     private List<Repo> repoList = new ArrayList<>();
     private ItemClickListener itemClickListener;
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     public RepoAdapter(Context context, ItemClickListener itemClickListener) {
         super(context);
@@ -122,6 +131,8 @@ public class RepoAdapter extends SelectableAdapter<RepoAdapter.ViewHolder> {
         if (selections.contains(repoId)) {
             selections.remove(repoId);
             repoListManager.remove(repoId);
+            if (syncManager.isSynced(repoId))
+                showRepoClearDialog(repoId);
         } else {
             selections.add(repoId);
         }
@@ -130,6 +141,29 @@ public class RepoAdapter extends SelectableAdapter<RepoAdapter.ViewHolder> {
 
     public int getSelectedCount() {
         return selections.size();
+    }
+
+    private void showRepoClearDialog(String repoId) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context)
+                .setTitle(context.getString(R.string.dialog_repo_clear_title))
+                .setMessage(context.getString(R.string.dialog_repo_clear_desc))
+                .setPositiveButton(context.getString(android.R.string.ok), (dialog, which) -> {
+                    CheckRepoUpdatesTask.removeRepoHeader(context, repoId);
+                    syncManager.clearSynced(repoId);
+                    disposable.add(Observable.fromCallable(() -> new DatabaseTask(context)
+                            .clearRepo(repoId))
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(success -> ContextUtil.toastLong(context, success
+                                    ? "Repo apps cleared"
+                                    : "Failed to remove repo apps")));
+                })
+                .setNegativeButton(context.getString(android.R.string.no), (dialog, which) -> {
+                    dialog.dismiss();
+                });
+        ;
+        builder.create();
+        builder.show();
     }
 
     public interface ItemClickListener {

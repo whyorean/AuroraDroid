@@ -23,9 +23,10 @@ import com.aurora.adroid.event.Events;
 import com.aurora.adroid.event.LogEvent;
 import com.aurora.adroid.event.RxBus;
 import com.aurora.adroid.manager.RepoListManager;
+import com.aurora.adroid.manager.SyncManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.notification.QuickNotification;
-import com.aurora.adroid.task.DatabaseTask;
+import com.aurora.adroid.task.CheckRepoUpdatesTask;
 import com.aurora.adroid.task.ExtractRepoTask;
 import com.aurora.adroid.task.JsonParserTask;
 import com.aurora.adroid.util.DatabaseUtil;
@@ -42,6 +43,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -55,11 +57,14 @@ public class RepoSyncService extends Service {
 
     public static RepoSyncService instance = null;
 
-    private RepoListManager repoListManager;
     private CompositeDisposable disposable = new CompositeDisposable();
     private Fetch fetch;
+    private SyncManager syncManager;
     private AbstractFetchListener abstractFetchListener;
-    private int count = 0;
+    private CheckRepoUpdatesTask checkRepoUpdatesTask;
+    private List<Request> requestList = new ArrayList<>();
+    private int targetCount = 0;
+    private int currentCount = 0;
     private int downloadCount = 0;
     private int failedDownloadCount = 0;
 
@@ -94,35 +99,40 @@ public class RepoSyncService extends Service {
     }
 
     public int getRepoCount() {
-        return repoListManager.getRepoCount();
+        return targetCount;
     }
 
     public void fetchRepo() {
-        List<Repo> repoList = RepoListManager.getSelectedRepos(this);
-        List<Request> requestList = RequestBuilder.buildRequest(this, repoList);
+        final List<Repo> repoList = RepoListManager.getSelectedRepos(this);
+        requestList = RequestBuilder.buildRequest(this, repoList);
 
         if (repoList.isEmpty()) {
             RxBus.publish(new Event(Events.SYNC_EMPTY));
             destroyService();
         }
 
-        repoListManager = new RepoListManager(this);
+        checkRepoUpdatesTask = new CheckRepoUpdatesTask(this);
         fetch = DownloadManager.getFetchInstance(this);
-
-        abstractFetchListener = getFetchListener();
-        fetch.addListener(abstractFetchListener);
-        fetch.enqueue(requestList, result -> {
-        });
+        syncManager = new SyncManager(this);
+        disposable.add(Observable.fromCallable(() -> checkRepoUpdatesTask
+                .filterList(requestList))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(requests -> {
+                    if (requests.isEmpty()) {
+                        RxBus.publish(new Event(Events.SYNC_COMPLETED));
+                        destroyService();
+                    } else {
+                        targetCount = requests.size();
+                        abstractFetchListener = getFetchListener();
+                        fetch.addListener(abstractFetchListener);
+                        fetch.enqueue(requests, result -> {
+                        });
+                    }
+                }));
     }
 
     private void extractAllRepos() {
-        DatabaseUtil.setDatabaseAvailable(this, false);
-        RepoListManager.clearSynced(this);
-        disposable.add(Observable.fromCallable(() -> new DatabaseTask(this)
-                .clearAllTables())
-                .subscribeOn(Schedulers.io())
-                .subscribe());
-
         final File repoDirectory = new File(PathUtil.getRepoDirectory(this));
         final File[] files = repoDirectory.listFiles();
 
@@ -134,9 +144,9 @@ public class RepoSyncService extends Service {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(repoBundle -> {
                     final Repo repo = repoBundle.getRepo();
-                    if (repoBundle.getStatus()) {
+                    if (repoBundle.isSynced()) {
                         RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_completed)));
-                        RepoListManager.setSynced(this, repo.getRepoId());
+                        syncManager.setSynced(repo.getRepoId());
                     } else {
                         RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_failed)));
                     }
@@ -157,11 +167,11 @@ public class RepoSyncService extends Service {
     }
 
     private void updateProgress() {
-        count++;
+        currentCount++;
         RxBus.publish(new Event(Events.SYNC_PROGRESS));
-        if (count == getRepoCount() - failedDownloadCount) {
+        if (currentCount == getRepoCount() - failedDownloadCount) {
             RxBus.publish(new Event(Events.SYNC_COMPLETED));
-            QuickNotification.show(this, getString(R.string.app_name),
+            QuickNotification.show(this, getString(R.string.action_sync),
                     getString(R.string.download_repo_synced), getContentIntent());
             destroyService();
         }
@@ -204,9 +214,9 @@ public class RepoSyncService extends Service {
         String NOTIFICATION_CHANNEL_ID = "com.aurora.adroid";
         String channelName = "Repo Sync Service";
 
-        NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+        NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH);
         notificationChannel.setLightColor(Color.BLUE);
-        notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
         NotificationManager manager = (NotificationManager) getSystemService(RepoSyncService.NOTIFICATION_SERVICE);
         manager.createNotificationChannel(notificationChannel);
@@ -218,12 +228,14 @@ public class RepoSyncService extends Service {
     private Notification buildNotification(NotificationCompat.Builder builder) {
         int versionCode = Build.VERSION.SDK_INT;
         return builder.setOngoing(true)
-                .setSmallIcon(R.drawable.ic_notifications)
-                .setContentTitle("Syncing repositories")
-                .setContentText("Please wait while the repositories are being synced")
-                .setPriority(versionCode >= Build.VERSION_CODES.O ? NotificationCompat.PRIORITY_DEFAULT : Notification.PRIORITY_DEFAULT)
-                .setCategory(Notification.CATEGORY_SERVICE)
+                .setAutoCancel(true)
+                .setCategory(Notification.CATEGORY_PROGRESS)
+                .setContentTitle(getString(R.string.sync_progress))
                 .setContentIntent(getContentIntent())
+                .setOnlyAlertOnce(true)
+                .setPriority(versionCode >= Build.VERSION_CODES.O ? NotificationCompat.PRIORITY_DEFAULT : Notification.PRIORITY_DEFAULT)
+                .setProgress(0, 0, true)
+                .setSmallIcon(R.drawable.ic_repo_alt)
                 .build();
     }
 

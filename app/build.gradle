@@ -59,7 +59,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0-alpha10'
 
     //Utils
-    implementation 'com.android.volley:volley:1.1.0'
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'org.apache.commons:commons-text:1.4'
     implementation 'commons-validator:commons-validator:1.6'

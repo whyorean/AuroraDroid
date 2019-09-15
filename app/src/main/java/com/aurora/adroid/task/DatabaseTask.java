@@ -21,7 +21,9 @@ package com.aurora.adroid.task;
 import android.content.Context;
 import android.content.ContextWrapper;
 
+import com.aurora.adroid.database.AppDao;
 import com.aurora.adroid.database.AppDatabase;
+import com.aurora.adroid.database.PackageDao;
 
 public class DatabaseTask extends ContextWrapper {
 
@@ -36,6 +38,17 @@ public class DatabaseTask extends ContextWrapper {
         try {
             final AppDatabase appDatabase = AppDatabase.getAppDatabase(context);
             appDatabase.clearAllTables();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean clearRepo(String repoID) {
+        try {
+            final AppDatabase appDatabase = AppDatabase.getAppDatabase(context);
+            final AppDao appDao = appDatabase.appDao();
+            appDao.clearRepo(repoID);
             return true;
         } catch (Exception e) {
             return false;

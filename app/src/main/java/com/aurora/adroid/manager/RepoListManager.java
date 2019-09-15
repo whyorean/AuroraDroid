@@ -37,7 +37,6 @@ import java.util.List;
 public class RepoListManager {
 
     private static final String REPO_LIST = "REPO_LIST";
-    private static final String SYNCED_LIST = "SYNCED_LIST";
     private static final String CUSTOM_REPO_LIST = "CUSTOM_REPO_LIST";
 
     private Context context;
@@ -112,16 +111,6 @@ public class RepoListManager {
         return repoList;
     }
 
-    public static List<Repo> getSyncedRepos(Context context) {
-        List<Repo> repoList = new ArrayList<>();
-        List<String> savedList = PrefUtil.getListString(context, SYNCED_LIST);
-        for (Repo repo : getAllRepoList(context)) {
-            if (savedList.contains(repo.getRepoId()))
-                repoList.add(repo);
-        }
-        return repoList;
-    }
-
     public static Repo getRepoById(Context context, String repoId) {
         Repo tempRepo = new Repo();
         for (Repo repo : getAllRepoList(context)) {
@@ -129,21 +118,6 @@ public class RepoListManager {
                 tempRepo = repo;
         }
         return tempRepo;
-    }
-
-    public static boolean isSynced(Context context, String s) {
-        ArrayList<String> syncedList = PrefUtil.getListString(context, SYNCED_LIST);
-        return syncedList.contains(s);
-    }
-
-    public static void clearSynced(Context context) {
-        PrefUtil.putListString(context, SYNCED_LIST, new ArrayList<>());
-    }
-
-    public static void setSynced(Context context, String s) {
-        ArrayList<String> syncedList = PrefUtil.getListString(context, SYNCED_LIST);
-        syncedList.add(s);
-        PrefUtil.putListString(context, SYNCED_LIST, syncedList);
     }
 
     public synchronized boolean addAll(ArrayList<String> arrayList) {

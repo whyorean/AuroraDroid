@@ -4,16 +4,16 @@ import com.aurora.adroid.model.Repo;
 
 public class RepoBundle {
 
-    private boolean status;
+    private boolean synced;
     private Repo repo;
 
     public RepoBundle(boolean status, Repo repo) {
-        this.status = status;
+        this.synced = status;
         this.repo = repo;
     }
 
-    public boolean getStatus() {
-        return status;
+    public boolean isSynced() {
+        return synced;
     }
 
     public Repo getRepo() {

@@ -23,6 +23,7 @@ import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.manager.RepoListManager;
+import com.aurora.adroid.manager.SyncManager;
 
 import java.util.ArrayList;
 
@@ -31,10 +32,12 @@ abstract class SelectableAdapter<VH extends RecyclerView.ViewHolder> extends Rec
     protected ArrayList<String> selections;
     protected Context context;
     protected RepoListManager repoListManager;
+    protected SyncManager syncManager;
 
     SelectableAdapter(Context context) {
         this.context = context;
         repoListManager = new RepoListManager(context);
+        syncManager = new SyncManager(context);
         ArrayList<String> selectedRepos = repoListManager.get();
         selections = new ArrayList<>();
         if (selectedRepos != null && !selectedRepos.isEmpty()) {
