@@ -275,7 +275,7 @@ public class AuroraActivity extends AppCompatActivity {
                     startRepoSyncService();
                     startSyncAnim();
                 })
-                .setNegativeButton(getString(R.string.action_later), (dialog, which) -> {
+                .setNegativeButton(getString(R.string.dialog_sync_negative), (dialog, which) -> {
                     dialog.dismiss();
                 });
         builder.create();

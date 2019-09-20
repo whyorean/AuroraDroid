@@ -74,11 +74,12 @@
     <string name="details_permissions_desc">Aurora Store uses following permissions</string>
     <string name="details_repo_desc">Select F-Droid repositories to sync</string>
 
-    <string name="dialog_sync_title">Repo Sync</string>
-    <string name="dialog_sync_desc">Do you wish to clear database and sync all the selected repositories ?</string>
+    <string name="dialog_sync_title">Repo Updates</string>
+    <string name="dialog_sync_desc">Do you wish to update apps from repositories ?</string>
     <string name="dialog_sync_desc_alt">Old data detected,there may be new updates, do you wish to sync all repositories ?</string>
-    <string name="dialog_sync_completed_desc">All repos synced, it is recommended to restart the app after sync.</string>
-    <string name="dialog_sync_positive">Sync now</string>
+    <string name="dialog_sync_completed_desc">All repositories updated, it is recommended to restart the app after updates.</string>
+    <string name="dialog_sync_positive">Yes</string>
+    <string name="dialog_sync_negative">No</string>
     <string name="dialog_sync_complete_positive">Restart now</string>
     <string name="dialog_repo_title">Add Repository</string>
     <string name="dialog_repo_desc">Do you really wish to add</string>
