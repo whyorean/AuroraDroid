@@ -158,7 +158,6 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
         repoAdapter = new RepoAdapter(context, this);
         recyclerView.setAdapter(repoAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-        recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(context, R.anim.anim_falldown));
         recyclerView.setMotionEventSplittingEnabled(false);
         ItemTouchHelper itemTouchHelper = new
                 ItemTouchHelper(new SwipeToDeleteRepoCallback(repoAdapter));
