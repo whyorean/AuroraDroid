@@ -45,9 +45,9 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textAlignment="viewStart"
+            android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            android:textSize="17sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_version"

@@ -35,6 +35,7 @@ import androidx.annotation.Nullable;
 import com.aurora.adroid.PermissionGroup;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
@@ -72,8 +73,9 @@ public class PermissionBottomSheet extends BottomSheetDialogFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onStart() {
+        super.onStart();
+        getDialog().getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     @NonNull

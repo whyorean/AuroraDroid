@@ -39,6 +39,17 @@ public class ThemeUtil {
         return Util.getPrefs(context).getBoolean(Constants.PREFERENCE_UI_TRANSPARENT, true);
     }
 
+    public static boolean isLightTheme(Context context) {
+        String theme = getTheme(context);
+        switch (theme) {
+            case "dark":
+            case "black":
+                return false;
+            default:
+                return true;
+        }
+    }
+
     public void onCreate(AppCompatActivity activity) {
         currentTheme = getSelectedTheme(activity);
         activity.setTheme(currentTheme);

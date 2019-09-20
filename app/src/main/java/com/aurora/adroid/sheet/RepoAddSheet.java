@@ -35,6 +35,7 @@ import com.aurora.adroid.fragment.RepoListFragment;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.util.Util;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -60,6 +61,12 @@ public class RepoAddSheet extends BottomSheetDialogFragment {
     ImageView imgQR;
 
     public RepoAddSheet() {
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getDialog().getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     @Override

@@ -17,74 +17,71 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_info"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/img_icon"
-        android:layout_width="@dimen/icon_size_large"
-        android:layout_height="@dimen/icon_size_large"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/margin_small"
-        android:contentDescription="@string/contentDescription" />
+        android:layout_width="@dimen/icon_size_big"
+        android:layout_height="@dimen/icon_size_big"
+        android:layout_margin="@dimen/margin_normal" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/img_icon"
+        android:layout_alignTop="@id/img_icon"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:paddingStart="@dimen/margin_small"
-        android:paddingEnd="@dimen/margin_small">
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_toEndOf="@id/img_icon">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:ellipsize="none"
             android:maxWidth="320dp"
             android:maxLines="2"
             android:requiresFadingEdge="horizontal"
-            android:text="A-Droid"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Aurora.Title"
-            android:textSize="20sp" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_package_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_name"
-            android:layout_centerHorizontal="true"
-            android:singleLine="true"
-            android:text="com.aurora.adroid"
             android:textAlignment="viewStart"
-            android:textIsSelectable="true"
-            android:textSize="12sp" />
+            android:textAppearance="@style/TextAppearance.Aurora.Title"
+            android:textSize="22sp"
+            tools:text="A-Droid" />
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_dev_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txt_package_name"
-            android:layout_centerHorizontal="true"
+            android:layout_below="@id/txt_name"
             android:singleLine="true"
-            android:text="Rahul Patel"
             android:textAlignment="viewStart"
             android:textColor="?android:attr/colorAccent"
-            android:textSize="16sp" />
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Rahul Patel" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_package_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_dev_name"
+            android:singleLine="true"
+            android:textAlignment="viewStart"
+            android:textIsSelectable="true"
+            android:textSize="12sp"
+            tools:text="com.aurora.adroid" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_version"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txt_dev_name"
-            android:layout_centerHorizontal="true"
+            android:layout_below="@id/txt_package_name"
             android:singleLine="true"
-            android:text="3.0.3"
             android:textAlignment="viewStart"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="3.0.3" />
     </RelativeLayout>
 </RelativeLayout>

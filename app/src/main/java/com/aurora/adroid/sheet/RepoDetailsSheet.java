@@ -37,6 +37,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.util.Util;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -85,6 +86,12 @@ public class RepoDetailsSheet extends BottomSheetDialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getDialog().getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     @Override

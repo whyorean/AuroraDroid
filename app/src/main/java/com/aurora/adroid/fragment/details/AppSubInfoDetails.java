@@ -19,6 +19,7 @@
 package com.aurora.adroid.fragment.details;
 
 import android.text.TextUtils;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.aurora.adroid.R;
@@ -54,10 +55,10 @@ public class AppSubInfoDetails extends AbstractDetails {
     Chip chipSdk;
     @BindView(R.id.txt_licence)
     Chip chipLicense;
-    @BindView(R.id.chip_description)
-    Chip chipDescription;
     @BindView(R.id.txt_repo)
     Chip chipRepo;
+    @BindView(R.id.img_more)
+    ImageButton imgMore;
     @BindView(R.id.cluster_container)
     LinearLayout layoutCluster;
 
@@ -82,7 +83,7 @@ public class AppSubInfoDetails extends AbstractDetails {
         } else
             ViewUtil.hideWithAnimation(chipCategory);
 
-        chipDescription.setOnClickListener(v -> {
+        imgMore.setOnClickListener(v -> {
             MoreInfoSheet moreInfoSheet = new MoreInfoSheet();
             moreInfoSheet.setApp(app);
             moreInfoSheet.show(fragment.getChildFragmentManager(), "DESCRIPTION");

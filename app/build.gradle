@@ -57,6 +57,7 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation 'androidx.preference:preference:1.1.0'
     implementation 'com.google.android.material:material:1.1.0-alpha10'
+    implementation 'androidx.palette:palette:1.0.0'
 
     //Utils
     implementation 'androidx.annotation:annotation:1.1.0'
@@ -91,7 +92,6 @@ dependencies {
     implementation "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:3.1.4"
 
     //Debug Utils
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
     testImplementation 'junit:junit:4.12'

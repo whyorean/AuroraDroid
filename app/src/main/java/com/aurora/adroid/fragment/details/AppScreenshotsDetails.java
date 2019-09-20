@@ -18,6 +18,8 @@
 
 package com.aurora.adroid.fragment.details;
 
+import android.view.View;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +43,7 @@ public class AppScreenshotsDetails extends AbstractDetails {
     @Override
     public void draw() {
         if (app.getScreenShots() != null) {
+            recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setAdapter(new SmallScreenshotsAdapter(DatabaseUtil.getScreenshotURLs(app), context));
             recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
         }
