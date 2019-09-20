@@ -99,9 +99,9 @@ public class AppInfoDetails extends AbstractDetails {
         setText(txtPackageName, app.getPackageName());
         setText(txtDevName, app.getAuthorName());
         if (app.getLocalized() != null && app.getLocalized().getEnUS() != null && !TextUtil.isEmpty(app.getLocalized().getEnUS().getSummary()))
-            setText(txtSummary, app.getLocalized().getEnUS().getSummary());
+            setText(txtSummary, app.getLocalized().getEnUS().getSummary().trim());
         else
-            setText(txtSummary, TextUtil.emptyIfNull(app.getSummary()));
+            setText(txtSummary, TextUtil.emptyIfNull(app.getSummary().trim()));
     }
 
     private void getPalette(Bitmap bitmap) {
