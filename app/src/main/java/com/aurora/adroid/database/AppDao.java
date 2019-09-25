@@ -51,7 +51,7 @@ public interface AppDao {
     @Query("SELECT * FROM app WHERE :refTime - lastUpdated <= :weekCount * 604800000 ORDER BY lastUpdated DESC")
     List<App> getLatestUpdatedApps(Long refTime, int weekCount);
 
-    @Query("SELECT * FROM app WHERE :refTime - added <= :weekCount * 604800000 ORDER BY added DESC LIMIT 30")
+    @Query("SELECT * FROM app WHERE :refTime - added <= :weekCount * 604800000 ORDER BY added DESC")
     List<App> getLatestAddedApps(Long refTime, int weekCount);
 
     @Query("SELECT * FROM app WHERE (name LIKE :query) OR (summary LIKE :query) LIMIT 30")

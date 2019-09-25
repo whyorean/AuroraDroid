@@ -42,6 +42,7 @@ import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.view.CustomSwipeToRefresh;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +51,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class CategoryAppsFragment extends Fragment {
+public class GenericAppsFragment extends Fragment {
 
     @BindView(R.id.swipe_layout)
     CustomSwipeToRefresh customSwipeToRefresh;
@@ -68,10 +69,12 @@ public class CategoryAppsFragment extends Fragment {
     Chip chipDateUpdated;
     @BindView(R.id.sort_date_added)
     Chip chipDateAdded;
+    @BindView(R.id.chip_group)
+    ChipGroup chipGroup;
 
     private Context context;
-    private String categoryName;
     private ActionBar actionBar;
+    private int listType;
     private BottomNavigationView bottomNavigationView;
     private GenericAppsAdapter genericAppsAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -94,13 +97,6 @@ public class CategoryAppsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_generic_apps, container, false);
         ButterKnife.bind(this, view);
-
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            categoryName = arguments.getString("CATEGORY_NAME");
-            fetchData(categoryName);
-        }
-
         return view;
     }
 
@@ -109,13 +105,27 @@ public class CategoryAppsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setupRecycler();
         setupChip();
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            listType = arguments.getInt("LIST_TYPE", 0);
+            if (listType == 0) {
+                fetchNewAppsData();
+                chipGroup.check(R.id.sort_date_added);
+            } else {
+                fetchUpdatedAppsData();
+                chipGroup.check(R.id.sort_date_updated);
+            }
+        }
         if (getActivity() instanceof AuroraActivity) {
             bottomNavigationView = ((AuroraActivity) getActivity()).getBottomNavigationView();
             actionBar = ((AuroraActivity) getActivity()).getDroidActionBar();
             ViewUtil.hideBottomNav(bottomNavigationView, true);
-            actionBar.setTitle(categoryName);
+            if (listType == 0)
+                actionBar.setTitle(getString(R.string.title_apps_new));
+            else
+
+                actionBar.setTitle(getString(R.string.title_latest_updated));
         }
-        customSwipeToRefresh.setOnRefreshListener(() -> fetchData(categoryName));
     }
 
     @Override
@@ -130,8 +140,6 @@ public class CategoryAppsFragment extends Fragment {
         if (genericAppsAdapter != null) {
             chipNameAZ.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.NAME_AZ));
             chipNameZA.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.NAME_ZA));
-            /*chipSizeMin.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MIN));
-            chipSizeMax.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MAX));*/
             chipSizeMax.setVisibility(View.GONE);
             chipSizeMin.setVisibility(View.GONE);
             chipDateUpdated.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.DATE_UPDATED));
@@ -139,16 +147,36 @@ public class CategoryAppsFragment extends Fragment {
         }
     }
 
-    private void fetchData(String categoryName) {
+    private void fetchUpdatedAppsData() {
         disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
-                .getAppsByCategory(categoryName))
+                .getLatestUpdatedApps(15))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(d -> customSwipeToRefresh.setRefreshing(true))
                 .doOnTerminate(() -> customSwipeToRefresh.setRefreshing(false))
                 .subscribe((appList) -> {
-                    if (!appList.isEmpty())
+                    if (!appList.isEmpty()) {
                         genericAppsAdapter.addData(appList);
+                        genericAppsAdapter.sortBy(Sort.DATE_UPDATED);
+                    }
+                }, err -> {
+                    Log.e(err.getMessage());
+                    err.printStackTrace();
+                }));
+    }
+
+    private void fetchNewAppsData() {
+        disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
+                .getLatestAddedApps(15))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(d -> customSwipeToRefresh.setRefreshing(true))
+                .doOnTerminate(() -> customSwipeToRefresh.setRefreshing(false))
+                .subscribe((appList) -> {
+                    if (!appList.isEmpty()) {
+                        genericAppsAdapter.addData(appList);
+                        genericAppsAdapter.sortBy(Sort.DATE_ADDED);
+                    }
                 }, err -> {
                     Log.e(err.getMessage());
                     err.printStackTrace();

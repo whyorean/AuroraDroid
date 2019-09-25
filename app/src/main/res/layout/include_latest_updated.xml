@@ -44,18 +44,19 @@
             android:textSize="18sp"
             app:drawableTint="?colorAccent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_more"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_more_updated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_small"
+            android:background="?selectableItemBackgroundBorderless"
             android:maxLines="1"
+            android:padding="@dimen/margin_small"
+            android:src="@drawable/ic_arrow"
             android:text="@string/action_more"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:tint="?android:colorForeground" />
     </RelativeLayout>
 
 

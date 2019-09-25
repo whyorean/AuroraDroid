@@ -37,6 +37,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
@@ -78,6 +80,7 @@ public class AuroraActivity extends AppCompatActivity {
 
     private ActionBar actionBar;
     private ThemeUtil themeUtil = new ThemeUtil();
+    private ViewPagerAdapter viewPagerAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
 
     @Nullable
@@ -216,6 +219,22 @@ public class AuroraActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = viewPagerAdapter.getItem(viewPager.getCurrentItem());
+        if (!fragment.isAdded())
+            return;
+        if (fragment instanceof HomeFragment) {
+            FragmentManager fragmentManager = fragment.getChildFragmentManager();
+            if (!fragmentManager.getFragments().isEmpty())
+                fragmentManager.popBackStack();
+            else
+                super.onBackPressed();
+        } else
+            super.onBackPressed();
+    }
+
+
     private void init() {
         setupActionbar();
         setupViewPager();
@@ -233,7 +252,7 @@ public class AuroraActivity extends AppCompatActivity {
     }
 
     private void setupViewPager() {
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(0, new HomeFragment());
         viewPagerAdapter.addFragment(1, new AppsFragment());
         viewPagerAdapter.addFragment(2, new SearchFragment());

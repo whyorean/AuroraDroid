@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,6 +43,7 @@ import com.aurora.adroid.task.FetchAppsTask;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.ViewUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +62,10 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerViewLatest;
     @BindView(R.id.recycler_new)
     RecyclerView recyclerViewNew;
+    @BindView(R.id.btn_more_new)
+    ImageButton btnMoreNew;
+    @BindView(R.id.btn_more_updated)
+    ImageButton btnMoreUpdated;
 
     private Context context;
     private BottomNavigationView bottomNavigationView;
@@ -92,7 +98,8 @@ public class HomeFragment extends Fragment {
         setupRepository();
         setupUpdatedApps();
         setupNewApps();
-
+        setupAllNewApps();
+        setupAllUpdatedApps();
         fetchCategories();
         fetchRepositories();
         fetchNewApps();
@@ -148,6 +155,34 @@ public class HomeFragment extends Fragment {
                 }
                 return false;
             }
+        });
+    }
+
+    private void setupAllNewApps() {
+        btnMoreNew.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("LIST_TYPE", 0);
+            GenericAppsFragment fragment = new GenericAppsFragment();
+            fragment.setArguments(bundle);
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.container, fragment, null)
+                    .commit();
+        });
+    }
+
+    private void setupAllUpdatedApps() {
+        btnMoreUpdated.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("LIST_TYPE", 1);
+            GenericAppsFragment fragment = new GenericAppsFragment();
+            fragment.setArguments(bundle);
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.container, fragment, null)
+                    .commit();
         });
     }
 

@@ -22,27 +22,47 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/title"
-        style="@style/Widget.MaterialComponents.Chip.Action"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_normal"
-        android:layout_marginTop="@dimen/margin_xsmall"
-        android:layout_marginEnd="@dimen/margin_xsmall"
-        android:layout_marginBottom="@dimen/margin_xsmall"
-        android:drawableStart="@drawable/ic_new"
-        android:drawablePadding="@dimen/margin_small"
-        android:text="@string/title_apps_new"
-        android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
-        android:textSize="18sp"
-        app:drawableTint="?colorAccent" />
+    <RelativeLayout
+        android:id="@+id/layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title"
+            style="@style/Widget.MaterialComponents.Chip.Action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_xsmall"
+            android:layout_marginEnd="@dimen/margin_xsmall"
+            android:layout_marginBottom="@dimen/margin_xsmall"
+            android:drawableStart="@drawable/ic_new"
+            android:drawablePadding="@dimen/margin_small"
+            android:text="@string/title_apps_new"
+            android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
+            android:textSize="18sp"
+            app:drawableTint="?colorAccent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_more_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?selectableItemBackgroundBorderless"
+            android:maxLines="1"
+            android:padding="@dimen/margin_small"
+            android:src="@drawable/ic_arrow"
+            android:text="@string/action_more"
+            android:textAllCaps="false"
+            android:tint="?android:colorForeground" />
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
+        android:layout_below="@id/layout_top"
         android:clipToPadding="false"
         android:orientation="horizontal"
         android:paddingStart="@dimen/margin_small"
