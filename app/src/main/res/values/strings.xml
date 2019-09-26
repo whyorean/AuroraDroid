@@ -147,6 +147,7 @@
 
     <string name="extract_completed">Extracted</string>
     <string name="extract_failed">Extraction failed</string>
+    <string name="sync_background">Syncing in background</string>
     <string name="sync_completed">Synced</string>
     <string name="sync_completed_all">All repositories synced</string>
     <string name="sync_progress">Syncing repositories</string>
