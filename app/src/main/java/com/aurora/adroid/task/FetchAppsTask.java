@@ -95,6 +95,8 @@ public class FetchAppsTask extends ContextWrapper {
     public List<App> getAppsByPackageName(List<String> packageNames) {
         List<App> appList = appDao.getAppsByPackageName(packageNames);
         appList = removeDuplicates(appList);
+        for (App app : appList)
+            app.setAppPackage(getPackageByName(app.getPackageName()));
         return appList;
     }
 
