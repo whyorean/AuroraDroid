@@ -112,7 +112,7 @@
         </activity>
         <activity android:name=".activity.FullscreenImageActivity" />
         <activity android:name=".activity.QRActivity" />
-        <activity android:name=".activity.IntroActivity" />
+        <activity android:name=".activity.IntroActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.SettingsActivity" />
         <activity
             android:name=".activity.DownloadsActivity"

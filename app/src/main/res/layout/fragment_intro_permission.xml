@@ -25,8 +25,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize">
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/perm_icon"
@@ -49,9 +48,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/perm_desc"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/acc_txt"
+            android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/margin_normal"
             android:text="@string/details_permissions_desc"
             android:textAlignment="center"
@@ -81,9 +81,10 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_next"
-                android:layout_width="@dimen/intro_btn_width"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/intro_btn_height"
-                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
                 android:layout_marginBottom="@dimen/margin_normal"
                 android:maxLines="1"
                 android:text="@string/action_next" />
