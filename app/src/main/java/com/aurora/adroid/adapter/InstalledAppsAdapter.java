@@ -129,12 +129,13 @@ public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdap
             return false;
         });
 
-        GlideApp
-                .with(context)
-                .asBitmap()
-                .load(DatabaseUtil.getImageUrl(app))
-                .placeholder(R.drawable.ic_placeholder)
-                .into(holder.imgIcon);
+        if (app.getIcon() != null)
+            GlideApp
+                    .with(context)
+                    .asBitmap()
+                    .load(DatabaseUtil.getImageUrl(app))
+                    .placeholder(R.drawable.ic_placeholder)
+                    .into(holder.imgIcon);
     }
 
     private FragmentManager getFragmentManager() {

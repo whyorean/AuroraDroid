@@ -89,12 +89,14 @@ public class LatestUpdatedAdapter extends RecyclerView.Adapter<LatestUpdatedAdap
             intent.putExtra("INTENT_APK_FILE_NAME", app.getPackageName());
             context.startActivity(intent);
         });
-        GlideApp
-                .with(context)
-                .asBitmap()
-                .load(DatabaseUtil.getImageUrl(app))
-                .placeholder(R.drawable.ic_placeholder)
-                .into(holder.imgIcon);
+
+        if (app.getIcon() != null)
+            GlideApp
+                    .with(context)
+                    .asBitmap()
+                    .load(DatabaseUtil.getImageUrl(app))
+                    .placeholder(R.drawable.ic_placeholder)
+                    .into(holder.imgIcon);
     }
 
     @Override

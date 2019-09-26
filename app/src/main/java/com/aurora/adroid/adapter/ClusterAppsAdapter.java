@@ -30,10 +30,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aurora.adroid.activity.DetailsActivity;
-import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
+import com.aurora.adroid.activity.AuroraActivity;
+import com.aurora.adroid.activity.DetailsActivity;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.Util;
@@ -86,12 +86,14 @@ public class ClusterAppsAdapter extends RecyclerView.Adapter<ClusterAppsAdapter.
             intent.putExtra("INTENT_APK_FILE_NAME", app.getPackageName());
             context.startActivity(intent);
         });
-        GlideApp
-                .with(context)
-                .asBitmap()
-                .load(DatabaseUtil.getImageUrl(app))
-                .placeholder(R.drawable.ic_placeholder)
-                .into(holder.imgIcon);
+
+        if (app.getIcon() != null)
+            GlideApp
+                    .with(context)
+                    .asBitmap()
+                    .load(DatabaseUtil.getImageUrl(app))
+                    .placeholder(R.drawable.ic_placeholder)
+                    .into(holder.imgIcon);
     }
 
     private FragmentManager getFragmentManager() {

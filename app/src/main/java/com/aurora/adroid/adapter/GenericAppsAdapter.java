@@ -152,12 +152,13 @@ public class GenericAppsAdapter extends RecyclerView.Adapter<GenericAppsAdapter.
             context.startActivity(intent);
         });
 
-        GlideApp
-                .with(context)
-                .asBitmap()
-                .load(DatabaseUtil.getImageUrl(app))
-                .placeholder(R.drawable.ic_placeholder)
-                .into(holder.AppIcon);
+        if (app.getIcon() != null)
+            GlideApp
+                    .with(context)
+                    .asBitmap()
+                    .load(DatabaseUtil.getImageUrl(app))
+                    .placeholder(R.drawable.ic_placeholder)
+                    .into(holder.AppIcon);
     }
 
     private FragmentManager getFragmentManager() {

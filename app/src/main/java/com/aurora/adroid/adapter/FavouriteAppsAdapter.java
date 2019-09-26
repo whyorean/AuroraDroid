@@ -97,12 +97,13 @@ public class FavouriteAppsAdapter extends RecyclerView.Adapter {
             holder.AppExtra.setText(context.getText(R.string.list_not_installd));
         }
 
-        Glide
-                .with(context)
-                .load(DatabaseUtil.getImageUrl(app))
-                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
-                .transition(new DrawableTransitionOptions().crossFade())
-                .into(holder.AppIcon);
+        if (app.getIcon() != null)
+            Glide
+                    .with(context)
+                    .load(DatabaseUtil.getImageUrl(app))
+                    .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                    .transition(new DrawableTransitionOptions().crossFade())
+                    .into(holder.AppIcon);
 
         holder.AppCheckbox.setChecked(isSelected(appList.get(position)));
 

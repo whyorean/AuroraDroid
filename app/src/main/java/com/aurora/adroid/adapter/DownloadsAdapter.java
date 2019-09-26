@@ -101,11 +101,12 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsAdapter.View
         final String iconURL = PackageUtil.getIconURL(context, packageName);
         final Status status = downloadData.download.getStatus();
 
-        GlideApp
-                .with(context)
-                .load(iconURL)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(viewHolder.imgDownload);
+        if (iconURL != null)
+            GlideApp
+                    .with(context)
+                    .load(iconURL)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(viewHolder.imgDownload);
 
         viewHolder.txtTitle.setText(displayName);
         viewHolder.txtStatus.setText(Util.getStatus(status));
