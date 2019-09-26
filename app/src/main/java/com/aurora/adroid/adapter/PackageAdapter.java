@@ -131,7 +131,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
             public void onQueued(int groupId, @NotNull Download download, boolean waitingNetwork, @NotNull FetchGroup fetchGroup) {
                 if (groupId == pkg.hashCode()) {
                     RxBus.publish(new Event(Events.DOWNLOAD_INITIATED));
-                    notification.notifyQueued();
+                    notification.notifyQueued(pkg.hashCode());
                 }
             }
 

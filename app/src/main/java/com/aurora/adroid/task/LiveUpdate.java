@@ -71,7 +71,7 @@ public class LiveUpdate extends ContextWrapper {
             @Override
             public void onQueued(int groupId, @NotNull Download download, boolean waitingNetwork, @NotNull FetchGroup fetchGroup) {
                 if (groupId == hashCode) {
-                    notification.notifyQueued();
+                    notification.notifyQueued(hashCode);
                 }
             }
 

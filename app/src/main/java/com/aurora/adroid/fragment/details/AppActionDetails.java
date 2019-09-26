@@ -269,7 +269,7 @@ public class AppActionDetails extends AbstractDetails {
                         progressBar.setIndeterminate(true);
                         progressStatus.setText(R.string.download_queued);
                     });
-                    notification.notifyQueued();
+                    notification.notifyQueued(hashCode);
                 }
             }
 
