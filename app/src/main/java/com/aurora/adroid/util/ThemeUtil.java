@@ -43,6 +43,7 @@ public class ThemeUtil {
         String theme = getTheme(context);
         switch (theme) {
             case "dark":
+            case "darker":
             case "black":
                 return false;
             default:
@@ -68,8 +69,6 @@ public class ThemeUtil {
     private int getSelectedTheme(AppCompatActivity activity) {
         String theme = getTheme(activity);
         switch (theme) {
-            case "light":
-                return R.style.AppTheme;
             case "dark":
                 return R.style.AppTheme_Dark;
             case "darker":
