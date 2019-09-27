@@ -65,7 +65,6 @@ public class DetailsFragment extends Fragment {
     private CompositeDisposable disposable = new CompositeDisposable();
     private DetailsInstallReceiver detailsInstallReceiver;
     private AppActionDetails appActionDetails;
-    private AppPackages appPackages;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -94,12 +93,6 @@ public class DetailsFragment extends Fragment {
                         }
                     }
                 }));
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     @Nullable
@@ -134,8 +127,8 @@ public class DetailsFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         try {
             context.unregisterReceiver(detailsInstallReceiver);
             appActionDetails = null;
@@ -169,7 +162,7 @@ public class DetailsFragment extends Fragment {
 
     public void drawButtons() {
         appActionDetails = new AppActionDetails(this, app);
-        appPackages = new AppPackages(this, app);
+        AppPackages appPackages = new AppPackages(this, app);
         appActionDetails.draw();
         appPackages.draw();
     }
