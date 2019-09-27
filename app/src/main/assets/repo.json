@@ -221,5 +221,21 @@
     "repoMirrors": [],
     "repoFingerprint": "BC 54 EA 6F D1 CD 51 75 BC CC C4 7C 56 1C 57 26 E1 C3 ED 7E 68 6B 6D B4 B1 8B AC 84 3A 3E FE 6C",
     "repoDescription": "Bitwarden repository"
+  },
+  {
+    "repoId": "28",
+    "repoName": "LibRetro",
+    "repoUrl": "https://fdroid.libretro.com/repo",
+    "repoMirrors": [],
+    "repoFingerprint": "",
+    "repoDescription": "This repository has the bleeding edge builds of RetroArch."
+  },
+  {
+    "repoId": "29",
+    "repoName": "LibRetro Archive",
+    "repoUrl": "https://fdroid.libretro.com/archive",
+    "repoMirrors": [],
+    "repoFingerprint": "",
+    "repoDescription": "This repository has the old builds of RetroArch."
   }
 ]
