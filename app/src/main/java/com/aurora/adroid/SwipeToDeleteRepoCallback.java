@@ -46,7 +46,7 @@ public class SwipeToDeleteRepoCallback extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-        if (viewHolder.getAdapterPosition() < 27 /*Total no of default repos*/)
+        if (viewHolder.getAdapterPosition() < 29 /*Total no of default repos*/)
             return 0;
         else
             return super.getMovementFlags(recyclerView, viewHolder);
