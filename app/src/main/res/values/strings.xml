@@ -224,7 +224,7 @@
     <string name="pref_updates_7days">7 days</string>
     <string name="pref_services_title">Aurora Services</string>
     <string name="pref_services_desc">Launch Aurora services</string>
-    <string name="pref_services_desc_alt">Aurora services unavailable</string>
+    <string name="pref_services_desc_alt">Aurora Services unavailable. Click to go to the services repository to learn more.</string>
 
     <string name="repo_list">Repository list</string>
     <string name="repo_list_select">Select the repositories you wish to sync</string>
