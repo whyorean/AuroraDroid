@@ -19,6 +19,7 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?colorSecondaryVariant"
@@ -49,6 +50,7 @@
                 android:layout_height="@dimen/icon_size_medium"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_normal"
+                android:contentDescription="@string/repo_qr_scan"
                 android:src="@drawable/ic_qr_code" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -142,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_normal"
                 android:layout_marginEnd="@dimen/margin_normal"
-                android:hint="@string/title_fingerprint">
+                android:hint="Fingerprint (Optional)">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/repo_fingerprint"
