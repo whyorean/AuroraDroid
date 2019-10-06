@@ -112,9 +112,7 @@ public class RepoAddSheet extends BottomSheetDialogFragment {
         else
             repoUrl = Util.emptyIfNull(inpRepoUrl.getText().toString());
 
-        if (inpFingerprint.getText() == null || inpFingerprint.getText().toString().isEmpty())
-            inpFingerprint.setHint("Optional");
-        else
+        if (inpFingerprint.getText() != null)
             repoFingerPrint = Util.emptyIfNull(inpFingerprint.getText().toString());
 
 

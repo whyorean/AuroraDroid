@@ -21,6 +21,7 @@ package com.aurora.adroid.fragment.preference;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -107,8 +108,12 @@ public class InstallationFragment extends PreferenceFragmentCompat implements Sh
                 return false;
             });
         } else {
-            servicePreference.setEnabled(false);
             servicePreference.setSummary(getString(R.string.pref_services_desc_alt));
+            servicePreference.setOnPreferenceClickListener(preference -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://gitlab.com/AuroraOSS/AuroraServices"));
+                startActivity(intent);
+                return false;
+            });
         }
     }
 

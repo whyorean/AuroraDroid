@@ -56,7 +56,7 @@
                 android:id="@+id/txt_name_head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
+                android:text="@string/repo_name"
                 android:textAppearance="@style/TextAppearance.Aurora.Title" />
 
             <androidx.appcompat.widget.AppCompatTextView
