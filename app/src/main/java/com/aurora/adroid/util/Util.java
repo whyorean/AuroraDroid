@@ -198,7 +198,7 @@ public class Util {
     }
 
     public static boolean shouldAutoInstallApk(Context context) {
-        return getPrefs(context).getBoolean(Constants.PREFERENCE_INSTALLATION_AUTO, false);
+        return getPrefs(context).getBoolean(Constants.PREFERENCE_INSTALLATION_AUTO, true);
     }
 
     public static boolean shouldDeleteApk(Context context) {
