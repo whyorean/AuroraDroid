@@ -37,6 +37,8 @@ import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.TextUtil;
 import com.aurora.adroid.util.Util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,9 +82,9 @@ public class LatestUpdatedAdapter extends RecyclerView.Adapter<LatestUpdatedAdap
         if (app.getLocalized() != null
                 && app.getLocalized().getEnUS() != null
                 && app.getLocalized().getEnUS().getSummary() != null) {
-            summary = TextUtil.emptyIfNull(app.getLocalized().getEnUS().getSummary());
+            summary = StringUtils.capitalize(TextUtil.emptyIfNull(app.getLocalized().getEnUS().getSummary()));
         } else
-            summary = TextUtil.emptyIfNull(app.getSummary());
+            summary = StringUtils.capitalize(TextUtil.emptyIfNull(app.getSummary()));
         holder.txtExtra.setText(summary);
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailsActivity.class);
