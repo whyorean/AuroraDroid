@@ -18,8 +18,9 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
-    android:padding="@dimen/margin_xsmall">
+    android:layout_height="?actionBarSize"
+    android:layout_marginStart="@dimen/margin_small"
+    android:layout_marginEnd="@dimen/margin_small">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_status"
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="@dimen/margin_xxsmall"
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -35,19 +36,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="@dimen/margin_xxsmall"
         android:layout_toStartOf="@id/btn_cancel"
         android:textSize="14sp" />
 
     <ProgressBar
         android:id="@+id/progress_download"
-        style="?android:attr/progressBarStyleHorizontal"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txt_status"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_toStartOf="@id/btn_cancel"
+        android:layout_marginStart="@dimen/margin_xxsmall"
+        android:layout_marginEnd="@dimen/margin_xxsmall"
         android:indeterminate="true"
         android:max="100" />
 
@@ -55,14 +55,12 @@
         android:id="@+id/btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/progress_download"
+        android:layout_alignTop="@id/txt_progress"
+        android:layout_alignBottom="@id/txt_progress"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
-        android:elevation="1dp"
         android:focusable="true"
         android:src="@drawable/ic_cancel"
-        android:tint="?colorAccent"
-        android:visibility="visible" />
+        android:tint="?colorControlNormal" />
 </RelativeLayout>
