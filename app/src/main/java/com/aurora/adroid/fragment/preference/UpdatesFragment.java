@@ -25,10 +25,13 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
+import com.aurora.adroid.receiver.UpdatesReceiver;
+import com.aurora.adroid.util.PrefUtil;
 import com.aurora.adroid.util.Util;
 
 public class UpdatesFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -52,6 +55,17 @@ public class UpdatesFragment extends PreferenceFragmentCompat implements SharedP
         super.onViewCreated(view, savedInstanceState);
         SharedPreferences mPrefs = Util.getPrefs(context);
         mPrefs.registerOnSharedPreferenceChangeListener(this);
+
+        ListPreference updatesIntervalList = findPreference(Constants.PREFERENCE_UPDATES_INTERVAL);
+        assert updatesIntervalList != null;
+        updatesIntervalList.setOnPreferenceChangeListener((preference, newValue) -> {
+            String value = newValue.toString();
+            int interval = Util.parseInt(value, 0);
+            PrefUtil.putString(context, Constants.PREFERENCE_UPDATES_INTERVAL, value);
+            UpdatesReceiver.setUpdatesInterval(context, interval);
+            return true;
+        });
+
     }
 
     @Override

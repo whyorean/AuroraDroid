@@ -23,52 +23,40 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
+import com.aurora.adroid.service.RepoSyncService;
 import com.aurora.adroid.util.Log;
 
+import java.util.Calendar;
+
 public class UpdatesReceiver extends BroadcastReceiver {
-    static public void enable(Context context, int interval) {
+    static public void setUpdatesInterval(Context context, int interval) {
         Intent intent = new Intent(context, UpdatesReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(pendingIntent);
-        if (interval > 0) {
-            Log.e("Enabling periodic update checks");
-            alarmManager.setRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    System.currentTimeMillis(),
-                    interval,
-                    pendingIntent
-            );
+        if (alarmManager != null) {
+            alarmManager.cancel(pendingIntent);
+            if (interval > 0) {
+                alarmManager.setInexactRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        Calendar.getInstance().getTimeInMillis(),
+                        interval,
+                        pendingIntent
+                );
+            }
         }
+        Log.i("Periodic update preferences updated");
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        /*Log.e("Update check Started");
-        CompositeDisposable disposable = new CompositeDisposable();
-        UpdatableApps updatableAppTask = new UpdatableApps(context);
-        disposable.add(Observable.fromCallable(updatableAppTask::getUpdatableApps)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((appList) -> {
-                    if (!appList.isEmpty()) {
-                        QuickNotification.show(context,
-                                context.getString(R.string.action_updates),
-                                new StringBuilder()
-                                        .append(appList.size())
-                                        .append(StringUtils.SPACE)
-                                        .append(context.getString(R.string.list_update_all_txt))
-                                        .toString(),
-                                getContentIntent(context));
-                    }
-                }, err -> Log.e("Update check failed")));*/
+        Log.i("Checking repo updates");
+        Intent repoSyncIntent = new Intent(context, RepoSyncService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(repoSyncIntent);
+        } else {
+            context.startService(repoSyncIntent);
+        }
     }
-
-    /*private PendingIntent getContentIntent(Context context) {
-        Intent intent = new Intent(context, AuroraActivity.class);
-        intent.putExtra(Constants.INTENT_FRAGMENT_POSITION, 2);
-        return PendingIntent.getActivity(context, 0, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-    }*/
 }

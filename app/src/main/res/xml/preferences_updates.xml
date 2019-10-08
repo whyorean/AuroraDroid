@@ -23,7 +23,7 @@
         android:defaultValue="0"
         android:entries="@array/pref_repo_updates_interval"
         android:entryValues="@array/pref_repo_updates_interval_values"
-        android:key="PREFERENCE_REPO_UPDATE_INTERVAL"
+        android:key="PREFERENCE_UPDATES_INTERVAL"
         android:title="@string/pref_updates_repo_interval"
         app:useSimpleSummaryProvider="true" />
 </androidx.preference.PreferenceScreen>
