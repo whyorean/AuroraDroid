@@ -21,12 +21,14 @@ package com.aurora.adroid;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 
 import com.aurora.adroid.event.RxBus;
 import com.aurora.adroid.installer.Installer;
 import com.aurora.adroid.installer.InstallerService;
 import com.aurora.adroid.installer.Uninstaller;
 import com.aurora.adroid.util.Log;
+import com.aurora.adroid.util.Util;
 
 import io.reactivex.Observable;
 import io.reactivex.plugins.RxJavaPlugins;
@@ -58,6 +60,7 @@ public class AuroraApplication extends Application {
         rxBus = RxBus.get();
         installer = new Installer(this);
         uninstaller = new Uninstaller(this);
+        AsyncTask.execute(() -> Util.clearOldInstallationSessions(this));
         registerReceiver(installer.getPackageInstaller().getBroadcastReceiver(),
                 new IntentFilter(InstallerService.ACTION_INSTALLATION_STATUS_NOTIFICATION));
         RxJavaPlugins.setErrorHandler(err -> {

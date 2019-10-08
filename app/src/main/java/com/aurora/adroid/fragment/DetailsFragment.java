@@ -18,8 +18,13 @@
 
 package com.aurora.adroid.fragment;
 
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +45,6 @@ import com.aurora.adroid.fragment.details.AppPackages;
 import com.aurora.adroid.fragment.details.AppScreenshotsDetails;
 import com.aurora.adroid.fragment.details.AppSubInfoDetails;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.receiver.DetailsInstallReceiver;
 import com.aurora.adroid.task.FetchAppsTask;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
@@ -55,6 +59,11 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class DetailsFragment extends Fragment {
+
+    private static final String ACTION_PACKAGE_REPLACED_NON_SYSTEM = "ACTION_PACKAGE_REPLACED_NON_SYSTEM";
+    private static final String ACTION_PACKAGE_INSTALLATION_FAILED = "ACTION_PACKAGE_INSTALLATION_FAILED";
+    private static final String ACTION_UNINSTALL_PACKAGE_FAILED = "ACTION_UNINSTALL_PACKAGE_FAILED";
+
     public static App app;
 
     @BindView(R.id.coordinator)
@@ -63,8 +72,31 @@ public class DetailsFragment extends Fragment {
     private Context context;
     private String packageName;
     private CompositeDisposable disposable = new CompositeDisposable();
-    private DetailsInstallReceiver detailsInstallReceiver;
     private AppActionDetails appActionDetails;
+
+    private BroadcastReceiver localInstallReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String packageName = intent.getStringExtra("PACKAGE_NAME");
+            int statusCode = intent.getIntExtra("STATUS_CODE", -1);
+            if (packageName != null && packageName.equals(app.getPackageName())) {
+                ContextUtil.runOnUiThread(() -> drawButtons());
+                clearNotification(context, packageName);
+            }
+            if (statusCode == 0)
+                ContextUtil.toastLong(context, getString(R.string.installer_status_failure));
+        }
+    };
+
+    private BroadcastReceiver globalInstallReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getData() == null || !TextUtils.equals(packageName, intent.getData().getSchemeSpecificPart())) {
+                return;
+            }
+            ContextUtil.runOnUiThread(() -> drawButtons());
+        }
+    };
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -109,30 +141,27 @@ public class DetailsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         fetchApp();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        detailsInstallReceiver = new DetailsInstallReceiver(packageName);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        context.registerReceiver(localInstallReceiver, new IntentFilter("ACTION_INSTALL"));
+        context.registerReceiver(globalInstallReceiver, getFilter());
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        context.registerReceiver(detailsInstallReceiver, detailsInstallReceiver.getFilter());
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
+    public void onDestroy() {
+        super.onDestroy();
         try {
-            context.unregisterReceiver(detailsInstallReceiver);
+            context.unregisterReceiver(localInstallReceiver);
+            context.unregisterReceiver(globalInstallReceiver);
             appActionDetails = null;
             disposable.clear();
+            disposable.dispose();
         } catch (Exception ignored) {
         }
     }
@@ -171,5 +200,27 @@ public class DetailsFragment extends Fragment {
         Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
         snackbar.setDuration(BaseTransientBottomBar.LENGTH_SHORT);
         snackbar.show();
+    }
+
+    private IntentFilter getFilter() {
+        IntentFilter filter = new IntentFilter();
+        filter.addDataScheme("package");
+        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        filter.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
+        filter.addAction(Intent.ACTION_PACKAGE_INSTALL);
+        filter.addAction(Intent.ACTION_UNINSTALL_PACKAGE);
+        filter.addAction(Intent.ACTION_PACKAGE_ADDED);
+        filter.addAction(Intent.ACTION_PACKAGE_REPLACED);
+        filter.addAction(ACTION_PACKAGE_REPLACED_NON_SYSTEM);
+        filter.addAction(ACTION_PACKAGE_INSTALLATION_FAILED);
+        filter.addAction(ACTION_UNINSTALL_PACKAGE_FAILED);
+        return filter;
+    }
+
+    private void clearNotification(Context context, String packageName) {
+        NotificationManager notificationManager = (NotificationManager)
+                context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null)
+            notificationManager.cancel(packageName.hashCode());
     }
 }

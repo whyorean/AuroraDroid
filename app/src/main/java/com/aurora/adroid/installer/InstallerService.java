@@ -27,7 +27,7 @@ import androidx.annotation.Nullable;
 
 public class InstallerService extends Service {
 
-    public static final String ACTION_INSTALLATION_STATUS_NOTIFICATION = "com.aurora.store.action.INSTALLATION_STATUS_NOTIFICATION";
+    public static final String ACTION_INSTALLATION_STATUS_NOTIFICATION = "com.aurora.adroid.action.INSTALLATION_STATUS_NOTIFICATION";
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

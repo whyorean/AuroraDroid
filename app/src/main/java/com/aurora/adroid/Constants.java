@@ -19,19 +19,16 @@
 package com.aurora.adroid;
 
 public class Constants {
-    public static final String SHARED_PREFERENCES_KEY = "com.aurora.store";
+    public static final String SHARED_PREFERENCES_KEY = "com.aurora.adroid";
     public static final String SERVICE_PACKAGE = "com.aurora.services";
     public static final String TAG = "A-Droid";
-    public static final String REPO_BASE = "https://mirror.cyberbits.eu/fdroid/repo/";
     public static final String IMG_URL_PREFIX = "/icons-640/";
     public static final String SIGNED_FILE_NAME = "index-v1.jar";
     public static final String DATA_FILE_NAME = "index-v1.json";
     public static final String REPO_AVAILABLE = "REPO_AVAILABLE";
     public static final String DATABASE_AVAILABLE = "DATABASE_AVAILABLE";
-    public static final String DATABASE_LATEST = "DATABASE_LATEST";
     public static final String DATABASE_DATE = "DATABASE_DATE";
     public static final String APP_SHARE_URL = "https://f-droid.org/app/";
-    public static final String FILES = "Files";
     public static final String JAR = "jar";
     public static final String JSON = ".json";
 
@@ -39,7 +36,6 @@ public class Constants {
     public static final String PRIVILEGED_EXTENSION_SERVICE_INTENT = "com.aurora.services.IPrivilegedService";
 
     public static final String PREFERENCE_REPO_HEADERS = "PREFERENCE_REPO_HEADERS";
-
     public static final String PREFERENCE_FIRST_LAUNCH = "PREFERENCE_FIRST_LAUNCH";
     public static final String PREFERENCE_BLACKLIST_APPS_LIST = "PREFERENCE_BLACKLIST_APPS_LIST";
     public static final String PREFERENCE_FAVOURITE_LIST = "PREFERENCE_FAVOURITE_LIST";
@@ -49,8 +45,6 @@ public class Constants {
     public static final String PREFERENCE_INSTALLATION_METHOD = "PREFERENCE_INSTALLATION_METHOD";
     public static final String PREFERENCE_INSTALLATION_DELETE = "PREFERENCE_INSTALLATION_DELETE";
     public static final String PREFERENCE_NOTIFICATION_TOGGLE = "PREFERENCE_NOTIFICATION_TOGGLE";
-    public static final String PREFERENCE_NOTIFICATION_PRIORITY = "PREFERENCE_NOTIFICATION_PRIORITY";
-    public static final String PREFERENCE_NOTIFICATION_PROVIDER = "PREFERENCE_NOTIFICATION_PROVIDER";
     public static final String PREFERENCE_UPDATES_INTERVAL = "PREFERENCE_UPDATES_INTERVAL";
     public static final String PREFERENCE_UI_THEME = "PREFERENCE_UI_THEME";
     public static final String PREFERENCE_UI_TRANSPARENT = "PREFERENCE_UI_TRANSPARENT";
@@ -59,7 +53,6 @@ public class Constants {
     public static final String PREFERENCE_DOWNLOAD_ACTIVE = "PREFERENCE_DOWNLOAD_ACTIVE";
     public static final String PREFERENCE_DOWNLOAD_DEBUG = "PREFERENCE_DOWNLOAD_DEBUG";
     public static final String PREFERENCE_DOWNLOAD_STRATEGY = "PREFERENCE_DOWNLOAD_STRATEGY";
-    public static final String PREFERENCE_DOWNLOAD_DELTAS = "PREFERENCE_DOWNLOAD_DELTAS";
     public static final String PREFERENCE_ENABLE_PROXY = "PREFERENCE_ENABLE_PROXY";
     public static final String PREFERENCE_PROXY_HOST = "PREFERENCE_PROXY_HOST";
     public static final String PREFERENCE_PROXY_PORT = "PREFERENCE_PROXY_PORT";

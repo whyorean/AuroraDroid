@@ -63,11 +63,6 @@ public class RepoAddSheet extends BottomSheetDialogFragment {
     public RepoAddSheet() {
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        getDialog().getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

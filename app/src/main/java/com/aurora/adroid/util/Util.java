@@ -25,6 +25,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInstaller;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.IBinder;
@@ -208,7 +209,7 @@ public class Util {
     }
 
     public static boolean isNativeInstallerEnforced(Context context) {
-        return getPrefs(context).getBoolean(Constants.PREFERENCE_INSTALLATION_TYPE, true);
+        return getPrefs(context).getBoolean(Constants.PREFERENCE_INSTALLATION_TYPE, false);
     }
 
     public static boolean isRootInstallEnabled(Context context) {
@@ -349,5 +350,18 @@ public class Util {
         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("Apk Url", dataToCopy);
         clipboard.setPrimaryClip(clip);
+    }
+
+    public static void clearOldInstallationSessions(Context context) {
+        final PackageInstaller packageInstaller = context.getPackageManager().getPackageInstaller();
+        for (PackageInstaller.SessionInfo sessionInfo : packageInstaller.getMySessions()) {
+            final int sessionId = sessionInfo.getSessionId();
+            try {
+                packageInstaller.abandonSession(sessionInfo.getSessionId());
+                Log.i("Abandoned session id -> %d", sessionId);
+            } catch (Exception e) {
+                Log.e(e.getMessage());
+            }
+        }
     }
 }

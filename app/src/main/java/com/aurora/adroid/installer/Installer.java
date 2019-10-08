@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInstaller;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 
 import androidx.core.content.FileProvider;
@@ -50,6 +51,11 @@ public class Installer {
     private Context context;
     private Map<String, App> appHashMap = new HashMap<>();
     private AppInstallerAbstract packageInstaller;
+    private List<App> installationQueue = new ArrayList<>();
+
+    private boolean isInstalling = false;
+    private boolean isWaiting = false;
+
 
     public Installer(Context context) {
         this.context = context;
@@ -58,11 +64,23 @@ public class Installer {
 
     public void install(App app) {
         appHashMap.put(app.getPackageName(), app);
+        installationQueue.add(app);
+
+        if (isInstalling)
+            isWaiting = true;
+        else
+            processApp(app);
+    }
+
+    private void processApp(App app) {
+        isInstalling = true;
+        installationQueue.remove(app);
         if (Util.isNativeInstallerEnforced(context))
             install(app.getAppPackage().getApkName());
         else
             installSplit(app);
     }
+
 
     public AppInstallerAbstract getPackageInstaller() {
         return packageInstaller;
@@ -122,6 +140,7 @@ public class Installer {
                             displayName,
                             status,
                             getContentIntent(intentPackageName));
+                    checkAndProcessQueuedApps();
                     break;
                 case PackageInstaller.STATUS_SUCCESS:
                     QuickNotification.show(
@@ -133,10 +152,21 @@ public class Installer {
                         PathUtil.deleteApkFile(context, intentPackageName);
                         appHashMap.remove(intentPackageName);
                     }
+                    checkAndProcessQueuedApps();
                     break;
             }
         });
-        packageInstaller.installApkFiles(apkFiles);
+        AsyncTask.execute(() -> packageInstaller.installApkFiles(app.getPackageName(), apkFiles));
+    }
+
+    private void checkAndProcessQueuedApps() {
+        if (installationQueue.isEmpty()) {
+            isWaiting = false;
+            isInstalling = false;
+        }
+
+        if (isWaiting)
+            processApp(installationQueue.get(0));
     }
 
     private AppInstallerAbstract getInstallationMethod(Context context) {

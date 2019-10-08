@@ -72,12 +72,6 @@ public class PermissionBottomSheet extends BottomSheetDialogFragment {
         this.context = context;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        getDialog().getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
-    }
-
     @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

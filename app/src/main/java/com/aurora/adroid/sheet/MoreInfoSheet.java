@@ -32,7 +32,6 @@ import androidx.annotation.Nullable;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import butterknife.BindView;
@@ -55,7 +54,6 @@ public class MoreInfoSheet extends BottomSheetDialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        getDialog().getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     @Override
