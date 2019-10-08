@@ -68,6 +68,9 @@
     <string name="action_whitelist">Whitelist</string>
 
     <string name="details_more">Read more</string>
+    <string name="details_more_apps_dev">More apps from developer</string>
+    <string name="details_more_apps_similar">Similar category apps</string>
+    <string name="details_other">Other versions</string>
     <string name="details_no_description">No description provided by the developer</string>
     <string name="details_no_permissions">No permissions are used.</string>
     <string name="details_permissions">App permissions</string>

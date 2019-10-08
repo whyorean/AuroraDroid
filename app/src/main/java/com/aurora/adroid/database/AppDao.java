@@ -48,6 +48,9 @@ public interface AppDao {
     @Query("SELECT * FROM app WHERE name LIKE :pattern LIMIT 20")
     List<App> findAppsByName(String pattern);
 
+    @Query("SELECT * FROM app WHERE (authorName = :authorName) or (authorName LIKE :authorName) LIMIT 20")
+    List<App> getAppsByAuthorName(String authorName);
+
     @Query("SELECT * FROM app WHERE :refTime - lastUpdated <= :weekCount * 604800000 ORDER BY lastUpdated DESC")
     List<App> getLatestUpdatedApps(Long refTime, int weekCount);
 

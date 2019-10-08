@@ -89,7 +89,8 @@
                     android:layout_centerVertical="true"
                     android:background="?selectableItemBackgroundBorderless"
                     android:padding="@dimen/margin_small"
-                    android:src="@drawable/ic_arrow" />
+                    app:tint="?colorControlNormal"
+                    app:srcCompat="@drawable/ic_arrow" />
             </RelativeLayout>
 
             <!-- Screenshot -->
@@ -122,8 +123,8 @@
                     android:layout_toStartOf="@id/img_expand"
                     android:paddingTop="@dimen/margin_small"
                     android:paddingBottom="@dimen/margin_small"
-                    android:text="Other versions"
-                    android:textAppearance="@style/TextAppearance.Aurora.Title" />
+                    android:text="@string/details_other"
+                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_expand"
@@ -132,6 +133,7 @@
                     android:layout_alignParentEnd="true"
                     android:background="?selectableItemBackgroundBorderless"
                     android:padding="@dimen/margin_small"
+                    app:tint="?colorControlNormal"
                     app:srcCompat="@drawable/ic_expand" />
             </RelativeLayout>
 
@@ -154,12 +156,69 @@
                     tools:listitem="@layout/item_screenshots_small" />
             </RelativeLayout>
 
-            <!-- Cluster container-->
             <LinearLayout
-                android:id="@+id/cluster_container"
+                android:id="@+id/layout_developer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:layout_marginTop="@dimen/margin_small"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:layout_marginTop="@dimen/margin_xsmall"
+                    android:layout_marginEnd="@dimen/margin_xsmall"
+                    android:layout_marginBottom="@dimen/margin_xsmall"
+                    android:drawablePadding="@dimen/margin_small"
+                    android:text="@string/details_more_apps_dev"
+                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
+                    android:textSize="18sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_developer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/margin_small"
+                    android:paddingEnd="@dimen/margin_small"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_cluster" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_similar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:layout_marginTop="@dimen/margin_xsmall"
+                    android:layout_marginEnd="@dimen/margin_xsmall"
+                    android:layout_marginBottom="@dimen/margin_xsmall"
+                    android:drawablePadding="@dimen/margin_small"
+                    android:text="@string/details_more_apps_similar"
+                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
+                    android:textSize="18sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_similar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/margin_small"
+                    android:paddingEnd="@dimen/margin_small"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_cluster" />
+            </LinearLayout>
 
             <!-- Links -->
             <include layout="@layout/include_details_links" />

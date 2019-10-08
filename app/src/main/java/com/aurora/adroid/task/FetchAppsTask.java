@@ -113,6 +113,15 @@ public class FetchAppsTask extends ContextWrapper {
         return appDao.findAppsByName(name);
     }
 
+    public List<App> getAppsByDeveloperName(String authorName, String packageName) {
+        List<App> appList = appDao.getAppsByAuthorName(authorName);
+        App app = new App();
+        app.setPackageName(packageName);
+        appList = removeDuplicates(appList);
+        appList.remove(app);
+        return appList;
+    }
+
     public List<App> getLatestUpdatedApps(int weekCount) {
         List<App> appList = appDao.getLatestUpdatedApps(Calendar.getInstance().getTimeInMillis(), weekCount);
         appList = removeDuplicates(appList);
@@ -130,8 +139,8 @@ public class FetchAppsTask extends ContextWrapper {
     }
 
     public List<App> removeDuplicates(List<App> appList) {
-        Set<App> unique = new LinkedHashSet<App>(appList);
-        appList = new ArrayList<App>(unique);
+        Set<App> unique = new LinkedHashSet<>(appList);
+        appList = new ArrayList<>(unique);
         return appList;
     }
 }

@@ -18,19 +18,26 @@
 
 package com.aurora.adroid.fragment.details;
 
+import android.content.Context;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.aurora.adroid.R;
+import com.aurora.adroid.adapter.ClusterAppsAdapter;
 import com.aurora.adroid.fragment.DetailsFragment;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 import com.aurora.adroid.sheet.MoreInfoSheet;
+import com.aurora.adroid.task.FetchAppsTask;
+import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
-import com.aurora.adroid.view.ClusterView;
 import com.google.android.material.chip.Chip;
 
 import java.text.DateFormat;
@@ -39,6 +46,10 @@ import java.util.Date;
 import java.util.Locale;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class AppSubInfoDetails extends AbstractDetails {
 
@@ -59,8 +70,18 @@ public class AppSubInfoDetails extends AbstractDetails {
     Chip chipRepo;
     @BindView(R.id.img_more)
     ImageButton imgMore;
-    @BindView(R.id.cluster_container)
-    LinearLayout layoutCluster;
+    @BindView(R.id.layout_developer)
+    LinearLayout layoutDeveloper;
+    @BindView(R.id.layout_similar)
+    LinearLayout layoutSimilar;
+    @BindView(R.id.recycler_developer)
+    RecyclerView recyclerDeveloper;
+    @BindView(R.id.recycler_similar)
+    RecyclerView recyclerSimilar;
+
+    private CompositeDisposable disposable = new CompositeDisposable();
+    private ClusterAppsAdapter adapterDeveloper;
+    private ClusterAppsAdapter adapterSimilar;
 
     public AppSubInfoDetails(DetailsFragment fragment, App app) {
         super(fragment, app);
@@ -79,7 +100,9 @@ public class AppSubInfoDetails extends AbstractDetails {
 
         if (app.getCategories() != null && !app.getCategories().isEmpty()) {
             chipCategory.setText(app.getCategories().get(0));
-            setupCluster(app.getCategories().get(0));
+            layoutSimilar.setVisibility(View.VISIBLE);
+            setupSimilarRecycler(context);
+            fetchSimilarApps(app.getCategories().get(0));
         } else
             ViewUtil.hideWithAnimation(chipCategory);
 
@@ -88,12 +111,56 @@ public class AppSubInfoDetails extends AbstractDetails {
             moreInfoSheet.setApp(app);
             moreInfoSheet.show(fragment.getChildFragmentManager(), "DESCRIPTION");
         });
+
+        if (app.getAuthorName() != null
+                && !app.getAuthorName().isEmpty()
+                && !app.getAuthorName().equalsIgnoreCase("unknown")) {
+            layoutDeveloper.setVisibility(View.VISIBLE);
+            setupAuthorRecycler(context);
+            fetchAuthorApps();
+        }
     }
 
-    private void setupCluster(String category) {
-        ClusterView clusterView = new ClusterView(context);
-        clusterView.setCategoryName(category);
-        clusterView.build();
-        layoutCluster.addView(clusterView);
+    private void fetchAuthorApps() {
+        disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
+                .getAppsByDeveloperName(app.getAuthorName(), app.getPackageName()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((appList) -> {
+                    if (appList.isEmpty())
+                        layoutDeveloper.setVisibility(View.GONE);
+                    else
+                        adapterDeveloper.addData(appList);
+
+                }, err -> {
+                    Log.e(err.getMessage());
+                }));
+    }
+
+    private void fetchSimilarApps(String category) {
+        disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
+                .getAppsByCategory(category))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((appList) -> {
+                    if (appList.isEmpty())
+                        layoutSimilar.setVisibility(View.GONE);
+                    else
+                        adapterSimilar.addData(appList);
+                }, err -> {
+                    Log.e(err.getMessage());
+                }));
+    }
+
+    private void setupAuthorRecycler(Context context) {
+        adapterDeveloper = new ClusterAppsAdapter(context);
+        recyclerDeveloper.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+        recyclerDeveloper.setAdapter(adapterDeveloper);
+    }
+
+    private void setupSimilarRecycler(Context context) {
+        adapterSimilar = new ClusterAppsAdapter(context);
+        recyclerSimilar.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+        recyclerSimilar.setAdapter(adapterSimilar);
     }
 }
