@@ -45,6 +45,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.button.MaterialButton;
 
+import org.apache.commons.lang3.StringUtils;
+
 import butterknife.BindView;
 
 public class AppInfoDetails extends AbstractDetails {
@@ -73,8 +75,7 @@ public class AppInfoDetails extends AbstractDetails {
     @Override
     public void draw() {
         GlideApp.with(context)
-                .
-                        asBitmap()
+                .asBitmap()
                 .load(DatabaseUtil.getImageUrl(app))
                 .transition(new BitmapTransitionOptions().crossFade())
                 .listener(new RequestListener<Bitmap>() {
@@ -99,9 +100,9 @@ public class AppInfoDetails extends AbstractDetails {
         setText(txtPackageName, app.getPackageName());
         setText(txtDevName, app.getAuthorName());
         if (app.getLocalized() != null && app.getLocalized().getEnUS() != null && !TextUtil.isEmpty(app.getLocalized().getEnUS().getSummary()))
-            setText(txtSummary, app.getLocalized().getEnUS().getSummary().trim());
+            setText(txtSummary, StringUtils.capitalize(app.getLocalized().getEnUS().getSummary().trim()));
         else
-            setText(txtSummary, TextUtil.emptyIfNull(app.getSummary().trim()));
+            setText(txtSummary, StringUtils.capitalize(TextUtil.emptyIfNull(app.getSummary().trim())));
     }
 
     private void getPalette(Bitmap bitmap) {
