@@ -35,7 +35,6 @@ import androidx.annotation.Nullable;
 import com.aurora.adroid.PermissionGroup;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
@@ -89,6 +88,10 @@ public class PermissionBottomSheet extends BottomSheetDialogFragment {
 
     private void addPermissionWidgets() {
         Map<String, PermissionGroup> permissionGroupWidgets = new HashMap<>();
+        if (app.getAppPackage().getUsesPermission() == null || app.getAppPackage().getUsesPermission().isEmpty()) {
+            permissions_none.setVisibility(permissionGroupWidgets.isEmpty() ? View.VISIBLE : View.GONE);
+            return;
+        }
         for (List<String> permissionList : app.getAppPackage().getUsesPermission())
             for (String permissionName : permissionList) {
                 PermissionInfo permissionInfo = getPermissionInfo(permissionName);
