@@ -27,13 +27,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
 import com.aurora.adroid.Sort;
-import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.activity.DetailsActivity;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.DatabaseUtil;
@@ -46,13 +44,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.disposables.CompositeDisposable;
 
 public class GenericAppsAdapter extends RecyclerView.Adapter<GenericAppsAdapter.ViewHolder> {
 
     private List<App> appList = new ArrayList<>();
     private Context context;
-    private CompositeDisposable disposable = new CompositeDisposable();
 
     public GenericAppsAdapter(Context context) {
         this.context = context;
@@ -152,7 +148,9 @@ public class GenericAppsAdapter extends RecyclerView.Adapter<GenericAppsAdapter.
             context.startActivity(intent);
         });
 
-        if (app.getIcon() != null)
+        if (app.getIcon() == null)
+            holder.AppIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_placeholder));
+        else
             GlideApp
                     .with(context)
                     .asBitmap()
@@ -161,18 +159,9 @@ public class GenericAppsAdapter extends RecyclerView.Adapter<GenericAppsAdapter.
                     .into(holder.AppIcon);
     }
 
-    private FragmentManager getFragmentManager() {
-        return ((AuroraActivity) context).getSupportFragmentManager();
-    }
-
     @Override
     public int getItemCount() {
         return appList.size();
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return appList.get(position).hashCode();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

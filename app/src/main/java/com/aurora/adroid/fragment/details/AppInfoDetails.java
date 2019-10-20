@@ -39,8 +39,6 @@ import com.aurora.adroid.util.ThemeUtil;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.button.MaterialButton;
@@ -74,23 +72,26 @@ public class AppInfoDetails extends AbstractDetails {
 
     @Override
     public void draw() {
-        GlideApp.with(context)
-                .asBitmap()
-                .load(DatabaseUtil.getImageUrl(app))
-                .transition(new BitmapTransitionOptions().crossFade())
-                .listener(new RequestListener<Bitmap>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                        return false;
-                    }
+        if (app.getIcon() == null)
+            imgIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_placeholder));
+        else
+            GlideApp.with(context)
+                    .asBitmap()
+                    .load(DatabaseUtil.getImageUrl(app))
+                    .transition(new BitmapTransitionOptions().crossFade())
+                    .listener(new RequestListener<Bitmap>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                            return false;
+                        }
 
-                    @Override
-                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                        getPalette(resource);
-                        return false;
-                    }
-                })
-                .into(imgIcon);
+                        @Override
+                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                            getPalette(resource);
+                            return false;
+                        }
+                    })
+                    .into(imgIcon);
 
         txtName.setText(app.getName());
         txtVersion.setText(new StringBuilder()

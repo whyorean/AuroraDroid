@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
 import com.aurora.adroid.activity.DetailsActivity;
 import com.aurora.adroid.manager.FavouriteListManager;
@@ -97,12 +98,14 @@ public class FavouriteAppsAdapter extends RecyclerView.Adapter {
             holder.AppExtra.setText(context.getText(R.string.list_not_installd));
         }
 
-        if (app.getIcon() != null)
-            Glide
+        if (app.getIcon() == null)
+            holder.AppIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_placeholder));
+        else
+            GlideApp
                     .with(context)
+                    .asBitmap()
                     .load(DatabaseUtil.getImageUrl(app))
-                    .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
-                    .transition(new DrawableTransitionOptions().crossFade())
+                    .placeholder(R.drawable.ic_placeholder)
                     .into(holder.AppIcon);
 
         holder.AppCheckbox.setChecked(isSelected(appList.get(position)));

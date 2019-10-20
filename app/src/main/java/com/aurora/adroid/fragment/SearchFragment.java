@@ -163,10 +163,8 @@ public class SearchFragment extends Fragment {
 
     private void setupRecycler() {
         genericAppsAdapter = new GenericAppsAdapter(context);
-        genericAppsAdapter.setHasStableIds(true);
         recyclerView.setAdapter(genericAppsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-        recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(context, R.anim.anim_falldown));
     }
 
     private void notifyAction(String message) {

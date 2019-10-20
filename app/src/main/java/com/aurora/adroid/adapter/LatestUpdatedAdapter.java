@@ -92,7 +92,9 @@ public class LatestUpdatedAdapter extends RecyclerView.Adapter<LatestUpdatedAdap
             context.startActivity(intent);
         });
 
-        if (app.getIcon() != null)
+        if (app.getIcon() == null)
+            holder.imgIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_placeholder));
+        else
             GlideApp
                     .with(context)
                     .asBitmap()

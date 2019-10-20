@@ -129,7 +129,9 @@ public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdap
             return false;
         });
 
-        if (app.getIcon() != null)
+        if (app.getIcon() == null)
+            holder.imgIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_placeholder));
+        else
             GlideApp
                     .with(context)
                     .asBitmap()
