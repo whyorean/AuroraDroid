@@ -15,8 +15,11 @@
     "repoId": "02",
     "repoName": "F-Droid Archive",
     "repoUrl": "https://f-droid.org/archive",
-    "repoMirrors": [],
-    "repoFingerprint": "",
+    "repoMirrors": [
+      "https://ftp.fau.de/fdroid/archive",
+      "https://bubu1.eu/fdroid/archive"
+    ],
+    "repoFingerprint": "43 23 8D 51 2C 1E 5E B2 D6 56 9F 4A 3A FB F5 52 34 18 B8 2E 0A 3E D1 55 27 70 AB B9 A9 C9 CC AB",
     "repoDescription": "F-Droid's mainline repository, serving apps build and signed by F-Droid"
   },
   {
