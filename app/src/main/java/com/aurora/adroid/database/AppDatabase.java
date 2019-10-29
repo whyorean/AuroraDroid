@@ -53,6 +53,11 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     }
 
+    public boolean clearAll() {
+        instance.clearAllTables();
+        return true;
+    }
+
     public abstract AppDao appDao();
 
     public abstract PackageDao packageDao();

@@ -59,7 +59,6 @@ public class RepoSyncService extends Service {
 
     private CompositeDisposable disposable = new CompositeDisposable();
     private Fetch fetch;
-    private SyncManager syncManager;
     private SyncNotification syncNotification;
     private AbstractFetchListener abstractFetchListener;
     private CheckRepoUpdatesTask checkRepoUpdatesTask;
@@ -115,7 +114,6 @@ public class RepoSyncService extends Service {
 
         checkRepoUpdatesTask = new CheckRepoUpdatesTask(this);
         fetch = DownloadManager.getFetchInstance(this);
-        syncManager = new SyncManager(this);
         disposable.add(Observable.fromCallable(() -> checkRepoUpdatesTask
                 .filterList(requestList))
                 .subscribeOn(Schedulers.io())
@@ -150,7 +148,7 @@ public class RepoSyncService extends Service {
                     final Repo repo = repoBundle.getRepo();
                     if (repoBundle.isSynced()) {
                         RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_completed)));
-                        syncManager.setSynced(repo.getRepoId());
+                        SyncManager.setSynced(this, repo.getRepoId());
                     } else {
                         RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_failed)));
                     }

@@ -36,6 +36,7 @@ import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.activity.IntroActivity;
 import com.aurora.adroid.activity.SettingsActivity;
 import com.aurora.adroid.manager.RepoListManager;
+import com.aurora.adroid.manager.SyncManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.sheet.RepoDetailsSheet;
 import com.aurora.adroid.task.CheckRepoUpdatesTask;
@@ -131,7 +132,7 @@ public class RepoAdapter extends SelectableAdapter<RepoAdapter.ViewHolder> {
         if (selections.contains(repoId)) {
             selections.remove(repoId);
             repoListManager.remove(repoId);
-            if (syncManager.isSynced(repoId))
+            if (SyncManager.isSynced(context, repoId))
                 showRepoClearDialog(repoId);
         } else {
             selections.add(repoId);
@@ -149,7 +150,7 @@ public class RepoAdapter extends SelectableAdapter<RepoAdapter.ViewHolder> {
                 .setMessage(context.getString(R.string.dialog_repo_clear_desc))
                 .setPositiveButton(context.getString(android.R.string.ok), (dialog, which) -> {
                     CheckRepoUpdatesTask.removeRepoHeader(context, repoId);
-                    syncManager.clearSynced(repoId);
+                    SyncManager.clearSynced(context, repoId);
                     disposable.add(Observable.fromCallable(() -> new DatabaseTask(context)
                             .clearRepo(repoId))
                             .subscribeOn(Schedulers.io())

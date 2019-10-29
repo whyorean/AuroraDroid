@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -39,9 +38,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aurora.adroid.R;
 import com.aurora.adroid.SwipeToDeleteRepoCallback;
 import com.aurora.adroid.adapter.RepoAdapter;
+import com.aurora.adroid.database.AppDatabase;
 import com.aurora.adroid.manager.RepoListManager;
+import com.aurora.adroid.manager.SyncManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.sheet.RepoAddSheet;
+import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.ViewUtil;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
@@ -49,7 +51,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickListener {
 
@@ -101,7 +107,6 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupFab();
-        setupClearAll();
         setupRecycler();
     }
 
@@ -130,14 +135,17 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
         fabAdd.setOnClickListener(v -> {
             RepoAddSheet repoAddSheet = new RepoAddSheet();
             repoAddSheet.setTargetFragment(RepoListFragment.this, RESULT_CODE);
-            repoAddSheet.show(getFragmentManager(), SHEET_TAG);
+            repoAddSheet.show(getChildFragmentManager(), SHEET_TAG);
         });
     }
 
-    private void setupClearAll() {
-        btnClearAll.setOnClickListener(v -> {
-            clearBlackListedApps();
-        });
+    @OnClick(R.id.btn_clear_all)
+    public void clearAll() {
+        SyncManager.clearAllSynced(context);
+        SyncManager.clearRepoHeader(context);
+        DatabaseUtil.setDatabaseAvailable(context, false);
+        clearBlackListedApps();
+        clearAllTables();
     }
 
     private void updateCount() {
@@ -174,6 +182,15 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
             }
         });
         updateCount();
+    }
+
+    private void clearAllTables() {
+        disposable.add(Observable.fromCallable(() -> AppDatabase.getAppDatabase(context)
+                .clearAll())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+        );
     }
 
     @Override

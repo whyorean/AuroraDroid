@@ -43,7 +43,6 @@ import com.aurora.adroid.task.FetchAppsTask;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.ViewUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.button.MaterialButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -201,7 +200,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchRepositories() {
-        repositoriesAdapter.addData(new SyncManager(context).getSyncedRepos());
+        repositoriesAdapter.addData(SyncManager.getSyncedRepos(context));
     }
 
     private void fetchNewApps() {
