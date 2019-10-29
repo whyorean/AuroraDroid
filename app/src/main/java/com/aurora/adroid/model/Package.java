@@ -18,214 +18,40 @@
 
 package com.aurora.adroid.model;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Data;
+
+@Data
 @Entity(tableName = "package")
 public class Package {
 
-    @SerializedName("repoName")
-    @Expose
-    private String repoName;
-    @SerializedName("repoUrl")
-    @Expose
-    private String repoUrl;
-    @SerializedName("added")
-    @Expose
-    private Long added;
-    @SerializedName("apkName")
-    @Expose
     @PrimaryKey
     @NotNull
     private String apkName = "unknown";
-    @SerializedName("hash")
-    @Expose
+    private String repoName;
+    private String repoUrl;
+    private Long added;
     private String hash;
-    @SerializedName("hashType")
-    @Expose
     private String hashType;
-    @SerializedName("minSdkVersion")
-    @Expose
     private String minSdkVersion;
-    @SerializedName("nativecode")
-    @Expose
     private List<String> nativecode = new ArrayList<>();
-    @SerializedName("packageName")
-    @Expose
-    @NonNull
-    private String packageName = "c";
-    @SerializedName("sig")
-    @Expose
+    private String packageName;
     private String sig;
-    @SerializedName("signer")
-    @Expose
     private String signer;
-    @SerializedName("size")
-    @Expose
     private Long size;
-    @SerializedName("srcname")
-    @Expose
     private String srcname;
-    @SerializedName("targetSdkVersion")
-    @Expose
     private String targetSdkVersion;
-    @SerializedName("uses-permission")
-    @Expose
     private List<List<String>> usesPermission = null;
-    @SerializedName("versionCode")
-    @Expose
     private Long versionCode = 0L;
-    @SerializedName("versionName")
-    @Expose
     private String versionName = "null";
 
     public Package() {
-    }
-
-    public String getRepoUrl() {
-        return repoUrl;
-    }
-
-    public void setRepoUrl(String repoUrl) {
-        this.repoUrl = repoUrl;
-    }
-
-    public String getRepoName() {
-        return repoName;
-    }
-
-    public void setRepoName(String repoName) {
-        this.repoName = repoName;
-    }
-
-    public Long getAdded() {
-        return added;
-    }
-
-    public void setAdded(Long added) {
-        this.added = added;
-    }
-
-    @NotNull
-    public String getApkName() {
-        return apkName;
-    }
-
-    public void setApkName(@NotNull String apkName) {
-        this.apkName = apkName;
-    }
-
-    public String getHash() {
-        return hash;
-    }
-
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
-
-    public String getHashType() {
-        return hashType;
-    }
-
-    public void setHashType(String hashType) {
-        this.hashType = hashType;
-    }
-
-    public String getMinSdkVersion() {
-        return minSdkVersion;
-    }
-
-    public void setMinSdkVersion(String minSdkVersion) {
-        this.minSdkVersion = minSdkVersion;
-    }
-
-    public List<String> getNativecode() {
-        return nativecode;
-    }
-
-    public void setNativecode(List<String> nativecode) {
-        this.nativecode = nativecode;
-    }
-
-    @NotNull
-    public String getPackageName() {
-        return packageName;
-    }
-
-    public void setPackageName(@NotNull String packageName) {
-        this.packageName = packageName;
-    }
-
-    public String getSig() {
-        return sig;
-    }
-
-    public void setSig(String sig) {
-        this.sig = sig;
-    }
-
-    public String getSigner() {
-        return signer;
-    }
-
-    public void setSigner(String signer) {
-        this.signer = signer;
-    }
-
-    public Long getSize() {
-        return size;
-    }
-
-    public void setSize(Long size) {
-        this.size = size;
-    }
-
-    public String getSrcname() {
-        return srcname;
-    }
-
-    public void setSrcname(String srcname) {
-        this.srcname = srcname;
-    }
-
-    public String getTargetSdkVersion() {
-        return targetSdkVersion;
-    }
-
-    public void setTargetSdkVersion(String targetSdkVersion) {
-        this.targetSdkVersion = targetSdkVersion;
-    }
-
-    public List<List<String>> getUsesPermission() {
-        return usesPermission;
-    }
-
-    public void setUsesPermission(List<List<String>> usesPermission) {
-        this.usesPermission = usesPermission;
-    }
-
-    public Long getVersionCode() {
-        return versionCode;
-    }
-
-    public void setVersionCode(Long versionCode) {
-        this.versionCode = versionCode;
-    }
-
-    public String getVersionName() {
-        return versionName;
-    }
-
-    public void setVersionName(String versionName) {
-        this.versionName = versionName;
     }
 }

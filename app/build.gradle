@@ -45,7 +45,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-	    signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -66,10 +66,16 @@ dependencies {
     implementation 'commons-validator:commons-validator:1.6'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
-    implementation "androidx.room:room-runtime:2.2.0-rc01"
-    annotationProcessor "androidx.room:room-compiler:2.2.0-rc01"
     implementation 'org.apache.commons:commons-text:1.4'
     implementation 'com.scottyab:rootbeer-lib:0.0.7'
+
+    //Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+
+    //Android Room
+    implementation "androidx.room:room-runtime:2.2.1"
+    annotationProcessor "androidx.room:room-compiler:2.2.1"
 
     //OkHTTP3
     implementation 'com.squareup.okhttp3:okhttp:4.2.1'
@@ -81,8 +87,8 @@ dependencies {
     implementation 'com.jakewharton.rxrelay2:rxrelay:2.1.0'
 
     //ButterKnife
-    implementation 'com.jakewharton:butterknife:10.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation 'com.jakewharton:butterknife:10.2.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'

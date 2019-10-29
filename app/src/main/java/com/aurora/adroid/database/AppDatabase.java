@@ -29,7 +29,7 @@ import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Index;
 import com.aurora.adroid.model.Package;
 
-@Database(entities = {App.class, Package.class, Index.class}, version = 2, exportSchema = false)
+@Database(entities = {App.class, Package.class, Index.class}, version = 3, exportSchema = false)
 @TypeConverters(DatabaseConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 

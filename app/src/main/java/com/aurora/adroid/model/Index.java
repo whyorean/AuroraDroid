@@ -18,20 +18,19 @@
 
 package com.aurora.adroid.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import org.jetbrains.annotations.NotNull;
 
+import lombok.Data;
+
+@Data
 @Entity(tableName = "index")
 public class Index implements Comparable<Index> {
     @PrimaryKey
-    @SerializedName("repoId")
-    @NotNull
-    @Expose
+    @NonNull
     private String repoId = "00";
     private Long timestamp;
     private int version;
@@ -39,63 +38,6 @@ public class Index implements Comparable<Index> {
     private String icon;
     private String address;
     private String description;
-
-    public Long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @NotNull
-    public String getRepoId() {
-        return repoId;
-    }
-
-    public void setRepoId(@NotNull String repoId) {
-        this.repoId = repoId;
-    }
 
     @Override
     public boolean equals(Object obj) {
