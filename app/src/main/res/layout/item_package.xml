@@ -23,9 +23,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_xxsmall"
     android:background="@drawable/generic_padded_bg"
-    android:orientation="horizontal"
-    android:layout_margin="@dimen/margin_xxsmall">
+    android:orientation="horizontal">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_apk"
@@ -64,10 +64,10 @@
         android:id="@+id/img_download"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:padding="@dimen/margin_normal"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="@dimen/margin_small"
         android:background="?selectableItemBackground"
+        android:padding="@dimen/margin_normal"
         app:srcCompat="@drawable/ic_download"
         app:tint="?colorAccent" />
 
@@ -126,4 +126,20 @@
         android:textAlignment="viewStart"
         android:textSize="12sp"
         tools:text="20/05/2019" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_apk_suggested"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_apk_added"
+        android:layout_alignStart="@id/txt_apk_version"
+        android:layout_alignEnd="@id/txt_apk_version"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="@string/details_apk_suggested"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorGreen"
+        android:textSize="12sp"
+        android:visibility="gone" />
 </RelativeLayout>

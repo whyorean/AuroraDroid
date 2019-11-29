@@ -104,6 +104,13 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
             holder.imgDownload.setImageDrawable(context.getDrawable(R.drawable.ic_checked));
             initDownload(pkg);
         });
+        if (isSuggested(pkg))
+            holder.txtApkSuggested.setVisibility(View.VISIBLE);
+    }
+
+    private boolean isSuggested(Package pkg) {
+        return app.getSuggestedVersionName().equals(pkg.getVersionName())
+                && Long.parseLong(app.getSuggestedVersionCode()) == pkg.getVersionCode();
     }
 
     private void initDownload(Package pkg) {
@@ -186,6 +193,8 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
         TextView txtApkArch;
         @BindView(R.id.txt_apk_size)
         TextView txtApkSize;
+        @BindView(R.id.txt_apk_suggested)
+        TextView txtApkSuggested;
 
         ViewHolder(View view) {
             super(view);

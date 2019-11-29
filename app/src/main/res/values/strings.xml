@@ -77,6 +77,7 @@
     <string name="details_permissions">App permissions</string>
     <string name="details_permissions_desc">Aurora Store uses following permissions</string>
     <string name="details_repo_desc">Select F-Droid repositories to sync</string>
+    <string name="details_apk_suggested">Suggested</string>
 
     <string name="dialog_sync_title">Repo Updates</string>
     <string name="dialog_sync_desc">Do you wish to update apps from repositories ?</string>
