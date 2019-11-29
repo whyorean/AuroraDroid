@@ -18,7 +18,9 @@
 
 package com.aurora.adroid.adapter;
 
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,18 +29,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.ColorUtils;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.activity.AuroraActivity;
-import com.aurora.adroid.activity.IntroActivity;
-import com.aurora.adroid.activity.SettingsActivity;
+import com.aurora.adroid.activity.RepoDetailsActivity;
+import com.aurora.adroid.activity.RepoListActivity;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.manager.SyncManager;
 import com.aurora.adroid.model.Repo;
-import com.aurora.adroid.sheet.RepoDetailsSheet;
 import com.aurora.adroid.task.CheckRepoUpdatesTask;
 import com.aurora.adroid.task.DatabaseTask;
 import com.aurora.adroid.util.ContextUtil;
@@ -105,20 +105,11 @@ public class RepoAdapter extends SelectableAdapter<RepoAdapter.ViewHolder> {
         holder.checkBoxRepo.setChecked(isSelected(repo.getRepoId()));
 
         holder.itemView.setOnLongClickListener(v -> {
-            RepoDetailsSheet repoDetailsSheet = new RepoDetailsSheet();
-            repoDetailsSheet.setRepo(repo);
-            repoDetailsSheet.show(getFragmentManager(), "REPO_DETAILS_SHEET");
+            RepoDetailsActivity.repo = repo;
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((AppCompatActivity) context);
+            context.startActivity(new Intent(context, RepoDetailsActivity.class), options.toBundle());
             return false;
         });
-    }
-
-    private FragmentManager getFragmentManager() {
-        if (context instanceof IntroActivity)
-            return ((IntroActivity) context).getSupportFragmentManager();
-        else if (context instanceof SettingsActivity)
-            return ((SettingsActivity) context).getSupportFragmentManager();
-        else
-            return ((AuroraActivity) context).getSupportFragmentManager();
     }
 
     @Override

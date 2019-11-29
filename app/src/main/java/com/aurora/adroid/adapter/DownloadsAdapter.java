@@ -18,6 +18,7 @@
 
 package com.aurora.adroid.adapter;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.GlideApp;
@@ -136,9 +138,10 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsAdapter.View
         }
 
         viewHolder.itemView.setOnClickListener(v -> {
+            ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation((AppCompatActivity) context);
             Intent intent = new Intent(context, DetailsActivity.class);
             intent.putExtra("INTENT_APK_FILE_NAME", packageName);
-            context.startActivity(intent);
+            context.startActivity(intent, activityOptions.toBundle());
         });
 
         viewHolder.itemView.setOnLongClickListener(v -> {

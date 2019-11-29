@@ -18,6 +18,7 @@
 
 package com.aurora.adroid.fragment;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -33,13 +34,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
 import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.activity.IntroActivity;
+import com.aurora.adroid.activity.RepoListActivity;
 import com.aurora.adroid.activity.SettingsActivity;
 import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.Events;
@@ -126,30 +126,20 @@ public class RepoFragment extends Fragment {
     public void onStop() {
         try {
             disposable.clear();
-            disposable.dispose();
         } catch (Exception ignored) {
         }
         super.onStop();
     }
 
     private void init() {
-        repoLayout.setOnClickListener(v -> openRepoListFragment());
+        repoLayout.setOnClickListener(v -> {
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
+            context.startActivity(new Intent(context, RepoListActivity.class), options.toBundle());
+        });
         btnSync.setOnClickListener(v -> startRepoSyncService());
         txtLog.setMovementMethod(new ScrollingMovementMethod());
         if (RepoSyncService.isServiceRunning())
             blockSync();
-    }
-
-    private void openRepoListFragment() {
-        RepoListFragment fragment = new RepoListFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        if (fragmentManager != null)
-            fragmentManager
-                    .beginTransaction()
-                    .add(R.id.coordinator, fragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .addToBackStack(null)
-                    .commitAllowingStateLoss();
     }
 
     private void startRepoSyncService() {
@@ -188,11 +178,6 @@ public class RepoFragment extends Fragment {
         btnSync.setEnabled(true);
         txtLog.setText(getString(R.string.sys_log));
         btnSync.setOnClickListener(v -> startRepoSyncService());
-    }
-
-    private float getProgress(int current, int max) {
-        float percent = ((float) current / (float) max) * 100.0f;
-        return ((int) percent);
     }
 
     private void notifyAction(String message) {

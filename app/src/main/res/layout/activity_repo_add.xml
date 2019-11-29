@@ -25,42 +25,18 @@
     android:background="?colorSecondaryVariant"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/margin_normal"
-        android:layout_marginBottom="@dimen/margin_small"
-        android:text="@string/title_repo_add"
-        android:textAppearance="@style/TextAppearance.Aurora.DialogTitle" />
+    <include layout="@layout/toolbar_main" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small">
+        android:layout_marginTop="@dimen/margin_small"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/img_qr"
-                android:layout_width="@dimen/icon_size_medium"
-                android:layout_height="@dimen/icon_size_medium"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:contentDescription="@string/repo_qr_scan"
-                android:src="@drawable/ic_qr_code" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/margin_normal"
-                android:text="@string/repo_qr_scan"
-                android:textAppearance="@style/TextAppearance.Aurora.DialogSubTitle"
-                android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"

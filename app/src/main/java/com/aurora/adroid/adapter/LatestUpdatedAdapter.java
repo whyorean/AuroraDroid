@@ -18,6 +18,7 @@
 
 package com.aurora.adroid.adapter;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.GlideApp;
@@ -87,9 +89,10 @@ public class LatestUpdatedAdapter extends RecyclerView.Adapter<LatestUpdatedAdap
             summary = StringUtils.capitalize(TextUtil.emptyIfNull(app.getSummary()));
         holder.txtExtra.setText(summary);
         holder.itemView.setOnClickListener(v -> {
+            ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation((AppCompatActivity) context);
             Intent intent = new Intent(context, DetailsActivity.class);
             intent.putExtra("INTENT_APK_FILE_NAME", app.getPackageName());
-            context.startActivity(intent);
+            context.startActivity(intent, activityOptions.toBundle());
         });
 
         if (app.getIcon() == null)

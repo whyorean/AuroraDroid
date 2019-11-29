@@ -25,10 +25,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar_main" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,20 +40,12 @@
             android:padding="@dimen/margin_normal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/img_share"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="end"
-                android:background="?selectableItemBackground"
-                app:srcCompat="@drawable/ic_share" />
-
-            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_qr"
                 android:layout_width="@dimen/icon_size_qr"
                 android:layout_height="@dimen/icon_size_qr"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_small"
-                android:layout_marginBottom="@dimen/margin_small" />
+                android:layout_marginBottom="@dimen/margin_normal" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_name_head"

@@ -26,7 +26,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,10 +41,8 @@ import com.aurora.adroid.database.AppDatabase;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.manager.SyncManager;
 import com.aurora.adroid.model.Repo;
-import com.aurora.adroid.sheet.RepoAddSheet;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.ViewUtil;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.List;
 
@@ -65,10 +62,6 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
 
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
-    @BindView(R.id.fab_repo_add)
-    ExtendedFloatingActionButton fabAdd;
-    @BindView(R.id.txt_selection)
-    TextView txtSelection;
     @BindView(R.id.btn_clear_all)
     Button btnClearAll;
 
@@ -98,7 +91,7 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_repository_list, container, false);
+        View view = inflater.inflate(R.layout.activity_repository_list, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -106,7 +99,6 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupFab();
         setupRecycler();
     }
 
@@ -127,16 +119,8 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
         if (repoAdapter != null) {
             repoAdapter.removeSelectionsFromRepoList();
             repoAdapter.notifyDataSetChanged();
-            txtSelection.setText(getString(R.string.list_blacklist_none));
+            //txtSelection.setText(getString(R.string.list_blacklist_none));
         }
-    }
-
-    private void setupFab() {
-        fabAdd.setOnClickListener(v -> {
-            RepoAddSheet repoAddSheet = new RepoAddSheet();
-            repoAddSheet.setTargetFragment(RepoListFragment.this, RESULT_CODE);
-            repoAddSheet.show(getChildFragmentManager(), SHEET_TAG);
-        });
     }
 
     @OnClick(R.id.btn_clear_all)
@@ -154,7 +138,7 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
                 .append(getResources().getString(R.string.list_repo_select))
                 .append(" : ")
                 .append(count).toString();
-        txtSelection.setText(count > 0 ? txtCount : getString(R.string.list_repo_none));
+        //txtSelection.setText(count > 0 ? txtCount : getString(R.string.list_repo_none));
         ViewUtil.setVisibility(btnClearAll, count > 0, true);
     }
 
@@ -170,17 +154,6 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
         ItemTouchHelper itemTouchHelper = new
                 ItemTouchHelper(new SwipeToDeleteRepoCallback(repoAdapter));
         itemTouchHelper.attachToRecyclerView(recyclerView);
-        recyclerView.setOnFlingListener(new RecyclerView.OnFlingListener() {
-            @Override
-            public boolean onFling(int velocityX, int velocityY) {
-                if (velocityY < 0) {
-                    fabAdd.show();
-                } else if (velocityY > 0) {
-                    fabAdd.hide();
-                }
-                return false;
-            }
-        });
         updateCount();
     }
 

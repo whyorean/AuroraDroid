@@ -62,13 +62,19 @@ public class PathUtil {
     }
 
     public static synchronized void deleteFile(Context context, String fileName) {
-        for (File file : new File(getRepoDirectory(context)).listFiles())
+        File[] files = new File(getBaseApkDirectory(context)).listFiles();
+        if (files == null)
+            return;
+        for (File file : files)
             if (file.getName().startsWith(fileName))
                 file.delete();
     }
 
     public static synchronized void deleteApkFile(Context context, String fileName) {
-        for (File file : new File(getBaseApkDirectory(context)).listFiles())
+        File[] files = new File(getBaseApkDirectory(context)).listFiles();
+        if (files == null)
+            return;
+        for (File file : files)
             if (file.getName().startsWith(fileName))
                 file.delete();
     }

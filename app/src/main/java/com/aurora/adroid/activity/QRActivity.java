@@ -34,33 +34,33 @@ import com.google.zxing.Result;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class QRActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
-    private ZXingScannerView mScannerView;
+    private ZXingScannerView scannerView;
 
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
         checkPermissions();
-        mScannerView = new ZXingScannerView(this);
-        setContentView(mScannerView);
+        scannerView = new ZXingScannerView(this);
+        setContentView(scannerView);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mScannerView.setResultHandler(this);
-        mScannerView.startCamera();
+        scannerView.setResultHandler(this);
+        scannerView.startCamera();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mScannerView.stopCamera();
+        scannerView.stopCamera();
     }
 
     @Override
     public void handleResult(Result rawResult) {
-        mScannerView.stopCameraPreview();
-        mScannerView.stopCamera();
+        scannerView.stopCameraPreview();
+        scannerView.stopCamera();
         if (rawResult.getText().contains("fingerprint") || rawResult.getText().contains("FINGERPRINT")) {
             try {
                 String[] ss = rawResult.getText().split("\\?");
@@ -85,9 +85,7 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
 
     private void checkPermissions() {
         ActivityCompat.requestPermissions(this,
-                new String[]{
-                        Manifest.permission.CAMERA
-                },
+                new String[]{Manifest.permission.CAMERA},
                 1337);
     }
 }

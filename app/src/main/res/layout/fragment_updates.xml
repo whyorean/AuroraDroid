@@ -37,7 +37,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/gradient_bg"
                 android:minHeight="@dimen/min_height">
 
                 <androidx.appcompat.widget.AppCompatTextView

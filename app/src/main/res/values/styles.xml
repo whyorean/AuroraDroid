@@ -32,6 +32,7 @@
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="chipStyle">@style/Widget.Aurora.FilterChip</item>
         <item name="materialCardViewStyle">@style/Aurora.MaterialComponents.CardView</item>
+        <item name="android:windowActivityTransitions">true</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
@@ -48,6 +49,8 @@
         <item name="materialCardViewStyle">@style/Aurora.MaterialComponents.CardView.Dark</item>
         <item name="android:splitMotionEvents">false</item>
         <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:windowActivityTransitions">true</item>
+
     </style>
 
     <style name="AppTheme.Darker" parent="AppTheme.Dark">

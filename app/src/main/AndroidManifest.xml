@@ -123,6 +123,9 @@
             android:name=".activity.DownloadsActivity"
             android:configChanges="orientation|locale"
             android:launchMode="singleTop" />
+        <activity android:name=".activity.RepoListActivity" />
+        <activity android:name=".activity.RepoDetailsActivity" />
+        <activity android:name=".activity.RepoAddActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

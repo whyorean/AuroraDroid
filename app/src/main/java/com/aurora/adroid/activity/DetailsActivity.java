@@ -18,7 +18,6 @@
 
 package com.aurora.adroid.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -56,12 +55,6 @@ public class DetailsActivity extends AppCompatActivity {
     private DetailsFragment detailsFragment;
     private ThemeUtil themeUtil = new ThemeUtil();
     private FavouriteListManager favouriteListManager;
-
-    static public Intent getDetailsIntent(Context context, String packageName) {
-        Intent intent = new Intent(context, DetailsActivity.class);
-        intent.putExtra(DetailsActivity.INTENT_PACKAGE_NAME, packageName);
-        return intent;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

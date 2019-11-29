@@ -18,6 +18,7 @@
 
 package com.aurora.adroid.adapter;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.GlideApp;
@@ -34,10 +36,6 @@ import com.aurora.adroid.activity.DetailsActivity;
 import com.aurora.adroid.manager.FavouriteListManager;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.DatabaseUtil;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -111,9 +109,10 @@ public class FavouriteAppsAdapter extends RecyclerView.Adapter {
         holder.AppCheckbox.setChecked(isSelected(appList.get(position)));
 
         holder.itemView.setOnClickListener(v -> {
+            ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation((AppCompatActivity) context);
             Intent intent = new Intent(context, DetailsActivity.class);
             intent.putExtra("INTENT_APK_FILE_NAME", app.getPackageName());
-            context.startActivity(intent);
+            context.startActivity(intent, activityOptions.toBundle());
         });
     }
 
