@@ -132,6 +132,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void fetchData(String query) {
+        disposable.clear();
         disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
                 .searchApps(query))
                 .subscribeOn(Schedulers.io())
