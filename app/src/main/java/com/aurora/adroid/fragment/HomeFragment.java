@@ -18,7 +18,7 @@
 
 package com.aurora.adroid.fragment;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,27 +28,30 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.activity.AuroraActivity;
+import com.aurora.adroid.activity.GenericAppActivity;
 import com.aurora.adroid.adapter.CategoriesAdapter;
-import com.aurora.adroid.adapter.ClusterAppsAdapter;
-import com.aurora.adroid.adapter.LatestUpdatedAdapter;
 import com.aurora.adroid.adapter.RepositoriesAdapter;
 import com.aurora.adroid.manager.SyncManager;
+import com.aurora.adroid.model.App;
+import com.aurora.adroid.section.NewAppSection;
+import com.aurora.adroid.section.UpdatedAppSection;
 import com.aurora.adroid.task.CategoriesTask;
-import com.aurora.adroid.task.FetchAppsTask;
 import com.aurora.adroid.util.Log;
-import com.aurora.adroid.util.ViewUtil;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.aurora.adroid.viewmodel.AppsViewModel;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment {
@@ -66,20 +69,8 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.btn_more_updated)
     ImageButton btnMoreUpdated;
 
-    private Context context;
-    private BottomNavigationView bottomNavigationView;
-    private CompositeDisposable disposable = new CompositeDisposable();
-
     private CategoriesAdapter categoriesAdapter;
-    private ClusterAppsAdapter clusterAppsAdapter;
-    private LatestUpdatedAdapter latestUpdatedAdapter;
     private RepositoriesAdapter repositoriesAdapter;
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
 
     @Nullable
     @Override
@@ -95,18 +86,11 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         setupCategories();
         setupRepository();
-        setupUpdatedApps();
-        setupNewApps();
-        setupAllNewApps();
-        setupAllUpdatedApps();
         fetchCategories();
-        fetchRepositories();
-        fetchNewApps();
-        fetchLatestApps();
 
-        if (getActivity() instanceof AuroraActivity)
-            bottomNavigationView = ((AuroraActivity) getActivity()).getBottomNavigationView();
-
+        AppsViewModel appsViewModel = new ViewModelProvider(this).get(AppsViewModel.class);
+        appsViewModel.getNewAppsLiveData().observe(getViewLifecycleOwner(), this::setupNewApps);
+        appsViewModel.getUpdatedAppsLiveData().observe(getViewLifecycleOwner(), this::setupUpdatedApps);
     }
 
     @Override
@@ -116,118 +100,63 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        disposable.clear();
         super.onDestroy();
     }
 
+    @OnClick(R.id.btn_more_new)
+    public void showAllNewApps() {
+        Intent intent = new Intent(requireContext(), GenericAppActivity.class);
+        intent.putExtra("LIST_TYPE", 0);
+        requireActivity().startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_more_updated)
+    public void showAllUpdatedApps() {
+        Intent intent = new Intent(requireContext(), GenericAppActivity.class);
+        intent.putExtra("LIST_TYPE", 1);
+        requireActivity().startActivity(intent);
+    }
+
     private void setupCategories() {
-        categoriesAdapter = new CategoriesAdapter(context);
+        categoriesAdapter = new CategoriesAdapter(requireContext());
         recyclerViewCat.setAdapter(categoriesAdapter);
-        recyclerViewCat.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+        recyclerViewCat.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
     }
 
     private void setupRepository() {
-        repositoriesAdapter = new RepositoriesAdapter(context);
+        repositoriesAdapter = new RepositoriesAdapter(requireContext());
+        repositoriesAdapter.addData(SyncManager.getSyncedRepos(requireContext()));
         recyclerViewRepo.setAdapter(repositoriesAdapter);
-        recyclerViewRepo.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+        recyclerViewRepo.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
     }
 
-    private void setupNewApps() {
-        clusterAppsAdapter = new ClusterAppsAdapter(context);
-        recyclerViewNew.setAdapter(clusterAppsAdapter);
-        recyclerViewNew.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+    private void setupNewApps(List<App> appList) {
+        SectionedRecyclerViewAdapter viewAdapter = new SectionedRecyclerViewAdapter();
+        NewAppSection newAppSection = new NewAppSection(requireContext(), appList);
+        viewAdapter.addSection(newAppSection);
+        recyclerViewNew.setAdapter(viewAdapter);
+        recyclerViewNew.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
     }
 
-    private void setupUpdatedApps() {
-        latestUpdatedAdapter = new LatestUpdatedAdapter(context);
-        recyclerViewLatest.setAdapter(latestUpdatedAdapter);
-        recyclerViewLatest.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-        recyclerViewLatest.setOnFlingListener(new RecyclerView.OnFlingListener() {
-            @Override
-            public boolean onFling(int velocityX, int velocityY) {
-                if (velocityY < 0) {
-                    if (bottomNavigationView != null)
-                        ViewUtil.showBottomNav(bottomNavigationView, true);
-                } else if (velocityY > 0) {
-                    if (bottomNavigationView != null)
-                        ViewUtil.hideBottomNav(bottomNavigationView, true);
-                }
-                return false;
-            }
-        });
-    }
-
-    private void setupAllNewApps() {
-        btnMoreNew.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("LIST_TYPE", 0);
-            GenericAppsFragment fragment = new GenericAppsFragment();
-            fragment.setArguments(bundle);
-            getChildFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.container, fragment, null)
-                    .commit();
-        });
-    }
-
-    private void setupAllUpdatedApps() {
-        btnMoreUpdated.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("LIST_TYPE", 1);
-            GenericAppsFragment fragment = new GenericAppsFragment();
-            fragment.setArguments(bundle);
-            getChildFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.container, fragment, null)
-                    .commit();
-        });
+    private void setupUpdatedApps(List<App> appList) {
+        SectionedRecyclerViewAdapter viewAdapter = new SectionedRecyclerViewAdapter();
+        UpdatedAppSection newAppSection = new UpdatedAppSection(requireContext(), appList);
+        viewAdapter.addSection(newAppSection);
+        recyclerViewLatest.setAdapter(viewAdapter);
+        recyclerViewLatest.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
     }
 
     private void fetchCategories() {
-        disposable.add(Observable.fromCallable(() -> new CategoriesTask(context)
+        Observable.fromCallable(() -> new CategoriesTask(requireContext())
                 .getCategories())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(categoryList -> {
+                .doOnNext(categoryList -> {
                     if (!categoryList.isEmpty()) {
                         categoriesAdapter.addData(categoryList);
                     }
-                }, err -> {
-                    Log.e(err.getMessage());
-                }));
-    }
-
-    private void fetchRepositories() {
-        repositoriesAdapter.addData(SyncManager.getSyncedRepos(context));
-    }
-
-    private void fetchNewApps() {
-        disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
-                .getLatestAddedApps(3))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(appList -> {
-                    if (!appList.isEmpty()) {
-                        clusterAppsAdapter.addData(appList);
-                    }
-                }, err -> {
-                    Log.e(err.getMessage());
-                }));
-    }
-
-    private void fetchLatestApps() {
-        disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
-                .getLatestUpdatedApps(1))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(appList -> {
-                    if (!appList.isEmpty()) {
-                        latestUpdatedAdapter.addData(appList);
-                    }
-                }, err -> {
-                    Log.e(err.getMessage());
-                }));
+                })
+                .doOnError(throwable -> Log.e(throwable.getMessage()))
+                .subscribe();
     }
 }

@@ -30,14 +30,13 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/title"
-            style="@style/Widget.MaterialComponents.Chip.Action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_xsmall"
             android:layout_marginEnd="@dimen/margin_xsmall"
             android:layout_marginBottom="@dimen/margin_xsmall"
-            android:drawableStart="@drawable/ic_latest"
+            android:drawableStart="@drawable/ic_update"
             android:drawablePadding="@dimen/margin_small"
             android:text="@string/title_latest_updated"
             android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
@@ -59,14 +58,15 @@
             android:tint="?android:colorForeground" />
     </RelativeLayout>
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_latest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_top"
-        android:orientation="vertical"
-        android:overScrollMode="never"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/margin_small"
+        android:paddingEnd="@dimen/margin_small"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_latest_updated" />
+        tools:listitem="@layout/item_cluster" />
 </RelativeLayout>

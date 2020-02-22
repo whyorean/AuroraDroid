@@ -18,37 +18,32 @@
 
 package com.aurora.adroid.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aurora.adroid.Constants;
-import com.aurora.adroid.ErrorType;
 import com.aurora.adroid.R;
-import com.aurora.adroid.adapter.InstalledAppsAdapter;
-import com.aurora.adroid.task.InstalledAppTask;
-import com.aurora.adroid.util.Log;
-import com.aurora.adroid.util.PrefUtil;
+import com.aurora.adroid.model.App;
+import com.aurora.adroid.section.InstalledAppSection;
 import com.aurora.adroid.view.CustomSwipeToRefresh;
+import com.aurora.adroid.viewmodel.InstalledAppsViewModel;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
-public class InstalledFragment extends BaseFragment {
+public class InstalledFragment extends Fragment {
 
     @BindView(R.id.swipe_layout)
     CustomSwipeToRefresh customSwipeToRefresh;
@@ -56,32 +51,6 @@ public class InstalledFragment extends BaseFragment {
     RecyclerView recyclerView;
     @BindView(R.id.switch_system)
     SwitchMaterial switchSystem;
-
-
-    private Context context;
-    private InstalledAppsAdapter installedAppsAdapter;
-    private CompositeDisposable disposable = new CompositeDisposable();
-
-    @Override
-    protected View.OnClickListener errRetry() {
-        return v -> {
-            fetchData();
-            ((Button) v).setText(getString(R.string.action_recheck_ing));
-            ((Button) v).setEnabled(false);
-        };
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        installedAppsAdapter = new InstalledAppsAdapter(context);
-    }
 
     @Nullable
     @Override
@@ -95,57 +64,18 @@ public class InstalledFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setErrorView(ErrorType.UNKNOWN);
-        setupRecycler();
-        customSwipeToRefresh.setOnRefreshListener(() -> fetchData());
-        switchSystem.setChecked(PrefUtil.getBoolean(context, Constants.PREFERENCE_INCLUDE_SYSTEM));
-        switchSystem.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked)
-                PrefUtil.putBoolean(context, Constants.PREFERENCE_INCLUDE_SYSTEM, true);
-            else
-                PrefUtil.putBoolean(context, Constants.PREFERENCE_INCLUDE_SYSTEM, false);
-            fetchData();
+        InstalledAppsViewModel viewModel = new ViewModelProvider(this).get(InstalledAppsViewModel.class);
+        viewModel.getAppsLiveData().observe(getViewLifecycleOwner(), appList -> {
+            setupRecycler(appList);
         });
+        viewModel.fetchNewApps(true);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (installedAppsAdapter != null && installedAppsAdapter.isDataEmpty())
-            fetchData();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        disposable.clear();
-    }
-
-    private void fetchData() {
-        disposable.add(Observable.fromCallable(() -> new InstalledAppTask(context)
-                .getInstalledApps(switchSystem.isChecked()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(subscription -> customSwipeToRefresh.setRefreshing(true))
-                .doOnComplete(() -> customSwipeToRefresh.setRefreshing(false))
-                .subscribe((appList) -> {
-                    if (appList.isEmpty()) {
-                        setErrorView(ErrorType.NO_INSTALLED_APPS);
-                        switchViews(true);
-                    } else {
-                        switchViews(false);
-                        installedAppsAdapter.addData(appList);
-                    }
-                }, err -> {
-                    Log.e(err.getMessage());
-                    err.printStackTrace();
-                }));
-    }
-
-    private void setupRecycler() {
-        customSwipeToRefresh.setRefreshing(false);
-        recyclerView.setAdapter(installedAppsAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-        recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(context, R.anim.anim_falldown));
+    private void setupRecycler(List<App> appList) {
+        SectionedRecyclerViewAdapter viewAdapter = new SectionedRecyclerViewAdapter();
+        InstalledAppSection section = new InstalledAppSection(requireContext(), appList);
+        viewAdapter.addSection(section);
+        recyclerView.setAdapter(viewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
     }
 }

@@ -164,7 +164,7 @@ public class FavouriteFragment extends BaseFragment implements FavouriteViewHold
     }
 
     private View.OnClickListener bulkInstallListener() {
-        return v -> disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
+        /*return v -> disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
                 .getAppsByPackageName(favouriteList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -189,7 +189,8 @@ public class FavouriteFragment extends BaseFragment implements FavouriteViewHold
                                 bulkInstallText,
                                 null);
                     });
-                }, err -> Log.e(err.getMessage())));
+                }, err -> Log.e(err.getMessage())));*/
+        return null;
     }
 
     private void exportList() {
@@ -259,7 +260,7 @@ public class FavouriteFragment extends BaseFragment implements FavouriteViewHold
             switchViews(true);
             return;
         }
-        disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
+        /*disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
                 .getAppsByPackageName(favouriteList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -277,7 +278,7 @@ public class FavouriteFragment extends BaseFragment implements FavouriteViewHold
                         switchViews(false);
                         setupFavourites(favouriteApps);
                     }
-                }, err -> Log.e(err.getMessage())));
+                }, err -> Log.e(err.getMessage())));*/
     }
 
     private void setupFavourites(List<App> appsToAdd) {

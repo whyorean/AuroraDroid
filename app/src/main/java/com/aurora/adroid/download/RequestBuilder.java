@@ -38,8 +38,6 @@ public class RequestBuilder {
     public static List<Request> buildRequest(Context context, List<Repo> repoList) {
         List<Request> requestList = new ArrayList<>();
         for (Repo repo : repoList) {
-            /*if (RepoListManager.isSynced(context, repo.getRepoId()))
-                continue;*/
             String Url = repo.getRepoUrl();
             if (Util.isMirrorChecked(context, repo.getRepoId()) && repo.getRepoMirrors() != null)
                 Url = repo.getRepoMirrors()[0];

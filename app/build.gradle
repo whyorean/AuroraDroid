@@ -53,18 +53,34 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation group: 'commons-io', name: 'commons-io', version: '2.6'
+    implementation group: 'org.apache.maven', name: 'maven-artifact', version: '3.6.2'
 
+    //Jetpack-Components
+    implementation 'androidx.navigation:navigation-fragment:2.2.1'
+    implementation 'androidx.navigation:navigation-ui:2.2.1'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
+
+    //AndroidX
+    implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation 'androidx.preference:preference:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0-beta01'
     implementation 'androidx.palette:palette:1.0.0'
 
+    //Google's shit
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.android:flexbox:2.0.1'
+
+    //Recycler-Extensions
+    implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:3.1.0'
+
     //Utils
-    implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'org.apache.commons:commons-text:1.8'
     implementation 'commons-validator:commons-validator:1.6'
-    implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
     implementation 'com.scottyab:rootbeer-lib:0.0.7'
 
@@ -72,13 +88,13 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.10'
     annotationProcessor 'org.projectlombok:lombok:1.18.10'
 
-    //Android Room
-    implementation "androidx.room:room-runtime:2.2.2"
-    annotationProcessor "androidx.room:room-compiler:2.2.2"
+    //Android-Room
+    implementation 'androidx.room:room-runtime:2.2.4'
+    annotationProcessor 'androidx.room:room-compiler:2.2.4'
 
     //OkHTTP3
-    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
-    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.2.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.3.1'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.3.1'
 
     //RX-Java2
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
@@ -86,13 +102,13 @@ dependencies {
     implementation 'com.jakewharton.rxrelay2:rxrelay:2.1.1'
 
     //ButterKnife
-    implementation 'com.jakewharton:butterknife:10.2.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 
     //Glide
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
-    implementation "com.github.bumptech.glide:okhttp3-integration:4.10.0"
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.11.0"
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     //Fetch - Downloader
     implementation "androidx.tonyodev.fetch2:xfetch2:3.1.4"
@@ -100,13 +116,14 @@ dependencies {
 
     //Debug Utils
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
 
-def Properties props = new Properties()
+Properties props = new Properties()
 def propFile = new File('signing.properties')
 if (propFile.canRead()) {
     props.load(new FileInputStream(propFile))

@@ -19,9 +19,9 @@
 package com.aurora.adroid.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,12 +32,10 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.core.graphics.ColorUtils;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.activity.AuroraActivity;
-import com.aurora.adroid.fragment.CategoryAppsFragment;
+import com.aurora.adroid.activity.GenericAppActivity;
 import com.aurora.adroid.util.ThemeUtil;
 
 import java.util.ArrayList;
@@ -113,16 +111,10 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         viewHolder.imgCat.setColorFilter(isTransparent ? color : Color.WHITE);
 
         viewHolder.itemView.setOnClickListener(v -> {
-            CategoryAppsFragment fragment = new CategoryAppsFragment();
-            Bundle arguments = new Bundle();
-            arguments.putString("CATEGORY_NAME", categoryName);
-            fragment.setArguments(arguments);
-            ((AuroraActivity) context).getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.container, fragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .addToBackStack(null)
-                    .commitAllowingStateLoss();
+            Intent intent = new Intent(context, GenericAppActivity.class);
+            intent.putExtra("LIST_TYPE", 2);
+            intent.putExtra("CATEGORY_NAME", categoryName);
+            context.startActivity(intent);
         });
     }
 

@@ -48,11 +48,12 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -176,8 +177,10 @@ public class Util {
 
     public static String getDateFromMilli(Long timeInMilli) {
         try {
-            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM YY", Locale.getDefault());
-            return simpleDateFormat.format(new Date(timeInMilli));
+            final DateFormat dateFormat = new SimpleDateFormat("dd MMM YY", Locale.getDefault());
+            final Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(timeInMilli);
+            return dateFormat.format(calendar.getTime());
         } catch (Exception e) {
             return StringUtils.EMPTY;
         }
@@ -185,8 +188,10 @@ public class Util {
 
     public static long getMilliFromDate(String data, long Default) {
         try {
-            return Date.parse(data);
+            final DateFormat dateFormat = new SimpleDateFormat("dd MMM YY", Locale.getDefault());
+            return dateFormat.parse(data).getTime();
         } catch (Exception e) {
+            Log.e(e.getMessage());
         }
         return Default;
     }

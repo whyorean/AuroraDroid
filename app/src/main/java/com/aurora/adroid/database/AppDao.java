@@ -18,6 +18,7 @@
 
 package com.aurora.adroid.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -34,40 +35,46 @@ import java.util.List;
 @Dao
 public interface AppDao {
     @Query("SELECT * FROM app")
-    List<App> getAllApps();
+    LiveData<List<App>> getAllApps();
 
     @Query("SELECT DISTINCT * FROM app WHERE packageName IN (:packageName)")
-    List<App> getAppsByPackageName(List<String> packageName);
+    LiveData<List<App>> getAppsByPackageName(List<String> packageName);
+
+    @Query("SELECT * FROM app WHERE packageName = :packageName")
+    LiveData<App> getLiveAppByPackageName(String packageName);
 
     @Query("SELECT * FROM app WHERE packageName = :packageName")
     App getAppByPackageName(String packageName);
 
     @Query("SELECT * FROM app WHERE name = :appName")
-    App getAppByName(String appName);
+    LiveData<App> getAppByName(String appName);
 
     @Query("SELECT * FROM app WHERE name LIKE :pattern LIMIT 20")
-    List<App> findAppsByName(String pattern);
+    LiveData<List<App>> findAppsByName(String pattern);
 
     @Query("SELECT * FROM app WHERE (authorName = :authorName) or (authorName LIKE :authorName) LIMIT 20")
-    List<App> getAppsByAuthorName(String authorName);
+    LiveData<List<App>> getAppsByAuthorName(String authorName);
 
     @Query("SELECT * FROM app WHERE :refTime - lastUpdated <= :weekCount * 604800000 ORDER BY lastUpdated DESC")
-    List<App> getLatestUpdatedApps(Long refTime, int weekCount);
+    LiveData<List<App>> getLatestUpdatedApps(Long refTime, int weekCount);
 
     @Query("SELECT * FROM app WHERE :refTime - added <= :weekCount * 604800000 ORDER BY added DESC")
-    List<App> getLatestAddedApps(Long refTime, int weekCount);
+    LiveData<List<App>> getLatestAddedApps(Long refTime, int weekCount);
 
     @Query("SELECT * FROM app WHERE (name LIKE :query) OR (summary LIKE :query) LIMIT 30")
-    List<App> searchApps(String query);
+    LiveData<List<App>> searchApps(String query);
 
     @RawQuery()
     List<App> searchApps(SupportSQLiteQuery query);
 
     @Query("SELECT * FROM app WHERE categories LIKE :category")
-    List<App> searchAppsByCategory(String category);
+    LiveData<List<App>> searchAppsByCategory(String category);
 
     @Query("SELECT * FROM app WHERE repoId LIKE :repoId")
-    List<App> searchAppsByRepository(String repoId);
+    LiveData<List<App>> searchAppsByRepository(String repoId);
+
+    @Query("SELECT `en-US-phoneScreenshots` FROM app WHERE packageName =:packageName")
+    LiveData<String> getLivePhoneScreenshots(String packageName);
 
     @Query("SELECT `en-US-phoneScreenshots` FROM app WHERE packageName =:packageName")
     String getPhoneScreenshots(String packageName);

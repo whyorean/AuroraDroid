@@ -158,7 +158,7 @@ public class RepoListFragment extends Fragment implements RepoAdapter.ItemClickL
     }
 
     private void clearAllTables() {
-        disposable.add(Observable.fromCallable(() -> AppDatabase.getAppDatabase(context)
+        disposable.add(Observable.fromCallable(() -> AppDatabase.getDatabase(context)
                 .clearAll())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

@@ -17,7 +17,6 @@
   -->
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
@@ -28,28 +27,33 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_apps"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txt_input_search"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="52dp"
             android:layout_margin="@dimen/margin_small"
             android:layout_marginStart="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_small"
             android:background="@drawable/search_bg"
+            android:drawableStart="@drawable/ic_search"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="@string/title_search"
             android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:layoutDirection="locale"
-            android:paddingVertical="@dimen/margin_medium"
-            app:iconifiedByDefault="false"
-            app:queryBackground="@android:color/transparent"
-            app:queryHint="Search Apps &amp; Games"
-            app:searchIcon="@drawable/ic_search" />
+            android:inputType="textNoSuggestions"
+            android:paddingStart="@dimen/margin_large"
+            android:paddingEnd="@dimen/margin_large"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
+            android:textIsSelectable="false" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_sort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/search_apps"
+            android:layout_below="@+id/txt_input_search"
             android:paddingStart="@dimen/margin_normal"
             android:paddingTop="@dimen/margin_small"
             android:paddingEnd="@dimen/margin_xsmall"

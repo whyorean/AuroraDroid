@@ -18,6 +18,7 @@
 
 package com.aurora.adroid.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -34,6 +35,12 @@ public interface PackageDao {
 
     @Query("SELECT * FROM Package WHERE packageName = :packageName ORDER BY added DESC")
     Package getPackageByPackageName(String packageName);
+
+    @Query("SELECT * FROM Package WHERE packageName = :packageName ORDER BY added DESC")
+    LiveData<Package> getLivePackageByPackageName(String packageName);
+
+    @Query("SELECT * FROM Package WHERE packageName = :packageName ORDER BY added DESC")
+    LiveData<List<Package>> getLivePackageListByPackageName(String packageName);
 
     @Query("SELECT * FROM Package WHERE packageName = :packageName ORDER BY added DESC")
     List<Package> getPackageListByPackageName(String packageName);

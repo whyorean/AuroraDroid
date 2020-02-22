@@ -35,7 +35,7 @@ public class DownloadManager {
 
     public DownloadManager() {
         if (instance != null) {
-            throw new RuntimeException("Use get() method to get the single instance of RxBus");
+            throw new RuntimeException("Use get() method to get the single instance of DownloadManager");
         }
     }
 

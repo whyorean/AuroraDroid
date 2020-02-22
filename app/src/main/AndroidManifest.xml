@@ -126,6 +126,7 @@
         <activity android:name=".activity.RepoListActivity" />
         <activity android:name=".activity.RepoDetailsActivity" />
         <activity android:name=".activity.RepoAddActivity" />
+        <activity android:name=".activity.GenericAppActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

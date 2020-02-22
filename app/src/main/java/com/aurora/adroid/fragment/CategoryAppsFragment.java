@@ -140,8 +140,8 @@ public class CategoryAppsFragment extends Fragment {
     }
 
     private void fetchData(String categoryName) {
-        disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
-                .getAppsByCategory(categoryName))
+       /* disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
+                .getAllAppsByCategory(categoryName))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(d -> customSwipeToRefresh.setRefreshing(true))
@@ -152,7 +152,7 @@ public class CategoryAppsFragment extends Fragment {
                 }, err -> {
                     Log.e(err.getMessage());
                     err.printStackTrace();
-                }));
+                }));*/
     }
 
     private void setupRecycler() {

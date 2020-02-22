@@ -21,6 +21,7 @@ package com.aurora.adroid.task;
 import android.content.Context;
 import android.content.ContextWrapper;
 
+import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.aurora.adroid.database.AppDao;
@@ -43,13 +44,13 @@ public class FetchAppsTask extends ContextWrapper {
 
     public FetchAppsTask(Context context) {
         super(context);
-        appDatabase = AppDatabase.getAppDatabase(this);
+        appDatabase = AppDatabase.getDatabase(this);
         appDao = appDatabase.appDao();
         packageDao = appDatabase.packageDao();
     }
 
-    public List<App> fetchAllApps() {
-        List<App> appList = appDao.getAllApps();
+    /*public LiveData<List<App>> fetchAllApps() {
+        LiveData<List<App>> appList = appDao.getAllApps();
         appList = removeDuplicates(appList);
         return appList;
     }
@@ -69,15 +70,15 @@ public class FetchAppsTask extends ContextWrapper {
         return appList;
     }
 
-    public List<App> getAppsByCategory(String category) {
+    public LiveData<List<App>> getAllAppsByCategory(String category) {
         category = category.replace("&", "%");
-        List<App> appList = appDao.searchAppsByCategory("%" + category + "%");
+        LiveData<List<App>> appList = appDao.searchAppsByCategory("%" + category + "%");
         appList = removeDuplicates(appList);
         return appList;
     }
 
-    public List<App> getAppsByRepository(String repoId) {
-        List<App> appList = appDao.searchAppsByRepository("%" + repoId + "%");
+    public LiveData<List<App>> getAllAppsByRepositoryId(String repoId) {
+        LiveData<List<App>> appList = appDao.searchAppsByRepository("%" + repoId + "%");
         appList = removeDuplicates(appList);
         return appList;
     }
@@ -129,9 +130,12 @@ public class FetchAppsTask extends ContextWrapper {
     }
 
     public List<App> getLatestAddedApps(int weekCount) {
-        List<App> appList = appDao.getLatestAddedApps(Calendar.getInstance().getTimeInMillis(), weekCount);
-        appList = removeDuplicates(appList);
-        return appList;
+        *//*List<App> appList = appDao.getLatestAddedApps(Calendar.getInstance().getTimeInMillis(), weekCount);
+        if (appList != null) {
+            appList = removeDuplicates(appList);
+            return appList;
+        } else*//*
+            return new ArrayList<>();
     }
 
     public Package getPackageByName(String packageName) {
@@ -142,5 +146,5 @@ public class FetchAppsTask extends ContextWrapper {
         Set<App> unique = new LinkedHashSet<>(appList);
         appList = new ArrayList<>(unique);
         return appList;
-    }
+    }*/
 }

@@ -20,14 +20,17 @@ package com.aurora.adroid.database;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Index;
 import com.aurora.adroid.model.Package;
+import com.aurora.adroid.util.Log;
 
 @Database(entities = {App.class, Package.class, Index.class}, version = 3, exportSchema = false)
 @TypeConverters(DatabaseConverter.class)
@@ -37,11 +40,22 @@ public abstract class AppDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "app";
     private static AppDatabase instance;
 
-    public static synchronized AppDatabase getAppDatabase(Context context) {
+    public static synchronized AppDatabase getDatabase(Context context) {
         if (instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, AppDatabase.DATABASE_NAME)
-                    .fallbackToDestructiveMigration()
-                    .build();
+            synchronized (AppDatabase.class) {
+                if (instance == null) {
+                    instance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, AppDatabase.DATABASE_NAME)
+                            .fallbackToDestructiveMigration()
+                            .addCallback(new Callback() {
+                                @Override
+                                public void onOpen(@NonNull SupportSQLiteDatabase db) {
+                                    super.onOpen(db);
+                                    Log.e("DB connection established");
+                                }
+                            })
+                            .build();
+                }
+            }
         }
         return instance;
     }

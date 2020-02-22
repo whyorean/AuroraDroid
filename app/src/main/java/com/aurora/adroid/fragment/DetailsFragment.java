@@ -33,6 +33,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.event.Event;
@@ -45,15 +46,13 @@ import com.aurora.adroid.fragment.details.AppPackages;
 import com.aurora.adroid.fragment.details.AppScreenshotsDetails;
 import com.aurora.adroid.fragment.details.AppSubInfoDetails;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.task.FetchAppsTask;
 import com.aurora.adroid.util.ContextUtil;
-import com.aurora.adroid.util.Log;
+import com.aurora.adroid.viewmodel.DetailAppViewModel;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -143,7 +142,11 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        fetchApp();
+        DetailAppViewModel viewModel = new ViewModelProvider(this).get(DetailAppViewModel.class);
+        viewModel.getLiveApp().observe(getViewLifecycleOwner(), liveApps -> {
+            draw(liveApps);
+        });
+        viewModel.getFullAppByPackageName(packageName);
     }
 
     @Override
@@ -164,20 +167,6 @@ public class DetailsFragment extends Fragment {
             disposable.dispose();
         } catch (Exception ignored) {
         }
-    }
-
-    private void fetchApp() {
-        disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
-                .getFullAppByPackageName(packageName))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((mApp) -> {
-                    if (mApp != null) {
-                        draw(mApp);
-                    }
-                }, err -> {
-                    Log.e(err.getMessage());
-                }));
     }
 
     private void draw(App mApp) {

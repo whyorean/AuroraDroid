@@ -18,44 +18,40 @@
 
 package com.aurora.adroid.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.Sort;
-import com.aurora.adroid.adapter.GenericAppsAdapter;
-import com.aurora.adroid.task.FetchAppsTask;
-import com.aurora.adroid.util.Log;
-import com.aurora.adroid.util.Util;
-import com.aurora.adroid.util.ViewUtil;
+import com.aurora.adroid.model.App;
+import com.aurora.adroid.section.GenericAppSection;
+import com.aurora.adroid.viewmodel.SearchAppsViewModel;
 import com.google.android.material.chip.Chip;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 public class SearchFragment extends Fragment {
     @BindView(R.id.container)
     CoordinatorLayout coordinatorLayout;
-    @BindView(R.id.search_apps)
-    SearchView searchView;
+    @BindView(R.id.txt_input_search)
+    TextInputEditText txtInputSearch;
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
     @BindView(R.id.sort_name_az)
@@ -71,15 +67,8 @@ public class SearchFragment extends Fragment {
     @BindView(R.id.sort_date_added)
     Chip chipDateAdded;
 
-    private Context context;
-    private GenericAppsAdapter genericAppsAdapter;
-    private CompositeDisposable disposable = new CompositeDisposable();
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
+    private SectionedRecyclerViewAdapter adapter;
+    private GenericAppSection section;
 
     @Nullable
     @Override
@@ -93,90 +82,60 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        SearchAppsViewModel viewModel = new ViewModelProvider(this).get(SearchAppsViewModel.class);
+        viewModel.getAppsLiveData().observe(getViewLifecycleOwner(), appList -> {
+            setupRecycler(appList);
+        });
         setupSearch();
-        setupRecycler();
         setupChip();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (searchView != null)
-            searchView.requestFocus();
-    }
-
-    @Override
-    public void onDestroy() {
-        searchView = null;
-        disposable.clear();
-        super.onDestroy();
-    }
-
     private void setupSearch() {
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        txtInputSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                if (!query.isEmpty())
-                    fetchData(query);
-                Util.toggleSoftInput(context, false);
-                return true;
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
-            public boolean onQueryTextChange(String query) {
-                if (!query.isEmpty())
-                    fetchData(query);
-                return false;
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterApps(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
-    }
-
-    private void fetchData(String query) {
-        disposable.clear();
-        disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
-                .searchApps(query))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((appList) -> {
-                    if (appList.isEmpty()) {
-                        notifyAction("No matching apps found");
-                    } else {
-                        genericAppsAdapter.addData(appList);
-                    }
-                }, err -> {
-                    Log.e(err.getMessage());
-                    err.printStackTrace();
-                }));
     }
 
     private void setupChip() {
-        if (genericAppsAdapter != null) {
-            chipNameAZ.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.NAME_AZ));
-            chipNameZA.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.NAME_ZA));
-           /* chipSizeMin.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MIN));
-            chipSizeMax.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.SIZE_MAX));*/
-            chipSizeMax.setVisibility(View.GONE);
-            chipSizeMin.setVisibility(View.GONE);
-            chipDateUpdated.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.DATE_UPDATED));
-            chipDateAdded.setOnClickListener(v -> genericAppsAdapter.sortBy(Sort.DATE_ADDED));
+        chipNameAZ.setOnClickListener(v -> sortAppsBy(Sort.NAME_AZ));
+        chipNameZA.setOnClickListener(v -> sortAppsBy(Sort.NAME_ZA));
+        chipSizeMin.setOnClickListener(v -> sortAppsBy(Sort.SIZE_MIN));
+        chipSizeMax.setOnClickListener(v -> sortAppsBy(Sort.SIZE_MAX));
+        chipSizeMax.setVisibility(View.GONE);
+        chipSizeMin.setVisibility(View.GONE);
+        chipDateUpdated.setOnClickListener(v -> sortAppsBy(Sort.DATE_UPDATED));
+        chipDateAdded.setOnClickListener(v -> sortAppsBy(Sort.DATE_ADDED));
+    }
+
+    private void sortAppsBy(Sort sort) {
+        if (section != null) {
+            section.sortBy(sort);
+            adapter.getAdapterForSection(section).notifyAllItemsChanged();
         }
     }
 
-    private void setupRecycler() {
-        genericAppsAdapter = new GenericAppsAdapter(context);
-        recyclerView.setAdapter(genericAppsAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
+    private void setupRecycler(List<App> appList) {
+        adapter = new SectionedRecyclerViewAdapter();
+        section = new GenericAppSection(requireContext(), appList);
+        adapter.addSection(section);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
     }
 
-    private void notifyAction(String message) {
-        Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
-        snackbar.setDuration(BaseTransientBottomBar.LENGTH_SHORT);
-        snackbar.show();
-        snackbar.addCallback(new Snackbar.Callback() {
-            @Override
-            public void onDismissed(Snackbar snackbar, int event) {
-                ViewUtil.showBottomNav(null, true);
-            }
-        });
+    private void filterApps(String query) {
+        section.filter(query);
+        adapter.notifyDataSetChanged();
     }
 }

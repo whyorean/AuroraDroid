@@ -109,8 +109,12 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
     }
 
     private boolean isSuggested(Package pkg) {
-        return app.getSuggestedVersionName().equals(pkg.getVersionName())
-                && Long.parseLong(app.getSuggestedVersionCode()) == pkg.getVersionCode();
+        try {
+            return app.getSuggestedVersionName().equals(pkg.getVersionName())
+                    && Long.parseLong(app.getSuggestedVersionCode()) == pkg.getVersionCode();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private void initDownload(Package pkg) {

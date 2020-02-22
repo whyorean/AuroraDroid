@@ -144,8 +144,8 @@ public class RepositoryAppsFragment extends Fragment {
     }
 
     private void fetchData(String repoId) {
-        disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
-                .getAppsByRepository(repoId))
+        /*disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
+                .getAllAppsByRepositoryId(repoId))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(d -> customSwipeToRefresh.setRefreshing(true))
@@ -156,7 +156,7 @@ public class RepositoryAppsFragment extends Fragment {
                 }, err -> {
                     Log.e(err.getMessage());
                     err.printStackTrace();
-                }));
+                }));*/
     }
 
     private void setupRecycler() {

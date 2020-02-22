@@ -44,22 +44,20 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends BaseActivity {
 
-    public static final String INTENT_PACKAGE_NAME = "INTENT_APK_FILE_NAME";
+    public static final String INTENT_PACKAGE_NAME = "INTENT_PACKAGE_NAME";
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
     private String packageName;
     private DetailsFragment detailsFragment;
-    private ThemeUtil themeUtil = new ThemeUtil();
     private FavouriteListManager favouriteListManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        themeUtil.onCreate(this);
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
         setupActionBar();
@@ -115,7 +113,6 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        themeUtil.onResume(this);
     }
 
     @Override

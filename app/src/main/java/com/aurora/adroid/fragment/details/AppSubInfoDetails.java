@@ -122,7 +122,7 @@ public class AppSubInfoDetails extends AbstractDetails {
     }
 
     private void fetchAuthorApps() {
-        disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
+        /*disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
                 .getAppsByDeveloperName(app.getAuthorName(), app.getPackageName()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -134,12 +134,12 @@ public class AppSubInfoDetails extends AbstractDetails {
 
                 }, err -> {
                     Log.e(err.getMessage());
-                }));
+                }));*/
     }
 
     private void fetchSimilarApps(String category) {
-        disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
-                .getAppsByCategory(category))
+        /*disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
+                .getAllAppsByCategory(category))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((appList) -> {
@@ -149,7 +149,7 @@ public class AppSubInfoDetails extends AbstractDetails {
                         adapterSimilar.addData(appList);
                 }, err -> {
                     Log.e(err.getMessage());
-                }));
+                }));*/
     }
 
     private void setupAuthorRecycler(Context context) {

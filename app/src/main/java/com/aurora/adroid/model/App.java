@@ -39,7 +39,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity(tableName = "app", primaryKeys = {"repoId", "packageName"})
@@ -120,7 +123,6 @@ public class App {
     public boolean equals(Object obj) {
         if (!(obj instanceof App))
             return false;
-
         return packageName.equals(((App) obj).getPackageName());
     }
 

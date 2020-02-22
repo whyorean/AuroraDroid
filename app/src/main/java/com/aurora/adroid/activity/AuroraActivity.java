@@ -29,7 +29,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import androidx.annotation.ColorInt;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,18 +38,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
-import com.aurora.adroid.adapter.ViewPagerAdapter;
 import com.aurora.adroid.database.AppDatabase;
 import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.Events;
-import com.aurora.adroid.fragment.AppsFragment;
-import com.aurora.adroid.fragment.HomeFragment;
-import com.aurora.adroid.fragment.SearchFragment;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.service.RepoSyncService;
@@ -58,7 +57,6 @@ import com.aurora.adroid.util.TextUtil;
 import com.aurora.adroid.util.ThemeUtil;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
-import com.aurora.adroid.view.CustomViewPager;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -69,19 +67,24 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class AuroraActivity extends AppCompatActivity {
+public class AuroraActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.viewpager)
-    CustomViewPager viewPager;
+    Toolbar toolbar;
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
 
     private ActionBar actionBar;
-    private ThemeUtil themeUtil = new ThemeUtil();
-    private ViewPagerAdapter viewPagerAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
+    private int fragmentCur = 0;
+
+    static boolean matchDestination(@NonNull NavDestination destination, @IdRes int destId) {
+        NavDestination currentDestination = destination;
+        while (currentDestination.getId() != destId && currentDestination.getParent() != null) {
+            currentDestination = currentDestination.getParent();
+        }
+        return currentDestination.getId() == destId;
+    }
 
     @Nullable
     public ActionBar getDroidActionBar() {
@@ -95,7 +98,6 @@ public class AuroraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        themeUtil.onCreate(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -197,7 +199,6 @@ public class AuroraActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        themeUtil.onResume(this);
         Util.toggleSoftInput(this, false);
     }
 
@@ -219,30 +220,13 @@ public class AuroraActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    @Override
-    public void onBackPressed() {
-        Fragment fragment = viewPagerAdapter.getItem(viewPager.getCurrentItem());
-        if (!fragment.isAdded())
-            return;
-        if (fragment instanceof HomeFragment) {
-            FragmentManager fragmentManager = fragment.getChildFragmentManager();
-            if (!fragmentManager.getFragments().isEmpty())
-                fragmentManager.popBackStack();
-            else
-                super.onBackPressed();
-        } else
-            super.onBackPressed();
-    }
-
-
     private void init() {
         setupActionbar();
         setupViewPager();
-        setupBottomNavigation();
     }
 
     private void setupActionbar() {
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayShowCustomEnabled(true);
@@ -252,36 +236,43 @@ public class AuroraActivity extends AppCompatActivity {
     }
 
     private void setupViewPager() {
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(0, new HomeFragment());
-        viewPagerAdapter.addFragment(1, new AppsFragment());
-        viewPagerAdapter.addFragment(2, new SearchFragment());
-        viewPager.enableScroll(false);
-        viewPager.setAdapter(viewPagerAdapter);
-    }
-
-    private void setupBottomNavigation() {
-        @ColorInt
         int backGroundColor = ViewUtil.getStyledAttribute(this, android.R.attr.colorBackground);
         bottomNavigationView.setBackgroundColor(ColorUtils.setAlphaComponent(backGroundColor, 245));
-        bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
-            viewPager.setCurrentItem(menuItem.getOrder(), true);
-            switch (menuItem.getItemId()) {
-                case R.id.action_home:
-                    Util.toggleSoftInput(this, false);
-                    actionBar.setTitle(getString(R.string.title_home));
-                    break;
-                case R.id.action_installed:
-                    Util.toggleSoftInput(this, false);
-                    actionBar.setTitle(getString(R.string.title_apps));
-                    break;
-                case R.id.action_search:
-                    Util.toggleSoftInput(this, true);
-                    actionBar.setTitle(getString(R.string.title_search));
-                    break;
-            }
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_main);
+
+        //Avoid Adding same fragment to NavController, if clicked on current BottomNavigation item
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == bottomNavigationView.getSelectedItemId())
+                return false;
+            NavigationUI.onNavDestinationSelected(item, navController);
             return true;
         });
+
+        //Check correct BottomNavigation item, if navigation_main is done programmatically
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            final Menu menu = bottomNavigationView.getMenu();
+            final int size = menu.size();
+            for (int i = 0; i < size; i++) {
+                MenuItem item = menu.getItem(i);
+                if (matchDestination(destination, item.getItemId())) {
+                    item.setChecked(true);
+                }
+            }
+        });
+
+        //Check default tab to open, if configured
+        switch (fragmentCur) {
+            case 0:
+                navController.navigate(R.id.homeFragment);
+                break;
+            case 1:
+                navController.navigate(R.id.updatesFragment);
+                break;
+            case 2:
+                navController.navigate(R.id.searchFragment);
+                break;
+        }
     }
 
     protected void showSyncDialog(boolean obsolete) {

@@ -34,13 +34,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <include layout="@layout/include_categories" />
+
             <include layout="@layout/include_new_apps" />
 
-            <include layout="@layout/include_categories" />
+            <include layout="@layout/include_latest_updated" />
 
             <include layout="@layout/include_repositories" />
 
-            <include layout="@layout/include_latest_updated" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

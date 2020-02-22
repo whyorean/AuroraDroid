@@ -136,7 +136,7 @@ public class RepoListActivity extends AppCompatActivity implements RepoAdapter.I
     }
 
     private void clearAllTables() {
-        disposable.add(Observable.fromCallable(() -> AppDatabase.getAppDatabase(this)
+        disposable.add(Observable.fromCallable(() -> AppDatabase.getDatabase(this)
                 .clearAll())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

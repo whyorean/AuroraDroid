@@ -35,6 +35,7 @@ import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PathUtil;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -46,6 +47,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,16 +70,15 @@ public class JsonParserTask extends ContextWrapper {
         return Observable.create(emitter -> {
             boolean status = false;
 
-            final AppDatabase appDatabase = AppDatabase.getAppDatabase(this);
+            final AppDatabase appDatabase = AppDatabase.getDatabase(this);
             final AppDao appDao = appDatabase.appDao();
             final PackageDao packageDao = appDatabase.packageDao();
             final IndexDao indexDao = appDatabase.indexDao();
 
             final Repo repo = RepoListManager.getRepoById(this, FilenameUtils.getBaseName(file.getName()));
-            final Index index = indexDao.getRepoByRepoId(repo.getRepoId());
 
             final File jsonFile = new File(repoDir + repo.getRepoId() + JSON);
-            final Gson gson = new Gson();
+            final Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
 
             try {
                 final String jsonString = IOUtils.toString(FileUtils.openInputStream(jsonFile), "UTF-8");
@@ -118,9 +119,7 @@ public class JsonParserTask extends ContextWrapper {
                 Log.e("Error processing JSON : %s", jsonFile.getName());
             } catch (FileNotFoundException e) {
                 Log.e("File not found : %s", jsonFile.getName());
-            } catch (IOException e) {
-                Log.e(e.getMessage());
-            } catch (SQLiteException e) {
+            } catch (IOException | SQLiteException e) {
                 Log.e(e.getMessage());
             } catch (Exception e) {
                 e.printStackTrace();

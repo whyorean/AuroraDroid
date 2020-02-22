@@ -46,12 +46,12 @@ public class InstalledAppTask extends ContextWrapper {
 
     public List<App> getUpdatableApps() {
         List<App> updatableList = new ArrayList<>();
-        for (App app : getInstalledApps(true)) {
+        /*for (App app : getInstalledApps(true)) {
             final PackageInfo packageInfo = PackageUtil.getPackageInfo(packageManager, app.getPackageName());
             final App tempApp = fetchAppsTask.getAppByPackageName(app.getPackageName());
             if (packageInfo != null && tempApp != null) {
                 final String RSA256 = CertUtil.getSHA256(context, app.getPackageName());
-                if (packageInfo.versionName.compareTo(tempApp.getAppPackage().getVersionName()) < 0
+                if (packageInfo.versionName.compareTo(tempApp.getAppPackage().getVersionName()) > 0
                         && RSA256.equals(app.getAppPackage().getSigner())
                         && (PackageUtil.isBestFitSupportedPackage(app.getAppPackage()) || PackageUtil.isSupportedPackage(app.getAppPackage()))) {
                     updatableList.add(tempApp);
@@ -62,16 +62,18 @@ public class InstalledAppTask extends ContextWrapper {
                     updatableList.add(tempApp);
                 }
             }
-        }
+        }*/
         return updatableList;
     }
 
     public List<App> getAllApps() {
-        return fetchAppsTask.getAppsByPackageName(getAllPackages());
+        //return fetchAppsTask.getAppsByPackageName(getAllPackages());
+        return new ArrayList<>();
     }
 
     public List<App> getInstalledApps(boolean showSystem) {
-        return fetchAppsTask.getAppsByPackageName(getInstalledPackages(showSystem));
+        //return fetchAppsTask.getAppsByPackageName(getInstalledPackages(showSystem));
+        return new ArrayList<>();
     }
 
     private List<String> getInstalledPackages(boolean showSystem) {

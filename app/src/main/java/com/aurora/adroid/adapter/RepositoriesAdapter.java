@@ -19,9 +19,9 @@
 package com.aurora.adroid.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,12 +31,10 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.core.graphics.ColorUtils;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.activity.AuroraActivity;
-import com.aurora.adroid.fragment.RepositoryAppsFragment;
+import com.aurora.adroid.activity.GenericAppActivity;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.util.ThemeUtil;
 
@@ -90,16 +88,10 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
         viewHolder.imgCat.setColorFilter(isTransparent ? color : Color.WHITE);
 
         viewHolder.itemView.setOnClickListener(v -> {
-            RepositoryAppsFragment fragment = new RepositoryAppsFragment();
-            Bundle arguments = new Bundle();
-            arguments.putString("REPO_ID", repo.getRepoId());
-            fragment.setArguments(arguments);
-            ((AuroraActivity) context).getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.container, fragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .addToBackStack(null)
-                    .commitAllowingStateLoss();
+            Intent intent = new Intent(context, GenericAppActivity.class);
+            intent.putExtra("LIST_TYPE", 3);
+            intent.putExtra("REPO_ID", repo.getRepoId());
+            context.startActivity(intent);
         });
     }
 
