@@ -23,81 +23,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ViewSwitcher
-        android:id="@+id/view_switcher"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/margin_bottom">
 
-        <LinearLayout
-            android:id="@+id/content_view"
+        <RelativeLayout
+            android:id="@+id/layout_action"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/min_height">
 
-            <RelativeLayout
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_update_all"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/min_height">
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_toStartOf="@id/btn_update_all"
+                android:maxLines="1"
+                android:text="@string/title_update_all"
+                android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
+                app:autoSizeMaxTextSize="16sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeTextType="uniform" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_update_all"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/margin_normal"
-                    android:layout_marginEnd="@dimen/margin_small"
-                    android:layout_toStartOf="@id/btn_update_all"
-                    android:maxLines="1"
-                    android:text="@string/title_update_all"
-                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
-                    app:autoSizeMaxTextSize="16sp"
-                    app:autoSizeMinTextSize="12sp"
-                    app:autoSizeTextType="uniform" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_update_all"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:maxLines="1"
+                android:text="@string/list_update_all" />
+        </RelativeLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_update_all"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginEnd="@dimen/margin_small"
-                    android:maxLines="1"
-                    android:text="@string/list_update_all" />
-            </RelativeLayout>
-
-            <com.aurora.adroid.view.CustomSwipeToRefresh
-                android:id="@+id/swipe_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:overScrollMode="never"
-                    android:paddingBottom="@dimen/margin_bottom"
-                    android:scrollbars="vertical"
-                    android:splitMotionEvents="false"
-                    tools:listitem="@layout/item_installed" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            </com.aurora.adroid.view.CustomSwipeToRefresh>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/err_view"
+        <com.aurora.adroid.view.CustomSwipeToRefresh
+            android:id="@+id/swipe_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
-    </ViewSwitcher>
+            android:layout_height="match_parent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingBottom="@dimen/margin_bottom"
+                android:scrollbars="vertical"
+                android:splitMotionEvents="false"
+                tools:listitem="@layout/item_installed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </com.aurora.adroid.view.CustomSwipeToRefresh>
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

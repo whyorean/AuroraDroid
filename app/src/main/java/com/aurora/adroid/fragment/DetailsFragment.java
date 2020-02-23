@@ -35,10 +35,9 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
-import com.aurora.adroid.event.Event;
-import com.aurora.adroid.event.Events;
-import com.aurora.adroid.event.RxBus;
+import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.fragment.details.AppActionDetails;
 import com.aurora.adroid.fragment.details.AppInfoDetails;
 import com.aurora.adroid.fragment.details.AppLinkDetails;
@@ -102,12 +101,13 @@ public class DetailsFragment extends Fragment {
         super.onAttach(context);
         this.context = context;
 
-        disposable.add(RxBus.get().toObservable()
+        disposable.add(AuroraApplication.getRxBus()
+                .getBus()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(event -> {
-                    if (event instanceof Event) {
-                        Events eventEnum = ((Event) event).getEvent();
+                    if (event != null) {
+                        EventType eventEnum = event.getType();
                         switch (eventEnum) {
                             case DOWNLOAD_INITIATED:
                                 ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_progress)));

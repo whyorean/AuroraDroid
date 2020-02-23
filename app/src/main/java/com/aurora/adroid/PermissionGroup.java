@@ -123,7 +123,7 @@ public class PermissionGroup extends LinearLayout {
         TextView textView = new TextView(getContext());
         textView.setText(label);
         textView.setTextSize(14);
-        textView.setTextAppearance(getContext(), R.style.TextAppearance_Aurora_Permission);
+        textView.setTextAppearance(getContext(), R.style.TextAppearance_Aurora_Line2);
         textView.setOnClickListener(getOnClickListener(description));
         permissionLabelsView.addView(textView);
     }

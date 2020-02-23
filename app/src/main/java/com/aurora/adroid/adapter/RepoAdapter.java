@@ -35,14 +35,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.activity.RepoDetailsActivity;
-import com.aurora.adroid.activity.RepoListActivity;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.manager.SyncManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.task.CheckRepoUpdatesTask;
 import com.aurora.adroid.task.DatabaseTask;
 import com.aurora.adroid.util.ContextUtil;
-import com.aurora.adroid.util.ViewUtil;
+import com.aurora.adroid.util.ImageUtil;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -96,7 +95,7 @@ public class RepoAdapter extends SelectableAdapter<RepoAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        final int color = ViewUtil.getSolidColors(position);
+        final int color = ImageUtil.getSolidColor(position);
         final Repo repo = repoList.get(position);
         holder.imgRepo.setBackgroundTintList(ColorStateList.valueOf(ColorUtils.setAlphaComponent(color, 60)));
         holder.imgRepo.setColorFilter(color);

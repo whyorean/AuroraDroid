@@ -13,15 +13,15 @@ import android.os.IBinder;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
+import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.download.RequestBuilder;
 import com.aurora.adroid.event.Event;
-import com.aurora.adroid.event.Events;
+import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.event.LogEvent;
-import com.aurora.adroid.event.RxBus;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.manager.SyncManager;
 import com.aurora.adroid.model.Repo;
@@ -58,11 +58,13 @@ public class RepoSyncService extends Service {
     public static RepoSyncService instance = null;
 
     private CompositeDisposable disposable = new CompositeDisposable();
+
     private Fetch fetch;
     private SyncNotification syncNotification;
     private AbstractFetchListener abstractFetchListener;
     private CheckRepoUpdatesTask checkRepoUpdatesTask;
     private List<Request> requestList = new ArrayList<>();
+
     private int targetCount = 0;
     private int currentCount = 0;
     private int downloadCount = 0;
@@ -108,7 +110,7 @@ public class RepoSyncService extends Service {
         requestList = RequestBuilder.buildRequest(this, repoList);
 
         if (repoList.isEmpty()) {
-            RxBus.publish(new Event(Events.SYNC_EMPTY));
+            AuroraApplication.rxNotify(new Event(EventType.SYNC_EMPTY));
             destroyService();
         }
 
@@ -120,7 +122,7 @@ public class RepoSyncService extends Service {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(requests -> {
                     if (requests.isEmpty()) {
-                        RxBus.publish(new Event(Events.SYNC_COMPLETED));
+                        AuroraApplication.rxNotify(new Event(EventType.SYNC_NO_UPDATES));
                         syncNotification.notifyCompleted();
                         destroyService();
                     } else {
@@ -147,10 +149,10 @@ public class RepoSyncService extends Service {
                 .doOnNext(repoBundle -> {
                     final Repo repo = repoBundle.getRepo();
                     if (repoBundle.isSynced()) {
-                        RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_completed)));
+                        AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_completed)));
                         SyncManager.setSynced(this, repo.getRepoId());
                     } else {
-                        RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_failed)));
+                        AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_failed)));
                     }
                     updateProgress();
                     PathUtil.deleteFile(this, repo.getRepoId());
@@ -161,7 +163,7 @@ public class RepoSyncService extends Service {
                     Log.i("Sync completed");
                 })
                 .doOnError(throwable -> {
-                    RxBus.publish(new Event(Events.SYNC_FAILED));
+                    AuroraApplication.rxNotify(new Event(EventType.SYNC_FAILED));
                     updateProgress();
                     Log.e("Error : %s", throwable.getMessage());
                 })
@@ -170,10 +172,10 @@ public class RepoSyncService extends Service {
 
     private void updateProgress() {
         currentCount++;
-        RxBus.publish(new Event(Events.SYNC_PROGRESS));
+        AuroraApplication.rxNotify(new Event(EventType.SYNC_PROGRESS));
         syncNotification.notifySyncProgress(currentCount, getRepoCount());
         if (currentCount == getRepoCount() - failedDownloadCount) {
-            RxBus.publish(new Event(Events.SYNC_COMPLETED));
+            AuroraApplication.rxNotify(new Event(EventType.SYNC_COMPLETED));
             syncNotification.notifyCompleted();
             destroyService();
         }
@@ -195,7 +197,7 @@ public class RepoSyncService extends Service {
                 super.onCompleted(download);
                 final Repo repo = RepoListManager.getRepoById(RepoSyncService.this, download.getTag());
                 Log.i("Downloaded : %s", download.getUrl());
-                RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_completed)));
+                AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_completed)));
                 updateDownloads();
             }
 
@@ -204,7 +206,7 @@ public class RepoSyncService extends Service {
                 super.onError(download, error, throwable);
                 final Repo repo = RepoListManager.getRepoById(RepoSyncService.this, download.getTag());
                 Log.e("Download Failed : %s", download.getUrl());
-                RxBus.publish(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_failed)));
+                AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_failed)));
                 failedDownloadCount++;
                 updateDownloads();
             }

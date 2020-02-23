@@ -112,8 +112,12 @@ public class JsonParserTask extends ContextWrapper {
                         packageList.add(pkg);
                     }
                 }
-                appDao.insertAll(appList);
-                packageDao.insertAll(packageList);
+
+                appDatabase.getQueryExecutor().execute(() -> {
+                    appDao.insertAll(appList);
+                    packageDao.insertAll(packageList);
+                });
+
                 status = true;
             } catch (JSONException e) {
                 Log.e("Error processing JSON : %s", jsonFile.getName());

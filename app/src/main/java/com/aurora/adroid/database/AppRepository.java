@@ -51,6 +51,10 @@ public class AppRepository {
         return appDao.searchAppsByRepository("%" + repoId + "%");
     }
 
+    public LiveData<List<App>> getAllAppsByDeveloper(String authorName) {
+        return appDao.getAppsByAuthorName(authorName);
+    }
+
     public String getScreenShots(String packageName) {
         return appDao.getPhoneScreenshots(packageName);
     }

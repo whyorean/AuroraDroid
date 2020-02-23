@@ -54,6 +54,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -188,8 +189,7 @@ public class Util {
 
     public static long getMilliFromDate(String data, long Default) {
         try {
-            final DateFormat dateFormat = new SimpleDateFormat("dd MMM YY", Locale.getDefault());
-            return dateFormat.parse(data).getTime();
+            return Date.parse(data);
         } catch (Exception e) {
             Log.e(e.getMessage());
         }

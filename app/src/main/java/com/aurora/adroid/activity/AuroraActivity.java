@@ -19,6 +19,9 @@
 package com.aurora.adroid.activity;
 
 import android.Manifest;
+import android.app.ActivityOptions;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -28,53 +31,59 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.aurora.adroid.AuroraApplication;
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.database.AppDatabase;
-import com.aurora.adroid.event.Event;
-import com.aurora.adroid.event.Events;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.service.RepoSyncService;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.TextUtil;
-import com.aurora.adroid.util.ThemeUtil;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.navigation.NavigationView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class AuroraActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
+    @BindView(R.id.navigation)
+    NavigationView navigation;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+    @BindView(R.id.action1)
+    AppCompatImageView action1;
+    @BindView(R.id.search_bar)
+    RelativeLayout searchBar;
 
-    private ActionBar actionBar;
     private CompositeDisposable disposable = new CompositeDisposable();
     private int fragmentCur = 0;
 
@@ -84,11 +93,6 @@ public class AuroraActivity extends BaseActivity {
             currentDestination = currentDestination.getParent();
         }
         return currentDestination.getId() == destId;
-    }
-
-    @Nullable
-    public ActionBar getDroidActionBar() {
-        return actionBar;
     }
 
     public BottomNavigationView getBottomNavigationView() {
@@ -112,27 +116,29 @@ public class AuroraActivity extends BaseActivity {
             checkPermissions();
         }
 
+        createNotificationChannel();
         init();
 
-        disposable.add(AuroraApplication.getRxBus()
+        AuroraApplication.getRxBus().getBus()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(event -> {
-                    if (event instanceof Event) {
-                        Events eventEnum = ((Event) event).getEvent();
-                        switch (eventEnum) {
-                            case SYNC_COMPLETED:
-                                clearSyncAnim();
-                                showSyncCompletedDialog();
-                                break;
-                            case SYNC_EMPTY:
-                                clearSyncAnim();
-                                ContextUtil.toastLong(this, "Select at least one repo to sync");
-                                break;
-                        }
+                .doOnNext(event -> {
+                    switch (event.getType()) {
+                        case SYNC_COMPLETED:
+                            clearSyncAnim();
+                            showSyncCompletedDialog(false);
+                            break;
+                        case SYNC_NO_UPDATES:
+                            clearSyncAnim();
+                            showSyncCompletedDialog(true);
+                            break;
+                        case SYNC_EMPTY:
+                            clearSyncAnim();
+                            ContextUtil.toastLong(this, "Select at least one repo to sync");
+                            break;
                     }
-                }));
-
+                })
+                .subscribe();
         onNewIntent(getIntent());
     }
 
@@ -220,22 +226,19 @@ public class AuroraActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    @OnClick({R.id.search_bar, R.id.action2})
+    public void openSearchActivity() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this);
+        startActivity(intent, options.toBundle());
+    }
+
     private void init() {
-        setupActionbar();
-        setupViewPager();
+        setupNavigation();
+        setupDrawer();
     }
 
-    private void setupActionbar() {
-        setSupportActionBar(toolbar);
-        actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayShowCustomEnabled(true);
-            actionBar.setElevation(0f);
-            actionBar.setTitle(getString(R.string.app_name));
-        }
-    }
-
-    private void setupViewPager() {
+    private void setupNavigation() {
         int backGroundColor = ViewUtil.getStyledAttribute(this, android.R.attr.colorBackground);
         bottomNavigationView.setBackgroundColor(ColorUtils.setAlphaComponent(backGroundColor, 245));
 
@@ -249,7 +252,7 @@ public class AuroraActivity extends BaseActivity {
             return true;
         });
 
-        //Check correct BottomNavigation item, if navigation_main is done programmatically
+        //Check correct BottomNavigation item, if nav_graph_main is done programmatically
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             final Menu menu = bottomNavigationView.getMenu();
             final int size = menu.size();
@@ -270,9 +273,69 @@ public class AuroraActivity extends BaseActivity {
                 navController.navigate(R.id.updatesFragment);
                 break;
             case 2:
-                navController.navigate(R.id.searchFragment);
+                navController.navigate(R.id.categoryFragment);
                 break;
         }
+    }
+
+    private void setupDrawer() {
+        action1.setOnClickListener(v -> {
+            if (!drawerLayout.isDrawerOpen(GravityCompat.START))
+                drawerLayout.openDrawer(GravityCompat.START, true);
+        });
+
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+
+        navigation.setNavigationItemSelectedListener(item -> {
+            Intent intent = new Intent(this, ContainerActivity.class);
+            switch (item.getItemId()) {
+                case R.id.action_all_apps:
+                    intent.putExtra(Constants.FRAGMENT_NAME, Constants.FRAGMENT_INSTALLED);
+                    startActivity(intent, ViewUtil.getEmptyActivityBundle(this));
+                    break;
+                case R.id.action_download:
+                    startActivity(new Intent(this, DownloadsActivity.class),
+                            ViewUtil.getEmptyActivityBundle(this));
+                    break;
+                case R.id.action_setting:
+                    startActivity(new Intent(this, SettingsActivity.class),
+                            ViewUtil.getEmptyActivityBundle(this));
+                    break;
+                case R.id.action_about:
+                    intent.putExtra(Constants.FRAGMENT_NAME, Constants.FRAGMENT_ABOUT);
+                    startActivity(intent, ViewUtil.getEmptyActivityBundle(this));
+                    break;
+                case R.id.action_favourite:
+                    intent.putExtra(Constants.FRAGMENT_NAME, Constants.FRAGMENT_FAV_LIST);
+                    startActivity(intent, ViewUtil.getEmptyActivityBundle(this));
+                    break;
+                case R.id.action_blacklist:
+                    intent.putExtra(Constants.FRAGMENT_NAME, Constants.FRAGMENT_BLACKLIST);
+                    startActivity(intent, ViewUtil.getEmptyActivityBundle(this));
+                    break;
+            }
+            return false;
+        });
     }
 
     protected void showSyncDialog(boolean obsolete) {
@@ -292,10 +355,10 @@ public class AuroraActivity extends BaseActivity {
         builder.show();
     }
 
-    protected void showSyncCompletedDialog() {
+    protected void showSyncCompletedDialog(boolean noUpdates) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(getString(R.string.dialog_sync_title))
-                .setMessage(getString(R.string.dialog_sync_completed_desc))
+                .setMessage(getString(noUpdates ? R.string.dialog_sync_completed_desc_alt : R.string.dialog_sync_completed_desc))
                 .setPositiveButton(getString(R.string.dialog_sync_complete_positive), (dialog, which) -> {
                     Util.restartApp(this);
                 })
@@ -345,6 +408,36 @@ public class AuroraActivity extends BaseActivity {
             startForegroundService(intent);
         } else {
             startService(intent);
+        }
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel alertChannel = new NotificationChannel(
+                    Constants.NOTIFICATION_CHANNEL_ALERT,
+                    getString(R.string.notification_channel_alert),
+                    NotificationManager.IMPORTANCE_HIGH);
+
+            NotificationChannel generalChannel = new NotificationChannel(
+                    Constants.NOTIFICATION_CHANNEL_GENERAL,
+                    getString(R.string.notification_channel_general),
+                    NotificationManager.IMPORTANCE_MIN);
+
+            alertChannel.enableLights(true);
+            alertChannel.enableVibration(true);
+            alertChannel.setShowBadge(true);
+            alertChannel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+            generalChannel.enableLights(false);
+            generalChannel.enableVibration(false);
+            generalChannel.setShowBadge(false);
+            generalChannel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PRIVATE);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(alertChannel);
+                notificationManager.createNotificationChannel(generalChannel);
+            }
         }
     }
 

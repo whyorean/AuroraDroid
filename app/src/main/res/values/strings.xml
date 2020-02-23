@@ -67,6 +67,7 @@
     <string name="action_use_mirror">Use mirror URL</string>
     <string name="action_unsupported">Incompatible App</string>
     <string name="action_whitelist">Whitelist</string>
+    <string name="action_sortBy">Sort by</string>
 
     <string name="details_more">Read more</string>
     <string name="details_more_apps_dev">More apps from developer</string>
@@ -83,6 +84,7 @@
     <string name="dialog_sync_desc">Do you wish to update apps from repositories ?</string>
     <string name="dialog_sync_desc_alt">Old data detected,there may be new updates, do you wish to sync all repositories ?</string>
     <string name="dialog_sync_completed_desc">All repositories updated, it is recommended to restart the app after updates.</string>
+    <string name="dialog_sync_completed_desc_alt">No new updates available</string>
     <string name="dialog_sync_positive">Yes</string>
     <string name="dialog_sync_negative">No</string>
     <string name="dialog_sync_complete_positive">Restart now</string>
@@ -152,6 +154,9 @@
     <string name="list_repo_select">Selected Repos(s)</string>
     <string name="list_repo_none">No repository selected</string>
 
+    <string name="notification_channel_alert">"Quick notification"</string>
+    <string name="notification_channel_general">"General notification"</string>
+
     <string name="extract_completed">Extracted</string>
     <string name="extract_failed">Extraction failed</string>
     <string name="sync_background">Syncing in background</string>
@@ -170,6 +175,7 @@
     <string name="title_perm">Permissions</string>
     <string name="title_repositories">Repositories</string>
     <string name="title_search">Search apps &amp; games</string>
+    <string name="title_installed">My apps &amp; games</string>
     <string name="title_search_alt">Search</string>
     <string name="title_sync_repo">Sync Repositories</string>
     <string name="title_update_all">Update All Apps</string>

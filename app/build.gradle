@@ -34,18 +34,30 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
     }
+
     signingConfigs {
         release
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            resValue "string", "app_name", "Aurora Droid"
+        }
+        beta {
+            initWith release
+            applicationIdSuffix = ".beta"
+            resValue "string", "app_name", "Aurora Droid - Beta"
+        }
+        debug{
+            resValue "string", "app_name", "Aurora Droid - Debug"
         }
     }
 }

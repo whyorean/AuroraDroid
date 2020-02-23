@@ -38,8 +38,6 @@ import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.adapter.GenericAppsAdapter;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.Repo;
-import com.aurora.adroid.task.FetchAppsTask;
-import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.view.CustomSwipeToRefresh;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -47,10 +45,7 @@ import com.google.android.material.chip.Chip;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class RepositoryAppsFragment extends Fragment {
 
@@ -115,9 +110,7 @@ public class RepositoryAppsFragment extends Fragment {
         setupChip();
         if (getActivity() instanceof AuroraActivity) {
             bottomNavigationView = ((AuroraActivity) getActivity()).getBottomNavigationView();
-            actionBar = ((AuroraActivity) getActivity()).getDroidActionBar();
             ViewUtil.hideBottomNav(bottomNavigationView, true);
-            actionBar.setTitle(repo.getRepoName());
         }
         customSwipeToRefresh.setOnRefreshListener(() -> fetchData(repoId));
     }

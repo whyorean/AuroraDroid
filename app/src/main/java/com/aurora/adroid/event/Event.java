@@ -18,19 +18,31 @@
 
 package com.aurora.adroid.event;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
 public class Event {
 
-    private Events event;
+    private String stringExtra;
+    private int intExtra;
+    private int status;
+    private EventType type;
 
-    public Event(Events event) {
-        this.event = event;
+    public Event(EventType type) {
+        this.type = type;
     }
 
-    public Events getEvent() {
-        return event;
+    public EventType getType() {
+        return type;
     }
 
-    public void setEvent(Events event) {
-        this.event = event;
+    public void setType(EventType type) {
+        this.type = type;
     }
 }

@@ -25,14 +25,12 @@
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
         <item name="colorSurface">@color/colorSecondaryVariant</item>
-        <item name="toolbarStyle">@style/Aurora.MaterialComponents.Toolbar</item>
         <item name="android:strokeColor">@color/colorGreyLight</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@color/colorWindowBackground</item>
         <item name="android:navigationBarColor">@color/colorBlack</item>
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="chipStyle">@style/Widget.Aurora.FilterChip</item>
-        <item name="materialCardViewStyle">@style/Aurora.MaterialComponents.CardView</item>
         <item name="android:splitMotionEvents">false</item>
         <item name="android:windowEnableSplitTouch">false</item>
     </style>
@@ -44,14 +42,12 @@
         <item name="colorSecondary">@color/colorDarkSecondary</item>
         <item name="colorSecondaryVariant">@color/colorDarkSecondaryVariant</item>
         <item name="colorSurface">@color/colorDarkSecondaryVariant</item>
-        <item name="toolbarStyle">@style/Aurora.MaterialComponents.Toolbar.Dark</item>
         <item name="android:strokeColor">@color/colorGreyLight</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowBackground">@color/colorDarkWindowBackground</item>
         <item name="android:navigationBarColor">@color/colorDarkNavigation</item>
         <item name="android:colorBackground">@color/colorDarkBackground</item>
         <item name="chipStyle">@style/Widget.Aurora.FilterChip</item>
-        <item name="materialCardViewStyle">@style/Aurora.MaterialComponents.CardView.Dark</item>
         <item name="android:splitMotionEvents">false</item>
         <item name="android:windowEnableSplitTouch">false</item>
     </style>
@@ -65,7 +61,6 @@
         <item name="colorSurface">@color/colorBlueSecondaryVariant</item>
         <item name="android:windowBackground">@color/colorBlueWindowBackground</item>
         <item name="android:colorBackground">@color/colorBlueBackground</item>
-        <item name="materialCardViewStyle">@style/Aurora.MaterialComponents.CardView.Dark</item>
     </style>
 
     <style name="AppTheme.Black" parent="AppTheme.Dark">
@@ -80,6 +75,5 @@
         <item name="android:windowBackground">@color/colorBlack</item>
         <item name="android:navigationBarColor">@color/colorBlack</item>
         <item name="android:colorBackground">@color/colorBlack</item>
-        <item name="materialCardViewStyle">@style/Aurora.MaterialComponents.CardView.Black</item>
     </style>
 </resources>

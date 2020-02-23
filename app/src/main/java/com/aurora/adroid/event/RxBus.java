@@ -21,43 +21,11 @@ package com.aurora.adroid.event;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.jakewharton.rxrelay2.Relay;
 
-import io.reactivex.Observable;
-
 public class RxBus {
 
-    private static final Relay<Object> bus = PublishRelay.create().toSerialized();
-    public static volatile RxBus instance;
+    private final Relay<Event> bus = PublishRelay.create();
 
-    public RxBus() {
-        if (instance != null) {
-            throw new RuntimeException("Use get() method to get the single instance of RxBus");
-        }
-    }
-
-    public static RxBus get() {
-        if (instance == null) {
-            synchronized (RxBus.class) {
-                if (instance == null) instance = new RxBus();
-            }
-        }
-        return instance;
-    }
-
-    public static void publish(Object event) {
-        bus.accept(event);
-    }
-
-    public static void clearLogEvents() {
-        bus
-                .filter(event -> event instanceof Event || event instanceof LogEvent)
-                .subscribe();
-    }
-
-    public Observable<Object> toObservable() {
+    public Relay<Event> getBus() {
         return bus;
-    }
-
-    public boolean hasObservers() {
-        return bus.hasObservers();
     }
 }

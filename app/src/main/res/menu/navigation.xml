@@ -26,13 +26,13 @@
 
     <item
         android:id="@+id/updatesFragment"
-        android:icon="@drawable/ic_apps"
+        android:icon="@drawable/ic_updates"
         android:orderInCategory="1"
-        android:title="@string/title_apps" />
+        android:title="@string/action_updates" />
 
     <item
-        android:id="@+id/searchFragment"
-        android:icon="@drawable/ic_search"
+        android:id="@+id/categoryFragment"
+        android:icon="@drawable/ic_categories"
         android:orderInCategory="3"
-        android:title="@string/action_search" />
+        android:title="@string/title_categories" />
 </menu>

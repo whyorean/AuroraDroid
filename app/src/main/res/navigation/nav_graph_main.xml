@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_updates" />
 
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.aurora.adroid.fragment.SearchFragment"
-        android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" />
+        android:id="@+id/categoryFragment"
+        android:name="com.aurora.adroid.fragment.CategoriesFragment"
+        android:label="@string/title_categories"
+        tools:layout="@layout/fragment_categories" />
 </navigation>

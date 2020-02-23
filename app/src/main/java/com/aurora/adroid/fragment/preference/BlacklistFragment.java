@@ -28,27 +28,23 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aurora.adroid.ErrorType;
 import com.aurora.adroid.R;
 import com.aurora.adroid.adapter.BlacklistAdapter;
 import com.aurora.adroid.fragment.BaseFragment;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.task.InstalledAppTask;
-import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.view.CustomSwipeToRefresh;
+import com.aurora.adroid.viewmodel.InstalledAppsViewModel;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 
 public class BlacklistFragment extends BaseFragment implements BlacklistAdapter.ItemClickListener {
@@ -86,9 +82,10 @@ public class BlacklistFragment extends BaseFragment implements BlacklistAdapter.
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        fetchData();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        InstalledAppsViewModel viewModel = new ViewModelProvider(this).get(InstalledAppsViewModel.class);
+        viewModel.getAppsLiveData().observe(getViewLifecycleOwner(), this::setupRecycler);
         setupClearAll();
     }
 
@@ -107,27 +104,6 @@ public class BlacklistFragment extends BaseFragment implements BlacklistAdapter.
             adapter.notifyDataSetChanged();
             txtBlacklist.setText(getString(R.string.list_blacklist_none));
         }
-    }
-
-    private void fetchData() {
-        disposable.add(Observable.fromCallable(() -> new InstalledAppTask(context)
-                .getAllApps())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(subscription -> customSwipeToRefresh.setRefreshing(true))
-                .doOnComplete(() -> customSwipeToRefresh.setRefreshing(false))
-                .subscribe((appList) -> {
-                    if (appList.isEmpty()) {
-                        setErrorView(ErrorType.NO_INSTALLED_APPS);
-                        switchViews(true);
-                    } else {
-                        switchViews(false);
-                        setupRecycler(appList);
-                    }
-                }, err -> {
-                    Log.e(err.getMessage());
-                    err.printStackTrace();
-                }));
     }
 
     private void setupRecycler(List<App> appList) {

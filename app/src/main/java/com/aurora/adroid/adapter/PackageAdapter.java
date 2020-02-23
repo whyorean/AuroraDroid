@@ -32,8 +32,7 @@ import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
 import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.event.Event;
-import com.aurora.adroid.event.Events;
-import com.aurora.adroid.event.RxBus;
+import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 import com.aurora.adroid.notification.GeneralNotification;
@@ -141,7 +140,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
             @Override
             public void onQueued(int groupId, @NotNull Download download, boolean waitingNetwork, @NotNull FetchGroup fetchGroup) {
                 if (groupId == pkg.hashCode()) {
-                    RxBus.publish(new Event(Events.DOWNLOAD_INITIATED));
+                    AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_INITIATED));
                     notification.notifyQueued(pkg.hashCode());
                 }
             }
@@ -157,7 +156,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
             @Override
             public void onCompleted(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
                 if (groupId == pkg.hashCode()) {
-                    RxBus.publish(new Event(Events.DOWNLOAD_COMPLETED));
+                    AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_COMPLETED));
                     notification.notifyCompleted();
                     AuroraApplication.getInstaller().install(pkg.getApkName());
                 }
@@ -167,7 +166,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
             public void onCancelled(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
                 super.onCancelled(groupId, download, fetchGroup);
                 if (groupId == pkg.hashCode()) {
-                    RxBus.publish(new Event(Events.DOWNLOAD_CANCELLED));
+                    AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_CANCELLED));
                     notification.notifyCancelled();
                 }
             }
@@ -175,7 +174,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
             @Override
             public void onError(int groupId, @NotNull Download download, @NotNull Error error, @Nullable Throwable throwable, @NotNull FetchGroup fetchGroup) {
                 if (groupId == pkg.hashCode()) {
-                    RxBus.publish(new Event(Events.DOWNLOAD_FAILED));
+                    AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_FAILED));
                     notification.notifyFailed();
                 }
             }

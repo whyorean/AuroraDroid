@@ -33,7 +33,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aurora.adroid.Constants;
 import com.aurora.adroid.ErrorType;
 import com.aurora.adroid.FavouriteItemTouchHelper;
 import com.aurora.adroid.R;
@@ -43,14 +42,8 @@ import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.fragment.BaseFragment;
 import com.aurora.adroid.manager.FavouriteListManager;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.notification.QuickNotification;
-import com.aurora.adroid.task.FetchAppsTask;
-import com.aurora.adroid.util.DatabaseUtil;
-import com.aurora.adroid.util.Log;
-import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.PathUtil;
 import com.aurora.adroid.view.CustomSwipeToRefresh;
-import com.tonyodev.fetch2.EnqueueAction;
 import com.tonyodev.fetch2.Fetch;
 import com.tonyodev.fetch2.Request;
 
@@ -69,10 +62,7 @@ import java.util.Scanner;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class FavouriteFragment extends BaseFragment implements FavouriteViewHolder.ItemClickListener,
         FavouriteItemTouchHelper.RecyclerItemTouchHelperListener {

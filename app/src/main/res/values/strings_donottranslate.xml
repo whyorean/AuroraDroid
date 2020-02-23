@@ -17,7 +17,6 @@
   -->
 
 <resources>
-    <string name="app_name">Aurora Droid</string>
     <string name="app_name_long">Aurora Droid - App store</string>
     <string name="app_desc">Aurora Droid aka A-Droid, is FOSS client for F-Droid repositories,with an elegant design based of latest MD guidelines
         \n

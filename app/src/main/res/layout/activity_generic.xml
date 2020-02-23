@@ -57,7 +57,7 @@
             android:paddingTop="@dimen/margin_small"
             android:paddingEnd="@dimen/margin_xsmall"
             android:paddingBottom="@dimen/margin_xsmall"
-            android:text="Sort by"
+            android:text="@string/action_sortBy"
             android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
 
         <include layout="@layout/include_filters" />

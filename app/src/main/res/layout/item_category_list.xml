@@ -17,30 +17,33 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_xsmall"
-    android:background="@drawable/category_bg">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="@dimen/margin_xxsmall"
+    android:background="?android:attr/selectableItemBackground"
+    android:paddingStart="@dimen/margin_normal"
+    android:paddingTop="@dimen/margin_small"
+    android:paddingEnd="@dimen/margin_small"
+    android:paddingBottom="@dimen/margin_small">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/cat_icon"
         android:layout_width="@dimen/icon_size_cat"
         android:layout_height="@dimen/icon_size_cat"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/margin_large"
-        tools:targetApi="p" />
+        android:src="@android:color/transparent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/cat_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cat_icon"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/margin_small"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.Aurora.DialogSubTitle"
-        android:textSize="12sp" />
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_toEndOf="@id/cat_icon"
+        tools:text="Category Name"
+        android:textAppearance="@style/TextAppearance.Aurora.Line1"
+        app:autoSizeMaxTextSize="16sp"
+        app:autoSizeMinTextSize="14sp"
+        app:autoSizeTextType="uniform" />
 </RelativeLayout>

@@ -25,25 +25,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar_main" />
+        <include layout="@layout/item_searchview" />
 
         <fragment
             android:id="@+id/nav_host_main"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            app:navGraph="@navigation/navigation_main" />
+            app:navGraph="@navigation/nav_graph_main" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
-            style="@style/Widget.Aurora.BottomNav"
+            style="@style/Widget.Aurora.BottomNavigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:elevation="8dp"
+            app:backgroundTint="?android:colorBackground"
+            app:elevation="6dp"
+            app:itemTextAppearanceActive="@style/TextAppearance.Aurora.BottomNav.Active"
+            app:itemTextAppearanceInactive="@style/TextAppearance.Aurora.BottomNav.Inactive"
             app:menu="@menu/navigation" />
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -53,6 +54,6 @@
         android:layout_gravity="start"
         android:background="?android:attr/windowBackground"
         app:itemIconTint="?android:attr/colorAccent"
-        app:itemTextAppearance="@style/TextAppearance.Aurora.SubTitle"
+        app:itemTextAppearance="@style/TextAppearance.Aurora.Line2"
         app:menu="@menu/menu_drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>

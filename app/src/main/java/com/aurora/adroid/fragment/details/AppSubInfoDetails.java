@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,11 +34,10 @@ import com.aurora.adroid.fragment.DetailsFragment;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 import com.aurora.adroid.sheet.MoreInfoSheet;
-import com.aurora.adroid.task.FetchAppsTask;
-import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
+import com.aurora.adroid.viewmodel.AppsViewModel;
 import com.google.android.material.chip.Chip;
 
 import java.text.DateFormat;
@@ -46,10 +46,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class AppSubInfoDetails extends AbstractDetails {
 
@@ -79,7 +75,6 @@ public class AppSubInfoDetails extends AbstractDetails {
     @BindView(R.id.recycler_similar)
     RecyclerView recyclerSimilar;
 
-    private CompositeDisposable disposable = new CompositeDisposable();
     private ClusterAppsAdapter adapterDeveloper;
     private ClusterAppsAdapter adapterSimilar;
 
@@ -89,8 +84,13 @@ public class AppSubInfoDetails extends AbstractDetails {
 
     @Override
     public void draw() {
+
+
+        AppsViewModel appsViewModel = new ViewModelProvider(fragment).get(AppsViewModel.class);
+
         final DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
         final Package pkg = app.getAppPackage();
+
         chipUpdated.setText(dateFormat.format(new Date(app.getLastUpdated())));
         chipLicense.setText(TextUtils.isEmpty(app.getLicense()) ? "unknown" : app.getLicense());
         chipSize.setText(Util.humanReadableByteValue(pkg.getSize(), true));
@@ -102,7 +102,7 @@ public class AppSubInfoDetails extends AbstractDetails {
             chipCategory.setText(app.getCategories().get(0));
             layoutSimilar.setVisibility(View.VISIBLE);
             setupSimilarRecycler(context);
-            fetchSimilarApps(app.getCategories().get(0));
+            appsViewModel.getCategoryAppsLiveData(app.getCategories().get(0)).observe(fragment.getViewLifecycleOwner(), appList -> adapterSimilar.addData(appList));
         } else
             ViewUtil.hideWithAnimation(chipCategory);
 
@@ -117,40 +117,10 @@ public class AppSubInfoDetails extends AbstractDetails {
                 && !app.getAuthorName().equalsIgnoreCase("unknown")) {
             layoutDeveloper.setVisibility(View.VISIBLE);
             setupAuthorRecycler(context);
-            fetchAuthorApps();
+            appsViewModel.getAuthorAppsLiveData(app.getAuthorName()).observe(fragment.getViewLifecycleOwner(), appList -> adapterDeveloper.addData(appList));
         }
     }
 
-    private void fetchAuthorApps() {
-        /*disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
-                .getAppsByDeveloperName(app.getAuthorName(), app.getPackageName()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((appList) -> {
-                    if (appList.isEmpty())
-                        layoutDeveloper.setVisibility(View.GONE);
-                    else
-                        adapterDeveloper.addData(appList);
-
-                }, err -> {
-                    Log.e(err.getMessage());
-                }));*/
-    }
-
-    private void fetchSimilarApps(String category) {
-        /*disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
-                .getAllAppsByCategory(category))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((appList) -> {
-                    if (appList.isEmpty())
-                        layoutSimilar.setVisibility(View.GONE);
-                    else
-                        adapterSimilar.addData(appList);
-                }, err -> {
-                    Log.e(err.getMessage());
-                }));*/
-    }
 
     private void setupAuthorRecycler(Context context) {
         adapterDeveloper = new ClusterAppsAdapter(context);

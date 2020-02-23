@@ -23,6 +23,7 @@ import android.app.Application;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 
+import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.RxBus;
 import com.aurora.adroid.installer.Installer;
 import com.aurora.adroid.installer.InstallerService;
@@ -30,16 +31,24 @@ import com.aurora.adroid.installer.Uninstaller;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.Util;
 
-import io.reactivex.Observable;
 import io.reactivex.plugins.RxJavaPlugins;
 
 public class AuroraApplication extends Application {
 
-    public static RxBus rxBus;
     @SuppressLint("StaticFieldLeak")
     public static Installer installer;
     @SuppressLint("StaticFieldLeak")
     public static Uninstaller uninstaller;
+
+    private static RxBus rxBus = null;
+
+    public static RxBus getRxBus() {
+        return rxBus;
+    }
+
+    public static void rxNotify(Event event) {
+        rxBus.getBus().accept(event);
+    }
 
     public static Uninstaller getUninstaller() {
         return uninstaller;
@@ -49,15 +58,12 @@ public class AuroraApplication extends Application {
         return installer;
     }
 
-    public static Observable<Object> getRxBus() {
-        return rxBus.toObservable();
-    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         RxJavaPlugins.setErrorHandler(err -> Log.e(err.getMessage()));
-        rxBus = RxBus.get();
+        rxBus = new RxBus();
         installer = new Installer(this);
         uninstaller = new Uninstaller(this);
         AsyncTask.execute(() -> Util.clearOldInstallationSessions(this));

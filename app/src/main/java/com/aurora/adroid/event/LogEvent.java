@@ -18,12 +18,12 @@
 
 package com.aurora.adroid.event;
 
-public class LogEvent
-{
+public class LogEvent extends Event {
 
     private String message;
 
     public LogEvent(String message) {
+        super(EventType.LOG);
         this.message = message;
     }
 

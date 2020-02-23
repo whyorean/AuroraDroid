@@ -127,10 +127,12 @@
         <activity android:name=".activity.RepoDetailsActivity" />
         <activity android:name=".activity.RepoAddActivity" />
         <activity android:name=".activity.GenericAppActivity" />
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.ContainerActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.aurora.adroid.fileProvider"
+            android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -154,10 +156,5 @@
 
         <service android:name=".installer.InstallerService" />
         <service android:name=".service.RepoSyncService" />
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
     </application>
-
 </manifest>

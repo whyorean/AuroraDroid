@@ -34,14 +34,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.activity.GenericAppActivity;
-import com.aurora.adroid.adapter.CategoriesAdapter;
 import com.aurora.adroid.adapter.RepositoriesAdapter;
 import com.aurora.adroid.manager.SyncManager;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.section.NewAppSection;
 import com.aurora.adroid.section.UpdatedAppSection;
-import com.aurora.adroid.task.CategoriesTask;
-import com.aurora.adroid.util.Log;
 import com.aurora.adroid.viewmodel.AppsViewModel;
 
 import java.util.List;
@@ -50,14 +47,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment {
 
-    @BindView(R.id.recycler_cat)
-    RecyclerView recyclerViewCat;
     @BindView(R.id.recycler_repo)
     RecyclerView recyclerViewRepo;
     @BindView(R.id.recycler_latest)
@@ -69,7 +61,6 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.btn_more_updated)
     ImageButton btnMoreUpdated;
 
-    private CategoriesAdapter categoriesAdapter;
     private RepositoriesAdapter repositoriesAdapter;
 
     @Nullable
@@ -84,9 +75,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setupCategories();
         setupRepository();
-        fetchCategories();
 
         AppsViewModel appsViewModel = new ViewModelProvider(this).get(AppsViewModel.class);
         appsViewModel.getNewAppsLiveData().observe(getViewLifecycleOwner(), this::setupNewApps);
@@ -117,12 +106,6 @@ public class HomeFragment extends Fragment {
         requireActivity().startActivity(intent);
     }
 
-    private void setupCategories() {
-        categoriesAdapter = new CategoriesAdapter(requireContext());
-        recyclerViewCat.setAdapter(categoriesAdapter);
-        recyclerViewCat.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
-    }
-
     private void setupRepository() {
         repositoriesAdapter = new RepositoriesAdapter(requireContext());
         repositoriesAdapter.addData(SyncManager.getSyncedRepos(requireContext()));
@@ -144,19 +127,5 @@ public class HomeFragment extends Fragment {
         viewAdapter.addSection(newAppSection);
         recyclerViewLatest.setAdapter(viewAdapter);
         recyclerViewLatest.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
-    }
-
-    private void fetchCategories() {
-        Observable.fromCallable(() -> new CategoriesTask(requireContext())
-                .getCategories())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(categoryList -> {
-                    if (!categoryList.isEmpty()) {
-                        categoriesAdapter.addData(categoryList);
-                    }
-                })
-                .doOnError(throwable -> Log.e(throwable.getMessage()))
-                .subscribe();
     }
 }

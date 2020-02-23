@@ -41,8 +41,7 @@ import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.activity.IntroActivity;
 import com.aurora.adroid.activity.RepoListActivity;
 import com.aurora.adroid.activity.SettingsActivity;
-import com.aurora.adroid.event.Event;
-import com.aurora.adroid.event.Events;
+import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.event.LogEvent;
 import com.aurora.adroid.service.RepoSyncService;
 import com.google.android.material.button.MaterialButton;
@@ -73,11 +72,12 @@ public class RepoFragment extends Fragment {
     public void onStart() {
         super.onStart();
         disposable.add(AuroraApplication.getRxBus()
+                .getBus()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(event -> {
-                    if (event instanceof Event) {
-                        Events eventEnum = ((Event) event).getEvent();
+                    if (event != null) {
+                        EventType eventEnum = event.getType();
                         switch (eventEnum) {
                             case SYNC_EMPTY:
                                 notifyAction(getString(R.string.toast_no_repo_selected));

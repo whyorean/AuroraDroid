@@ -16,19 +16,19 @@
  * along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.aurora.adroid.fragment;
+package com.aurora.adroid.activity;
 
+import android.app.Service;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,10 +45,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
-public class SearchFragment extends Fragment {
-    @BindView(R.id.container)
+public class SearchActivity extends FragmentActivity {
+
+    @BindView(R.id.coordinator)
     CoordinatorLayout coordinatorLayout;
     @BindView(R.id.txt_input_search)
     TextInputEditText txtInputSearch;
@@ -66,24 +68,25 @@ public class SearchFragment extends Fragment {
     Chip chipDateUpdated;
     @BindView(R.id.sort_date_added)
     Chip chipDateAdded;
+    @BindView(R.id.action2)
+    ImageView action2;
 
     private SectionedRecyclerViewAdapter adapter;
     private GenericAppSection section;
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }
+    private InputMethodManager inputMethodManager;
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+        ButterKnife.bind(this);
+
+
+        Object object = getSystemService(Service.INPUT_METHOD_SERVICE);
+        inputMethodManager = (InputMethodManager) object;
+
         SearchAppsViewModel viewModel = new ViewModelProvider(this).get(SearchAppsViewModel.class);
-        viewModel.getAppsLiveData().observe(getViewLifecycleOwner(), appList -> {
+        viewModel.getAppsLiveData().observe(this, appList -> {
             setupRecycler(appList);
         });
         setupSearch();
@@ -91,6 +94,10 @@ public class SearchFragment extends Fragment {
     }
 
     private void setupSearch() {
+        action2.setImageDrawable(getDrawable(R.drawable.ic_cancel));
+        action2.setOnClickListener(v -> {
+            txtInputSearch.setText("");
+        });
         txtInputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -106,6 +113,23 @@ public class SearchFragment extends Fragment {
             public void afterTextChanged(Editable s) {
             }
         });
+    }
+
+    @OnClick(R.id.action1)
+    public void goBack() {
+        onBackPressed();
+    }
+
+    @OnClick(R.id.fab_ime)
+    public void toggleKeyBoard() {
+        if (inputMethodManager != null)
+            inputMethodManager.showSoftInput(txtInputSearch, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        txtInputSearch.requestFocus();
     }
 
     private void setupChip() {
@@ -128,10 +152,10 @@ public class SearchFragment extends Fragment {
 
     private void setupRecycler(List<App> appList) {
         adapter = new SectionedRecyclerViewAdapter();
-        section = new GenericAppSection(requireContext(), appList);
+        section = new GenericAppSection(this, appList);
         adapter.addSection(section);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
     }
 
     private void filterApps(String query) {

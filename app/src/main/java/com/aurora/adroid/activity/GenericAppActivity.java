@@ -80,7 +80,7 @@ public class GenericAppActivity extends FragmentActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_generic_apps);
+        setContentView(R.layout.activity_generic);
         ButterKnife.bind(this);
         Intent arguments = getIntent();
         if (arguments != null) {

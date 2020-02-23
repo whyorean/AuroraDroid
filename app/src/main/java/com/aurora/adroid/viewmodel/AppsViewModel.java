@@ -35,4 +35,8 @@ public class AppsViewModel extends AndroidViewModel {
     public LiveData<List<App>> getRepoAppsLiveData(String repoId) {
         return appRepository.getAllAppsByRepositoryId(repoId);
     }
+
+    public LiveData<List<App>> getAuthorAppsLiveData(String authorName) {
+        return appRepository.getAllAppsByDeveloper(authorName);
+    }
 }

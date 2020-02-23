@@ -18,11 +18,13 @@
 
 package com.aurora.adroid.event;
 
-public enum Events {
+public enum EventType {
     SYNC_EMPTY,
     SYNC_COMPLETED,
+    SYNC_NO_UPDATES,
     SYNC_FAILED,
     SYNC_PROGRESS,
+    LOG,
     DOWNLOAD_INITIATED,
     DOWNLOAD_COMPLETED,
     DOWNLOAD_CANCELLED,

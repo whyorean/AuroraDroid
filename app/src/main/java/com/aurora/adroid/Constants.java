@@ -32,6 +32,9 @@ public class Constants {
     public static final String JAR = "jar";
     public static final String JSON = ".json";
 
+    public static final String NOTIFICATION_CHANNEL_ALERT = "NOTIFICATION_CHANNEL_ALERT";
+    public static final String NOTIFICATION_CHANNEL_GENERAL = "NOTIFICATION_CHANNEL_GENERAL";
+
     public static final String PRIVILEGED_EXTENSION_PACKAGE_NAME = "com.aurora.services";
     public static final String PRIVILEGED_EXTENSION_SERVICE_INTENT = "com.aurora.services.IPrivilegedService";
 
@@ -60,4 +63,11 @@ public class Constants {
     public static final String PREFERENCE_REPO_UPDATE_INTERVAL = "PREFERENCE_REPO_UPDATE_INTERVAL";
     public static final String PREFERENCE_MIRROR_CHECKED = "PREFERENCE_MIRROR_CHECKED";
     public static final String PREFERENCE_LAUNCH_SERVICES = "PREFERENCE_LAUNCH_SERVICES";
+
+    public static final String FRAGMENT_NAME = "FRAGMENT_NAME";
+    public static final String FRAGMENT_ABOUT = "FRAGMENT_ABOUT";
+    public static final String FRAGMENT_INSTALLED = "FRAGMENT_INSTALLED";
+    public static final String FRAGMENT_BLACKLIST = "FRAGMENT_BLACKLIST";
+    public static final String FRAGMENT_FAV_LIST = "FRAGMENT_FAV_LIST";
+    public static final String FRAGMENT_SPOOF = "FRAGMENT_SPOOF";
 }
