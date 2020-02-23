@@ -56,7 +56,7 @@ android {
             applicationIdSuffix = ".beta"
             resValue "string", "app_name", "Aurora Droid - Beta"
         }
-        debug{
+        debug {
             resValue "string", "app_name", "Aurora Droid - Debug"
         }
     }
@@ -78,14 +78,12 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation 'androidx.preference:preference:1.1.0'
     implementation 'androidx.palette:palette:1.0.0'
 
     //Google's shit
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.google.android:flexbox:2.0.1'
 
     //Recycler-Extensions
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:3.1.0'

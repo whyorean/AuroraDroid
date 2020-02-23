@@ -29,9 +29,9 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aurora.adroid.activity.FullscreenImageActivity;
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
+import com.aurora.adroid.activity.FullscreenImageActivity;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;

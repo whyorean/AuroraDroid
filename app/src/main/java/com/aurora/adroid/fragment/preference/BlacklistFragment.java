@@ -28,16 +28,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.adapter.BlacklistAdapter;
-import com.aurora.adroid.fragment.BaseFragment;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.ViewUtil;
-import com.aurora.adroid.view.CustomSwipeToRefresh;
 import com.aurora.adroid.viewmodel.InstalledAppsViewModel;
 
 import java.util.List;
@@ -47,10 +46,8 @@ import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 
 
-public class BlacklistFragment extends BaseFragment implements BlacklistAdapter.ItemClickListener {
+public class BlacklistFragment extends Fragment implements BlacklistAdapter.ItemClickListener {
 
-    @BindView(R.id.swipe_layout)
-    CustomSwipeToRefresh customSwipeToRefresh;
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
     @BindView(R.id.btn_clear_all)
@@ -61,11 +58,6 @@ public class BlacklistFragment extends BaseFragment implements BlacklistAdapter.
     private Context context;
     private BlacklistAdapter adapter;
     private CompositeDisposable disposable = new CompositeDisposable();
-
-    @Override
-    protected View.OnClickListener errRetry() {
-        return null;
-    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -107,7 +99,6 @@ public class BlacklistFragment extends BaseFragment implements BlacklistAdapter.
     }
 
     private void setupRecycler(List<App> appList) {
-        customSwipeToRefresh.setRefreshing(false);
         adapter = new BlacklistAdapter(context, appList, this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));

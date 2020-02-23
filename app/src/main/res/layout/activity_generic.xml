@@ -17,42 +17,23 @@
   -->
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txt_input_search"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_margin="@dimen/margin_small"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:background="@drawable/search_bg"
-            android:drawableStart="@drawable/ic_search"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:hint="@string/title_search_alt"
-            android:imeOptions="actionSearch"
-            android:inputType="textNoSuggestions"
-            android:paddingStart="@dimen/margin_large"
-            android:paddingEnd="@dimen/margin_large"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
-            android:textIsSelectable="false" />
+        <include layout="@layout/search_bar" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_sort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txt_input_search"
             android:paddingStart="@dimen/margin_normal"
             android:paddingTop="@dimen/margin_small"
             android:paddingEnd="@dimen/margin_xsmall"
@@ -66,8 +47,23 @@
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/sort_view"
             android:overScrollMode="never"
+            app:fastScrollEnabled="true"
+            app:fastScrollHorizontalThumbDrawable="@drawable/fast_scroll_thumb"
+            app:fastScrollHorizontalTrackDrawable="@drawable/fast_scroll_track"
+            app:fastScrollVerticalThumbDrawable="@drawable/fast_scroll_thumb"
+            app:fastScrollVerticalTrackDrawable="@drawable/fast_scroll_track"
             tools:listitem="@layout/item_installed" />
-    </RelativeLayout>
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_ime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_normal"
+        app:backgroundTint="@color/colorAccent"
+        app:icon="@drawable/ic_keyboard"
+        app:iconTint="@color/colorWhite" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

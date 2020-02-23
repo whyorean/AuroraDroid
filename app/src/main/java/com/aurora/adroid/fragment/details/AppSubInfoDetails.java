@@ -18,7 +18,6 @@
 
 package com.aurora.adroid.fragment.details;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
@@ -29,10 +28,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.adapter.ClusterAppsAdapter;
 import com.aurora.adroid.fragment.DetailsFragment;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
+import com.aurora.adroid.section.ClusterAppSection;
 import com.aurora.adroid.sheet.MoreInfoSheet;
 import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.Util;
@@ -43,9 +42,11 @@ import com.google.android.material.chip.Chip;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 public class AppSubInfoDetails extends AbstractDetails {
 
@@ -75,19 +76,13 @@ public class AppSubInfoDetails extends AbstractDetails {
     @BindView(R.id.recycler_similar)
     RecyclerView recyclerSimilar;
 
-    private ClusterAppsAdapter adapterDeveloper;
-    private ClusterAppsAdapter adapterSimilar;
-
     public AppSubInfoDetails(DetailsFragment fragment, App app) {
         super(fragment, app);
     }
 
     @Override
     public void draw() {
-
-
-        AppsViewModel appsViewModel = new ViewModelProvider(fragment).get(AppsViewModel.class);
-
+        final AppsViewModel appsViewModel = new ViewModelProvider(fragment).get(AppsViewModel.class);
         final DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
         final Package pkg = app.getAppPackage();
 
@@ -101,8 +96,8 @@ public class AppSubInfoDetails extends AbstractDetails {
         if (app.getCategories() != null && !app.getCategories().isEmpty()) {
             chipCategory.setText(app.getCategories().get(0));
             layoutSimilar.setVisibility(View.VISIBLE);
-            setupSimilarRecycler(context);
-            appsViewModel.getCategoryAppsLiveData(app.getCategories().get(0)).observe(fragment.getViewLifecycleOwner(), appList -> adapterSimilar.addData(appList));
+            appsViewModel.getCategoryAppsLiveData(app.getCategories().get(0))
+                    .observe(fragment.getViewLifecycleOwner(), this::setupSimilarRecycler);
         } else
             ViewUtil.hideWithAnimation(chipCategory);
 
@@ -116,21 +111,24 @@ public class AppSubInfoDetails extends AbstractDetails {
                 && !app.getAuthorName().isEmpty()
                 && !app.getAuthorName().equalsIgnoreCase("unknown")) {
             layoutDeveloper.setVisibility(View.VISIBLE);
-            setupAuthorRecycler(context);
-            appsViewModel.getAuthorAppsLiveData(app.getAuthorName()).observe(fragment.getViewLifecycleOwner(), appList -> adapterDeveloper.addData(appList));
+            appsViewModel.getAuthorAppsLiveData(app.getAuthorName())
+                    .observe(fragment.getViewLifecycleOwner(), this::setupAuthorRecycler);
         }
     }
 
-
-    private void setupAuthorRecycler(Context context) {
-        adapterDeveloper = new ClusterAppsAdapter(context);
+    private void setupAuthorRecycler(List<App> appList) {
+        SectionedRecyclerViewAdapter adapter = new SectionedRecyclerViewAdapter();
+        ClusterAppSection section = new ClusterAppSection(context, appList);
+        adapter.addSection(section);
         recyclerDeveloper.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
-        recyclerDeveloper.setAdapter(adapterDeveloper);
+        recyclerDeveloper.setAdapter(adapter);
     }
 
-    private void setupSimilarRecycler(Context context) {
-        adapterSimilar = new ClusterAppsAdapter(context);
+    private void setupSimilarRecycler(List<App> appList) {
+        SectionedRecyclerViewAdapter adapter = new SectionedRecyclerViewAdapter();
+        ClusterAppSection section = new ClusterAppSection(context, appList);
+        adapter.addSection(section);
         recyclerSimilar.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
-        recyclerSimilar.setAdapter(adapterSimilar);
+        recyclerSimilar.setAdapter(adapter);
     }
 }

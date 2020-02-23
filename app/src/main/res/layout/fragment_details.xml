@@ -78,8 +78,7 @@
                     android:layout_toStartOf="@id/img_more"
                     android:background="?selectableItemBackground"
                     android:text="@string/details_more"
-                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
-                    android:textSize="18sp" />
+                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/img_more"
@@ -89,8 +88,8 @@
                     android:layout_centerVertical="true"
                     android:background="?selectableItemBackgroundBorderless"
                     android:padding="@dimen/margin_small"
-                    app:tint="?colorControlNormal"
-                    app:srcCompat="@drawable/ic_arrow" />
+                    app:srcCompat="@drawable/ic_arrow"
+                    app:tint="?colorControlNormal" />
             </RelativeLayout>
 
             <!-- Screenshot -->
@@ -133,8 +132,8 @@
                     android:layout_alignParentEnd="true"
                     android:background="?selectableItemBackgroundBorderless"
                     android:padding="@dimen/margin_small"
-                    app:tint="?colorControlNormal"
-                    app:srcCompat="@drawable/ic_expand" />
+                    app:srcCompat="@drawable/ic_expand"
+                    app:tint="?colorControlNormal" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -162,7 +161,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -173,8 +173,7 @@
                     android:layout_marginBottom="@dimen/margin_xsmall"
                     android:drawablePadding="@dimen/margin_small"
                     android:text="@string/details_more_apps_dev"
-                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
-                    android:textSize="18sp" />
+                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_developer"
@@ -194,7 +193,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -205,8 +205,7 @@
                     android:layout_marginBottom="@dimen/margin_xsmall"
                     android:drawablePadding="@dimen/margin_small"
                     android:text="@string/details_more_apps_similar"
-                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
-                    android:textSize="18sp" />
+                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_similar"

@@ -27,7 +27,6 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 
 import com.aurora.adroid.ArchType;
-import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 
 import java.util.ArrayList;
@@ -103,20 +102,6 @@ public class PackageUtil {
             return (packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
         } catch (PackageManager.NameNotFoundException e) {
             return false;
-        }
-    }
-
-    public static App getAppByPackage(PackageManager packageManager, String packageName) {
-        try {
-            final PackageInfo packageInfo = packageManager.getPackageInfo(packageName,
-                    PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS);
-            final App app = new App(packageInfo);
-            app.setPackageName(packageInfo.packageName);
-            app.setName(packageManager.getApplicationLabel(packageInfo.applicationInfo).toString());
-            app.setIconDrawable(packageManager.getApplicationIcon(app.getPackageName()));
-            return app;
-        } catch (PackageManager.NameNotFoundException e) {
-            return null;
         }
     }
 

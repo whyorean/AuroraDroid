@@ -32,27 +32,16 @@
     <color name="colorNavigation">@color/colorPrimaryDark</color>
 
     <!--Dark Theme-->
+    <color name="colorDarkAccent">#4285f4</color>
     <color name="colorDarkRipple">#4C5368</color>
-    <color name="colorDarkPrimary">#00bd56</color>
-    <color name="colorDarkPrimaryDark">#0A0A0A</color>
+    <color name="colorDarkPrimary">#202124</color>
+    <color name="colorDarkPrimaryDark">#202124</color>
+    <color name="colorDarkBackground">#2d2e31</color>
+    <color name="colorDarkWindowBackground">#202124</color>
     <color name="colorDarkPrimaryVariant">@color/colorDarkPrimaryDark</color>
     <color name="colorDarkSecondary">@color/colorDarkPrimary</color>
     <color name="colorDarkSecondaryVariant">#121212</color>
-    <color name="colorDarkBackground">#0E0E0E</color>
-    <color name="colorDarkWindowBackground">@color/colorDarkBackground</color>
     <color name="colorDarkNavigation">@color/colorDarkPrimaryDark</color>
-
-    <!--Blue Theme-->
-    <color name="colorBluePrimary">#cd4545</color>
-    <color name="colorBluePrimaryDark">#0C0A10</color>
-    <color name="colorBluePrimaryVariant">@color/colorBluePrimaryDark</color>
-    <color name="colorBlueSecondary">@color/colorBluePrimary</color>
-    <color name="colorBlueSecondaryVariant">#1F1E24</color>
-    <color name="colorBlueBackground">#100E16</color>
-    <color name="colorBlueWindowBackground">#100E16</color>
-
-    <!--Pitch Black-->
-    <color name="colorBlackAccent">#EE3B34</color>
 
     <color name="colorWhite">#FFF</color>
     <color name="colorBlack">#000</color>
@@ -63,6 +52,11 @@
     <color name="colorScrim">#11000000</color>
     <color name="colorScrimAccent">#224768FD</color>
     <color name="colorTransparent">#00000000</color>
+
+
+    <color name="colorScrollTrack">#22545454</color>
+    <color name="colorScrollThumb">#66545454</color>
+    <color name="colorScrollThumbSelected">#4768FD</color>
 
     <color name="colorTeal">#31e7b6</color>
     <color name="colorBlue">#4768FD</color>

@@ -18,7 +18,6 @@
 
 package com.aurora.adroid.model;
 
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 
@@ -32,17 +31,10 @@ import com.aurora.adroid.util.PackageUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Entity(tableName = "app", primaryKeys = {"repoId", "packageName"})
@@ -82,8 +74,6 @@ public class App {
     @Ignore
     private transient Drawable iconDrawable;
     @Ignore
-    private transient Set<String> permissions = new HashSet<>();
-    @Ignore
     private transient Package appPackage = new Package();
     @Ignore
     private transient List<Package> packageList = new ArrayList<>();
@@ -93,30 +83,10 @@ public class App {
     public App() {
     }
 
-    @Ignore
-    public App(PackageInfo packageInfo) {
-        this.setPackageInfo(packageInfo);
-        this.setSuggestedVersionName(packageInfo.versionName);
-        this.setSuggestedVersionCode(String.valueOf(packageInfo.versionCode));
-        if (packageInfo.requestedPermissions != null) {
-            this.setPermissions(Arrays.asList(packageInfo.requestedPermissions));
-        }
-    }
-
     public void setPackageList(List<Package> packageList) {
         Collections.sort(packageList, (package1, package2) -> package2.getAdded().compareTo(package1.getAdded()));
         this.setAppPackage(PackageUtil.getOptimumPackage(packageList));
         this.packageList = packageList;
-    }
-
-    public void setPermissions(Collection<String> permissions) {
-        this.permissions = new HashSet<>(permissions);
-    }
-
-    public void setPackageInfo(PackageInfo packageInfo) {
-        this.packageInfo = packageInfo;
-        this.setInstalled(true);
-        this.setSystemApp(null != packageInfo.applicationInfo && (packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
     }
 
     @Override

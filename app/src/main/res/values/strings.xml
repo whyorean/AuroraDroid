@@ -94,6 +94,7 @@
     <string name="dialog_repo_clear_desc">Do you also wish to remove the apps of this repo from database ?</string>
 
     <string name="menu_downloads">Downloads</string>
+    <string name="menu_repository">Repository</string>
     <string name="menu_setting">"Settings"</string>
     <string name="menu_about">"About"</string>
     <string name="download_cancel_all">Cancel all</string>

@@ -143,29 +143,12 @@ public class AuroraActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem menuItem = menu.findItem(R.id.action_sync);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            case R.id.action_downloads:
-                startActivity(new Intent(this, DownloadsActivity.class));
-                return true;
-            case R.id.action_sync:
-                showSyncDialog(false);
-                return true;
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START, true);
+            return;
         }
-        return super.onOptionsItemSelected(menuItem);
+        super.onBackPressed();
     }
 
     @Override
@@ -333,6 +316,10 @@ public class AuroraActivity extends BaseActivity {
                     intent.putExtra(Constants.FRAGMENT_NAME, Constants.FRAGMENT_BLACKLIST);
                     startActivity(intent, ViewUtil.getEmptyActivityBundle(this));
                     break;
+                case R.id.action_repository:
+                    intent.putExtra(Constants.FRAGMENT_NAME, Constants.FRAGMENT_REPOSITORY);
+                    startActivity(intent, ViewUtil.getEmptyActivityBundle(this));
+                    break;
             }
             return false;
         });
@@ -365,7 +352,6 @@ public class AuroraActivity extends BaseActivity {
                 .setNegativeButton(getString(R.string.action_later), (dialog, which) -> {
                     dialog.dismiss();
                 });
-        ;
         builder.create();
         builder.show();
     }
@@ -384,7 +370,6 @@ public class AuroraActivity extends BaseActivity {
                 .setNegativeButton(getString(R.string.action_cancel), (dialog, which) -> {
                     dialog.dismiss();
                 });
-        ;
         builder.create();
         builder.show();
     }

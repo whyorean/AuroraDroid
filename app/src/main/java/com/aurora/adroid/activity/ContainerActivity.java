@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.fragment.InstalledFragment;
+import com.aurora.adroid.fragment.RepoFragment;
 import com.aurora.adroid.fragment.preference.BlacklistFragment;
 import com.aurora.adroid.fragment.preference.FavouriteFragment;
 
@@ -67,6 +68,10 @@ public class ContainerActivity extends BaseActivity {
             case Constants.FRAGMENT_FAV_LIST:
                 actionBar.setTitle(getString(R.string.action_favourites));
                 fragment = new FavouriteFragment();
+                break;
+            case Constants.FRAGMENT_REPOSITORY:
+                actionBar.setTitle(getString(R.string.title_repositories));
+                fragment = new RepoFragment();
                 break;
         }
 

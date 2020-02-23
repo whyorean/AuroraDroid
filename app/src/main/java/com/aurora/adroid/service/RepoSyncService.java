@@ -1,12 +1,9 @@
 package com.aurora.adroid.service;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.IBinder;
 
@@ -25,6 +22,7 @@ import com.aurora.adroid.event.LogEvent;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.manager.SyncManager;
 import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.model.RepoRequest;
 import com.aurora.adroid.notification.SyncNotification;
 import com.aurora.adroid.task.CheckRepoUpdatesTask;
 import com.aurora.adroid.task.ExtractRepoTask;
@@ -36,9 +34,9 @@ import com.tonyodev.fetch2.AbstractFetchListener;
 import com.tonyodev.fetch2.Download;
 import com.tonyodev.fetch2.Error;
 import com.tonyodev.fetch2.Fetch;
-import com.tonyodev.fetch2.Request;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -50,25 +48,21 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class RepoSyncService extends Service {
 
     public static RepoSyncService instance = null;
 
-    private CompositeDisposable disposable = new CompositeDisposable();
-
     private Fetch fetch;
     private SyncNotification syncNotification;
     private AbstractFetchListener abstractFetchListener;
     private CheckRepoUpdatesTask checkRepoUpdatesTask;
-    private List<Request> requestList = new ArrayList<>();
+    private List<RepoRequest> requestList = new ArrayList<>();
 
     private int targetCount = 0;
     private int currentCount = 0;
     private int downloadCount = 0;
-    private int failedDownloadCount = 0;
 
     public static boolean isServiceRunning() {
         try {
@@ -91,7 +85,7 @@ public class RepoSyncService extends Service {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             startForeground(1, getNotification());
         } else {
-            Notification notification = buildNotification(new NotificationCompat.Builder(this));
+            Notification notification = getNotification(new NotificationCompat.Builder(this, Constants.NOTIFICATION_CHANNEL_GENERAL));
             startForeground(1, notification);
         }
         fetchRepo();
@@ -116,31 +110,38 @@ public class RepoSyncService extends Service {
 
         checkRepoUpdatesTask = new CheckRepoUpdatesTask(this);
         fetch = DownloadManager.getFetchInstance(this);
-        disposable.add(Observable.fromCallable(() -> checkRepoUpdatesTask
-                .filterList(requestList))
+
+        Observable.fromCallable(() -> checkRepoUpdatesTask.filterList(requestList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(requests -> {
+                .doOnNext(requests -> {
                     if (requests.isEmpty()) {
                         AuroraApplication.rxNotify(new Event(EventType.SYNC_NO_UPDATES));
-                        syncNotification.notifyCompleted();
-                        destroyService();
+                        notifyCompleted();
                     } else {
                         targetCount = requests.size();
                         syncNotification.notifyQueued();
                         abstractFetchListener = getFetchListener();
                         fetch.addListener(abstractFetchListener);
                         fetch.enqueue(requests, result -> {
+
                         });
                     }
-                }));
+                })
+                .doOnError(e -> {
+                    if (!StringUtils.isEmpty(e.getMessage())) {
+                        AuroraApplication.rxNotify(new LogEvent(e.getMessage()));
+                        Log.e(e.getMessage());
+                    }
+                })
+                .subscribe();
     }
 
     private void extractAllRepos() {
         final File repoDirectory = new File(PathUtil.getRepoDirectory(this));
         final File[] files = repoDirectory.listFiles();
 
-        disposable.add(Observable.fromIterable(Arrays.asList(files))
+        Observable.fromIterable(Arrays.asList(files))
                 .filter(file -> FilenameUtils.getExtension(file.getName()).equals(Constants.JAR))
                 .flatMap(file -> new ExtractRepoTask(this, file).extract())
                 .flatMap(file -> new JsonParserTask(this, file).parse())
@@ -158,27 +159,20 @@ public class RepoSyncService extends Service {
                     PathUtil.deleteFile(this, repo.getRepoId());
                 })
                 .doOnComplete(() -> {
-                    DatabaseUtil.setDatabaseAvailable(this, true);
-                    DatabaseUtil.setDatabaseSyncTime(this, Calendar.getInstance().getTimeInMillis());
-                    Log.i("Sync completed");
+                    notifyCompleted();
                 })
                 .doOnError(throwable -> {
                     AuroraApplication.rxNotify(new Event(EventType.SYNC_FAILED));
                     updateProgress();
                     Log.e("Error : %s", throwable.getMessage());
                 })
-                .subscribe());
+                .subscribe();
     }
 
     private void updateProgress() {
         currentCount++;
         AuroraApplication.rxNotify(new Event(EventType.SYNC_PROGRESS));
         syncNotification.notifySyncProgress(currentCount, getRepoCount());
-        if (currentCount == getRepoCount() - failedDownloadCount) {
-            AuroraApplication.rxNotify(new Event(EventType.SYNC_COMPLETED));
-            syncNotification.notifyCompleted();
-            destroyService();
-        }
     }
 
     private void updateDownloads() {
@@ -188,6 +182,15 @@ public class RepoSyncService extends Service {
             fetch.removeGroup(1337);
             extractAllRepos();
         }
+    }
+
+    private void notifyCompleted() {
+        DatabaseUtil.setDatabaseAvailable(this, true);
+        DatabaseUtil.setDatabaseSyncTime(this, Calendar.getInstance().getTimeInMillis());
+        AuroraApplication.rxNotify(new Event(EventType.SYNC_COMPLETED));
+        syncNotification.notifyCompleted();
+        Log.i("Sync completed");
+        destroyService();
     }
 
     private AbstractFetchListener getFetchListener() {
@@ -207,7 +210,6 @@ public class RepoSyncService extends Service {
                 final Repo repo = RepoListManager.getRepoById(RepoSyncService.this, download.getTag());
                 Log.e("Download Failed : %s", download.getUrl());
                 AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_failed)));
-                failedDownloadCount++;
                 updateDownloads();
             }
         };
@@ -215,21 +217,11 @@ public class RepoSyncService extends Service {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private Notification getNotification() {
-        String NOTIFICATION_CHANNEL_ID = "com.aurora.adroid";
-        String channelName = "Repo Sync Service";
-
-        NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_LOW);
-        notificationChannel.setLightColor(Color.BLUE);
-        notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-
-        NotificationManager manager = (NotificationManager) getSystemService(RepoSyncService.NOTIFICATION_SERVICE);
-        manager.createNotificationChannel(notificationChannel);
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
-        return buildNotification(notificationBuilder);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, Constants.NOTIFICATION_CHANNEL_GENERAL);
+        return getNotification(notificationBuilder);
     }
 
-    private Notification buildNotification(NotificationCompat.Builder builder) {
+    private Notification getNotification(NotificationCompat.Builder builder) {
         return builder
                 .setAutoCancel(true)
                 .setContentTitle(getString(R.string.sync_background))

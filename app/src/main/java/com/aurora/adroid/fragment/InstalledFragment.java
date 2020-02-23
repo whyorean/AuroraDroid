@@ -33,7 +33,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.section.InstalledAppSection;
-import com.aurora.adroid.view.CustomSwipeToRefresh;
 import com.aurora.adroid.viewmodel.InstalledAppsViewModel;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -45,8 +44,6 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
 
 public class InstalledFragment extends Fragment {
 
-    @BindView(R.id.swipe_layout)
-    CustomSwipeToRefresh customSwipeToRefresh;
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
     @BindView(R.id.switch_system)

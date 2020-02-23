@@ -29,17 +29,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.activity.GenericAppActivity;
-import com.aurora.adroid.adapter.RepositoriesAdapter;
-import com.aurora.adroid.manager.SyncManager;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.model.Index;
+import com.aurora.adroid.section.IndexSection;
 import com.aurora.adroid.section.NewAppSection;
 import com.aurora.adroid.section.UpdatedAppSection;
 import com.aurora.adroid.viewmodel.AppsViewModel;
+import com.aurora.adroid.viewmodel.IndexViewModel;
 
 import java.util.List;
 
@@ -61,8 +63,6 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.btn_more_updated)
     ImageButton btnMoreUpdated;
 
-    private RepositoriesAdapter repositoriesAdapter;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -75,11 +75,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setupRepository();
 
         AppsViewModel appsViewModel = new ViewModelProvider(this).get(AppsViewModel.class);
         appsViewModel.getNewAppsLiveData().observe(getViewLifecycleOwner(), this::setupNewApps);
         appsViewModel.getUpdatedAppsLiveData().observe(getViewLifecycleOwner(), this::setupUpdatedApps);
+
+        IndexViewModel indexViewModel = new ViewModelProvider(this).get(IndexViewModel.class);
+        indexViewModel.getAllIndicesLive().observe(getViewLifecycleOwner(), this::setupRepository);
     }
 
     @Override
@@ -106,11 +108,13 @@ public class HomeFragment extends Fragment {
         requireActivity().startActivity(intent);
     }
 
-    private void setupRepository() {
-        repositoriesAdapter = new RepositoriesAdapter(requireContext());
-        repositoriesAdapter.addData(SyncManager.getSyncedRepos(requireContext()));
-        recyclerViewRepo.setAdapter(repositoriesAdapter);
-        recyclerViewRepo.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+    private void setupRepository(List<Index> indexList) {
+        SectionedRecyclerViewAdapter adapter = new SectionedRecyclerViewAdapter();
+        IndexSection newAppSection = new IndexSection(requireContext(), indexList);
+        adapter.addSection(newAppSection);
+        recyclerViewRepo.setAdapter(adapter);
+        recyclerViewRepo.setLayoutManager(new LinearLayoutManager(requireContext(),
+                RecyclerView.HORIZONTAL, false));
     }
 
     private void setupNewApps(List<App> appList) {
@@ -118,7 +122,8 @@ public class HomeFragment extends Fragment {
         NewAppSection newAppSection = new NewAppSection(requireContext(), appList);
         viewAdapter.addSection(newAppSection);
         recyclerViewNew.setAdapter(viewAdapter);
-        recyclerViewNew.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+        recyclerViewNew.setLayoutManager(new GridLayoutManager(requireContext(), 2,
+                RecyclerView.HORIZONTAL, false));
     }
 
     private void setupUpdatedApps(List<App> appList) {
@@ -126,6 +131,7 @@ public class HomeFragment extends Fragment {
         UpdatedAppSection newAppSection = new UpdatedAppSection(requireContext(), appList);
         viewAdapter.addSection(newAppSection);
         recyclerViewLatest.setAdapter(viewAdapter);
-        recyclerViewLatest.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+        recyclerViewLatest.setLayoutManager(new GridLayoutManager(requireContext(), 2,
+                RecyclerView.HORIZONTAL, false));
     }
 }

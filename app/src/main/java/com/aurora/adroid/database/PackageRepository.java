@@ -25,6 +25,10 @@ public class PackageRepository {
         return packageDao.getPackageListByPackageName(packageName);
     }
 
+    public List<Package> getAllPackages(String packageName, String repoName) {
+        return packageDao.getPackageListByPackageNameAndRepo(packageName, repoName);
+    }
+
     public LiveData<Package> getLivePackage(String packageName) {
         return packageDao.getLivePackageByPackageName(packageName);
     }

@@ -38,10 +38,9 @@ import androidx.fragment.app.Fragment;
 import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
 import com.aurora.adroid.activity.AuroraActivity;
+import com.aurora.adroid.activity.ContainerActivity;
 import com.aurora.adroid.activity.IntroActivity;
 import com.aurora.adroid.activity.RepoListActivity;
-import com.aurora.adroid.activity.SettingsActivity;
-import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.event.LogEvent;
 import com.aurora.adroid.service.RepoSyncService;
 import com.google.android.material.button.MaterialButton;
@@ -76,22 +75,17 @@ public class RepoFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(event -> {
-                    if (event != null) {
-                        EventType eventEnum = event.getType();
-                        switch (eventEnum) {
-                            case SYNC_EMPTY:
-                                notifyAction(getString(R.string.toast_no_repo_selected));
-                                break;
-                            case SYNC_COMPLETED:
-                                syncCompleted();
-                                break;
-                            case SYNC_FAILED:
-                                syncFailed();
-                                break;
-                            case SYNC_PROGRESS:
 
-                                break;
-                        }
+                    switch (event.getType()) {
+                        case SYNC_EMPTY:
+                            notifyAction(getString(R.string.toast_no_repo_selected));
+                            break;
+                        case SYNC_COMPLETED:
+                            syncCompleted();
+                            break;
+                        case SYNC_FAILED:
+                            syncFailed();
+                            break;
                     }
 
                     if (event instanceof LogEvent) {
@@ -167,7 +161,7 @@ public class RepoFragment extends Fragment {
                 getActivity().startActivity(new Intent(context, AuroraActivity.class));
                 getActivity().finish();
             });
-        else if (getActivity() instanceof SettingsActivity)
+        else if (getActivity() instanceof ContainerActivity)
             btnSync.setOnClickListener(v -> {
                 getActivity().onBackPressed();
             });

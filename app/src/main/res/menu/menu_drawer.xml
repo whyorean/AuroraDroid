@@ -43,6 +43,12 @@
     </group>
 
     <group android:id="@+id/group2">
+
+        <item
+            android:id="@+id/action_repository"
+            android:icon="@drawable/ic_repo_alt"
+            android:title="@string/menu_repository" />
+
         <item
             android:id="@+id/action_setting"
             android:icon="@drawable/ic_menu_settings"

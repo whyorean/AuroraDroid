@@ -3,14 +3,16 @@ package com.aurora.adroid.task;
 import android.content.Context;
 import android.content.ContextWrapper;
 
+import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
+import com.aurora.adroid.event.LogEvent;
 import com.aurora.adroid.model.RepoHeader;
+import com.aurora.adroid.model.RepoRequest;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PrefUtil;
 import com.aurora.adroid.util.Util;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tonyodev.fetch2.Request;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ import okhttp3.Response;
 public class CheckRepoUpdatesTask extends ContextWrapper {
 
     private Context context;
-    private List<Request> filteredList = new ArrayList<>();
+    private List<RepoRequest> filteredList = new ArrayList<>();
     private List<RepoHeader> savedRepoHeaderList;
     private List<RepoHeader> newRepoHeaderList;
 
@@ -51,17 +53,17 @@ public class CheckRepoUpdatesTask extends ContextWrapper {
         PrefUtil.putString(context, Constants.PREFERENCE_REPO_HEADERS, filteredString);
     }
 
-    public List<Request> filterList(List<Request> requestList) {
+    public List<RepoRequest> filterList(List<RepoRequest> requestList) {
         final OkHttpClient client = new OkHttpClient();
-
-        for (Request request : requestList) {
-            RepoHeader repoHeader = getRepoHeader(request.getTag());
-            okhttp3.Request okRequest = new okhttp3.Request.Builder().url(request.getUrl()).head().build();
-            try (Response response = client.newCall(okRequest).execute()) {
+        for (RepoRequest request : requestList) {
+            AuroraApplication.rxNotify(new LogEvent("Checking update for " + request.getRepoName()));
+            RepoHeader repoHeader = getRepoHeader(request.getRepoId());
+            okhttp3.Request okhttpRequest = new okhttp3.Request.Builder().url(request.getUrl()).head().build();
+            try (Response response = client.newCall(okhttpRequest).execute()) {
                 Long lastModified = Util.getMilliFromDate(response.header("Last-Modified"), Calendar.getInstance().getTimeInMillis());
                 if (repoHeader == null) {
                     repoHeader = new RepoHeader();
-                    repoHeader.setRepoId(request.getTag());
+                    repoHeader.setRepoId(request.getRepoId());
                     repoHeader.setLastModified(lastModified);
                     filteredList.add(request);
                 } else {
@@ -72,7 +74,8 @@ public class CheckRepoUpdatesTask extends ContextWrapper {
                 }
                 newRepoHeaderList.add(repoHeader);
             } catch (Exception e) {
-                Log.e(e.getMessage());
+                AuroraApplication.rxNotify(new LogEvent("Unable to reach " + request.getRepoName()));
+                Log.e("Unable to reach %s", request.getRepoUrl());
             }
         }
         saveRepoHeadersToCache(newRepoHeaderList);

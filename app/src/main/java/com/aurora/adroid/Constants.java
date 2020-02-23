@@ -69,5 +69,5 @@ public class Constants {
     public static final String FRAGMENT_INSTALLED = "FRAGMENT_INSTALLED";
     public static final String FRAGMENT_BLACKLIST = "FRAGMENT_BLACKLIST";
     public static final String FRAGMENT_FAV_LIST = "FRAGMENT_FAV_LIST";
-    public static final String FRAGMENT_SPOOF = "FRAGMENT_SPOOF";
+    public static final String FRAGMENT_REPOSITORY = "FRAGMENT_REPOSITORY";
 }

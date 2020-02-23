@@ -35,6 +35,7 @@ import androidx.annotation.Nullable;
 import com.aurora.adroid.PermissionGroup;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.util.Log;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class PermissionBottomSheet extends BottomSheetDialogFragment {
 
     private Context context;
     private App app;
-    private PackageManager pm;
+    private PackageManager packageManager;
 
     public void setApp(App app) {
         this.app = app;
@@ -75,7 +76,7 @@ public class PermissionBottomSheet extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.sheet_permissions, container, false);
-        pm = context.getPackageManager();
+        packageManager = context.getPackageManager();
         return view;
     }
 
@@ -92,6 +93,7 @@ public class PermissionBottomSheet extends BottomSheetDialogFragment {
             permissions_none.setVisibility(permissionGroupWidgets.isEmpty() ? View.VISIBLE : View.GONE);
             return;
         }
+        Log.e("Loila");
         for (List<String> permissionList : app.getAppPackage().getUsesPermission())
             for (String permissionName : permissionList) {
                 PermissionInfo permissionInfo = getPermissionInfo(permissionName);
@@ -126,7 +128,7 @@ public class PermissionBottomSheet extends BottomSheetDialogFragment {
 
     private PermissionInfo getPermissionInfo(String permissionName) {
         try {
-            return pm.getPermissionInfo(permissionName, 0);
+            return packageManager.getPermissionInfo(permissionName, 0);
         } catch (PackageManager.NameNotFoundException e) {
             return null;
         }
@@ -138,7 +140,7 @@ public class PermissionBottomSheet extends BottomSheetDialogFragment {
             permissionGroupInfo = getFakePermissionGroupInfo(permissionInfo.packageName);
         } else {
             try {
-                permissionGroupInfo = pm.getPermissionGroupInfo(permissionInfo.group, 0);
+                permissionGroupInfo = packageManager.getPermissionGroupInfo(permissionInfo.group, 0);
             } catch (PackageManager.NameNotFoundException e) {
                 permissionGroupInfo = getFakePermissionGroupInfo(permissionInfo.packageName);
             }

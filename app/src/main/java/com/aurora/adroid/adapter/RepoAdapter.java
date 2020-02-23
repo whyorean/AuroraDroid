@@ -152,7 +152,6 @@ public class RepoAdapter extends SelectableAdapter<RepoAdapter.ViewHolder> {
                 .setNegativeButton(context.getString(android.R.string.no), (dialog, which) -> {
                     dialog.dismiss();
                 });
-        ;
         builder.create();
         builder.show();
     }

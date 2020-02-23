@@ -69,6 +69,7 @@ public class DetailsFragment extends Fragment {
 
     private Context context;
     private String packageName;
+    private String repoName;
     private CompositeDisposable disposable = new CompositeDisposable();
     private AppActionDetails appActionDetails;
 
@@ -135,6 +136,7 @@ public class DetailsFragment extends Fragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             packageName = arguments.getString("PackageName");
+            repoName = arguments.getString("RepoName");
         }
         return view;
     }
@@ -146,7 +148,7 @@ public class DetailsFragment extends Fragment {
         viewModel.getLiveApp().observe(getViewLifecycleOwner(), liveApps -> {
             draw(liveApps);
         });
-        viewModel.getFullAppByPackageName(packageName);
+        viewModel.getFullAppByPackageName(packageName, repoName);
     }
 
     @Override

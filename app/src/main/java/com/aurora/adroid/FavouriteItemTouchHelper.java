@@ -24,7 +24,6 @@ import android.view.View;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.aurora.adroid.adapter.FavouriteViewHolder;
 
 import org.jetbrains.annotations.NotNull;

@@ -71,8 +71,6 @@ public class ThemeUtil {
         switch (theme) {
             case "dark":
                 return R.style.AppTheme_Dark;
-            case "darker":
-                return R.style.AppTheme_Darker;
             case "black":
                 return R.style.AppTheme_Black;
             default:

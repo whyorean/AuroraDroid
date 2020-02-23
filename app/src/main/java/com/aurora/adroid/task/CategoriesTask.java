@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,11 +35,11 @@ public class CategoriesTask extends ContextWrapper {
         super(base);
     }
 
-    public List<String> getCategories(){
+    public List<String> getCategories() {
         List<String> categoryList = new ArrayList<>();
         try {
             getAssets().open("categories.json");
-            String jsonString = IOUtils.toString(getAssets().open("categories.json"), "UTF-8");
+            String jsonString = IOUtils.toString(getAssets().open("categories.json"), StandardCharsets.UTF_8);
             JSONArray jsonArray = new JSONArray(jsonString);
             for (int i = 0; i < jsonArray.length(); i++)
                 categoryList.add(jsonArray.getString(i));

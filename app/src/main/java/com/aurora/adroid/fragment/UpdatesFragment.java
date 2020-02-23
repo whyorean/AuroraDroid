@@ -39,7 +39,6 @@ import com.aurora.adroid.section.UpdatableAppSection;
 import com.aurora.adroid.task.LiveUpdate;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.ViewUtil;
-import com.aurora.adroid.view.CustomSwipeToRefresh;
 import com.aurora.adroid.viewmodel.UpdatableAppsViewModel;
 import com.tonyodev.fetch2.Fetch;
 
@@ -60,8 +59,6 @@ public class UpdatesFragment extends Fragment {
 
     private static final int UPDATE_GROUP_ID = 1338;
 
-    @BindView(R.id.swipe_layout)
-    CustomSwipeToRefresh customSwipeToRefresh;
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
     @BindView(R.id.btn_update_all)

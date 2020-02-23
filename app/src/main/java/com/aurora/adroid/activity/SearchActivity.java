@@ -28,7 +28,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,7 +47,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
-public class SearchActivity extends FragmentActivity {
+public class SearchActivity extends BaseActivity {
 
     @BindView(R.id.coordinator)
     CoordinatorLayout coordinatorLayout;
@@ -80,7 +79,6 @@ public class SearchActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
-
 
         Object object = getSystemService(Service.INPUT_METHOD_SERVICE);
         inputMethodManager = (InputMethodManager) object;

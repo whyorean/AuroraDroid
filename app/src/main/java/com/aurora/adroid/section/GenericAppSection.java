@@ -59,11 +59,11 @@ public class GenericAppSection extends Section implements FilterableSection {
         switch (sort) {
             case NAME_AZ:
                 Collections.sort(this.filteredList, (App1, App2) ->
-                        App1.getName().compareTo(App2.getName()));
+                        App1.getName().compareToIgnoreCase(App2.getName()));
                 break;
             case NAME_ZA:
                 Collections.sort(this.filteredList, (App1, App2) ->
-                        App2.getName().compareTo(App1.getName()));
+                        App2.getName().compareToIgnoreCase(App1.getName()));
                 break;
             case SIZE_MIN:
                 Collections.sort(this.filteredList, (App1, App2) ->
@@ -98,9 +98,15 @@ public class GenericAppSection extends Section implements FilterableSection {
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
         final ContentHolder contentHolder = (ContentHolder) holder;
         final App app = filteredList.get(position);
+        final List<String> extraStringList = new ArrayList<>();
+
+        extraStringList.add(Util.getDateFromMilli(app.getLastUpdated()));
+        extraStringList.add(app.getRepoName());
+        if (!app.getAuthorName().equals("unknown"))
+            extraStringList.add(app.getAuthorName());
 
         contentHolder.txtTitle.setText(app.getName());
-        contentHolder.txtVersion.setText(Util.getDateFromMilli(app.getLastUpdated()));
+        contentHolder.txtVersion.setText(TextUtils.join(" • ", extraStringList));
 
         String summary;
         if (app.getLocalized() != null
@@ -110,10 +116,13 @@ public class GenericAppSection extends Section implements FilterableSection {
         } else
             summary = TextUtil.emptyIfNull(app.getSummary());
 
+        summary = StringUtils.capitalize(summary);
+
         contentHolder.txtExtra.setText(summary);
         contentHolder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailsActivity.class);
             intent.putExtra(DetailsActivity.INTENT_PACKAGE_NAME, app.getPackageName());
+            intent.putExtra(DetailsActivity.INTENT_REPO_NAME, app.getRepoName());
             context.startActivity(intent);
         });
 
@@ -155,7 +164,7 @@ public class GenericAppSection extends Section implements FilterableSection {
 
         if (!StringUtils.isEmpty(searchQuery) && !summary.isEmpty()) {
             Pattern word = Pattern.compile(searchQuery);
-            Matcher match = word.matcher(summary);
+            Matcher match = word.matcher(summary.toLowerCase());
 
             if (match.find()) {
                 SpannableString spannable = new SpannableString(summary);
@@ -196,7 +205,7 @@ public class GenericAppSection extends Section implements FilterableSection {
                 } else
                     summary = TextUtil.emptyIfNull(app.getSummary());
 
-                if (!summary.isEmpty() && summary.contains(query)) {
+                if (!summary.isEmpty() && summary.toLowerCase().contains(query)) {
                     filteredList.add(app);
                 }
             }

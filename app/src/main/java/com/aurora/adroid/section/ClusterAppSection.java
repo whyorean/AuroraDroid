@@ -2,14 +2,10 @@ package com.aurora.adroid.section;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,9 +14,7 @@ import com.aurora.adroid.R;
 import com.aurora.adroid.activity.DetailsActivity;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.DatabaseUtil;
-import com.aurora.adroid.util.PackageUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,19 +22,16 @@ import butterknife.ButterKnife;
 import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 
-public class InstalledAppSection extends Section {
-
-    protected PackageManager packageManager;
+public class ClusterAppSection extends Section {
     private Context context;
     private List<App> appList;
 
-    public InstalledAppSection(Context context, List<App> appList) {
+    public ClusterAppSection(Context context, List<App> appList) {
         super(SectionParameters.builder()
-                .itemResourceId(R.layout.item_installed)
+                .itemResourceId(R.layout.item_cluster)
                 .build());
         this.context = context;
         this.appList = appList;
-        this.packageManager = context.getPackageManager();
     }
 
     @Override
@@ -58,14 +49,8 @@ public class InstalledAppSection extends Section {
         final ContentHolder contentHolder = (ContentHolder) holder;
         final App app = appList.get(position);
 
-        List<String> versionList = new ArrayList<>();
-        List<String> extraList = new ArrayList<>();
-
-        contentHolder.txtTitle.setText(app.getName());
-        getDetails(versionList, extraList, app);
-        setText(contentHolder.txtVersion, TextUtils.join(" • ", versionList));
-        setText(contentHolder.txtExtra, TextUtils.join(" • ", extraList));
-
+        contentHolder.txtApp.setText(app.getName());
+        contentHolder.txtExtra.setText(app.getRepoName());
         contentHolder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailsActivity.class);
             intent.putExtra(DetailsActivity.INTENT_PACKAGE_NAME, app.getPackageName());
@@ -83,31 +68,11 @@ public class InstalledAppSection extends Section {
                     .into(contentHolder.imgIcon);
     }
 
-    private void getDetails(List<String> versionList, List<String> extraList, App app) {
-        PackageInfo packageInfo = PackageUtil.getPackageInfo(packageManager, app.getPackageName());
-        if (packageInfo != null)
-            versionList.add(packageInfo.versionName + "." + packageInfo.versionCode);
-        extraList.add(PackageUtil.isSystemApp(packageManager, app.getPackageName()) ?
-                "System App"
-                : "User App");
-    }
-
-    private void setText(TextView textView, String text) {
-        if (!TextUtils.isEmpty(text)) {
-            textView.setText(text);
-            textView.setVisibility(View.VISIBLE);
-        } else {
-            textView.setVisibility(View.INVISIBLE);
-        }
-    }
-
     public static class ContentHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.img_icon)
-        AppCompatImageView imgIcon;
-        @BindView(R.id.txt_title)
-        AppCompatTextView txtTitle;
-        @BindView(R.id.txt_version)
-        AppCompatTextView txtVersion;
+        ImageView imgIcon;
+        @BindView(R.id.txt_app)
+        AppCompatTextView txtApp;
         @BindView(R.id.txt_extra)
         AppCompatTextView txtExtra;
 

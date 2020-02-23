@@ -29,49 +29,49 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:paddingStart="@dimen/margin_normal"
+        android:paddingEnd="@dimen/margin_normal"
         app:checkedChip="@id/sort_name_az"
         app:singleLine="true"
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/sort_name_az"
-            style="@style/Widget.Aurora.FilterChip"
+            style="@style/ViewStyle.Aurora.Chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filter_name_az" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/sort_name_za"
-            style="@style/Widget.Aurora.FilterChip"
+            style="@style/ViewStyle.Aurora.Chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filter_name_za" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/sort_size_min"
-            style="@style/Widget.Aurora.FilterChip"
+            style="@style/ViewStyle.Aurora.Chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filter_size_min" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/sort_size_max"
-            style="@style/Widget.Aurora.FilterChip"
+            style="@style/ViewStyle.Aurora.Chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filter_size_max" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/sort_date_updated"
-            style="@style/Widget.Aurora.FilterChip"
+            style="@style/ViewStyle.Aurora.Chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filter_date_updated" />
 
-
         <com.google.android.material.chip.Chip
             android:id="@+id/sort_date_added"
-            style="@style/Widget.Aurora.FilterChip"
+            style="@style/ViewStyle.Aurora.Chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filter_date_added" />

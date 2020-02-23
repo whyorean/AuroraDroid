@@ -87,6 +87,17 @@
 
     <style name="Widget.Aurora.FilterChip" parent="Widget.Aurora.Chip.Review" />
 
+    <style name="ViewStyle.Aurora.Chip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@android:color/transparent</item>
+        <item name="chipStrokeColor">@color/chip_stroke_selector</item>
+        <item name="android:textColor">@color/chip_txt_selector</item>
+        <item name="chipSurfaceColor">@color/chip_surface_selector</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipStartPadding">@dimen/padding_normal</item>
+        <item name="chipEndPadding">@dimen/padding_normal</item>
+        <item name="android:textAppearance">@style/TextAppearance.Aurora.Chip</item>
+    </style>
+
     <!-- Bottom Navigation -->
     <style name="Widget.Aurora.BottomNavigation" parent="@style/Widget.MaterialComponents.BottomNavigationView">
         <item name="itemIconTint">@color/color_selector</item>

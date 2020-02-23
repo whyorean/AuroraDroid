@@ -32,7 +32,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.activity.QRActivity;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.util.Util;

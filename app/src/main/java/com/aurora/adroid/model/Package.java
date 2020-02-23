@@ -21,6 +21,8 @@ package com.aurora.adroid.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ public class Package {
     private Long size;
     private String srcname;
     private String targetSdkVersion;
+    @SerializedName("uses-permission")
     private List<List<String>> usesPermission = null;
     private Long versionCode = 0L;
     private String versionName = "null";

@@ -70,7 +70,8 @@ public class GeneralNotification extends NotificationBase {
 
     public void notifyQueued(int requestId) {
         builder.mActions.clear();
-        builder.setContentText(context.getString(R.string.download_queued));builder.addAction(R.drawable.ic_cancel, context.getString(R.string.action_cancel),
+        builder.setContentText(context.getString(R.string.download_queued));
+        builder.addAction(R.drawable.ic_cancel, context.getString(R.string.action_cancel),
                 getCancelIntent(requestId));
         show();
     }

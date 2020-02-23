@@ -22,11 +22,11 @@ import android.content.Context;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.model.RepoRequest;
 import com.aurora.adroid.util.PathUtil;
 import com.aurora.adroid.util.Util;
 import com.tonyodev.fetch2.EnqueueAction;
 import com.tonyodev.fetch2.NetworkType;
-import com.tonyodev.fetch2.Request;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,17 +35,21 @@ import static com.aurora.adroid.Constants.SIGNED_FILE_NAME;
 
 public class RequestBuilder {
 
-    public static List<Request> buildRequest(Context context, List<Repo> repoList) {
-        List<Request> requestList = new ArrayList<>();
+    public static List<RepoRequest> buildRequest(Context context, List<Repo> repoList) {
+        List<RepoRequest> requestList = new ArrayList<>();
         for (Repo repo : repoList) {
             String Url = repo.getRepoUrl();
             if (Util.isMirrorChecked(context, repo.getRepoId()) && repo.getRepoMirrors() != null)
                 Url = repo.getRepoMirrors()[0];
-            final Request request = new Request(Url + "/" + SIGNED_FILE_NAME,
+            final RepoRequest request = new RepoRequest(Url + "/" + SIGNED_FILE_NAME,
                     PathUtil.getRepoDirectory(context) + repo.getRepoId() + "." + Constants.JAR);
             request.setGroupId(1337);
             request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
             request.setTag(repo.getRepoId());
+            request.setRepoId(repo.getRepoId());
+            request.setRepoName(repo.getRepoName());
+            request.setRepoUrl(repo.getRepoUrl());
+
             if (Util.isDownloadWifiOnly(context))
                 request.setNetworkType(NetworkType.WIFI_ONLY);
             else

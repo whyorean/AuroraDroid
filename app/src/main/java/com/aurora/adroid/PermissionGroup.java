@@ -96,7 +96,7 @@ public class PermissionGroup extends LinearLayout {
 
     public void setPermissionGroupInfo(final PermissionGroupInfo permissionGroupInfo) {
         this.permissionGroupInfo = permissionGroupInfo;
-        ImageView imageView = (ImageView) findViewById(R.id.permission_group_icon);
+        ImageView imageView = findViewById(R.id.permission_group_icon);
         imageView.setImageDrawable(getPermissionGroupIcon(permissionGroupInfo));
         imageView.setColorFilter(ViewUtil.getStyledAttribute(imageView.getContext(), android.R.attr.colorAccent));
     }

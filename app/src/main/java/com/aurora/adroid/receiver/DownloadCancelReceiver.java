@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.aurora.adroid.download.DownloadManager;
-import com.tonyodev.fetch2.Fetch;
 
 import static com.aurora.adroid.notification.NotificationBase.REQUEST_ID;
 

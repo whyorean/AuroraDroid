@@ -26,7 +26,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -37,7 +36,6 @@ import com.aurora.adroid.R;
 import com.aurora.adroid.fragment.DetailsFragment;
 import com.aurora.adroid.manager.FavouriteListManager;
 import com.aurora.adroid.util.Log;
-import com.aurora.adroid.util.ThemeUtil;
 
 import java.util.List;
 
@@ -47,11 +45,13 @@ import butterknife.ButterKnife;
 public class DetailsActivity extends BaseActivity {
 
     public static final String INTENT_PACKAGE_NAME = "INTENT_PACKAGE_NAME";
+    public static final String INTENT_REPO_NAME = "INTENT_REPO_NAME";
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
     private String packageName;
+    private String repoName;
     private DetailsFragment detailsFragment;
     private FavouriteListManager favouriteListManager;
 
@@ -70,13 +70,15 @@ public class DetailsActivity extends BaseActivity {
         super.onNewIntent(intent);
 
         packageName = getIntentPackageName(intent);
+        repoName = intent.getStringExtra(INTENT_REPO_NAME);
+
         if (TextUtils.isEmpty(packageName)) {
             Log.e("No package name provided");
             finish();
             return;
         }
         Log.i("Getting info about %s", packageName);
-        grabDetails(packageName);
+        grabDetails();
     }
 
     @Override
@@ -108,7 +110,6 @@ public class DetailsActivity extends BaseActivity {
         getMenuInflater().inflate(R.menu.details_main, menu);
         return true;
     }
-
 
     @Override
     protected void onResume() {
@@ -152,10 +153,11 @@ public class DetailsActivity extends BaseActivity {
         return null;
     }
 
-    public void grabDetails(String packageName) {
+    public void grabDetails() {
         detailsFragment = new DetailsFragment();
         Bundle arguments = new Bundle();
         arguments.putString("PackageName", packageName);
+        arguments.putString("RepoName", repoName);
         detailsFragment.setArguments(arguments);
         getSupportFragmentManager()
                 .beginTransaction()

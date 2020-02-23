@@ -46,6 +46,9 @@ public interface AppDao {
     @Query("SELECT * FROM app WHERE packageName = :packageName")
     App getAppByPackageName(String packageName);
 
+    @Query("SELECT * FROM app WHERE packageName = :packageName and repoName =:repoName")
+    App getAppByPackageNameAndRepo(String packageName, String repoName);
+
     @Query("SELECT * FROM app WHERE name = :appName")
     LiveData<App> getAppByName(String appName);
 
@@ -55,7 +58,7 @@ public interface AppDao {
     @Query("SELECT * FROM app WHERE (authorName = :authorName) or (authorName LIKE :authorName) LIMIT 20")
     LiveData<List<App>> getAppsByAuthorName(String authorName);
 
-    @Query("SELECT * FROM app WHERE (:refTime - lastUpdated <= :weekCount * 604800000) and (lastUpdated != added) ORDER BY lastUpdated DESC")
+    @Query("SELECT * FROM app WHERE (:refTime - lastUpdated <= :weekCount * 604800000) and (lastUpdated - added > 100000) ORDER BY lastUpdated DESC")
     LiveData<List<App>> getLatestUpdatedApps(Long refTime, int weekCount);
 
     @Query("SELECT * FROM app WHERE :refTime - added <= :weekCount * 604800000 ORDER BY added DESC")

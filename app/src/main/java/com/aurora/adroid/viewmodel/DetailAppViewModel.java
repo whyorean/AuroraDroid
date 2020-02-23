@@ -12,6 +12,8 @@ import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 import com.aurora.adroid.util.Log;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -34,10 +36,14 @@ public class DetailAppViewModel extends AndroidViewModel {
         return liveApp;
     }
 
-    public void getFullAppByPackageName(String packageName) {
-        Observable.fromCallable(() -> appRepository.getAppByPackageName(packageName))
+    public void getFullAppByPackageName(String packageName, String repoName) {
+        Observable.fromCallable(() -> StringUtils.isEmpty(repoName)
+                ? appRepository.getAppByPackageName(packageName)
+                : appRepository.getAppByPackageNameAndRepo(packageName, repoName))
                 .map(app -> {
-                    List<Package> pkgList = packageRepository.getAllPackages(packageName);
+                    List<Package> pkgList = StringUtils.isEmpty(repoName)
+                            ? packageRepository.getAllPackages(packageName)
+                            : packageRepository.getAllPackages(packageName, repoName);
                     if (!pkgList.isEmpty())
                         app.setPackageList(pkgList);
                     return app;

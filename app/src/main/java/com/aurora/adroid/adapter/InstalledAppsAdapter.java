@@ -122,7 +122,7 @@ public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdap
             ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation((AppCompatActivity) context);
             Intent intent = new Intent(context, DetailsActivity.class);
             intent.putExtra("INTENT_APK_FILE_NAME", app.getPackageName());
-            context.startActivity(intent,activityOptions.toBundle());
+            context.startActivity(intent, activityOptions.toBundle());
         });
 
         holder.itemView.setOnLongClickListener(v -> {

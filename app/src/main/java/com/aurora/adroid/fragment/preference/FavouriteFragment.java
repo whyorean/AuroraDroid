@@ -29,21 +29,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aurora.adroid.ErrorType;
 import com.aurora.adroid.FavouriteItemTouchHelper;
 import com.aurora.adroid.R;
 import com.aurora.adroid.adapter.FavouriteAppsAdapter;
 import com.aurora.adroid.adapter.FavouriteViewHolder;
 import com.aurora.adroid.download.DownloadManager;
-import com.aurora.adroid.fragment.BaseFragment;
 import com.aurora.adroid.manager.FavouriteListManager;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.PathUtil;
-import com.aurora.adroid.view.CustomSwipeToRefresh;
 import com.tonyodev.fetch2.Fetch;
 import com.tonyodev.fetch2.Request;
 
@@ -64,15 +62,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class FavouriteFragment extends BaseFragment implements FavouriteViewHolder.ItemClickListener,
+public class FavouriteFragment extends Fragment implements FavouriteViewHolder.ItemClickListener,
         FavouriteItemTouchHelper.RecyclerItemTouchHelperListener {
 
     private static final int BULK_GROUP_ID = 1996;
 
-    @BindView(R.id.swipe_refresh_layout)
-    CustomSwipeToRefresh swipeRefreshLayout;
-    @BindView(R.id.fav_apps_list)
-    RecyclerView favRecyclerView;
+    @BindView(R.id.recycler)
+    RecyclerView recyclerView;
     @BindView(R.id.export_list)
     Button buttonExport;
     @BindView(R.id.install_list)
@@ -89,15 +85,6 @@ public class FavouriteFragment extends BaseFragment implements FavouriteViewHold
     private FavouriteAppsAdapter favouriteAppsAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
     private Fetch fetch;
-
-    @Override
-    protected View.OnClickListener errRetry() {
-        return v -> {
-            importList();
-            ((Button) v).setEnabled(false);
-            fetchData();
-        };
-    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -123,12 +110,6 @@ public class FavouriteFragment extends BaseFragment implements FavouriteViewHold
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setErrorView(ErrorType.IMPORT);
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            if (!manager.get().isEmpty())
-                fetchData();
-        });
-
         buttonInstall.setOnClickListener(bulkInstallListener());
         buttonExport.setOnClickListener(v -> {
             exportList();
@@ -139,12 +120,6 @@ public class FavouriteFragment extends BaseFragment implements FavouriteViewHold
     public void onResume() {
         super.onResume();
         fetchData();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -246,47 +221,31 @@ public class FavouriteFragment extends BaseFragment implements FavouriteViewHold
 
     private void fetchData() {
         favouriteList = manager.get();
-        if (favouriteList.isEmpty()) {
-            switchViews(true);
-            return;
-        }
         /*disposable.add(Observable.fromCallable(() -> new FetchAppsTask(context)
                 .getAppsByPackageName(favouriteList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(start -> swipeRefreshLayout.setRefreshing(true))
-                .doOnTerminate(() -> swipeRefreshLayout.setRefreshing(false))
-                .doOnComplete(() -> {
-                    buttonExport.setEnabled(true);
-                    swipeRefreshLayout.setRefreshing(false);
+                .doOnNext(appList -> {
+
                 })
-                .subscribe((appList) -> {
-                    if (appList.isEmpty()) {
-                        switchViews(true);
-                    } else {
-                        favouriteApps = appList;
-                        switchViews(false);
-                        setupFavourites(favouriteApps);
-                    }
-                }, err -> Log.e(err.getMessage())));*/
+                .doOnComplete(() -> {
+                })
+                .subscribe());*/
     }
 
     private void setupFavourites(List<App> appsToAdd) {
         favouriteAppsAdapter = new FavouriteAppsAdapter(context, this, appsToAdd);
-        favRecyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-        favRecyclerView.setAdapter(favouriteAppsAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
+        recyclerView.setAdapter(favouriteAppsAdapter);
         new ItemTouchHelper(
                 new FavouriteItemTouchHelper(0, ItemTouchHelper.LEFT, this))
-                .attachToRecyclerView(favRecyclerView);
+                .attachToRecyclerView(recyclerView);
     }
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (viewHolder instanceof FavouriteViewHolder) {
             favouriteAppsAdapter.remove(position);
-            if (favouriteAppsAdapter.getItemCount() < 1) {
-                switchViews(true);
-            }
         }
     }
 

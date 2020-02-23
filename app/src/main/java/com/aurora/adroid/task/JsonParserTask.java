@@ -48,6 +48,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +82,7 @@ public class JsonParserTask extends ContextWrapper {
             final Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
 
             try {
-                final String jsonString = IOUtils.toString(FileUtils.openInputStream(jsonFile), "UTF-8");
+                final String jsonString = IOUtils.toString(FileUtils.openInputStream(jsonFile), StandardCharsets.UTF_8);
                 final JSONObject jsonObject = new JSONObject(jsonString);
 
                 final JSONArray jsonArrayApp = jsonObject.getJSONArray("apps");

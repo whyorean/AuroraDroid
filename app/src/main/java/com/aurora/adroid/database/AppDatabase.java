@@ -50,7 +50,13 @@ public abstract class AppDatabase extends RoomDatabase {
                                 @Override
                                 public void onOpen(@NonNull SupportSQLiteDatabase db) {
                                     super.onOpen(db);
-                                    Log.e("DB connection established");
+                                    Log.i("DB connection established");
+                                }
+
+                                @Override
+                                public void onDestructiveMigration(@NonNull SupportSQLiteDatabase db) {
+                                    super.onDestructiveMigration(db);
+                                    Log.i("DB migrated to new version, old purged");
                                 }
                             })
                             .build();

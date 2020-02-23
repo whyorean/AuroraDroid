@@ -20,14 +20,12 @@
     <string-array name="pref_themes">
         <item>@string/pref_ui_theme_light</item>
         <item>@string/pref_ui_theme_dark</item>
-        <item>@string/pref_ui_theme_darker</item>
         <item>@string/pref_ui_theme_black</item>
     </string-array>
 
     <string-array name="pref_themes_values">
         <item>light</item>
         <item>dark</item>
-        <item>darker</item>
         <item>black</item>
     </string-array>
 

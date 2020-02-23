@@ -48,7 +48,6 @@ public class AppLinkDetails extends AbstractDetails {
 
     @Override
     public void draw() {
-
         LinkView permLinkView = new LinkView(context);
         permLinkView.setLinkText("Permission");
         permLinkView.setLinkImageId(R.drawable.ic_permission_link);

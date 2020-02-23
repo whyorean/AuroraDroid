@@ -18,25 +18,24 @@
 
 package com.aurora.adroid.activity;
 
+import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.Sort;
-import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.section.GenericAppSection;
 import com.aurora.adroid.viewmodel.AppsViewModel;
 import com.google.android.material.chip.Chip;
@@ -47,9 +46,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
-public class GenericAppActivity extends FragmentActivity {
+public class GenericAppActivity extends BaseActivity {
 
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
@@ -71,17 +71,22 @@ public class GenericAppActivity extends FragmentActivity {
     TextInputEditText txtInputSearch;
     @BindView(R.id.sort_view)
     HorizontalScrollView sortView;
-    @BindView(R.id.container)
-    CoordinatorLayout container;
+    @BindView(R.id.action2)
+    ImageView action2;
 
     private SectionedRecyclerViewAdapter adapter;
     private GenericAppSection section;
+    private InputMethodManager inputMethodManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_generic);
+        setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
+
+        Object object = getSystemService(Service.INPUT_METHOD_SERVICE);
+        inputMethodManager = (InputMethodManager) object;
+
         Intent arguments = getIntent();
         if (arguments != null) {
             int listType = arguments.getIntExtra("LIST_TYPE", 0);
@@ -104,8 +109,8 @@ public class GenericAppActivity extends FragmentActivity {
                     break;
                 case 3:
                     String repoId = arguments.getStringExtra("REPO_ID");
-                    Repo repo = RepoListManager.getRepoById(this, repoId);
-                    txtInputSearch.setHint(repo.getRepoName());
+                    String repoName = arguments.getStringExtra("REPO_NAME");
+                    txtInputSearch.setHint(repoName);
                     appsViewModel.getRepoAppsLiveData(repoId).observe(this, this::setupApps);
                     break;
             }
@@ -113,6 +118,23 @@ public class GenericAppActivity extends FragmentActivity {
             setupChip();
             setupSearchBar();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        txtInputSearch.requestFocus();
+    }
+
+    @OnClick(R.id.action1)
+    public void goBack() {
+        onBackPressed();
+    }
+
+    @OnClick(R.id.fab_ime)
+    public void toggleKeyBoard() {
+        if (inputMethodManager != null)
+            inputMethodManager.showSoftInput(txtInputSearch, InputMethodManager.SHOW_IMPLICIT);
     }
 
     private void setupChip() {
@@ -140,6 +162,10 @@ public class GenericAppActivity extends FragmentActivity {
     }
 
     private void setupSearchBar() {
+        action2.setImageDrawable(getDrawable(R.drawable.ic_cancel));
+        action2.setOnClickListener(v -> {
+            txtInputSearch.setText("");
+        });
         txtInputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
