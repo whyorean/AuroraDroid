@@ -23,19 +23,19 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/img_icon"
-        android:layout_width="@dimen/icon_size_big"
-        android:layout_height="@dimen/icon_size_big"
+        android:id="@+id/img"
+        android:layout_width="@dimen/icon_size_large"
+        android:layout_height="@dimen/icon_size_large"
         android:layout_margin="@dimen/margin_normal" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/img_icon"
+        android:layout_alignTop="@id/img"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="@dimen/margin_small"
         android:layout_marginEnd="@dimen/margin_small"
-        android:layout_toEndOf="@id/img_icon">
+        android:layout_toEndOf="@id/img">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_name"
@@ -75,7 +75,7 @@
             tools:text="com.aurora.adroid" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_version"
+            android:id="@+id/line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_package_name"

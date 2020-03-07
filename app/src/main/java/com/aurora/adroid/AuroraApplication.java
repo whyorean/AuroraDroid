@@ -58,7 +58,6 @@ public class AuroraApplication extends Application {
         return installer;
     }
 
-
     @Override
     public void onCreate() {
         super.onCreate();

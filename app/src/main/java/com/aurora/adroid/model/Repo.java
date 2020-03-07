@@ -42,6 +42,11 @@ public class Repo implements Comparable<Repo> {
     }
 
     @Override
+    public int hashCode() {
+        return repoId.hashCode();
+    }
+
+    @Override
     public int compareTo(Repo repo) {
         return getRepoId().compareToIgnoreCase(repo.getRepoId());
     }

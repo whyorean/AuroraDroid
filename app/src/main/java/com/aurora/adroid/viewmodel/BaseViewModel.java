@@ -8,13 +8,21 @@ import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
+import com.aurora.adroid.model.App;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BaseViewModel extends AndroidViewModel {
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
+    }
+
+    public List<App> sortList(List<App> appList) {
+        Collections.sort(appList, (App1, App2) -> App1.getName().compareToIgnoreCase(App2.getName()));
+        return appList;
     }
 
     public List<String> getInstalledPackages(boolean includeSystem) {

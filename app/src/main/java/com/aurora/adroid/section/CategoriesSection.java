@@ -13,7 +13,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.activity.GenericAppActivity;
+import com.aurora.adroid.ui.activity.GenericAppActivity;
 import com.aurora.adroid.util.ImageUtil;
 
 import java.util.List;

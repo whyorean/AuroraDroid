@@ -22,6 +22,11 @@ public class RepoHeader implements Comparable<RepoHeader> {
     }
 
     @Override
+    public int hashCode() {
+        return repoId.hashCode();
+    }
+
+    @Override
     public int compareTo(@NotNull RepoHeader repoHeader) {
         return getRepoId().compareToIgnoreCase(repoHeader.getRepoId());
     }

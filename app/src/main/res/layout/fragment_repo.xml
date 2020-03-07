@@ -34,8 +34,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/sync_icon"
-                android:layout_width="@dimen/icon_size_big"
-                android:layout_height="@dimen/icon_size_big"
+                android:layout_width="@dimen/icon_size_large"
+                android:layout_height="@dimen/icon_size_large"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_xlarge"
                 app:srcCompat="@drawable/ic_repository" />

@@ -21,7 +21,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.IntroActivity">
+    tools:context=".ui.activity.IntroActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,8 +29,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/perm_icon"
-            android:layout_width="@dimen/icon_size_big"
-            android:layout_height="@dimen/icon_size_big"
+            android:layout_width="@dimen/icon_size_large"
+            android:layout_height="@dimen/icon_size_large"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_xlarge"
             app:srcCompat="@drawable/ic_permission" />

@@ -37,7 +37,7 @@ import androidx.annotation.Nullable;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
-import com.aurora.adroid.activity.AuroraActivity;
+import com.aurora.adroid.ui.activity.AuroraActivity;
 import com.tonyodev.fetch2.Status;
 import com.tonyodev.fetch2core.Downloader;
 

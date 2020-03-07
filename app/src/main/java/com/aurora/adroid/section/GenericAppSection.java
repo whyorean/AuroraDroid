@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
 import com.aurora.adroid.Sort;
-import com.aurora.adroid.activity.DetailsActivity;
+import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.TextUtil;
@@ -214,13 +214,13 @@ public class GenericAppSection extends Section implements FilterableSection {
     }
 
     public static class ContentHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.img_icon)
+        @BindView(R.id.img)
         AppCompatImageView imgIcon;
-        @BindView(R.id.txt_title)
+        @BindView(R.id.line1)
         AppCompatTextView txtTitle;
-        @BindView(R.id.txt_version)
+        @BindView(R.id.line2)
         AppCompatTextView txtVersion;
-        @BindView(R.id.txt_extra)
+        @BindView(R.id.line3)
         AppCompatTextView txtExtra;
 
         ContentHolder(@NonNull View itemView) {

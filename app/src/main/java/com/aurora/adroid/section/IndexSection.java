@@ -12,8 +12,10 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.activity.GenericAppActivity;
 import com.aurora.adroid.model.Index;
+import com.aurora.adroid.ui.activity.AuroraActivity;
+import com.aurora.adroid.ui.activity.GenericAppActivity;
+import com.aurora.adroid.ui.sheet.RepoDetailsBottomSheet;
 import com.aurora.adroid.util.ImageUtil;
 import com.aurora.adroid.util.ThemeUtil;
 import com.aurora.adroid.util.Util;
@@ -70,6 +72,13 @@ public class IndexSection extends Section {
             intent.putExtra("REPO_ID", index.getRepoId());
             intent.putExtra("REPO_NAME", repoName);
             context.startActivity(intent);
+        });
+
+        contentHolder.itemView.setOnLongClickListener(v -> {
+            RepoDetailsBottomSheet.index = index;
+            RepoDetailsBottomSheet repoDetailsBottomSheet = new RepoDetailsBottomSheet();
+            repoDetailsBottomSheet.show(((AuroraActivity) context).getSupportFragmentManager(), "REPO_DETAILS_SHEET");
+            return false;
         });
     }
 

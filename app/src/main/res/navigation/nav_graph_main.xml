@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.aurora.adroid.fragment.HomeFragment"
+        android:name="com.aurora.adroid.ui.fragment.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/updatesFragment"
-        android:name="com.aurora.adroid.fragment.UpdatesFragment"
+        android:name="com.aurora.adroid.ui.fragment.UpdatesFragment"
         android:label="@string/action_updates"
         tools:layout="@layout/fragment_updates" />
 
     <fragment
         android:id="@+id/categoryFragment"
-        android:name="com.aurora.adroid.fragment.CategoriesFragment"
+        android:name="com.aurora.adroid.ui.fragment.CategoriesFragment"
         android:label="@string/title_categories"
         tools:layout="@layout/fragment_categories" />
 </navigation>

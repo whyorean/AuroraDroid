@@ -47,6 +47,11 @@ public class Index implements Comparable<Index> {
     }
 
     @Override
+    public int hashCode() {
+        return repoId.hashCode();
+    }
+
+    @Override
     public int compareTo(@NotNull Index repo) {
         return getRepoId().compareToIgnoreCase(repo.getRepoId());
     }

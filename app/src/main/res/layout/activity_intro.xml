@@ -21,9 +21,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.IntroActivity">
+    tools:context=".ui.activity.IntroActivity">
 
-    <com.aurora.adroid.view.CustomViewPager
+    <com.aurora.adroid.ui.view.CustomViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

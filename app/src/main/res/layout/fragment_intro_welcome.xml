@@ -21,7 +21,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.IntroActivity">
+    tools:context=".ui.activity.IntroActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,14 +29,14 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/welcome_icon"
-            android:layout_width="@dimen/icon_size_big"
-            android:layout_height="@dimen/icon_size_big"
+            android:layout_width="@dimen/icon_size_large"
+            android:layout_height="@dimen/icon_size_large"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_xlarge"
             app:srcCompat="@drawable/ic_balloons" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_app"
+            android:id="@+id/line1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/welcome_icon"
@@ -50,7 +50,7 @@
             android:id="@+id/txt_app_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_app"
+            android:layout_below="@+id/line1"
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/margin_normal"
             android:text="@string/app_name_long"

@@ -1,19 +1,21 @@
 /*
- * Aurora Droid
+ * Aurora Store
  * Copyright (C) 2019, Rahul Kumar Patel <whyorean@gmail.com>
  *
- * Aurora Droid is free software: you can redistribute it and/or modify
+ * Aurora Store is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
+ * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * Aurora Droid is distributed in the hope that it will be useful,
+ * Aurora Store is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Aurora Store.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
  */
 
 package com.aurora.adroid.manager;
@@ -22,59 +24,60 @@ import android.content.Context;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.util.PrefUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class BlacklistManager {
 
     private Context context;
-    private ArrayList<String> blackList;
+    private Gson gson;
 
     public BlacklistManager(Context context) {
         this.context = context;
-        blackList = PrefUtil.getListString(context, Constants.PREFERENCE_BLACKLIST_APPS_LIST);
+        this.gson = new Gson();
     }
 
-    public boolean add(String s) {
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add(s);
-        boolean result = addAll(arrayList);
-        save();
-        return result;
+    public void addToBlacklist(String packageName) {
+        List<String> stringList = getBlacklistedPackages();
+        if (!stringList.contains(packageName)) {
+            stringList.add(packageName);
+            saveBlacklist(stringList);
+        }
     }
 
-    public boolean addAll(ArrayList<String> arrayList) {
-        boolean result = blackList.addAll(arrayList);
-        Set<String> mAppSet = new HashSet<>(blackList);
-        blackList.clear();
-        blackList.addAll(mAppSet);
-        save();
-        return result;
+    public void removeFromBlacklist(String packageName) {
+        List<String> stringList = getBlacklistedPackages();
+        if (stringList.contains(packageName)) {
+            stringList.remove(packageName);
+            saveBlacklist(stringList);
+        }
     }
 
-    public ArrayList<String> get() {
-        return blackList;
+    public boolean isBlacklisted(String packageName) {
+        return getBlacklistedPackages().contains(packageName);
     }
 
-    public boolean contains(String packageName) {
-        return blackList.contains(packageName);
+    public void clear() {
+        saveBlacklist(new ArrayList<>());
     }
 
-    public boolean remove(String packageName) {
-        boolean result = blackList.remove(packageName);
-        save();
-        return result;
+    private void saveBlacklist(List<String> stringList) {
+        PrefUtil.putString(context, Constants.PREFERENCE_BLACKLIST_PACKAGE_LIST, gson.toJson(stringList));
     }
 
-    public boolean removeAll(ArrayList<String> packageList) {
-        boolean result = blackList.removeAll(packageList);
-        save();
-        return result;
-    }
+    public List<String> getBlacklistedPackages() {
+        String rawList = PrefUtil.getString(context, Constants.PREFERENCE_BLACKLIST_PACKAGE_LIST);
+        Type type = new TypeToken<List<String>>() {
+        }.getType();
+        List<String> stringList = gson.fromJson(rawList, type);
 
-    private void save() {
-        PrefUtil.putListString(context, Constants.PREFERENCE_BLACKLIST_APPS_LIST, blackList);
+        if (stringList == null)
+            return new ArrayList<>();
+        else
+            return stringList;
     }
 }

@@ -43,7 +43,7 @@
         android:theme="@style/AppTheme"
         tools:targetApi="q">
         <activity
-            android:name=".activity.AuroraActivity"
+            android:name=".ui.activity.AuroraActivity"
             android:configChanges="locale|orientation"
             android:label="@string/app_name"
             android:launchMode="singleTop">
@@ -97,7 +97,7 @@
                 <data android:pathPattern="/.*/.*/.*/FDROID/REPO" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.DetailsActivity">
+        <activity android:name=".ui.activity.DetailsActivity">
             <intent-filter
                 android:autoVerify="true"
                 android:configChanges="locale|orientation"
@@ -113,22 +113,21 @@
                 <data android:host="www.f-droid.org" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.FullscreenImageActivity" />
-        <activity android:name=".activity.QRActivity" />
+        <activity android:name=".ui.activity.FullscreenImageActivity" />
+        <activity android:name=".ui.activity.QRActivity" />
         <activity
-            android:name=".activity.IntroActivity"
+            android:name=".ui.activity.IntroActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.SettingsActivity" />
+        <activity android:name=".ui.activity.SettingsActivity" />
         <activity
-            android:name=".activity.DownloadsActivity"
+            android:name=".ui.activity.DownloadsActivity"
             android:configChanges="orientation|locale"
             android:launchMode="singleTop" />
-        <activity android:name=".activity.RepoListActivity" />
-        <activity android:name=".activity.RepoDetailsActivity" />
-        <activity android:name=".activity.RepoAddActivity" />
-        <activity android:name=".activity.GenericAppActivity" />
-        <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.ContainerActivity" />
+        <activity android:name=".ui.activity.RepoDetailsActivity" />
+        <activity android:name=".ui.activity.RepoAddActivity" />
+        <activity android:name=".ui.activity.GenericAppActivity" />
+        <activity android:name=".ui.activity.SearchActivity" />
+        <activity android:name=".ui.activity.ContainerActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

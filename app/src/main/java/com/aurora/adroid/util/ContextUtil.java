@@ -30,7 +30,7 @@ import android.widget.Toast;
 public class ContextUtil {
 
     public static void toast(Context context, int stringId, String... params) {
-        toastLong(context, context.getString(stringId, params));
+        toastLong(context, context.getString(stringId, (Object) params));
     }
 
     public static void toastShort(final Context context, final String message) {
@@ -45,7 +45,7 @@ public class ContextUtil {
         if (isUiThread()) {
             action.run();
         } else {
-            new Handler(Looper.getMainLooper()).post(action::run);
+            new Handler(Looper.getMainLooper()).post(action);
         }
     }
 

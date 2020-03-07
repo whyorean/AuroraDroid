@@ -20,48 +20,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/card_width"
     android:layout_height="wrap_content"
-    app:cardUseCompatPadding="true"
     app:cardBackgroundColor="?android:colorBackground"
-    app:cardCornerRadius="15dp">
+    app:cardCornerRadius="15dp"
+    app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/img_icon"
-            android:layout_width="@dimen/icon_size_big"
-            android:layout_height="@dimen/icon_size_big"
+            android:id="@+id/img"
+            android:layout_width="@dimen/icon_size_large"
+            android:layout_height="@dimen/icon_size_large"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_medium"
             android:scaleType="centerCrop" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_app"
+            android:id="@+id/line1"
             android:layout_width="match_parent"
             android:layout_height="32dp"
-            android:layout_below="@id/img_icon"
+            android:layout_below="@id/img"
             android:layout_margin="@dimen/margin_xsmall"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="2"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
-            android:textSize="14sp"
+            android:textAppearance="@style/TextAppearance.Aurora.Line1"
             app:autoSizeMaxTextSize="15sp"
             app:autoSizeMinTextSize="12sp"
             app:autoSizeTextType="uniform" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_extra"
+            android:id="@+id/line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txt_app"
+            android:layout_below="@id/line1"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_small"
             android:layout_marginBottom="@dimen/margin_small"
             android:textAlignment="center"
-            android:textSize="12sp" />
+            android:textAppearance="@style/TextAppearance.Aurora.Line2" />
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

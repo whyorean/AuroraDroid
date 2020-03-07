@@ -41,7 +41,11 @@ public class Constants {
     public static final String PREFERENCE_REPO_HEADERS = "PREFERENCE_REPO_HEADERS";
     public static final String PREFERENCE_FIRST_LAUNCH = "PREFERENCE_FIRST_LAUNCH";
     public static final String PREFERENCE_BLACKLIST_APPS_LIST = "PREFERENCE_BLACKLIST_APPS_LIST";
+    public static final String PREFERENCE_BLACKLIST_PACKAGE_LIST = "PREFERENCE_BLACKLIST_PACKAGE_LIST";
     public static final String PREFERENCE_FAVOURITE_LIST = "PREFERENCE_FAVOURITE_LIST";
+    public static final String PREFERENCE_FAVOURITE_PACKAGE_LIST = "PREFERENCE_FAVOURITE_PACKAGE_LIST";
+    public static final String PREFERENCE_REPO_LIST = "PREFERENCE_REPO_LIST";
+    public static final String PREFERENCE_SYNC_LIST = "PREFERENCE_SYNC_LIST";
     public static final String PREFERENCE_INCLUDE_SYSTEM = "PREFERENCE_INCLUDE_SYSTEM";
     public static final String PREFERENCE_INSTALLATION_AUTO = "PREFERENCE_INSTALLATION_AUTO";
     public static final String PREFERENCE_INSTALLATION_TYPE = "PREFERENCE_INSTALLATION_TYPE";
@@ -70,4 +74,9 @@ public class Constants {
     public static final String FRAGMENT_BLACKLIST = "FRAGMENT_BLACKLIST";
     public static final String FRAGMENT_FAV_LIST = "FRAGMENT_FAV_LIST";
     public static final String FRAGMENT_REPOSITORY = "FRAGMENT_REPOSITORY";
+
+    public static final String INTENT_PACKAGE_NAME = "INTENT_PACKAGE_NAME";
+    public static final String INT_EXTRA = "INT_EXTRA";
+    public static final String FLOAT_EXTRA = "FLOAT_EXTRA";
+    public static final String STRING_EXTRA = "STRING_EXTRA";
 }

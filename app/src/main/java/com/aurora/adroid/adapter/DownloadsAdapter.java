@@ -34,9 +34,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
-import com.aurora.adroid.activity.DetailsActivity;
-import com.aurora.adroid.activity.DownloadsActivity;
-import com.aurora.adroid.sheet.DownloadMenuSheet;
+import com.aurora.adroid.ui.activity.DetailsActivity;
+import com.aurora.adroid.ui.activity.DownloadsActivity;
+import com.aurora.adroid.ui.sheet.DownloadMenuSheet;
 import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.Util;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -233,7 +233,7 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.img_download)
         ImageView imgDownload;
-        @BindView(R.id.txt_title)
+        @BindView(R.id.line1)
         TextView txtTitle;
         @BindView(R.id.txt_status)
         TextView txtStatus;

@@ -13,13 +13,13 @@ import androidx.core.app.NotificationCompat;
 import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
-import com.aurora.adroid.activity.AuroraActivity;
 import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.download.RequestBuilder;
 import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.event.LogEvent;
 import com.aurora.adroid.manager.RepoListManager;
+import com.aurora.adroid.manager.RepoManager;
 import com.aurora.adroid.manager.SyncManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.model.RepoRequest;
@@ -27,6 +27,7 @@ import com.aurora.adroid.notification.SyncNotification;
 import com.aurora.adroid.task.CheckRepoUpdatesTask;
 import com.aurora.adroid.task.ExtractRepoTask;
 import com.aurora.adroid.task.JsonParserTask;
+import com.aurora.adroid.ui.activity.AuroraActivity;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PathUtil;
@@ -100,7 +101,7 @@ public class RepoSyncService extends Service {
     }
 
     public void fetchRepo() {
-        final List<Repo> repoList = RepoListManager.getSelectedRepos(this);
+        final List<Repo> repoList = new RepoManager(this).getRepoList();
         requestList = RequestBuilder.buildRequest(this, repoList);
 
         if (repoList.isEmpty()) {
@@ -138,6 +139,7 @@ public class RepoSyncService extends Service {
     }
 
     private void extractAllRepos() {
+        final SyncManager syncManager = new SyncManager(this);
         final File repoDirectory = new File(PathUtil.getRepoDirectory(this));
         final File[] files = repoDirectory.listFiles();
 
@@ -151,7 +153,7 @@ public class RepoSyncService extends Service {
                     final Repo repo = repoBundle.getRepo();
                     if (repoBundle.isSynced()) {
                         AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_completed)));
-                        SyncManager.setSynced(this, repo.getRepoId());
+                        syncManager.addToSyncList(repo);
                     } else {
                         AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_failed)));
                     }

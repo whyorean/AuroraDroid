@@ -62,6 +62,16 @@ android {
     }
 }
 
+buildscript {
+    ext {
+        versions = [
+                fastAdapter: "5.0.0",
+                okhttp3    : "4.3.1",
+                glide      : "4.11.0"
+        ]
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation group: 'commons-io', name: 'commons-io', version: '2.6'
@@ -85,7 +95,13 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'com.google.code.gson:gson:2.8.6'
 
-    //Recycler-Extensions
+    //Extensions
+    implementation "com.mikepenz:fastadapter:${versions.fastAdapter}"
+    implementation "com.mikepenz:fastadapter-extensions-diff:${versions.fastAdapter}"
+    implementation "com.mikepenz:fastadapter-extensions-scroll:${versions.fastAdapter}"
+    implementation "com.mikepenz:fastadapter-extensions-ui:${versions.fastAdapter}"
+    implementation "com.mikepenz:fastadapter-extensions-utils:${versions.fastAdapter}"
+
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:3.1.0'
 
     //Utils

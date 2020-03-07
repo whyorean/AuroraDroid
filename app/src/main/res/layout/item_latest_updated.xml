@@ -27,7 +27,7 @@
     android:paddingBottom="@dimen/margin_small">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/img_icon"
+        android:id="@+id/img"
         android:layout_width="@dimen/icon_size_medium"
         android:layout_height="@dimen/icon_size_medium"
         android:layout_marginStart="@dimen/margin_small"
@@ -36,10 +36,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/img_icon">
+        android:layout_toEndOf="@id/img">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_title"
+            android:id="@+id/line1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -50,10 +50,10 @@
             android:textSize="17sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_version"
+            android:id="@+id/line2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_title"
+            android:layout_below="@+id/line1"
             android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:singleLine="true"
@@ -62,10 +62,10 @@
             android:textSize="14sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_extra"
+            android:id="@+id/line3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_version"
+            android:layout_below="@+id/line2"
             android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:singleLine="true"

@@ -28,7 +28,6 @@ import java.util.List;
 
 public class LiveUpdate extends ContextWrapper {
 
-    private Context context;
     private App app;
     private Fetch fetch;
     private FetchListener fetchListener;
@@ -37,7 +36,6 @@ public class LiveUpdate extends ContextWrapper {
 
     public LiveUpdate(Context context, App app) {
         super(context);
-        this.context = context;
         this.app = app;
         this.fetch = DownloadManager.getFetchInstance(context);
         this.fetchListener = getFetchListener();

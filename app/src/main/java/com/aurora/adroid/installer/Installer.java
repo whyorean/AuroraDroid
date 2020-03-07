@@ -31,7 +31,7 @@ import androidx.core.content.FileProvider;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
-import com.aurora.adroid.activity.DetailsActivity;
+import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.notification.QuickNotification;
 import com.aurora.adroid.util.Log;

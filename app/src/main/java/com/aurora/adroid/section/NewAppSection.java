@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
-import com.aurora.adroid.activity.DetailsActivity;
+import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.Util;
@@ -70,11 +70,11 @@ public class NewAppSection extends Section {
     }
 
     public static class ContentHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.img_icon)
+        @BindView(R.id.img)
         ImageView imgIcon;
-        @BindView(R.id.txt_app)
+        @BindView(R.id.line1)
         AppCompatTextView txtApp;
-        @BindView(R.id.txt_extra)
+        @BindView(R.id.line3)
         AppCompatTextView txtExtra;
 
         ContentHolder(@NonNull View itemView) {

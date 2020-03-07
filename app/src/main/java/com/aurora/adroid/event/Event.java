@@ -45,4 +45,9 @@ public class Event {
     public void setType(EventType type) {
         this.type = type;
     }
+
+    public Event(EventType type,String stringExtra) {
+        this.type = type;
+        this.stringExtra = stringExtra;
+    }
 }
