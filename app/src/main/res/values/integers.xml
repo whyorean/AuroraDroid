@@ -16,6 +16,4 @@
   ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
-    <integer name="anim_duration_medium">350</integer>
-</resources>
+<resources></resources>

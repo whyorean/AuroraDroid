@@ -23,8 +23,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.aurora.adroid.ui.fragment.DetailsFragment;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.ui.fragment.DetailsFragment;
 import com.aurora.adroid.util.ViewUtil;
 
 import butterknife.ButterKnife;

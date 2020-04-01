@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
-import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.Util;
 

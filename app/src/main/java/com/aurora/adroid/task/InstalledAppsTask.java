@@ -23,7 +23,6 @@ package com.aurora.adroid.task;
 import android.content.Context;
 import android.text.TextUtils;
 
-
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.PackageUtil;
 

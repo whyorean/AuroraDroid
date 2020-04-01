@@ -28,10 +28,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.ui.fragment.DetailsFragment;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 import com.aurora.adroid.section.ClusterAppSection;
+import com.aurora.adroid.ui.fragment.DetailsFragment;
 import com.aurora.adroid.ui.sheet.MoreInfoSheet;
 import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.Util;

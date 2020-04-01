@@ -38,16 +38,16 @@ public class Event {
         this.type = type;
     }
 
+    public Event(EventType type, String stringExtra) {
+        this.type = type;
+        this.stringExtra = stringExtra;
+    }
+
     public EventType getType() {
         return type;
     }
 
     public void setType(EventType type) {
         this.type = type;
-    }
-
-    public Event(EventType type,String stringExtra) {
-        this.type = type;
-        this.stringExtra = stringExtra;
     }
 }

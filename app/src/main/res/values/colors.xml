@@ -32,25 +32,18 @@
     <color name="colorNavigation">@color/colorPrimaryDark</color>
 
     <!--Dark Theme-->
-    <color name="colorDarkAccent">#4285f4</color>
-    <color name="colorDarkRipple">#4C5368</color>
-    <color name="colorDarkPrimary">#202124</color>
     <color name="colorDarkPrimaryDark">#202124</color>
     <color name="colorDarkBackground">#2d2e31</color>
     <color name="colorDarkWindowBackground">#202124</color>
     <color name="colorDarkPrimaryVariant">@color/colorDarkPrimaryDark</color>
-    <color name="colorDarkSecondary">@color/colorDarkPrimary</color>
     <color name="colorDarkSecondaryVariant">#121212</color>
     <color name="colorDarkNavigation">@color/colorDarkPrimaryDark</color>
 
     <color name="colorWhite">#FFF</color>
     <color name="colorBlack">#000</color>
-    <color name="colorGreyDark">#545454</color>
-    <color name="colorGreyDarker">#242424</color>
     <color name="colorGreyLight">#E5E5E5</color>
 
     <color name="colorScrim">#11000000</color>
-    <color name="colorScrimAccent">#224768FD</color>
     <color name="colorTransparent">#00000000</color>
 
 

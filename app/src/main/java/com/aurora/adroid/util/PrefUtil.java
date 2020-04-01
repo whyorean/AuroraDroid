@@ -22,8 +22,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.aurora.adroid.CustomMap;
-
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -101,26 +99,6 @@ public class PrefUtil {
 
     public static Map<String, String> getMap(Context context, String key) {
         Map<String, String> outputMap = new HashMap<>();
-        SharedPreferences mPreferences = Util.getPrefs(context);
-        try {
-            if (mPreferences != null) {
-                String jsonString = mPreferences.getString(key, (new JSONObject()).toString());
-                JSONObject jsonObject = new JSONObject(jsonString);
-                Iterator<String> keysItr = jsonObject.keys();
-                while (keysItr.hasNext()) {
-                    String k = keysItr.next();
-                    String value = (String) jsonObject.get(k);
-                    outputMap.put(k, value);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return outputMap;
-    }
-
-    public static CustomMap<String, String> getCustomMap(Context context, String key) {
-        CustomMap<String, String> outputMap = new CustomMap<>();
         SharedPreferences mPreferences = Util.getPrefs(context);
         try {
             if (mPreferences != null) {

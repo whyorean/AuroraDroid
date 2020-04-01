@@ -27,8 +27,8 @@ import com.aurora.adroid.adapter.ViewPagerAdapter;
 import com.aurora.adroid.ui.fragment.RepoFragment;
 import com.aurora.adroid.ui.fragment.intro.PermissionFragment;
 import com.aurora.adroid.ui.fragment.intro.WelcomeFragment;
-import com.aurora.adroid.util.ThemeUtil;
 import com.aurora.adroid.ui.view.CustomViewPager;
+import com.aurora.adroid.util.ThemeUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

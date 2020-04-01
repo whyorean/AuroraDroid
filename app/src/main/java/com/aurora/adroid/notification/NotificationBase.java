@@ -27,12 +27,12 @@ import android.content.Intent;
 import androidx.core.app.NotificationCompat;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.receiver.DownloadCancelReceiver;
 import com.aurora.adroid.receiver.DownloadPauseReceiver;
 import com.aurora.adroid.receiver.DownloadResumeReceiver;
 import com.aurora.adroid.receiver.InstallReceiver;
+import com.aurora.adroid.ui.activity.DetailsActivity;
 
 
 public class NotificationBase {

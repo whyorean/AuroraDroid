@@ -1,8 +1,6 @@
 package com.aurora.adroid.model.items;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -11,7 +9,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.util.PackageUtil;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 

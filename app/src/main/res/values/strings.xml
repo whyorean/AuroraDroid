@@ -18,7 +18,6 @@
 
 <resources>
     <string name="action_add">Add</string>
-    <string name="action_add_repo">Add Repository</string>
     <string name="action_ask">Ask</string>
     <string name="action_blacklist">Blacklist</string>
     <string name="action_cancel">Cancel</string>
@@ -44,25 +43,19 @@
     <string name="action_installed">Installed</string>
     <string name="action_installations">Installations</string>
     <string name="action_later">Later</string>
-    <string name="action_manual">Manual download</string>
     <string name="action_more">More</string>
     <string name="action_next">Next</string>
     <string name="action_open">Open</string>
     <string name="action_pause">Pause</string>
     <string name="action_recheck">Recheck</string>
-    <string name="action_recheck_ing">Rechecking</string>
     <string name="action_remove">Remove</string>
     <string name="action_restart">Restart</string>
     <string name="action_resume">Resume</string>
     <string name="action_retry">Retry</string>
-    <string name="action_read_more">Read more</string>
-    <string name="action_reset_defaults">Reset defaults</string>
     <string name="action_save">Save</string>
-    <string name="action_search">Search</string>
     <string name="action_settings">Settings</string>
     <string name="action_share">Share</string>
     <string name="action_sync">Synchronize</string>
-    <string name="action_show_system">Show system apps</string>
     <string name="action_show_user_only">Show user apps only</string>
     <string name="action_uninstall">Uninstall</string>
     <string name="action_update">Update</string>
@@ -94,8 +87,6 @@
     <string name="dialog_repo_title">Add Repository</string>
     <string name="dialog_repo_list">Repository List</string>
     <string name="dialog_repo_desc">Do you really wish to add</string>
-    <string name="dialog_repo_clear_title">Remove Repository</string>
-    <string name="dialog_repo_clear_desc">Do you also wish to remove the apps of this repo from database ?</string>
 
     <string name="menu_downloads">Downloads</string>
     <string name="menu_repository">Repository</string>
@@ -113,8 +104,6 @@
     <string name="download_progress">Downloading</string>
     <string name="download_queued">Queued</string>
     <string name="download_resume">Resume</string>
-    <string name="download_repo_progress">Downloading repositories</string>
-    <string name="download_repo_synced">All repositories synced</string>
     <string name="download_resume_all">Resume all</string>
 
     <string name="filter_name_az">Name A-Z</string>
@@ -135,44 +124,27 @@
     <string name="installer_status_unknown">Unknown</string>
     <string name="installer_status_user_action">Waiting for user confirmation</string>
 
-    <string name="list_app_blacklisted_empty">No Apps Blacklisted</string>
-    <string name="list_app_depends_on_gsf">GSF dependent</string>
-    <string name="list_app_has_ads">has ads</string>
-    <string name="list_app_independent_from_gsf">GSF independent</string>
-    <string name="list_app_no_ads">no ads</string>
-    <string name="list_app_system">System app</string>
-    <string name="list_app_user">User app</string>
     <string name="list_blacklist">Blacklisted apps</string>
     <string name="list_blacklist_none">No apps blacklisted</string>
-    <string name="list_bulk_install">app(s) queued for bulk install"</string>
     <string name="list_empty_fav">No favourites</string>
-    <string name="list_empty_query">No recent searches</string>
     <string name="list_empty_updates">No updates available</string>
     <string name="list_installed">Installed</string>
-    <string name="list_installed_system">Show user apps only</string>
     <string name="list_not_installd">Not installed</string>
     <string name="list_selected">Apps selected</string>
     <string name="list_update_all">Update all</string>
     <string name="list_update_all_txt">update(s) available"</string>
-    <string name="list_update_all_queue_txt">update(s) queued</string>
     <string name="list_updating">Updating</string>
-    <string name="list_repo_select">Selected Repos(s)</string>
-    <string name="list_repo_none">No repository selected</string>
 
     <string name="notification_channel_alert">"Quick notification"</string>
     <string name="notification_channel_general">"General notification"</string>
 
-    <string name="extract_completed">Extracted</string>
-    <string name="extract_failed">Extraction failed</string>
     <string name="sync_background">Syncing in background</string>
     <string name="sync_completed">Synced</string>
     <string name="sync_completed_all">All repositories synced</string>
     <string name="sync_progress">Syncing repositories</string>
     <string name="sync_failed">Sync failed</string>
-    <string name="database_cleared">Database cleared</string>
 
     <string name="title_home">Aurora Droid</string>
-    <string name="title_apps">Apps</string>
     <string name="title_apps_new">New Apps</string>
     <string name="title_categories">Categories</string>
     <string name="title_latest_updated">Latest updated</string>
@@ -181,7 +153,6 @@
     <string name="title_repositories">Repositories</string>
     <string name="title_search">Search apps &amp; games</string>
     <string name="title_installed">My apps &amp; games</string>
-    <string name="title_search_alt">Search</string>
     <string name="title_sync_repo">Sync Repositories</string>
     <string name="title_update_all">Update All Apps</string>
     <string name="title_welcome">Welcome</string>
@@ -212,7 +183,6 @@
     <string name="pref_ui_theme_title">Theme</string>
     <string name="pref_ui_theme_light">Light</string>
     <string name="pref_ui_theme_dark">Dark</string>
-    <string name="pref_ui_theme_darker">Darker</string>
     <string name="pref_ui_theme_black">Black</string>
     <string name="pref_ui_transparent">Transparent style</string>
     <string name="pref_ui_transparent_summary">Use transparent card style for category and link views</string>
@@ -234,7 +204,6 @@
     <string name="pref_proxy_type">Proxy type</string>
     <string name="pref_updates_title">Updates</string>
     <string name="pref_updates_repo_title">Repo Updates</string>
-    <string name="pref_updates_app_title">App Updates</string>
     <string name="pref_updates_repo_interval">Updates interval</string>
     <string name="pref_updates_manual">Manual</string>
     <string name="pref_updates_daily">1 day</string>
@@ -263,18 +232,10 @@
     <string name="error_unknown">"Unknown error occurred"</string>
     <string name="error_no_updates">"No updates available"</string>
 
-    <string name="notification_installation_complete">Successfully installed</string>
-    <string name="notification_installation_failed">Installation failed</string>
-    <string name="notification_installation_progress">Installing</string>
-    <string name="notification_installation_auto">Downloaded, click to install</string>
-    <string name="notification_installation_manual">Bundled Apk, manual action required</string>
-    <string name="notification_uninstallation_complete">Successfully uninstalled</string>
-
     <string name="toast_apk_blacklisted">Blacklisted</string>
     <string name="toast_apk_whitelisted">Whitelisted</string>
     <string name="toast_apk_copy_success">APK copied successfully</string>
     <string name="toast_apk_copy_failure">Failed to copy APK</string>
-    <string name="toast_loading_apps">Loading more apps..</string>
 
 
     <string name="details_new_changes">"What's New"</string>

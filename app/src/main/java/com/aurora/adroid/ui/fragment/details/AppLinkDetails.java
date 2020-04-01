@@ -26,12 +26,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.ui.fragment.DetailsFragment;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.ui.fragment.DetailsFragment;
 import com.aurora.adroid.ui.sheet.PermissionBottomSheet;
+import com.aurora.adroid.ui.view.LinkView;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PackageUtil;
-import com.aurora.adroid.ui.view.LinkView;
 
 import butterknife.BindView;
 

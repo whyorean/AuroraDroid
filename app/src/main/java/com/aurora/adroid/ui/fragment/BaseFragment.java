@@ -21,25 +21,18 @@ package com.aurora.adroid.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
-import com.aurora.adroid.ErrorType;
 import com.aurora.adroid.R;
-import com.aurora.adroid.ui.view.ErrorView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.Modifier;
-
-import butterknife.BindView;
 
 public abstract class BaseFragment extends Fragment {
 

@@ -27,8 +27,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.adapter.PackageAdapter;
-import com.aurora.adroid.ui.fragment.DetailsFragment;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.ui.fragment.DetailsFragment;
 import com.aurora.adroid.util.ViewUtil;
 
 import butterknife.BindView;
