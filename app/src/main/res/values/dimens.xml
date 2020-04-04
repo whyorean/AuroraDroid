@@ -21,6 +21,7 @@
     <dimen name="margin_medium">12dp</dimen>
     <dimen name="margin_xxsmall">4dp</dimen>
 
+    <dimen name="padding_xsmall">4dp</dimen>
     <dimen name="padding_small">6dp</dimen>
     <dimen name="padding_normal">8dp</dimen>
     <dimen name="padding_medium">12dp</dimen>

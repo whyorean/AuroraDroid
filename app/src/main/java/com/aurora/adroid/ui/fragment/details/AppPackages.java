@@ -26,12 +26,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.adapter.PackageAdapter;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.model.items.PackageItem;
 import com.aurora.adroid.ui.fragment.DetailsFragment;
+import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.ViewUtil;
+import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class AppPackages extends AbstractDetails {
 
@@ -41,8 +45,12 @@ public class AppPackages extends AbstractDetails {
     RelativeLayout layoutExpand;
     @BindView(R.id.layout_version)
     RelativeLayout layoutVersion;
+
     @BindView(R.id.package_recycler)
     RecyclerView recyclerView;
+
+    private FastItemAdapter<PackageItem> fastItemAdapter;
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     public AppPackages(DetailsFragment fragment, App app) {
         super(fragment, app);
@@ -50,7 +58,9 @@ public class AppPackages extends AbstractDetails {
 
     @Override
     public void draw() {
-        recyclerView.setAdapter(new PackageAdapter(context, app));
+
+        fastItemAdapter = new FastItemAdapter<>();
+        recyclerView.setAdapter(fastItemAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
         layoutExpand.setOnClickListener(v -> {
             if (layoutVersion.getVisibility() == View.GONE) {
@@ -61,5 +71,14 @@ public class AppPackages extends AbstractDetails {
                 ViewUtil.hideWithAnimation(layoutVersion);
             }
         });
+
+        disposable.add(Observable.fromIterable(app.getPackageList())
+                .map(pkg -> new PackageItem(pkg, app))
+                .toList()
+                .subscribe(packageItems -> {
+                    fastItemAdapter.add(packageItems);
+                }, throwable -> {
+                    Log.e(throwable.getMessage());
+                }));
     }
 }

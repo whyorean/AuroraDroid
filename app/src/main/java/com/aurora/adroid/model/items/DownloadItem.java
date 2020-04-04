@@ -63,7 +63,7 @@ public class DownloadItem extends AbstractItem<DownloadItem.ViewHolder> {
     }
 
     public static class ViewHolder extends FastAdapter.ViewHolder<DownloadItem> {
-        @BindView(R.id.img_download)
+        @BindView(R.id.img)
         ImageView imgDownload;
         @BindView(R.id.txt_title)
         TextView txtTitle;

@@ -22,6 +22,7 @@ import android.content.Context;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.model.Package;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.model.RepoRequest;
 import com.aurora.adroid.util.DatabaseUtil;
@@ -44,6 +45,16 @@ public class RequestBuilder {
     public static Request buildRequest(Context context, App app) {
         final Request request = new Request(DatabaseUtil.getDownloadURl(app),
                 PathUtil.getApkPath(context, app.getAppPackage().getApkName()));
+        addAppExtras(request, app);
+        request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
+        request.setGroupId(app.getPackageName().hashCode());
+        request.setTag(app.getPackageName());
+        return request;
+    }
+
+    public static Request buildRequest(Context context, Package pkg, App app) {
+        final Request request = new Request(DatabaseUtil.getDownloadURl(pkg),
+                PathUtil.getApkPath(context, pkg.getApkName()));
         addAppExtras(request, app);
         request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
         request.setGroupId(app.getPackageName().hashCode());

@@ -24,7 +24,7 @@
     android:padding="5dp">
 
     <ImageView
-        android:id="@+id/img_download"
+        android:id="@+id/img"
         android:layout_width="@dimen/icon_size_medium"
         android:layout_height="@dimen/icon_size_medium"
         android:layout_margin="@dimen/margin_xxsmall"
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
-        android:layout_toEndOf="@id/img_download"
+        android:layout_toEndOf="@id/img"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView

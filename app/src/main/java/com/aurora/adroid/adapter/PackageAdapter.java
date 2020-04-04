@@ -167,19 +167,19 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.img_download)
+        //@BindView(R.id.img)
         ImageView imgDownload;
-        @BindView(R.id.img_installed)
+        //@BindView(R.id.img)
         ImageView imgInstalled;
-        @BindView(R.id.txt_apk_version)
+       // @BindView(R.id.line1)
         TextView txtApkVersion;
-        @BindView(R.id.txt_apk_repo)
+       // @BindView(R.id.line3)
         TextView txtApkRepo;
-        @BindView(R.id.txt_apk_added)
+      //  @BindView(R.id.img)
         TextView txtApkAdded;
-        @BindView(R.id.txt_apk_arch)
+        @BindView(R.id.line2)
         TextView txtApkArch;
-        @BindView(R.id.txt_apk_size)
+        @BindView(R.id.img)
         TextView txtApkSize;
         @BindView(R.id.txt_apk_suggested)
         TextView txtApkSuggested;

@@ -24,8 +24,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_xxsmall"
-    android:background="@drawable/generic_padded_bg"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="@dimen/padding_small">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_apk"
@@ -34,112 +34,65 @@
         app:srcCompat="@drawable/ic_apk"
         app:tint="?android:colorAccent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/img_installed"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/line1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/img_apk"
         android:layout_marginStart="@dimen/margin_small"
-        android:layout_marginEnd="@dimen/margin_small"
-        android:scaleX=".5"
-        android:scaleY=".5"
-        android:visibility="visible"
-        app:srcCompat="@drawable/ic_indicator"
-        app:tint="@color/colorGreen" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_apk_size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/txt_apk_added"
-        android:layout_alignStart="@id/img_download"
-        android:layout_alignEnd="@id/img_download"
-        android:maxLines="1"
-        android:textAlignment="center"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="12sp"
-        tools:text="12 MB" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/img_download"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="@dimen/margin_small"
-        android:background="?selectableItemBackground"
-        android:padding="@dimen/margin_normal"
-        app:srcCompat="@drawable/ic_download"
-        app:tint="?colorAccent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_apk_version"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_xsmall"
-        android:layout_toStartOf="@id/img_download"
+        android:layout_marginEnd="@dimen/padding_small"
         android:layout_toEndOf="@id/img_apk"
-        android:maxLines="1"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:text="Version 1.0.0" />
+        android:textAppearance="@style/TextAppearance.Aurora.Line1" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_apk_arch"
+        android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_apk_version"
-        android:layout_alignStart="@id/txt_apk_version"
-        android:layout_alignEnd="@id/txt_apk_version"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:textAlignment="viewStart"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="12sp"
-        tools:text="arm64-v8" />
+        android:layout_below="@id/line1"
+        android:layout_alignStart="@id/line1"
+        android:layout_toStartOf="@id/img"
+        android:textAppearance="@style/TextAppearance.Aurora.Line2" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_apk_repo"
+        android:id="@+id/line3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_apk_arch"
-        android:layout_alignStart="@id/txt_apk_version"
-        android:layout_alignEnd="@id/txt_apk_version"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:textAlignment="viewStart"
-        android:textSize="12sp"
-        tools:text="Bromite" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_apk_added"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_apk_repo"
-        android:layout_alignStart="@id/txt_apk_version"
-        android:layout_alignEnd="@id/txt_apk_version"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:textAlignment="viewStart"
-        android:textSize="12sp"
-        tools:text="20/05/2019" />
+        android:layout_below="@id/line2"
+        android:layout_alignStart="@id/line2"
+        android:layout_alignEnd="@id/line2"
+        android:textAppearance="@style/TextAppearance.Aurora.Line3" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_apk_suggested"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_apk_added"
-        android:layout_alignStart="@id/txt_apk_version"
-        android:layout_alignEnd="@id/txt_apk_version"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:singleLine="true"
+        android:layout_toEndOf="@id/line1"
+        android:background="@drawable/green_padded_bg"
         android:text="@string/details_apk_suggested"
-        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.Aurora.Line3"
         android:textColor="@color/colorGreen"
-        android:textSize="12sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_apk_installed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_toEndOf="@id/txt_apk_suggested"
+        android:background="@drawable/green_padded_bg"
+        android:text="@string/action_installed"
+        android:textAppearance="@style/TextAppearance.Aurora.Line3"
+        android:textColor="@color/colorGreen"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/icon_size_category"
+        android:layout_height="@dimen/icon_size_category"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="?selectableItemBackground"
+        app:srcCompat="@drawable/ic_download"
+        app:tint="?colorAccent" />
 </RelativeLayout>

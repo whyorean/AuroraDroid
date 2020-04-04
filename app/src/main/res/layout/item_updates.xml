@@ -90,6 +90,7 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:padding="@dimen/margin_small"
+                app:tint="?android:attr/colorControlNormal"
                 app:srcCompat="@drawable/ic_expand" />
 
             <View

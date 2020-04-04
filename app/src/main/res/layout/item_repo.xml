@@ -30,7 +30,7 @@
     android:paddingBottom="@dimen/margin_small">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/img_download"
+        android:id="@+id/img"
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:layout_centerVertical="true"
@@ -40,21 +40,21 @@
         app:srcCompat="@drawable/ic_repo_alt" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_apk_version"
+        android:id="@+id/line1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toStartOf="@id/checkbox_repo"
-        android:layout_toEndOf="@id/img_download"
+        android:layout_toEndOf="@id/img"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="17sp"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_apk_repo"
+        android:id="@+id/line3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_apk_version"
-        android:layout_alignStart="@id/txt_apk_version"
+        android:layout_below="@id/line1"
+        android:layout_alignStart="@id/line1"
         android:layout_toStartOf="@id/checkbox_repo"
         android:ellipsize="end"
         android:singleLine="true"

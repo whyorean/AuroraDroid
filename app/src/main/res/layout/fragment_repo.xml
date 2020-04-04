@@ -71,7 +71,7 @@
                 android:minHeight="56dp">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/img_download"
+                    android:id="@+id/img"
                     android:layout_width="@dimen/icon_size_small"
                     android:layout_height="@dimen/icon_size_small"
                     android:layout_centerVertical="true"
@@ -87,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
-                    android:layout_toEndOf="@id/img_download"
+                    android:layout_toEndOf="@id/img"
                     android:text="@string/repo_list"
                     android:textAlignment="viewStart"
                     android:textAppearance="@style/TextAppearance.Aurora.Title"
@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txt_repo_list"
                     android:layout_marginStart="@dimen/margin_small"
-                    android:layout_toEndOf="@id/img_download"
+                    android:layout_toEndOf="@id/img"
                     android:text="@string/repo_list_select"
                     android:textAlignment="viewStart"
                     android:textColor="?android:attr/textColorPrimary"

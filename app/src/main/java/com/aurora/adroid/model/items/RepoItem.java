@@ -52,11 +52,11 @@ public class RepoItem extends AbstractItem<RepoItem.RepoItemHolder> {
     }
 
     public static class RepoItemHolder extends FastAdapter.ViewHolder<RepoItem> {
-        @BindView(R.id.img_download)
+        @BindView(R.id.img)
         ImageView imgRepo;
-        @BindView(R.id.txt_apk_version)
+        @BindView(R.id.line1)
         TextView txtRepoTitle;
-        @BindView(R.id.txt_apk_repo)
+        @BindView(R.id.line3)
         TextView txtRepoUrl;
         @BindView(R.id.checkbox_repo)
         CheckBox checkBox;

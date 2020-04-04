@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Aurora Droid
   ~ Copyright (C) 2019, Rahul Kumar Patel <whyorean@gmail.com>
@@ -15,13 +17,16 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp"
-    android:height="24dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
-    <path
-        android:fillColor="#FF000000"
-        android:pathData="M13,10h5l-6,6 -6,-6h5L11,3h2v7zM4,19h16v-7h2v8a1,1 0,0 1,-1 1L3,21a1,1 0,0 1,-1 -1v-8h2v7z"/>
-</vector>
 
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <padding
+        android:bottom="2dp"
+        android:left="6dp"
+        android:right="6dp"
+        android:top="2dp" />
+    <corners android:radius="8dp" />
+    <stroke
+        android:width="1dp"
+        android:color="@color/colorGreen" />
+</shape>
