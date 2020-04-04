@@ -22,9 +22,13 @@ import android.content.Context;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.util.Util;
+import com.tonyodev.fetch2.Download;
 import com.tonyodev.fetch2.Fetch;
 import com.tonyodev.fetch2.FetchConfiguration;
+import com.tonyodev.fetch2.FetchListener;
 import com.tonyodev.fetch2okhttp.OkHttpDownloader;
+
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 
@@ -71,5 +75,19 @@ public class DownloadManager {
         if (Util.isNetworkProxyEnabled(context))
             builder.proxy(Util.getNetworkProxy(context));
         return builder.build();
+    }
+
+    public static void updateOngoingDownloads(Fetch fetch, List<String> packageList, Download download,
+                                              FetchListener fetchListener) {
+        if (packageList.contains(download.getTag())) {
+            final String packageName = download.getTag();
+            if (packageName != null) {
+                fetch.deleteGroup(packageName.hashCode());
+                packageList.remove(packageName);
+            }
+        }
+        if (packageList.size() == 0) {
+            fetch.removeListener(fetchListener);
+        }
     }
 }

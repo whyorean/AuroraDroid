@@ -162,5 +162,6 @@
         <service
             android:name=".service.NotificationService"
             android:foregroundServiceType="dataSync" />
+        <service android:name=".service.BulkUpdateService" />
     </application>
 </manifest>

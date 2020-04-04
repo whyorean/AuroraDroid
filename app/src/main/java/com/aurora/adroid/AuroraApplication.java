@@ -28,8 +28,13 @@ import com.aurora.adroid.event.RxBus;
 import com.aurora.adroid.installer.Installer;
 import com.aurora.adroid.installer.InstallerService;
 import com.aurora.adroid.installer.Uninstaller;
+import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.Util;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import io.reactivex.plugins.RxJavaPlugins;
 
@@ -41,6 +46,8 @@ public class AuroraApplication extends Application {
     public static Uninstaller uninstaller;
 
     private static RxBus rxBus = null;
+    private static boolean bulkUpdateAlive = false;
+    private static List<App> ongoingUpdateList = new ArrayList<>();
 
     public static RxBus getRxBus() {
         return rxBus;
@@ -56,6 +63,32 @@ public class AuroraApplication extends Application {
 
     public static Installer getInstaller() {
         return installer;
+    }
+
+    public static boolean isBulkUpdateAlive() {
+        return bulkUpdateAlive;
+    }
+
+    public static void setBulkUpdateAlive(boolean updating) {
+        AuroraApplication.bulkUpdateAlive = updating;
+    }
+
+    public static List<App> getOngoingUpdateList() {
+        return ongoingUpdateList;
+    }
+
+    public static void setOngoingUpdateList(List<App> ongoingUpdateList) {
+        AuroraApplication.ongoingUpdateList = ongoingUpdateList;
+    }
+
+    public static void removeFromOngoingUpdateList(String packageName) {
+        Iterator<App> iterator = ongoingUpdateList.iterator();
+        while (iterator.hasNext()) {
+            if (packageName.equals(iterator.next().getPackageName()))
+                iterator.remove();
+        }
+        if (ongoingUpdateList.isEmpty())
+            setBulkUpdateAlive(false);
     }
 
     @Override

@@ -45,7 +45,7 @@ public class RequestBuilder {
     public static Request buildRequest(Context context, App app) {
         final Request request = new Request(DatabaseUtil.getDownloadURl(app),
                 PathUtil.getApkPath(context, app.getAppPackage().getApkName()));
-        addAppExtras(request, app);
+        addAppExtras(request, app, null);
         request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
         request.setGroupId(app.getPackageName().hashCode());
         request.setTag(app.getPackageName());
@@ -55,7 +55,7 @@ public class RequestBuilder {
     public static Request buildRequest(Context context, Package pkg, App app) {
         final Request request = new Request(DatabaseUtil.getDownloadURl(pkg),
                 PathUtil.getApkPath(context, pkg.getApkName()));
-        addAppExtras(request, app);
+        addAppExtras(request, app, pkg);
         request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
         request.setGroupId(app.getPackageName().hashCode());
         request.setTag(app.getPackageName());
@@ -85,13 +85,14 @@ public class RequestBuilder {
         return requestList;
     }
 
-    private static void addAppExtras(Request request, App app) {
+    private static void addAppExtras(Request request, App app, Package pkg) {
         final Map<String, String> stringMap = new HashMap<>();
         stringMap.put(Constants.DOWNLOAD_PACKAGE_NAME, app.getPackageName());
         stringMap.put(Constants.DOWNLOAD_DISPLAY_NAME, app.getName());
         stringMap.put(Constants.DOWNLOAD_VERSION_NAME, app.getSuggestedVersionName());
         stringMap.put(Constants.DOWNLOAD_VERSION_CODE, String.valueOf(app.getSuggestedVersionCode()));
         stringMap.put(Constants.DOWNLOAD_ICON_URL, DatabaseUtil.getImageUrl(app));
+        stringMap.put(Constants.DOWNLOAD_APK_NAME, pkg == null ? app.getAppPackage().getApkName() : pkg.getApkName());
 
         final Extras extras = new Extras(stringMap);
         request.setExtras(extras);

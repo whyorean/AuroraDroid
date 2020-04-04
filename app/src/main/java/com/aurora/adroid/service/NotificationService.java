@@ -260,7 +260,7 @@ public class NotificationService extends Service {
                             progressBigText.bigText(getString(R.string.notification_installation_auto));
                             builder.addAction(R.drawable.ic_installation,
                                     getString(R.string.action_install),
-                                    getInstallIntent(downloadBundle.getPackageName(), downloadBundle.getVersionCode()));
+                                    getInstallIntent(downloadBundle.getPackageName(), downloadBundle.getApkName()));
                         }
                         builder.setStyle(progressBigText);
                     }
@@ -293,7 +293,9 @@ public class NotificationService extends Service {
                         }
                     });
 
-            notificationManager.notify(downloadBundle.getPackageName(), groupId, builder.build());
+            notificationManager.notify(downloadBundle.getPackageName(),
+                    downloadBundle.getPackageName().hashCode(),
+                    builder.build());
         }
     }
 
@@ -326,10 +328,9 @@ public class NotificationService extends Service {
         return PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    private PendingIntent getInstallIntent(String packageName, String versionCode) {
+    private PendingIntent getInstallIntent(String packageName, String apkName) {
         final Intent intent = new Intent(this, InstallReceiver.class);
-        intent.putExtra(Constants.INTENT_PACKAGE_NAME, packageName);
-        intent.putExtra(Constants.DOWNLOAD_VERSION_CODE, versionCode);
+        intent.putExtra(Constants.INTENT_APK_FILE_NAME, apkName);
         return PendingIntent.getBroadcast(this, packageName.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
@@ -348,6 +349,7 @@ public class NotificationService extends Service {
         private String versionName;
         private String versionCode;
         private String iconUrl;
+        private String apkName;
 
         public DownloadBundle(Download download) {
             final Extras extras = download.getExtras();
@@ -355,6 +357,7 @@ public class NotificationService extends Service {
             this.displayName = extras.getString(Constants.DOWNLOAD_DISPLAY_NAME, StringUtils.EMPTY);
             this.versionName = extras.getString(Constants.DOWNLOAD_VERSION_NAME, StringUtils.EMPTY);
             this.versionCode = extras.getString(Constants.DOWNLOAD_VERSION_CODE, StringUtils.EMPTY);
+            this.apkName = extras.getString(Constants.DOWNLOAD_APK_NAME, StringUtils.EMPTY);
             this.iconUrl = extras.getString(Constants.DOWNLOAD_ICON_URL, StringUtils.EMPTY);
         }
     }

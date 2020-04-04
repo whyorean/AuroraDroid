@@ -25,14 +25,14 @@ import android.os.Bundle;
 
 import com.aurora.adroid.download.DownloadManager;
 
-import static com.aurora.adroid.Constants.REQUEST_ID;
+import static com.aurora.adroid.service.NotificationService.FETCH_GROUP_ID;
 
 public class DownloadPauseReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle extras = intent.getExtras();
         if ((extras != null)) {
-            final int requestId = extras.getInt(REQUEST_ID, -1);
+            final int requestId = extras.getInt(FETCH_GROUP_ID, -1);
             DownloadManager.getFetchInstance(context).pauseGroup(requestId);
         }
     }

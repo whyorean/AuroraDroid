@@ -4,14 +4,12 @@ import android.content.Context;
 
 import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.download.DownloadManager;
+import com.aurora.adroid.download.RequestBuilder;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.Log;
-import com.aurora.adroid.util.PathUtil;
 import com.aurora.adroid.util.Util;
 import com.tonyodev.fetch2.AbstractFetchGroupListener;
 import com.tonyodev.fetch2.Download;
-import com.tonyodev.fetch2.EnqueueAction;
 import com.tonyodev.fetch2.Fetch;
 import com.tonyodev.fetch2.FetchGroup;
 import com.tonyodev.fetch2.FetchListener;
@@ -39,12 +37,7 @@ public class LiveUpdate {
     }
 
     public void enqueueUpdate() {
-        final String apkName = app.getAppPackage().getApkName();
-        final Request request = new Request(DatabaseUtil.getDownloadURl(app), PathUtil.getApkPath(context, apkName));
-        request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
-        request.setGroupId(app.getPackageName().hashCode());
-        request.setTag(app.getPackageName());
-
+        final Request request = RequestBuilder.buildRequest(context, app);
         final List<Request> requestList = new ArrayList<>();
         requestList.add(request);
 

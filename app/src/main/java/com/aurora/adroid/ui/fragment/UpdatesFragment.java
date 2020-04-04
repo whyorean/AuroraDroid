@@ -23,39 +23,44 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.RecyclerDataObserver;
 import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.items.UpdatesItem;
-import com.aurora.adroid.task.LiveUpdate;
 import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.ui.sheet.AppMenuSheet;
-import com.aurora.adroid.util.Log;
+import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.util.diff.UpdatesDiffCallback;
 import com.aurora.adroid.viewmodel.UpdatesViewModel;
+import com.google.android.material.button.MaterialButton;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil;
 import com.mikepenz.fastadapter.select.SelectExtension;
+import com.tonyodev.fetch2.AbstractFetchGroupListener;
+import com.tonyodev.fetch2.Download;
 import com.tonyodev.fetch2.Fetch;
+import com.tonyodev.fetch2.FetchGroup;
+import com.tonyodev.fetch2.FetchListener;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -65,21 +70,15 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class UpdatesFragment extends BaseFragment {
 
-    private static final int UPDATE_GROUP_ID = 1338;
-
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
-    @BindView(R.id.btn_update_all)
-    Button btnUpdateAll;
     @BindView(R.id.txt_update_all)
-    TextView txtUpdateAll;
-
+    AppCompatTextView txtUpdateAll;
+    @BindView(R.id.btn_action)
+    MaterialButton btnAction;
     @BindView(R.id.empty_layout)
     RelativeLayout emptyLayout;
     @BindView(R.id.progress_layout)
@@ -91,14 +90,9 @@ public class UpdatesFragment extends BaseFragment {
     private UpdatesViewModel model;
     private RecyclerDataObserver dataObserver;
 
-
     private FastAdapter<UpdatesItem> fastAdapter;
     private ItemAdapter<UpdatesItem> itemAdapter;
     private SelectExtension<UpdatesItem> selectExtension;
-
-    private boolean onGoingUpdate = false;
-    private List<App> updatableAppList = new ArrayList<>();
-    private CompositeDisposable disposable = new CompositeDisposable();
 
     @Nullable
     @Override
@@ -119,6 +113,33 @@ public class UpdatesFragment extends BaseFragment {
         model.getAppsLiveData().observe(getViewLifecycleOwner(), updatesItems -> {
             dispatchAppsToAdapter(updatesItems);
         });
+
+        AuroraApplication
+                .getRxBus()
+                .getBus()
+                .doOnNext(event -> {
+                    //Handle list update events
+                    switch (event.getType()) {
+                        case BLACKLIST:
+                            int adapterPosition = event.getIntExtra();
+                            removeItemByAdapterPosition(adapterPosition);
+                            break;
+                        case INSTALLED:
+                        case UNINSTALLED:
+                            removeItemByPackageName(event.getStringExtra());
+                            break;
+                    }
+
+                    //Handle misc events
+                    switch (event.getType()) {
+                        case BULK_UPDATE_NOTIFY:
+                            updatePageData();
+                            break;
+                        case WHITELIST:
+                            //TODO:Check for update and add app to list if update is available
+                            break;
+                    }
+                }).subscribe();
     }
 
     @Override
@@ -129,15 +150,48 @@ public class UpdatesFragment extends BaseFragment {
         }
     }
 
+    private void removeItemByPackageName(String packageName) {
+        int adapterPosition = -1;
+        for (UpdatesItem updatesItem : itemAdapter.getAdapterItems()) {
+            if (updatesItem.getPackageName().equals(packageName)) {
+                adapterPosition = itemAdapter.getAdapterPosition(updatesItem);
+                break;
+            }
+        }
+
+        if (adapterPosition >= 0 && itemAdapter != null) {
+            itemAdapter.remove(adapterPosition);
+            updateItemList(packageName);
+        }
+    }
+
+    private void removeItemByAdapterPosition(int adapterPosition) {
+        if (adapterPosition >= 0 && itemAdapter != null) {
+            UpdatesItem updatesItem = itemAdapter.getAdapterItem(adapterPosition);
+            updateItemList(updatesItem.getPackageName());
+            itemAdapter.remove(adapterPosition);
+        }
+    }
+
+    private void updateItemList(String packageName) {
+        AuroraApplication.removeFromOngoingUpdateList(packageName);
+        updatePageData();
+    }
+
+    private void updatePageData() {
+        updateText();
+        updateButtons();
+        updateButtonActions();
+        if (dataObserver != null)
+            dataObserver.checkIfEmpty();
+    }
+
     private void dispatchAppsToAdapter(List<UpdatesItem> updatesItems) {
         final FastAdapterDiffUtil fastAdapterDiffUtil = FastAdapterDiffUtil.INSTANCE;
         final UpdatesDiffCallback diffCallback = new UpdatesDiffCallback();
         final DiffUtil.DiffResult diffResult = fastAdapterDiffUtil.calculateDiff(itemAdapter, updatesItems, diffCallback);
         fastAdapterDiffUtil.set(itemAdapter, diffResult);
-
-        if (dataObserver != null)
-            dataObserver.checkIfEmpty();
-        //updatePageData();
+        updatePageData();
     }
 
     private void setupRecycler() {
@@ -179,6 +233,7 @@ public class UpdatesFragment extends BaseFragment {
             } else {
                 selectedItems.remove(item);
             }
+            updatePageData();
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
@@ -186,52 +241,98 @@ public class UpdatesFragment extends BaseFragment {
         recyclerView.setAdapter(fastAdapter);
     }
 
-    private void setupUpdateAll() {
-        if (updatableAppList.isEmpty()) {
-            ViewUtil.hideWithAnimation(btnUpdateAll);
-            txtUpdateAll.setText(requireContext().getString(R.string.list_empty_updates));
-        } else if (onGoingUpdate) {
-            btnUpdateAll.setOnClickListener(cancelAllListener());
+    private void updateText() {
+        if (selectExtension.getSelectedItems().size() > 0) {
+            btnAction.setText(getString(R.string.list_update_selected));
         } else {
-            btnUpdateAll.setOnClickListener(updateAllListener());
+            btnAction.setText(getString(R.string.list_update_all));
         }
     }
 
-    private void updateCounter() {
-        txtUpdateAll.setText(new StringBuilder()
-                .append(updatableAppList.size())
-                .append(StringUtils.SPACE)
-                .append(requireContext().getString(R.string.list_update_all_txt)));
+    private void updateButtons() {
+        final int size = itemAdapter.getAdapterItemCount();
+        btnAction.setVisibility(size == 0 ? View.INVISIBLE : View.VISIBLE);
+        txtUpdateAll.setVisibility(size == 0 ? View.INVISIBLE : View.VISIBLE);
+
+        if (size > 0) {
+            txtUpdateAll.setText(new StringBuilder()
+                    .append(size)
+                    .append(StringUtils.SPACE)
+                    .append(size == 1
+                            ? requireContext().getString(R.string.list_update_all_txt_one)
+                            : requireContext().getString(R.string.list_update_all_txt)));
+        }
     }
 
-    private View.OnClickListener updateAllListener() {
-        btnUpdateAll.setText(getString(R.string.list_update_all));
-        btnUpdateAll.setEnabled(true);
-        return v -> {
-            updateAllApps();
-            onGoingUpdate = true;
-            btnUpdateAll.setText(getString(R.string.list_updating));
-            btnUpdateAll.setEnabled(false);
-        };
-    }
+    private void attachFetchCancelListener() {
+        boolean selectiveUpdate = selectExtension.getSelectedItems().size() > 0;
+        Observable.fromIterable(selectiveUpdate
+                ? selectedItems
+                : itemAdapter.getAdapterItems())
+                .map(updatesItem -> updatesItem.getPackageName().hashCode())
+                .toList()
+                .doOnSuccess(hashCodes -> {
+                    final FetchListener fetchListener = new AbstractFetchGroupListener() {
+                        @Override
+                        public void onAdded(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
+                            super.onAdded(groupId, download, fetchGroup);
+                            if (hashCodes.contains(groupId)) {
+                                fetch.cancelGroup(groupId);
+                            }
+                        }
 
-    private View.OnClickListener cancelAllListener() {
-        btnUpdateAll.setText(getString(R.string.action_cancel));
-        btnUpdateAll.setEnabled(true);
-        return v -> {
-            fetch.deleteGroup(UPDATE_GROUP_ID);
-            setupUpdateAll();
-        };
-    }
+                        @Override
+                        public void onProgress(int groupId, @NotNull Download download, long etaInMilliSeconds, long downloadedBytesPerSecond, @NotNull FetchGroup fetchGroup) {
+                            super.onProgress(groupId, download, etaInMilliSeconds, downloadedBytesPerSecond, fetchGroup);
+                            if (hashCodes.contains(groupId)) {
+                                fetch.cancelGroup(groupId);
+                            }
+                        }
 
-    private void updateAllApps() {
-        disposable.add(Observable.fromIterable(updatableAppList)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(app -> new LiveUpdate(requireContext(), app).enqueueUpdate())
-                .doOnError(throwable -> {
-                    Log.e(throwable.getMessage());
+                        @Override
+                        public void onQueued(int groupId, @NotNull Download download, boolean waitingNetwork, @NotNull FetchGroup fetchGroup) {
+                            super.onQueued(groupId, download, waitingNetwork, fetchGroup);
+                            if (hashCodes.contains(groupId)) {
+                                fetch.cancelGroup(groupId);
+                            }
+                        }
+                    };
+
+                    fetch.addListener(fetchListener);
+
+                    //Clear ongoing update list
+                    AuroraApplication.setOngoingUpdateList(new ArrayList<>());
+                    //Start BulkUpdate cancellation request
+                    Util.stopBulkUpdateService(requireContext());
                 })
-                .subscribe());
+                .subscribe();
+    }
+
+    private void updateButtonActions() {
+        btnAction.setOnClickListener(null);
+        btnAction.setEnabled(true);
+        if (AuroraApplication.isBulkUpdateAlive()) {
+            btnAction.setText(getString(R.string.action_cancel));
+            btnAction.setOnClickListener(v -> {
+                attachFetchCancelListener();
+                btnAction.setEnabled(false);
+            });
+        } else {
+            boolean selectiveUpdate = selectExtension.getSelectedItems().size() > 0;
+            btnAction.setOnClickListener(v -> {
+                btnAction.setEnabled(false);
+                Observable.fromIterable(selectiveUpdate
+                        ? selectedItems
+                        : itemAdapter.getAdapterItems())
+                        .map(UpdatesItem::getApp)
+                        .toList()
+                        .doOnSuccess(apps -> {
+                            AuroraApplication.setOngoingUpdateList(apps);
+                            Util.startBulkUpdateService(requireContext());
+
+                        })
+                        .subscribe();
+            });
+        }
     }
 }

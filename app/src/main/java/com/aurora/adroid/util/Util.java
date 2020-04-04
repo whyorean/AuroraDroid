@@ -37,6 +37,7 @@ import androidx.annotation.Nullable;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
+import com.aurora.adroid.service.BulkUpdateService;
 import com.aurora.adroid.service.NotificationService;
 import com.aurora.adroid.ui.activity.AuroraActivity;
 import com.tonyodev.fetch2.Status;
@@ -366,6 +367,24 @@ public class Util {
             } catch (Exception e) {
                 Log.e(e.getMessage());
             }
+        }
+    }
+
+    public static void startBulkUpdateService(Context context) {
+        try {
+            if (!BulkUpdateService.isServiceRunning())
+                context.startService(new Intent(context, BulkUpdateService.class));
+        } catch (IllegalStateException e) {
+            Log.e(e.getMessage());
+        }
+    }
+
+    public static void stopBulkUpdateService(Context context) {
+        try {
+            if (BulkUpdateService.isServiceRunning())
+                context.stopService(new Intent(context, BulkUpdateService.class));
+        } catch (IllegalStateException e) {
+            Log.e(e.getMessage());
         }
     }
 

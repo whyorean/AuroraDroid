@@ -33,5 +33,7 @@ public enum EventType {
     NET_DISCONNECTED,
     BLACKLIST,
     WHITELIST,
-    INSTALLED
+    INSTALLED,
+    UNINSTALLED,
+    BULK_UPDATE_NOTIFY
 }

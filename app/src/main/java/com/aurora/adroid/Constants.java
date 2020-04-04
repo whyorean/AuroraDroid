@@ -88,6 +88,7 @@ public class Constants {
     public static final String DOWNLOAD_VERSION_NAME = "DOWNLOAD_VERSION_NAME";
     public static final String DOWNLOAD_VERSION_CODE = "DOWNLOAD_VERSION_CODE";
     public static final String DOWNLOAD_ICON_URL = "DOWNLOAD_ICON_URL";
+    public static final String DOWNLOAD_APK_NAME = "DOWNLOAD_APK_NAME";
 
     public static final String DOWNLOAD_REPO_ID = "DOWNLOAD_REPO_ID";
     public static final String DOWNLOAD_REPO_NAME = "DOWNLOAD_REPO_NAME";
