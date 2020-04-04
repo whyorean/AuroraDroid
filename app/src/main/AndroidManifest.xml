@@ -153,7 +153,14 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".installer.InstallerService" />
-        <service android:name=".service.RepoSyncService" />
+        <service
+            android:name=".installer.InstallerService"
+            android:foregroundServiceType="dataSync" />
+        <service
+            android:name=".service.SyncService"
+            android:foregroundServiceType="dataSync" />
+        <service
+            android:name=".service.NotificationService"
+            android:foregroundServiceType="dataSync" />
     </application>
 </manifest>

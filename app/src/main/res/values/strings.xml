@@ -98,6 +98,7 @@
     <string name="download_completed">Downloaded</string>
     <string name="download_failed">Download Failed</string>
     <string name="download_force_clear_all">Force clear all</string>
+    <string name="download_metadata">Getting metadata</string>
     <string name="download_none">No downloads</string>
     <string name="download_pause_all">Pause all</string>
     <string name="download_paused">Paused</string>
@@ -137,11 +138,14 @@
 
     <string name="notification_channel_alert">"Quick notification"</string>
     <string name="notification_channel_general">"General notification"</string>
+    <string name="notification_installation_auto">"Click to install"</string>
 
-    <string name="sync_background">Syncing in background</string>
+    <string name="sync_service">Repository Sync service running</string>
     <string name="sync_completed">Synced</string>
     <string name="sync_completed_all">All repositories synced</string>
     <string name="sync_progress">Syncing repositories</string>
+    <string name="sync_init">Checking for updates</string>
+    <string name="sync_downloading">Downloading repositories</string>
     <string name="sync_failed">Sync failed</string>
 
     <string name="title_home">Aurora Droid</string>

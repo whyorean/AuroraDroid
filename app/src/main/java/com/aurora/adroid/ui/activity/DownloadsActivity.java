@@ -1,42 +1,51 @@
 /*
- * Aurora Droid
+ * Aurora Store
  * Copyright (C) 2019, Rahul Kumar Patel <whyorean@gmail.com>
  *
- * Aurora Droid is free software: you can redistribute it and/or modify
+ * Aurora Store is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
+ * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * Aurora Droid is distributed in the hope that it will be useful,
+ * Aurora Store is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Aurora Store.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
  */
 
 package com.aurora.adroid.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ViewSwitcher;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aurora.adroid.ErrorType;
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
-import com.aurora.adroid.adapter.DownloadsAdapter;
 import com.aurora.adroid.download.DownloadManager;
-import com.aurora.adroid.ui.view.ErrorView;
-import com.aurora.adroid.util.ThemeUtil;
+import com.aurora.adroid.model.items.DownloadItem;
+import com.aurora.adroid.ui.sheet.DownloadMenuSheet;
+import com.aurora.adroid.util.Util;
+import com.aurora.adroid.util.ViewUtil;
+import com.aurora.adroid.util.diff.DownloadDiffCallback;
+import com.mikepenz.fastadapter.FastAdapter;
+import com.mikepenz.fastadapter.adapters.ItemAdapter;
+import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil;
 import com.tonyodev.fetch2.AbstractFetchListener;
 import com.tonyodev.fetch2.Download;
 import com.tonyodev.fetch2.Error;
@@ -49,92 +58,94 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
-public class DownloadsActivity extends AppCompatActivity {
-
-    private static final long UNKNOWN_REMAINING_TIME = -1;
-    private static final long UNKNOWN_DOWNLOADED_BYTES_PER_SECOND = 0;
+public class DownloadsActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.recyclerDownloads)
     RecyclerView recyclerView;
-    @BindView(R.id.view_switcher)
-    ViewSwitcher viewSwitcher;
     @BindView(R.id.content_view)
     ViewGroup layoutContent;
-    @BindView(R.id.err_view)
-    ViewGroup layoutError;
 
+    @BindView(R.id.empty_layout)
+    RelativeLayout emptyLayout;
+
+    private FastAdapter<DownloadItem> fastAdapter;
+    private ItemAdapter<DownloadItem> itemAdapter;
     private Fetch fetch;
-    private DownloadsAdapter downloadsAdapter;
+
     private final FetchListener fetchListener = new AbstractFetchListener() {
         @Override
         public void onAdded(@NotNull Download download) {
-            downloadsAdapter.addDownload(download);
+            updateDownloadsList();
         }
 
         @Override
         public void onQueued(@NotNull Download download, boolean waitingOnNetwork) {
-            downloadsAdapter.update(download, UNKNOWN_REMAINING_TIME, UNKNOWN_DOWNLOADED_BYTES_PER_SECOND);
+            updateDownloadsList();
         }
 
         @Override
         public void onCompleted(@NotNull Download download) {
-            downloadsAdapter.update(download, UNKNOWN_REMAINING_TIME, UNKNOWN_DOWNLOADED_BYTES_PER_SECOND);
+            updateDownloadsList();
         }
 
         @Override
         public void onError(@NotNull Download download, @NotNull Error error, @Nullable Throwable throwable) {
             super.onError(download, error, throwable);
-            downloadsAdapter.update(download, UNKNOWN_REMAINING_TIME, UNKNOWN_DOWNLOADED_BYTES_PER_SECOND);
+            updateDownloadsList();
         }
 
         @Override
         public void onProgress(@NotNull Download download, long etaInMilliseconds, long downloadedBytesPerSecond) {
-            downloadsAdapter.update(download, etaInMilliseconds, downloadedBytesPerSecond);
+            updateDownloadsList();
         }
 
         @Override
-        public void onPaused(@NotNull Download download) {
-            downloadsAdapter.update(download, UNKNOWN_REMAINING_TIME, UNKNOWN_DOWNLOADED_BYTES_PER_SECOND);
+        public void onPaused(@NotNull Download download) {//downloadsAdapter.update(download, UNKNOWN_REMAINING_TIME, UNKNOWN_DOWNLOADED_BYTES_PER_SECOND);
+            updateDownloadsList();
         }
 
         @Override
-        public void onResumed(@NotNull Download download) {
-            downloadsAdapter.update(download, UNKNOWN_REMAINING_TIME, UNKNOWN_DOWNLOADED_BYTES_PER_SECOND);
+        public void onResumed(@NotNull Download download) {//downloadsAdapter.update(download, UNKNOWN_REMAINING_TIME, UNKNOWN_DOWNLOADED_BYTES_PER_SECOND);
+            updateDownloadsList();
         }
 
         @Override
-        public void onCancelled(@NotNull Download download) {
-            downloadsAdapter.update(download, UNKNOWN_REMAINING_TIME, UNKNOWN_DOWNLOADED_BYTES_PER_SECOND);
+        public void onCancelled(@NotNull Download download) {//downloadsAdapter.update(download, UNKNOWN_REMAINING_TIME, UNKNOWN_DOWNLOADED_BYTES_PER_SECOND);
+            updateDownloadsList();
         }
 
         @Override
-        public void onRemoved(@NotNull Download download) {
-            downloadsAdapter.update(download, UNKNOWN_REMAINING_TIME, UNKNOWN_DOWNLOADED_BYTES_PER_SECOND);
+        public void onRemoved(@NotNull Download download) {//downloadsAdapter.update(download, UNKNOWN_REMAINING_TIME, UNKNOWN_DOWNLOADED_BYTES_PER_SECOND);
+            updateDownloadsList();
         }
 
         @Override
         public void onDeleted(@NotNull Download download) {
-            downloadsAdapter.update(download, UNKNOWN_REMAINING_TIME, UNKNOWN_DOWNLOADED_BYTES_PER_SECOND);
+            updateDownloadsList();
         }
     };
-    private ThemeUtil themeUtil = new ThemeUtil();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        themeUtil.onCreate(this);
         setContentView(R.layout.activity_downloads);
         ButterKnife.bind(this);
-        fetch = DownloadManager.getFetchInstance(this);
-        downloadsAdapter = new DownloadsAdapter(this);
+
         setupActionbar();
         setupRecycler();
+
+        fetch = DownloadManager.getFetchInstance(this);
+        updateDownloadsList();
     }
 
     @Override
@@ -162,7 +173,7 @@ public class DownloadsActivity extends AppCompatActivity {
                 fetch.removeAllWithStatus(Status.COMPLETED);
                 return true;
             case R.id.action_force_clear_all:
-                forceClearAll();
+                fetch.deleteAll();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -171,73 +182,92 @@ public class DownloadsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        themeUtil.onResume(this);
-        fetch.getDownloads(downloads -> {
-            final ArrayList<Download> list = new ArrayList<>(downloads);
-            Collections.sort(list, (first, second) -> Long.compare(first.getCreated(), second.getCreated()));
-            if (list.isEmpty()) {
-                setErrorView(ErrorType.NO_DOWNLOADS);
-                switchViews(true);
-                return;
-            }
-            for (Download download : list) {
-                if (download.getGroup() == 1337)
-                    continue; /*Exclude repository downloads from download  manager*/
-                downloadsAdapter.addDownload(download);
-            }
-        }).addListener(fetchListener);
-        downloadsAdapter.notifyDataSetChanged();
+        fetch.addListener(fetchListener);
+
+        //Check & start notification service
+        Util.startNotificationService(this);
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
         fetch.removeListener(fetchListener);
+        super.onPause();
     }
 
     @Override
     protected void onDestroy() {
+        fetch.removeListener(fetchListener);
         super.onDestroy();
-    }
-
-    protected void setErrorView(ErrorType errorType) {
-        layoutError.removeAllViews();
-        layoutError.addView(new ErrorView(this, errorType, null));
-    }
-
-    protected void switchViews(boolean showError) {
-        if (viewSwitcher.getCurrentView() == layoutContent && showError)
-            viewSwitcher.showNext();
-        else if (viewSwitcher.getCurrentView() == layoutError && !showError)
-            viewSwitcher.showPrevious();
     }
 
     private void setupActionbar() {
         setSupportActionBar(toolbar);
-        ActionBar mActionBar = getSupportActionBar();
-        if (mActionBar != null) {
-            mActionBar.setDisplayShowCustomEnabled(true);
-            mActionBar.setDisplayHomeAsUpEnabled(true);
-            mActionBar.setElevation(0f);
-            mActionBar.setTitle(R.string.menu_downloads);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setElevation(0f);
+            actionBar.setTitle(R.string.menu_downloads);
         }
     }
 
-    private void forceClearAll() {
-        fetch.deleteAllWithStatus(Status.ADDED);
-        fetch.deleteAllWithStatus(Status.CANCELLED);
-        fetch.deleteAllWithStatus(Status.COMPLETED);
-        fetch.deleteAllWithStatus(Status.DOWNLOADING);
-        fetch.deleteAllWithStatus(Status.FAILED);
-        fetch.deleteAllWithStatus(Status.PAUSED);
-        fetch.deleteAllWithStatus(Status.QUEUED);
+    private void updateDownloadsList() {
+        fetch.getDownloads(downloads -> {
+            final List<Download> downloadList = new ArrayList<>(downloads);
+            Collections.sort(downloadList, (first, second) -> Long.compare(first.getCreated(), second.getCreated()));
+
+            Observable.fromIterable(downloadList)
+                    .subscribeOn(Schedulers.io())
+                    .map(DownloadItem::new)
+                    .toList()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSuccess(this::dispatchAppsToAdapter)
+                    .doFinally(() -> {
+                        if (itemAdapter != null) {
+                            emptyLayout.setVisibility(itemAdapter.getAdapterItems().isEmpty()
+                                    ? View.VISIBLE
+                                    : View.GONE);
+                        }
+                    })
+                    .subscribe();
+        });
+    }
+
+    private void dispatchAppsToAdapter(List<DownloadItem> installedItemList) {
+        final FastAdapterDiffUtil fastAdapterDiffUtil = FastAdapterDiffUtil.INSTANCE;
+        final DownloadDiffCallback diffCallback = new DownloadDiffCallback();
+        final DiffUtil.DiffResult diffResult = fastAdapterDiffUtil.calculateDiff(itemAdapter, installedItemList, diffCallback);
+        fastAdapterDiffUtil.set(itemAdapter, diffResult);
     }
 
     private void setupRecycler() {
-        recyclerView.setAdapter(downloadsAdapter);
+        fastAdapter = new FastAdapter<>();
+        itemAdapter = new ItemAdapter<>();
+        fastAdapter.addAdapter(0, itemAdapter);
+
+        fastAdapter.setOnClickListener((view, downloadItemIAdapter, downloadItem, position) -> {
+            final Intent intent = new Intent(this, DetailsActivity.class);
+            intent.putExtra(Constants.INTENT_PACKAGE_NAME, downloadItem.getPackageName());
+            startActivity(intent, ViewUtil.getEmptyActivityBundle(this));
+            return false;
+        });
+
+        fastAdapter.setOnLongClickListener((view, downloadItemIAdapter, downloadItem, position) -> {
+            final DownloadMenuSheet menuSheet = new DownloadMenuSheet();
+            final Bundle bundle = new Bundle();
+            bundle.putInt(DownloadMenuSheet.DOWNLOAD_ID, downloadItem.getDownload().getId());
+            bundle.putInt(DownloadMenuSheet.DOWNLOAD_STATUS, downloadItem.getDownload().getStatus().getValue());
+            bundle.putString(DownloadMenuSheet.DOWNLOAD_URL, downloadItem.getDownload().getUrl());
+            menuSheet.setArguments(bundle);
+            menuSheet.show(getSupportFragmentManager(), DownloadMenuSheet.TAG);
+            return true;
+        });
+
+        recyclerView.setAdapter(fastAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        DividerItemDecoration itemDecorator = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(itemDecorator);
-        recyclerView.setItemViewCacheSize(25);
+
+        final DividerItemDecoration itemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+        itemDecoration.setDrawable(getResources().getDrawable(R.drawable.downloads_divider));
+        recyclerView.addItemDecoration(itemDecoration);
     }
 }

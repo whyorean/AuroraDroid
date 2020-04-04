@@ -37,7 +37,7 @@ import androidx.fragment.app.Fragment;
 import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
 import com.aurora.adroid.event.LogEvent;
-import com.aurora.adroid.service.RepoSyncService;
+import com.aurora.adroid.service.SyncService;
 import com.aurora.adroid.ui.activity.AuroraActivity;
 import com.aurora.adroid.ui.activity.ContainerActivity;
 import com.aurora.adroid.ui.activity.IntroActivity;
@@ -133,12 +133,12 @@ public class RepoFragment extends Fragment {
         btnSync.setOnClickListener(v -> startRepoSyncService());
         txtLog.setMovementMethod(new ScrollingMovementMethod());
 
-        if (RepoSyncService.isServiceRunning())
+        if (SyncService.isServiceRunning())
             blockSync();
     }
 
     private void startRepoSyncService() {
-        Intent intent = new Intent(context, RepoSyncService.class);
+        Intent intent = new Intent(context, SyncService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(intent);
         } else {

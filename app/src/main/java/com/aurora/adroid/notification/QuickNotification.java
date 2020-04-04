@@ -18,29 +18,24 @@
 
 package com.aurora.adroid.notification;
 
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.ContextWrapper;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 
-public class QuickNotification extends ContextWrapper {
+public class QuickNotification {
 
     private static final int QUICK_NOTIFICATION_CHANNEL_ID = 69;
-
-    protected NotificationCompat.Builder builder;
-    protected NotificationChannel channel;
-    protected NotificationManager manager;
+    private Context context;
 
     public QuickNotification(Context context) {
-        super(context);
+        this.context = context;
     }
 
     public static QuickNotification show(@NonNull Context context,
@@ -53,31 +48,20 @@ public class QuickNotification extends ContextWrapper {
     }
 
     public void show(String contentTitle, String contentText, PendingIntent contentIntent) {
-        manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        builder = new NotificationCompat.Builder(this, this.getPackageName())
+        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(context, Constants.NOTIFICATION_CHANNEL_ALERT)
                 .setAutoCancel(true)
-                .setCategory(NotificationCompat.CATEGORY_PROGRESS)
-                .setColorized(true)
-                .setColor(this.getResources().getColor(R.color.colorAccent))
+                .setColor(context.getResources().getColor(R.color.colorAccent))
                 .setContentTitle(contentTitle)
                 .setContentText(contentText)
                 .setOnlyAlertOnce(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setSmallIcon(R.drawable.ic_notifications)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+                .setSmallIcon(R.drawable.ic_notification_outlined);
 
         if (contentIntent != null)
             builder.setContentIntent(contentIntent);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            channel = new NotificationChannel(
-                    this.getPackageName(),
-                    this.getString(R.string.app_name),
-                    NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription("Aurora Store Quick Notification Channel");
-            manager.createNotificationChannel(channel);
-            builder.setChannelId(channel.getId());
-        }
-        manager.notify(QUICK_NOTIFICATION_CHANNEL_ID, builder.build());
+        if (notificationManager != null)
+            notificationManager.notify(QUICK_NOTIFICATION_CHANNEL_ID, builder.build());
     }
 }

@@ -45,7 +45,7 @@ public class InstalledAppsViewModel extends BaseViewModel implements SharedPrefe
     }
 
     public void fetchInstalledApps(boolean userOnly) {
-        Observable.fromCallable(() -> new InstalledAppsTask(getApplication())
+        disposable.add(Observable.fromCallable(() -> new InstalledAppsTask(getApplication())
                 .getInstalledApps())
                 .subscribeOn(Schedulers.io())
                 .map(apps -> filterList(apps, userOnly))
@@ -55,11 +55,7 @@ public class InstalledAppsViewModel extends BaseViewModel implements SharedPrefe
                         .map(InstalledItem::new))
                 .toList()
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess(installedItems -> data.setValue(installedItems))
-                .doOnError(throwable -> {
-                    throwable.printStackTrace();
-                })
-                .subscribe();
+                .subscribe(installedItems -> data.setValue(installedItems), throwable -> throwable.printStackTrace()));
     }
 
     private List<App> filterList(List<App> appList, boolean userOnly) {
@@ -85,5 +81,12 @@ public class InstalledAppsViewModel extends BaseViewModel implements SharedPrefe
             userOnly = PrefUtil.getBoolean(getApplication(), Constants.PREFERENCE_INCLUDE_SYSTEM);
             fetchInstalledApps(userOnly);
         }
+    }
+
+    @Override
+    protected void onCleared() {
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        disposable.dispose();
+        super.onCleared();
     }
 }

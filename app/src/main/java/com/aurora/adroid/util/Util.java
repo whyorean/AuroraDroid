@@ -37,6 +37,7 @@ import androidx.annotation.Nullable;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
+import com.aurora.adroid.service.NotificationService;
 import com.aurora.adroid.ui.activity.AuroraActivity;
 import com.tonyodev.fetch2.Status;
 import com.tonyodev.fetch2core.Downloader;
@@ -367,6 +368,15 @@ public class Util {
             } catch (Exception e) {
                 Log.e(e.getMessage());
             }
+        }
+    }
+
+    public static void startNotificationService(Context context) {
+        try {
+            if (NotificationService.isNotAvailable())
+                context.startService(new Intent(context, NotificationService.class));
+        } catch (IllegalStateException e) {
+            Log.e(e.getMessage());
         }
     }
 }

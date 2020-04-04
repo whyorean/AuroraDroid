@@ -25,7 +25,7 @@ import android.os.Bundle;
 
 import com.aurora.adroid.AuroraApplication;
 
-import static com.aurora.adroid.notification.NotificationBase.INTENT_APK_FILE_NAME;
+import static com.aurora.adroid.Constants.INTENT_APK_FILE_NAME;
 
 public class InstallReceiver extends BroadcastReceiver {
     @Override

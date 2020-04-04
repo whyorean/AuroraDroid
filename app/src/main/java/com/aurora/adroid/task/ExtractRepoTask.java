@@ -32,8 +32,6 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import io.reactivex.Observable;
-
 public class ExtractRepoTask extends ContextWrapper {
 
     private File file;
@@ -45,22 +43,19 @@ public class ExtractRepoTask extends ContextWrapper {
         this.repoDir = PathUtil.getRepoDirectory(context);
     }
 
-    public Observable<File> extract() {
-        return Observable.create(emitter -> {
-            try {
-                final JarFile jarFile = new JarFile(file);
-                final String fileName = FilenameUtils.getBaseName(file.getName());
-                for (Enumeration<JarEntry> enums = jarFile.entries(); enums.hasMoreElements(); ) {
-                    JarEntry entry = enums.nextElement();
-                    if (entry.getName().equals(Constants.DATA_FILE_NAME)) {
-                        final File jsonFile = new File(repoDir + fileName + Constants.JSON);
-                        FileUtils.copyToFile(jarFile.getInputStream(entry), jsonFile);
-                    }
+    public File extract() {
+        try {
+            final JarFile jarFile = new JarFile(file);
+            final String fileName = FilenameUtils.getBaseName(file.getName());
+            for (Enumeration<JarEntry> enums = jarFile.entries(); enums.hasMoreElements(); ) {
+                JarEntry entry = enums.nextElement();
+                if (entry.getName().equals(Constants.DATA_FILE_NAME)) {
+                    final File jsonFile = new File(repoDir + fileName + Constants.JSON);
+                    FileUtils.copyToFile(jarFile.getInputStream(entry), jsonFile);
                 }
-            } catch (Exception ignored) {
             }
-            emitter.onNext(file);
-            emitter.onComplete();
-        });
+        } catch (Exception ignored) {
+        }
+        return file;
     }
 }

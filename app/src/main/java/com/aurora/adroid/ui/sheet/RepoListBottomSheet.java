@@ -52,9 +52,9 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        test();
+    protected void onContentViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onContentViewCreated(view, savedInstanceState);
+        setupRecycler();
     }
 
     @OnClick(R.id.btn_positive)
@@ -95,7 +95,7 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
         return RepoListManager.getAllRepoList(requireContext());
     }
 
-    private void test() {
+    private void setupRecycler() {
         fastItemAdapter = new FastItemAdapter<>();
         selectExtension = new SelectExtension<>(fastItemAdapter);
         selectExtension.setMultiSelect(true);

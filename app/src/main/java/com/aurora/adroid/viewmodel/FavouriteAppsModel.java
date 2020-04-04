@@ -21,7 +21,6 @@ import io.reactivex.schedulers.Schedulers;
 public class FavouriteAppsModel extends BaseViewModel {
 
     private AppRepository appRepository;
-    private List<String> packageList;
 
     private MutableLiveData<List<FavouriteItem>> data = new MutableLiveData<>();
 
@@ -37,9 +36,9 @@ public class FavouriteAppsModel extends BaseViewModel {
 
     public void fetchFavouriteApps() {
         final FavouritesManager favouritesManager = new FavouritesManager(getApplication());
-        packageList = favouritesManager.getFavouritePackages();
-        if (packageList.size() > 0) {
-            Observable.fromCallable(() -> new FavouritesManager(getApplication())
+        final List<String> packageList1 = favouritesManager.getFavouritePackages();
+        if (packageList1.size() > 0) {
+            disposable.add(Observable.fromCallable(() -> new FavouritesManager(getApplication())
                     .getFavouritePackages())
                     .subscribeOn(Schedulers.io())
                     .map(packageList -> {
@@ -59,12 +58,16 @@ public class FavouriteAppsModel extends BaseViewModel {
                     .flatMap(apps -> Observable.fromIterable(apps).map(FavouriteItem::new))
                     .toList()
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSuccess(favouriteItems -> data.setValue(favouriteItems))
-                    .doOnError(throwable -> throwable.printStackTrace())
-                    .subscribe();
+                    .subscribe(favouriteItems -> data.setValue(favouriteItems), throwable -> throwable.printStackTrace()));
         } else {
             data.setValue(new ArrayList<>());
         }
+    }
+
+    @Override
+    protected void onCleared() {
+        disposable.dispose();
+        super.onCleared();
     }
 }
 

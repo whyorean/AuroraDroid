@@ -61,14 +61,26 @@ public class AuroraApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        RxJavaPlugins.setErrorHandler(err -> Log.e(err.getMessage()));
+
         rxBus = new RxBus();
         installer = new Installer(this);
         uninstaller = new Uninstaller(this);
+
+        //Clear all old installation sessions.
         AsyncTask.execute(() -> Util.clearOldInstallationSessions(this));
+
+        //Check & start notification service
+        Util.startNotificationService(this);
+
         registerReceiver(installer.getPackageInstaller().getBroadcastReceiver(),
                 new IntentFilter(InstallerService.ACTION_INSTALLATION_STATUS_NOTIFICATION));
-        RxJavaPlugins.setErrorHandler(err -> {
+
+        //Global RX-Error handler, just simply logs, I make sure all errors are handled at origin.
+        RxJavaPlugins.setErrorHandler(throwable -> {
+            Log.e(throwable.getMessage());
+            if (BuildConfig.DEBUG) {
+                throwable.printStackTrace();
+            }
         });
     }
 

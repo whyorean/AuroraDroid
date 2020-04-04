@@ -21,7 +21,6 @@
     android:id="@+id/sort_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/txt_sort"
     android:scrollbars="none">
 
     <com.google.android.material.chip.ChipGroup

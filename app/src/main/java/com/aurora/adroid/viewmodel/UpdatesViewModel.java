@@ -13,7 +13,6 @@ import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 import com.aurora.adroid.model.items.UpdatesItem;
 import com.aurora.adroid.util.CertUtil;
-import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PackageUtil;
 
 import org.apache.maven.artifact.versioning.ComparableVersion;
@@ -45,7 +44,7 @@ public class UpdatesViewModel extends BaseViewModel {
     }
 
     public void fetchUpdatableApps() {
-        Observable.fromCallable(() -> getInstalledPackages(true))
+        disposable.add(Observable.fromCallable(() -> getInstalledPackages(true))
                 .subscribeOn(Schedulers.io())
                 .map(packages -> {
                     final List<App> appList = new ArrayList<>();
@@ -53,8 +52,8 @@ public class UpdatesViewModel extends BaseViewModel {
                         final App app = appRepository.getAppByPackageName(packageName);
                         if (app != null) {
                             final Package appPackage = packageRepository.getAppPackage(packageName);
-                            final PackageInfo packageInfo = PackageUtil
-                                    .getPackageInfo(packageManager, app.getPackageName());
+                            final PackageInfo packageInfo = PackageUtil.getPackageInfo(packageManager, app.getPackageName());
+
                             if (appPackage != null && packageInfo != null) {
                                 final ComparableVersion installedVersion = new ComparableVersion(
                                         packageInfo.versionName + "." + packageInfo.versionCode);
@@ -62,6 +61,7 @@ public class UpdatesViewModel extends BaseViewModel {
                                         appPackage.getVersionName() + "." + appPackage.getVersionCode());
                                 final String RSA256 = CertUtil.getSHA256(getApplication(),
                                         app.getPackageName());
+
                                 if (installedVersion.compareTo(repoVersion) < 0
                                         && RSA256.equals(appPackage.getSigner())
                                         && (PackageUtil.isBestFitSupportedPackage(app.getAppPackage())
@@ -74,14 +74,12 @@ public class UpdatesViewModel extends BaseViewModel {
                     }
                     return appList;
                 })
-                .map(apps -> sortList(apps))
+                .map(this::sortList)
                 .flatMap(apps -> Observable
                         .fromIterable(apps)
                         .map(UpdatesItem::new))
                 .toList()
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess(updatesItems -> data.setValue(updatesItems))
-                .doOnError(throwable -> Log.e("Failed to fetch updatable app list"))
-                .subscribe();
+                .subscribe(updatesItems -> data.setValue(updatesItems), Throwable::printStackTrace));
     }
 }

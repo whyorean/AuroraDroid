@@ -25,7 +25,8 @@ import android.os.Bundle;
 
 import com.aurora.adroid.download.DownloadManager;
 
-import static com.aurora.adroid.notification.NotificationBase.REQUEST_ID;
+import static com.aurora.adroid.Constants.REQUEST_ID;
+
 
 public class DownloadResumeReceiver extends BroadcastReceiver {
     @Override

@@ -36,11 +36,10 @@ import android.widget.ViewSwitcher;
 import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
 import com.aurora.adroid.download.DownloadManager;
+import com.aurora.adroid.download.RequestBuilder;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.notification.GeneralNotification;
 import com.aurora.adroid.ui.fragment.DetailsFragment;
 import com.aurora.adroid.util.ContextUtil;
-import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.PathUtil;
@@ -49,8 +48,6 @@ import com.aurora.adroid.util.ViewUtil;
 import com.google.android.material.button.MaterialButton;
 import com.tonyodev.fetch2.AbstractFetchGroupListener;
 import com.tonyodev.fetch2.Download;
-import com.tonyodev.fetch2.EnqueueAction;
-import com.tonyodev.fetch2.Error;
 import com.tonyodev.fetch2.Fetch;
 import com.tonyodev.fetch2.FetchGroup;
 import com.tonyodev.fetch2.FetchListener;
@@ -58,7 +55,6 @@ import com.tonyodev.fetch2.Request;
 import com.tonyodev.fetch2core.DownloadBlock;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +87,6 @@ public class AppActionDetails extends AbstractDetails {
 
     private Fetch fetch;
     private FetchListener fetchListener;
-    private GeneralNotification notification;
 
     public AppActionDetails(DetailsFragment fragment, App app) {
         super(fragment, app);
@@ -110,7 +105,6 @@ public class AppActionDetails extends AbstractDetails {
             runOrUpdate();
 
         fetch = DownloadManager.getFetchInstance(context);
-        notification = new GeneralNotification(context, app);
 
         fetch.getFetchGroup(hashCode, fetchGroup -> {
             if (fetchGroup.getGroupDownloadProgress() == 100) {
@@ -183,8 +177,6 @@ public class AppActionDetails extends AbstractDetails {
     private View.OnClickListener cancelDownloadListener() {
         return v -> {
             fetch.cancelGroup(hashCode);
-            if (notification != null)
-                notification.notifyCancelled();
             switchViews(false);
         };
     }
@@ -239,13 +231,8 @@ public class AppActionDetails extends AbstractDetails {
     }
 
     private void initDownload() {
-        final String apkName = app.getAppPackage().getApkName();
-        final Request request = new Request(DatabaseUtil.getDownloadURl(app), PathUtil.getApkPath(context, apkName));
-        request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
-        request.setGroupId(app.getPackageName().hashCode());
-        request.setTag(app.getPackageName());
-
-        List<Request> requestList = new ArrayList<>();
+        final Request request = RequestBuilder.buildRequest(context, app);
+        final List<Request> requestList = new ArrayList<>();
         requestList.add(request);
 
         fetchListener = getFetchListener();
@@ -253,10 +240,6 @@ public class AppActionDetails extends AbstractDetails {
 
         fetch.enqueue(requestList, updatedRequestList ->
                 Log.i("Downloading Apks : %s", app.getPackageName()));
-
-        //Add <PackageName,DisplayName> and <PackageName,IconURL> to PseudoMaps
-        PackageUtil.addToPseudoPackageMap(context, app.getPackageName(), app.getName());
-        PackageUtil.addToPseudoURLMap(context, app.getPackageName(), DatabaseUtil.getImageUrl(app));
     }
 
     private FetchListener getFetchListener() {
@@ -269,7 +252,6 @@ public class AppActionDetails extends AbstractDetails {
                         progressBar.setIndeterminate(true);
                         progressStatus.setText(R.string.download_queued);
                     });
-                    notification.notifyQueued(hashCode);
                 }
             }
 
@@ -287,10 +269,6 @@ public class AppActionDetails extends AbstractDetails {
             @Override
             public void onResumed(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
                 if (groupId == hashCode) {
-                    int progress = fetchGroup.getGroupDownloadProgress();
-                    if (progress < 0)
-                        progress = 0;
-                    notification.notifyProgress(progress, 0, hashCode);
                     ContextUtil.runOnUiThread(() -> {
                         progressStatus.setText(R.string.download_progress);
                         progressBar.setIndeterminate(false);
@@ -314,14 +292,12 @@ public class AppActionDetails extends AbstractDetails {
                         progressStatus.setText(R.string.download_progress);
                         progressTxt.setText(new StringBuilder().append(progress).append("%"));
                     });
-                    notification.notifyProgress(progress, downloadedBytesPerSecond, hashCode);
                 }
             }
 
             @Override
             public void onPaused(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
                 if (groupId == hashCode) {
-                    notification.notifyResume(hashCode);
                     ContextUtil.runOnUiThread(() -> {
                         switchViews(false);
                         progressStatus.setText(R.string.download_paused);
@@ -330,16 +306,8 @@ public class AppActionDetails extends AbstractDetails {
             }
 
             @Override
-            public void onError(int groupId, @NotNull Download download, @NotNull Error error, @Nullable Throwable throwable, @NotNull FetchGroup fetchGroup) {
-                if (groupId == hashCode) {
-                    notification.notifyFailed();
-                }
-            }
-
-            @Override
             public void onCompleted(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
                 if (groupId == hashCode && fetchGroup.getGroupDownloadProgress() == 100) {
-                    notification.notifyCompleted();
                     ContextUtil.runOnUiThread(() -> {
                         switchViews(false);
                         progressStatus.setText(R.string.download_completed);
@@ -364,7 +332,6 @@ public class AppActionDetails extends AbstractDetails {
             @Override
             public void onCancelled(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
                 if (groupId == hashCode) {
-                    notification.notifyCancelled();
                     ContextUtil.runOnUiThread(() -> {
                         switchViews(false);
                         progressBar.setIndeterminate(true);

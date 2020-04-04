@@ -56,7 +56,7 @@ public class SyncNotification {
                 .setColor(context.getResources().getColor(R.color.colorAccent))
                 .setContentTitle(context.getString(R.string.sync_progress))
                 .setOnlyAlertOnce(true)
-                .setSmallIcon(R.drawable.ic_notifications)
+                .setSmallIcon(R.drawable.ic_notification_outlined)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
     }
 

@@ -29,7 +29,7 @@ public class BlackListedAppsModel extends BaseViewModel {
     }
 
     public void fetchBlackListedApps() {
-        Observable.fromCallable(() -> new InstalledAppsTask(getApplication())
+        disposable.add(Observable.fromCallable(() -> new InstalledAppsTask(getApplication())
                 .getAllLocalApps())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -37,8 +37,12 @@ public class BlackListedAppsModel extends BaseViewModel {
                         .fromIterable(apps)
                         .map(BlacklistItem::new))
                 .toList()
-                .doOnSuccess(blacklistItems -> data.setValue(blacklistItems))
-                .doOnError(throwable -> throwable.printStackTrace())
-                .subscribe();
+                .subscribe(blacklistItems -> data.setValue(blacklistItems), throwable -> throwable.printStackTrace()));
+    }
+
+    @Override
+    protected void onCleared() {
+        disposable.dispose();
+        super.onCleared();
     }
 }

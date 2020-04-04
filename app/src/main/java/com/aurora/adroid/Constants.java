@@ -32,6 +32,9 @@ public class Constants {
     public static final String JAR = "jar";
     public static final String JSON = ".json";
 
+    public static final String INTENT_APK_FILE_NAME = "INTENT_APK_FILE_NAME";
+    public static final String REQUEST_ID = "REQUEST_ID";
+
     public static final String NOTIFICATION_CHANNEL_ALERT = "NOTIFICATION_CHANNEL_ALERT";
     public static final String NOTIFICATION_CHANNEL_GENERAL = "NOTIFICATION_CHANNEL_GENERAL";
 
@@ -79,4 +82,16 @@ public class Constants {
     public static final String INT_EXTRA = "INT_EXTRA";
     public static final String FLOAT_EXTRA = "FLOAT_EXTRA";
     public static final String STRING_EXTRA = "STRING_EXTRA";
+
+    public static final String DOWNLOAD_PACKAGE_NAME = "DOWNLOAD_PACKAGE_NAME";
+    public static final String DOWNLOAD_DISPLAY_NAME = "DOWNLOAD_DISPLAY_NAME";
+    public static final String DOWNLOAD_VERSION_NAME = "DOWNLOAD_VERSION_NAME";
+    public static final String DOWNLOAD_VERSION_CODE = "DOWNLOAD_VERSION_CODE";
+    public static final String DOWNLOAD_ICON_URL = "DOWNLOAD_ICON_URL";
+
+    public static final String DOWNLOAD_REPO_ID = "DOWNLOAD_REPO_ID";
+    public static final String DOWNLOAD_REPO_NAME = "DOWNLOAD_REPO_NAME";
+    public static final String DOWNLOAD_REPO_URL = "DOWNLOAD_REPO_URL";
+    public static final String DOWNLOAD_REPO_FINGERPRINT = "DOWNLOAD_REPO_FINGERPRINT";
+
 }

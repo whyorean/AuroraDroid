@@ -22,12 +22,21 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
+        multiDexEnabled true
+
         applicationId "com.aurora.adroid"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 4
         versionName "1.0.4"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables.useSupportLibrary = true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath false
+            }
+        }
     }
 
     compileOptions {
@@ -36,6 +45,7 @@ android {
     }
 
     lintOptions {
+        warning "MissingTranslation", "GetLocales", "VectorDrawableCompat"
         checkReleaseBuilds false
         abortOnError false
     }
@@ -46,7 +56,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             resValue "string", "app_name", "Aurora Droid"
@@ -67,7 +79,11 @@ buildscript {
         versions = [
                 fastAdapter: "5.0.0",
                 okhttp3    : "4.3.1",
-                glide      : "4.11.0"
+                glide      : "4.11.0",
+                room       : "2.2.5",
+                lambok     : "1.18.10",
+                butterknife: "10.2.1",
+                fetch2     : "3.1.4"
         ]
     }
 }
@@ -80,8 +96,8 @@ dependencies {
     //Jetpack-Components
     implementation 'androidx.navigation:navigation-fragment:2.2.1'
     implementation 'androidx.navigation:navigation-ui:2.2.1'
+
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
 
     //AndroidX
@@ -111,42 +127,38 @@ dependencies {
     implementation 'com.scottyab:rootbeer-lib:0.0.7'
 
     //Lombok
-    compileOnly 'org.projectlombok:lombok:1.18.10'
-    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+    compileOnly "org.projectlombok:lombok:1.18.10"
+    annotationProcessor "org.projectlombok:lombok:1.18.10"
 
     //Android-Room
-    implementation 'androidx.room:room-runtime:2.2.4'
-    annotationProcessor 'androidx.room:room-compiler:2.2.4'
+    implementation "androidx.room:room-runtime:${versions.room}"
+    annotationProcessor "androidx.room:room-compiler:${versions.room}"
 
     //OkHTTP3
-    implementation 'com.squareup.okhttp3:okhttp:4.3.1'
-    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.3.1'
+    implementation "com.squareup.okhttp3:okhttp:${versions.okhttp3}"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:${versions.okhttp3}"
 
     //RX-Java2
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.14'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.16'
     implementation 'com.jakewharton.rxrelay2:rxrelay:2.1.1'
 
     //ButterKnife
-    implementation 'com.jakewharton:butterknife:10.2.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+    implementation "com.jakewharton:butterknife:${versions.butterknife}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${versions.butterknife}"
 
     //Glide
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    implementation "com.github.bumptech.glide:okhttp3-integration:4.11.0"
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation "com.github.bumptech.glide:glide:${versions.glide}"
+    implementation "com.github.bumptech.glide:okhttp3-integration:${versions.glide}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${versions.glide}"
 
     //Fetch - Downloader
-    implementation "androidx.tonyodev.fetch2:xfetch2:3.1.4"
-    implementation "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:3.1.4"
+    implementation "androidx.tonyodev.fetch2:xfetch2:${versions.fetch2}"
+    implementation "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:${versions.fetch2}"
 
     //Debug Utils
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
     //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.1'
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
 
 Properties props = new Properties()

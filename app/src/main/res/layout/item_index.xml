@@ -17,9 +17,7 @@
   -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/card_width"
-    android:id="@+id/card"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="?android:colorBackground"
     app:cardCornerRadius="15dp"
@@ -30,32 +28,32 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/repo_icon"
+            android:id="@+id/img"
             android:layout_width="@dimen/icon_size_category"
             android:layout_height="@dimen/icon_size_category"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_large"
-            tools:targetApi="p" />
+            app:tint="?colorAccent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/repo_txt"
+            android:id="@+id/line1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/repo_icon"
+            android:layout_below="@id/img"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_small"
             android:ellipsize="end"
             android:singleLine="true"
             android:textAlignment="center"
-            android:textColor="?android:attr/textColorPrimary"
             android:textAppearance="@style/TextAppearance.Aurora.Line2"
+            android:textColor="?android:attr/textColorPrimary"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/repo_updated"
+            android:id="@+id/line2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/repo_txt"
+            android:layout_below="@id/line1"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_xsmall"
             android:layout_marginBottom="@dimen/margin_xsmall"

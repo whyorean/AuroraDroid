@@ -36,7 +36,7 @@ public class IndexSection extends Section {
 
     public IndexSection(Context context, List<Index> indexList) {
         super(SectionParameters.builder()
-                .itemResourceId(R.layout.item_repository)
+                .itemResourceId(R.layout.item_index)
                 .build());
         this.context = context;
         this.indexList = indexList;
@@ -83,13 +83,11 @@ public class IndexSection extends Section {
     }
 
     public static class ContentHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.card)
-        MaterialCardView card;
-        @BindView(R.id.repo_icon)
+        @BindView(R.id.img)
         AppCompatImageView repoIcon;
-        @BindView(R.id.repo_txt)
+        @BindView(R.id.line1)
         AppCompatTextView repoTxt;
-        @BindView(R.id.repo_updated)
+        @BindView(R.id.line2)
         AppCompatTextView repoUpdated;
 
         ContentHolder(@NonNull View itemView) {

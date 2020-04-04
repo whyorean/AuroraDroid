@@ -16,29 +16,35 @@
   ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
-        app:fragment="com.aurora.adroid.fragment.preference.DownloaderFragment"
+        android:fragment="com.aurora.adroid.ui.fragment.preference.DownloaderFragment"
         app:icon="@drawable/ic_downloads"
+        app:layout="@layout/item_preference"
         app:title="@string/pref_downloads" />
 
     <Preference
-        app:fragment="com.aurora.adroid.fragment.preference.InstallationFragment"
+        android:fragment="com.aurora.adroid.ui.fragment.preference.InstallationFragment"
         app:icon="@drawable/ic_installation"
+        app:layout="@layout/item_preference"
         app:title="@string/pref_installations" />
 
     <Preference
-        app:fragment="com.aurora.adroid.fragment.preference.NetworkFragment"
+        android:fragment="com.aurora.adroid.ui.fragment.preference.NetworkFragment"
         app:icon="@drawable/ic_network"
+        app:layout="@layout/item_preference"
         app:title="@string/pref_network" />
 
     <Preference
-        app:fragment="com.aurora.adroid.fragment.preference.UIFragment"
+        android:fragment="com.aurora.adroid.ui.fragment.preference.UIFragment"
         app:icon="@drawable/ic_ui"
+        app:layout="@layout/item_preference"
         app:title="@string/pref_ui" />
 
     <Preference
-        app:fragment="com.aurora.adroid.fragment.preference.UpdatesFragment"
+        android:fragment="com.aurora.adroid.ui.fragment.preference.UpdatesFragment"
         app:icon="@drawable/ic_update"
+        app:layout="@layout/item_preference"
         app:title="@string/pref_updates_title" />
 </androidx.preference.PreferenceScreen>

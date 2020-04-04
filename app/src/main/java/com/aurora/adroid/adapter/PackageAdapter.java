@@ -35,7 +35,6 @@ import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
-import com.aurora.adroid.notification.GeneralNotification;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PackageUtil;
@@ -64,14 +63,12 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
     private List<Package> packages;
     private Context context;
     private Fetch fetch;
-    private GeneralNotification notification;
 
     public PackageAdapter(Context context, App app) {
         this.context = context;
         this.app = app;
         this.packages = app.getPackageList();
         this.fetch = DownloadManager.getFetchInstance(context);
-        this.notification = new GeneralNotification(context, app);
     }
 
     @NonNull
@@ -141,15 +138,6 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
             public void onQueued(int groupId, @NotNull Download download, boolean waitingNetwork, @NotNull FetchGroup fetchGroup) {
                 if (groupId == pkg.hashCode()) {
                     AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_INITIATED));
-                    notification.notifyQueued(pkg.hashCode());
-                }
-            }
-
-            @Override
-            public void onProgress(int groupId, @NotNull Download download, long etaInMilliSeconds, long downloadedBytesPerSecond, @NotNull FetchGroup fetchGroup) {
-                if (groupId == pkg.hashCode()) {
-                    final int progress = fetchGroup.getGroupDownloadProgress();
-                    notification.notifyProgress(progress, downloadedBytesPerSecond, pkg.hashCode());
                 }
             }
 
@@ -157,7 +145,6 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
             public void onCompleted(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
                 if (groupId == pkg.hashCode()) {
                     AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_COMPLETED));
-                    notification.notifyCompleted();
                     AuroraApplication.getInstaller().install(pkg.getApkName());
                 }
             }
@@ -167,7 +154,6 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
                 super.onCancelled(groupId, download, fetchGroup);
                 if (groupId == pkg.hashCode()) {
                     AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_CANCELLED));
-                    notification.notifyCancelled();
                 }
             }
 
@@ -175,13 +161,12 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
             public void onError(int groupId, @NotNull Download download, @NotNull Error error, @Nullable Throwable throwable, @NotNull FetchGroup fetchGroup) {
                 if (groupId == pkg.hashCode()) {
                     AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_FAILED));
-                    notification.notifyFailed();
                 }
             }
         };
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.img_download)
         ImageView imgDownload;
         @BindView(R.id.img_installed)

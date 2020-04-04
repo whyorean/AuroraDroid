@@ -29,8 +29,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.IdRes;
@@ -53,7 +51,7 @@ import com.aurora.adroid.R;
 import com.aurora.adroid.database.AppDatabase;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.Repo;
-import com.aurora.adroid.service.RepoSyncService;
+import com.aurora.adroid.service.SyncService;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.TextUtil;
@@ -124,16 +122,7 @@ public class AuroraActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(event -> {
                     switch (event.getType()) {
-                        case SYNC_COMPLETED:
-                            clearSyncAnim();
-                            showSyncCompletedDialog(false);
-                            break;
-                        case SYNC_NO_UPDATES:
-                            clearSyncAnim();
-                            showSyncCompletedDialog(true);
-                            break;
                         case SYNC_EMPTY:
-                            clearSyncAnim();
                             ContextUtil.toastLong(this, "Select at least one repo to sync");
                             break;
                     }
@@ -189,6 +178,9 @@ public class AuroraActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         Util.toggleSoftInput(this, false);
+
+        //Check & start notification service
+        Util.startNotificationService(this);
     }
 
     @Override
@@ -330,26 +322,11 @@ public class AuroraActivity extends BaseActivity {
                 .setTitle(getString(R.string.dialog_sync_title))
                 .setMessage(obsolete ? getString(R.string.dialog_sync_desc_alt) : getString(R.string.dialog_sync_desc))
                 .setPositiveButton(getString(R.string.dialog_sync_positive), (dialog, which) -> {
-                    if (RepoSyncService.isServiceRunning())
+                    if (SyncService.isServiceRunning())
                         return;
                     startRepoSyncService();
-                    startSyncAnim();
                 })
                 .setNegativeButton(getString(R.string.dialog_sync_negative), (dialog, which) -> {
-                    dialog.dismiss();
-                });
-        builder.create();
-        builder.show();
-    }
-
-    protected void showSyncCompletedDialog(boolean noUpdates) {
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
-                .setTitle(getString(R.string.dialog_sync_title))
-                .setMessage(getString(noUpdates ? R.string.dialog_sync_completed_desc_alt : R.string.dialog_sync_completed_desc))
-                .setPositiveButton(getString(R.string.dialog_sync_complete_positive), (dialog, which) -> {
-                    Util.restartApp(this);
-                })
-                .setNegativeButton(getString(R.string.action_later), (dialog, which) -> {
                     dialog.dismiss();
                 });
         builder.create();
@@ -374,21 +351,8 @@ public class AuroraActivity extends BaseActivity {
         builder.show();
     }
 
-    private void startSyncAnim() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.sync_anim);
-        View view = findViewById(R.id.action_sync);
-        if (view != null)
-            view.startAnimation(animation);
-    }
-
-    private void clearSyncAnim() {
-        View view = findViewById(R.id.action_sync);
-        if (view != null)
-            view.clearAnimation();
-    }
-
     private void startRepoSyncService() {
-        Intent intent = new Intent(this, RepoSyncService.class);
+        Intent intent = new Intent(this, SyncService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(intent);
         } else {

@@ -5,14 +5,20 @@ import android.content.ContextWrapper;
 
 import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
+import com.aurora.adroid.download.RequestBuilder;
 import com.aurora.adroid.event.LogEvent;
+import com.aurora.adroid.manager.RepoManager;
+import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.model.RepoHeader;
-import com.aurora.adroid.model.RepoRequest;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PrefUtil;
 import com.aurora.adroid.util.Util;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tonyodev.fetch2.Request;
+import com.tonyodev.fetch2core.Extras;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -25,7 +31,6 @@ import okhttp3.Response;
 public class CheckRepoUpdatesTask extends ContextWrapper {
 
     private Context context;
-    private List<RepoRequest> filteredList = new ArrayList<>();
     private List<RepoHeader> savedRepoHeaderList;
     private List<RepoHeader> newRepoHeaderList;
 
@@ -53,17 +58,34 @@ public class CheckRepoUpdatesTask extends ContextWrapper {
         PrefUtil.putString(context, Constants.PREFERENCE_REPO_HEADERS, filteredString);
     }
 
-    public List<RepoRequest> filterList(List<RepoRequest> requestList) {
+    public List<Request> getRepoRequestList() {
+        final List<Repo> repoList = new RepoManager(this).getRepoList();
+        final List<Request> requestList = RequestBuilder.buildRequest(this, repoList);
+        final List<Request> filteredList = new ArrayList<>();
+
+        if (repoList.isEmpty()) {
+            return new ArrayList<>();
+        }
+
         final OkHttpClient client = new OkHttpClient();
-        for (RepoRequest request : requestList) {
-            AuroraApplication.rxNotify(new LogEvent("Checking update for " + request.getRepoName()));
-            RepoHeader repoHeader = getRepoHeader(request.getRepoId());
-            okhttp3.Request okhttpRequest = new okhttp3.Request.Builder().url(request.getUrl()).head().build();
+        for (Request request : requestList) {
+            final Extras extras = request.getExtras();
+            final String repoId = extras.getString(Constants.DOWNLOAD_REPO_ID, StringUtils.EMPTY);
+            final String repoName = extras.getString(Constants.DOWNLOAD_REPO_NAME, StringUtils.EMPTY);
+            final String repoUrl = extras.getString(Constants.DOWNLOAD_REPO_URL, StringUtils.EMPTY);
+
+            if (repoId.isEmpty() || repoName.isEmpty() || repoUrl.isEmpty())
+                continue;
+
+            AuroraApplication.rxNotify(new LogEvent("Checking update for " + repoName));
+
+            final RepoHeader repoHeader = getRepoHeader(extras.getString(Constants.DOWNLOAD_REPO_ID, StringUtils.EMPTY));
+            final okhttp3.Request okhttpRequest = new okhttp3.Request.Builder().url(request.getUrl()).head().build();
+
             try (Response response = client.newCall(okhttpRequest).execute()) {
                 Long lastModified = Util.getMilliFromDate(response.header("Last-Modified"), Calendar.getInstance().getTimeInMillis());
-                if (repoHeader == null) {
-                    repoHeader = new RepoHeader();
-                    repoHeader.setRepoId(request.getRepoId());
+                if (repoHeader.getLastModified() == null) {
+                    repoHeader.setRepoId(repoId);
                     repoHeader.setLastModified(lastModified);
                     filteredList.add(request);
                 } else {
@@ -74,8 +96,8 @@ public class CheckRepoUpdatesTask extends ContextWrapper {
                 }
                 newRepoHeaderList.add(repoHeader);
             } catch (Exception e) {
-                AuroraApplication.rxNotify(new LogEvent("Unable to reach " + request.getRepoName()));
-                Log.e("Unable to reach %s", request.getRepoUrl());
+                AuroraApplication.rxNotify(new LogEvent("Unable to reach " + repoName));
+                Log.e("Unable to reach %s", repoUrl);
             }
         }
         saveRepoHeadersToCache(newRepoHeaderList);
@@ -86,7 +108,7 @@ public class CheckRepoUpdatesTask extends ContextWrapper {
         for (RepoHeader repoHeader : savedRepoHeaderList)
             if (repoHeader.getRepoId().equals(repoId))
                 return repoHeader;
-        return null;
+        return new RepoHeader();
     }
 
     private void saveRepoHeadersToCache(List<RepoHeader> appList) {

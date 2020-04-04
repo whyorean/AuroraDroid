@@ -25,7 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import com.aurora.adroid.service.RepoSyncService;
+import com.aurora.adroid.service.SyncService;
 import com.aurora.adroid.util.Log;
 
 import java.util.Calendar;
@@ -52,7 +52,7 @@ public class UpdatesReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i("Checking repo updates");
-        Intent repoSyncIntent = new Intent(context, RepoSyncService.class);
+        Intent repoSyncIntent = new Intent(context, SyncService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(repoSyncIntent);
         } else {

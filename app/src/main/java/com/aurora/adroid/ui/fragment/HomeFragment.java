@@ -34,22 +34,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.model.Index;
+import com.aurora.adroid.model.items.IndexItem;
 import com.aurora.adroid.model.items.cluster.NewClusterItem;
 import com.aurora.adroid.model.items.cluster.UpdatesClusterItem;
-import com.aurora.adroid.section.IndexSection;
+import com.aurora.adroid.ui.activity.AuroraActivity;
 import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.ui.activity.GenericAppActivity;
+import com.aurora.adroid.ui.sheet.RepoDetailsBottomSheet;
 import com.aurora.adroid.viewmodel.ClusterAppsViewModel;
 import com.aurora.adroid.viewmodel.IndexViewModel;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -57,7 +55,7 @@ import io.reactivex.schedulers.Schedulers;
 public class HomeFragment extends Fragment {
 
     @BindView(R.id.recycler_repo)
-    RecyclerView recyclerViewRepo;
+    RecyclerView recyclerViewIndices;
     @BindView(R.id.recycler_latest)
     RecyclerView recyclerViewUpdates;
     @BindView(R.id.recycler_new)
@@ -69,6 +67,7 @@ public class HomeFragment extends Fragment {
 
     private FastItemAdapter<NewClusterItem> fastItemAdapterNew;
     private FastItemAdapter<UpdatesClusterItem> fastItemAdapterUpdates;
+    private FastItemAdapter<IndexItem> fastItemAdapterIndices;
 
     @Nullable
     @Override
@@ -85,8 +84,9 @@ public class HomeFragment extends Fragment {
 
         setupNewApps();
         setupUpdatedApps();
+        setupRepository();
 
-        ClusterAppsViewModel clusterModel = new ViewModelProvider(this).get(ClusterAppsViewModel.class);
+        final ClusterAppsViewModel clusterModel = new ViewModelProvider(this).get(ClusterAppsViewModel.class);
 
         clusterModel.getNewAppsLiveData().observe(getViewLifecycleOwner(), apps -> {
             Observable.fromIterable(apps)
@@ -108,8 +108,14 @@ public class HomeFragment extends Fragment {
                     .subscribe();
         });
 
-        IndexViewModel indexViewModel = new ViewModelProvider(this).get(IndexViewModel.class);
-        indexViewModel.getAllIndicesLive().observe(getViewLifecycleOwner(), this::setupRepository);
+        final IndexViewModel indexViewModel = new ViewModelProvider(this).get(IndexViewModel.class);
+        indexViewModel.getAllIndicesLive().observe(getViewLifecycleOwner(), indices -> {
+            Observable.fromIterable(indices)
+                    .map(IndexItem::new)
+                    .toList()
+                    .doOnSuccess(indexItems -> fastItemAdapterIndices.add(indexItems))
+                    .subscribe();
+        });
     }
 
     @Override
@@ -136,20 +142,32 @@ public class HomeFragment extends Fragment {
         requireActivity().startActivity(intent);
     }
 
-    private void setupRepository(List<Index> indexList) {
-        SectionedRecyclerViewAdapter adapter = new SectionedRecyclerViewAdapter();
-        IndexSection newAppSection = new IndexSection(requireContext(), indexList);
-        adapter.addSection(newAppSection);
-        recyclerViewRepo.setAdapter(adapter);
-        recyclerViewRepo.setLayoutManager(new LinearLayoutManager(requireContext(),
+    private void setupRepository() {
+        fastItemAdapterIndices = new FastItemAdapter<>();
+        fastItemAdapterIndices.setOnClickListener((view, adapter, item, position) -> {
+            Intent intent = new Intent(requireContext(), GenericAppActivity.class);
+            intent.putExtra("LIST_TYPE", 3);
+            intent.putExtra("REPO_ID", item.getIndex().getRepoId());
+            intent.putExtra("REPO_NAME", item.getIndex().getName());
+            startActivity(intent);
+            return false;
+        });
+        fastItemAdapterIndices.setOnLongClickListener((view, adapter, item, position) -> {
+            RepoDetailsBottomSheet.index = item.getIndex();
+            RepoDetailsBottomSheet repoDetailsBottomSheet = new RepoDetailsBottomSheet();
+            repoDetailsBottomSheet.show(requireActivity().getSupportFragmentManager(), "REPO_DETAILS_SHEET");
+            return true;
+        });
+        recyclerViewIndices.setAdapter(fastItemAdapterIndices);
+        recyclerViewIndices.setLayoutManager(new LinearLayoutManager(requireContext(),
                 RecyclerView.HORIZONTAL, false));
     }
 
     private void setupNewApps() {
         fastItemAdapterNew = new FastItemAdapter<>();
-        fastItemAdapterNew.setOnClickListener((view, clusterItemIAdapter, newClusterItem, position) -> {
+        fastItemAdapterNew.setOnClickListener((view, adapter, item, position) -> {
             Intent intent = new Intent(requireContext(), DetailsActivity.class);
-            intent.putExtra(DetailsActivity.INTENT_PACKAGE_NAME, newClusterItem.getPackageName());
+            intent.putExtra(DetailsActivity.INTENT_PACKAGE_NAME, item.getPackageName());
             startActivity(intent);
             return false;
         });
@@ -161,9 +179,9 @@ public class HomeFragment extends Fragment {
 
     private void setupUpdatedApps() {
         fastItemAdapterUpdates = new FastItemAdapter<>();
-        fastItemAdapterUpdates.setOnClickListener((view, clusterItemIAdapter, newClusterItem, position) -> {
+        fastItemAdapterUpdates.setOnClickListener((view, adapter, item, position) -> {
             Intent intent = new Intent(requireContext(), DetailsActivity.class);
-            intent.putExtra(DetailsActivity.INTENT_PACKAGE_NAME, newClusterItem.getPackageName());
+            intent.putExtra(DetailsActivity.INTENT_PACKAGE_NAME, item.getPackageName());
             startActivity(intent);
             return false;
         });

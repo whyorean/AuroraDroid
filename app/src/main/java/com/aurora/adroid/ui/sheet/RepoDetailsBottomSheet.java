@@ -93,14 +93,14 @@ public class RepoDetailsBottomSheet extends BaseBottomSheet {
     private void generateQR() {
         QRCodeWriter writer = new QRCodeWriter();
         try {
-            StringBuilder content = new StringBuilder()
+            final StringBuilder content = new StringBuilder()
                     .append(repo.getRepoUrl())
                     .append("/?fingerprint=")
                     .append(StringUtils.deleteWhitespace(repo.getRepoFingerprint()));
-            BitMatrix bitMatrix = writer.encode(content.toString(), BarcodeFormat.QR_CODE, 512, 512);
-            int width = bitMatrix.getWidth();
-            int height = bitMatrix.getHeight();
-            Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+            final BitMatrix bitMatrix = writer.encode(content.toString(), BarcodeFormat.QR_CODE, 512, 512);
+            final int width = bitMatrix.getWidth();
+            final int height = bitMatrix.getHeight();
+            final Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
                     bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);

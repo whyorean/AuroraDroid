@@ -14,7 +14,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 public class BaseViewModel extends AndroidViewModel {
+
+    protected CompositeDisposable disposable = new CompositeDisposable();
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
