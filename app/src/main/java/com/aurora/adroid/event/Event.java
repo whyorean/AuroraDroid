@@ -43,6 +43,12 @@ public class Event {
         this.stringExtra = stringExtra;
     }
 
+    public Event(EventType type, String stringExtra, int status) {
+        this.type = type;
+        this.stringExtra = stringExtra;
+        this.status = status;
+    }
+
     public EventType getType() {
         return type;
     }

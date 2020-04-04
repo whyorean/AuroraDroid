@@ -30,6 +30,9 @@ import androidx.annotation.Nullable;
 import java.io.File;
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public abstract class AppInstallerAbstract {
 
     private Context context;
@@ -49,8 +52,8 @@ public abstract class AppInstallerAbstract {
         };
     }
 
-    void addInstallationStatusListener(InstallationStatusListener installationStatusListener) {
-        this.installationStatusListener = installationStatusListener;
+    void addInstallationStatusListener(InstallationStatusListener listener) {
+        this.installationStatusListener = listener;
     }
 
     void dispatchSessionUpdate(int status, String packageName) {
@@ -58,14 +61,6 @@ public abstract class AppInstallerAbstract {
             if (installationStatusListener != null)
                 installationStatusListener.onStatusChanged(status, packageName);
         });
-    }
-
-    public BroadcastReceiver getBroadcastReceiver() {
-        return broadcastReceiver;
-    }
-
-    protected Context getContext() {
-        return context;
     }
 
     protected abstract void installApkFiles(String packageName, List<File> apkFiles);

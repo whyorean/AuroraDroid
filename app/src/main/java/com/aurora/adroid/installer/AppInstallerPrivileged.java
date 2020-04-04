@@ -25,6 +25,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -35,6 +36,7 @@ import com.aurora.adroid.R;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PackageUtil;
+import com.aurora.adroid.util.ViewUtil;
 import com.aurora.services.IPrivilegedCallback;
 import com.aurora.services.IPrivilegedService;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -64,19 +66,22 @@ public class AppInstallerPrivileged extends AppInstallerAbstract {
         return instance;
     }
 
-    public static boolean isServiceOnline(Context context) {
+    private static boolean isServiceOnline(Context context) {
         if (!PackageUtil.isInstalled(context, Constants.SERVICE_PACKAGE)) {
             return false;
         }
-        ServiceConnection serviceConnection = new ServiceConnection() {
+
+        final ServiceConnection serviceConnection = new ServiceConnection() {
             public void onServiceConnected(ComponentName name, IBinder service) {
             }
 
             public void onServiceDisconnected(ComponentName name) {
             }
         };
-        Intent serviceIntent = new Intent(Constants.PRIVILEGED_EXTENSION_SERVICE_INTENT);
+
+        final Intent serviceIntent = new Intent(Constants.PRIVILEGED_EXTENSION_SERVICE_INTENT);
         serviceIntent.setPackage(Constants.PRIVILEGED_EXTENSION_PACKAGE_NAME);
+
         try {
             context.getApplicationContext().bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
             return true;
@@ -92,12 +97,12 @@ public class AppInstallerPrivileged extends AppInstallerAbstract {
             return;
         }
 
-        List<Uri> uriList = new ArrayList<>();
+        final List<Uri> uriList = new ArrayList<>();
         for (File file : apkFiles) {
             uriList.add(Uri.parse(file.getPath()));
         }
 
-        ServiceConnection serviceConnection = new ServiceConnection() {
+        final ServiceConnection serviceConnection = new ServiceConnection() {
             public void onServiceConnected(ComponentName name, IBinder binder) {
                 IPrivilegedService service = IPrivilegedService.Stub.asInterface(binder);
                 IPrivilegedCallback callback = new IPrivilegedCallback.Stub() {
@@ -123,16 +128,18 @@ public class AppInstallerPrivileged extends AppInstallerAbstract {
             }
         };
 
-        Intent serviceIntent = new Intent(Constants.PRIVILEGED_EXTENSION_SERVICE_INTENT);
+        final Intent serviceIntent = new Intent(Constants.PRIVILEGED_EXTENSION_SERVICE_INTENT);
         serviceIntent.setPackage(Constants.PRIVILEGED_EXTENSION_PACKAGE_NAME);
         getContext().getApplicationContext().bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     private void showDisconnectedServicesDialog() {
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
+        final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
         builder.setTitle(R.string.action_installations);
         builder.setMessage(R.string.pref_install_mode_offline_services);
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss());
+        final int backGroundColor = ViewUtil.getStyledAttribute(getContext(), android.R.attr.colorBackground);
+        builder.setBackground(new ColorDrawable(backGroundColor));
         builder.create();
         builder.show();
     }

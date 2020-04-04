@@ -32,5 +32,6 @@ public enum EventType {
     NET_CONNECTED,
     NET_DISCONNECTED,
     BLACKLIST,
-    WHITELIST
+    WHITELIST,
+    INSTALLED
 }

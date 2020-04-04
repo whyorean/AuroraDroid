@@ -253,15 +253,16 @@ public class NotificationService extends Service {
                         builder.setAutoCancel(true);
                         builder.setContentIntent(getContentIntentForDetails(downloadBundle.getPackageName()));
                         //Check for Aurora Services, if available do not show install notification.
-                        if (!Util.isPrivilegedInstall(this)) {
+                        if (Util.isPrivilegedInstall(this)) {
+                            progressBigText.bigText(getString(R.string.action_installing));
+                        } else {
                             //Check for Enforced Native & Add Install action via notification, only if app is not bundled.
                             progressBigText.bigText(getString(R.string.notification_installation_auto));
                             builder.addAction(R.drawable.ic_installation,
                                     getString(R.string.action_install),
                                     getInstallIntent(downloadBundle.getPackageName(), downloadBundle.getVersionCode()));
-                            builder.setAutoCancel(true);
-                            builder.setStyle(progressBigText);
                         }
+                        builder.setStyle(progressBigText);
                     }
                     break;
             }

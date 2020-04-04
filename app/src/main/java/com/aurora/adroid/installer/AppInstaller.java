@@ -35,9 +35,9 @@ import java.util.List;
 
 public class AppInstaller extends AppInstallerAbstract {
 
-    private static volatile AppInstaller instance;
+    private static AppInstaller instance;
 
-    private AppInstaller(Context context) {
+    public AppInstaller(Context context) {
         super(context);
         instance = this;
     }
@@ -76,7 +76,8 @@ public class AppInstaller extends AppInstallerAbstract {
             session.commit(pendingIntent.getIntentSender());
             session.close();
         } catch (Exception e) {
-            Log.w(e.getMessage());
+            Log.e(e.getMessage());
+            dispatchSessionUpdate(PackageInstaller.STATUS_FAILURE, packageName);
         }
     }
 }

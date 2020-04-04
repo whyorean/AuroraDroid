@@ -27,10 +27,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 
+import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
+import com.aurora.adroid.event.Event;
+import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.notification.QuickNotification;
 import com.aurora.adroid.ui.activity.DetailsActivity;
@@ -40,13 +44,15 @@ import com.aurora.adroid.util.PrefUtil;
 import com.aurora.adroid.util.TextUtil;
 import com.aurora.adroid.util.Util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Installer {
+public class Installer implements AppInstallerAbstract.InstallationStatusListener {
 
     private Context context;
     private Map<String, App> appHashMap = new HashMap<>();
@@ -56,10 +62,13 @@ public class Installer {
     private boolean isInstalling = false;
     private boolean isWaiting = false;
 
-
     public Installer(Context context) {
         this.context = context;
         packageInstaller = getInstallationMethod(context.getApplicationContext());
+    }
+
+    public AppInstallerAbstract getPackageInstaller() {
+        return packageInstaller;
     }
 
     public void install(App app) {
@@ -75,21 +84,17 @@ public class Installer {
     private void processApp(App app) {
         isInstalling = true;
         installationQueue.remove(app);
+
         if (Util.isNativeInstallerEnforced(context))
             install(app.getAppPackage().getApkName());
         else
             installSplit(app);
     }
 
-
-    public AppInstallerAbstract getPackageInstaller() {
-        return packageInstaller;
-    }
-
     public void install(String apkName) {
         Log.i("Native Installer Called");
         Intent intent;
-        File file = new File(PathUtil.getApkPath(context, apkName));
+        final File file = new File(PathUtil.getApkPath(context, apkName));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
             intent.setData(FileProvider.getUriForFile(context, "com.aurora.adroid.fileProvider", file));
@@ -104,58 +109,17 @@ public class Installer {
 
     private void installSplit(App app) {
         Log.i("Split Installer Called");
-        String apkName = app.getAppPackage().getApkName();
-        Log.e(apkName);
-        List<File> apkFiles = new ArrayList<>();
-        File apkDirectory = new File(PathUtil.getRootApkPath(context));
+        final String apkName = app.getAppPackage().getApkName();
+        final List<File> apkFiles = new ArrayList<>();
+        final File apkDirectory = new File(PathUtil.getRootApkPath(context));
+
         for (File splitApk : apkDirectory.listFiles()) {
-            if (splitApk.getPath().contains(new StringBuilder()
-                    .append(apkName))) {
+            if (splitApk.getPath().contains(apkName)) {
                 apkFiles.add(splitApk);
             }
         }
 
-        packageInstaller.addInstallationStatusListener((statusCode, intentPackageName) -> {
-            final String status = getStatusString(statusCode);
-            final App app1 = appHashMap.get(intentPackageName);
-            final String displayName = (app1 != null)
-                    ? TextUtil.emptyIfNull(app.getName())
-                    : TextUtil.emptyIfNull(intentPackageName);
-
-            Log.i("Package Installer -> %s : %s", displayName, TextUtil.emptyIfNull(status));
-
-            if (app1 != null)
-                clearNotification(intentPackageName);
-
-            switch (statusCode) {
-                case PackageInstaller.STATUS_FAILURE:
-                case PackageInstaller.STATUS_FAILURE_ABORTED:
-                case PackageInstaller.STATUS_FAILURE_BLOCKED:
-                case PackageInstaller.STATUS_FAILURE_CONFLICT:
-                case PackageInstaller.STATUS_FAILURE_INCOMPATIBLE:
-                case PackageInstaller.STATUS_FAILURE_INVALID:
-                case PackageInstaller.STATUS_FAILURE_STORAGE:
-                    QuickNotification.show(
-                            context,
-                            displayName,
-                            status,
-                            getContentIntent(intentPackageName));
-                    checkAndProcessQueuedApps();
-                    break;
-                case PackageInstaller.STATUS_SUCCESS:
-                    QuickNotification.show(
-                            context,
-                            displayName,
-                            status,
-                            getContentIntent(intentPackageName));
-                    if (app1 != null) {
-                        PathUtil.deleteApkFile(context, intentPackageName);
-                        appHashMap.remove(intentPackageName);
-                    }
-                    checkAndProcessQueuedApps();
-                    break;
-            }
-        });
+        packageInstaller.addInstallationStatusListener(this);
         AsyncTask.execute(() -> packageInstaller.installApkFiles(app.getPackageName(), apkFiles));
     }
 
@@ -169,11 +133,26 @@ public class Installer {
             processApp(installationQueue.get(0));
     }
 
+    private void clearNotification(String packageName) {
+        final Object object = context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager notificationManager = (NotificationManager) object;
+        if (notificationManager != null)
+            notificationManager.cancel(packageName, packageName.hashCode());
+    }
+
+    private void sendStatusBroadcast(String packageName, int status) {
+        AuroraApplication.rxNotify(new Event(EventType.INSTALLED, packageName, status));
+    }
+
+    private PendingIntent getContentIntent(String packageName) {
+        Intent intent = new Intent(context, DetailsActivity.class);
+        intent.putExtra(Constants.INTENT_PACKAGE_NAME, packageName);
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
     private AppInstallerAbstract getInstallationMethod(Context context) {
         String prefValue = PrefUtil.getString(context, Constants.PREFERENCE_INSTALLATION_METHOD);
         switch (prefValue) {
-            case "0":
-                return AppInstaller.getInstance(context);
             case "1":
                 return AppInstallerRooted.getInstance(context);
             case "2":
@@ -181,18 +160,6 @@ public class Installer {
             default:
                 return AppInstaller.getInstance(context);
         }
-    }
-
-    private void clearNotification(String packageName) {
-        NotificationManager notificationManager = (NotificationManager)
-                context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(packageName.hashCode());
-    }
-
-    private PendingIntent getContentIntent(String packageName) {
-        Intent intent = new Intent(context, DetailsActivity.class);
-        intent.putExtra("INTENT_PACKAGE_NAME", packageName);
-        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private String getStatusString(int status) {
@@ -218,5 +185,41 @@ public class Installer {
             default:
                 return context.getString(R.string.installer_status_unknown);
         }
+    }
+
+    @Override
+    public void onStatusChanged(int status, @Nullable String packageName) {
+        final String statusMessage = getStatusString(status);
+        final App app = appHashMap.get(packageName);
+
+        String displayName = (app != null)
+                ? TextUtil.emptyIfNull(app.getName())
+                : TextUtil.emptyIfNull(packageName);
+
+        if (StringUtils.isEmpty(displayName))
+            displayName = context.getString(R.string.app_name);
+
+        Log.i("Package Installer -> %s : %s", displayName, TextUtil.emptyIfNull(statusMessage));
+
+        if (packageName != null)
+            clearNotification(packageName);
+
+        if (status == PackageInstaller.STATUS_SUCCESS) {
+            sendStatusBroadcast(packageName, 1);
+            if (app != null && Util.shouldDeleteApk(context)) {
+                PathUtil.deleteApkFile(context, packageName);
+            }
+        } else {
+            sendStatusBroadcast(packageName, 0);
+        }
+
+        QuickNotification.show(
+                context,
+                displayName,
+                statusMessage,
+                getContentIntent(packageName));
+
+        appHashMap.remove(packageName);
+        checkAndProcessQueuedApps();
     }
 }
