@@ -37,7 +37,7 @@
     <dimen name="icon_size_small">48dp</dimen>
     <dimen name="icon_size_medium">56dp</dimen>
     <dimen name="icon_size">64dp</dimen>
-    <dimen name="icon_size_large">96dp</dimen>
+    <dimen name="icon_size_large">80dp</dimen>
     <dimen name="icon_size_qr">172dp</dimen>
 
     <dimen name="card_width">132dp</dimen>
