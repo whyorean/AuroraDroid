@@ -71,7 +71,7 @@ public class PathUtil {
     }
 
     public static synchronized void deleteApkFile(Context context, String fileName) {
-        File[] files = new File(getBaseApkDirectory(context)).listFiles();
+        File[] files = new File(getRootApkPath(context)).listFiles();
         if (files == null)
             return;
         for (File file : files)

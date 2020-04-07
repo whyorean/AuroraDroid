@@ -32,6 +32,7 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SeekBarPreference;
+import androidx.preference.SwitchPreferenceCompat;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
@@ -68,6 +69,16 @@ public class DownloaderFragment extends PreferenceFragmentCompat implements Shar
         assert strategyList != null;
         strategyList.setOnPreferenceChangeListener((preference, newValue) -> {
             PrefUtil.putString(context, Constants.PREFERENCE_DOWNLOAD_STRATEGY, (String) newValue);
+            return true;
+        });
+
+        SwitchPreferenceCompat switchPreference = findPreference(Constants.PREFERENCE_DOWNLOAD_INTERNAL);
+        assert switchPreference != null;
+        switchPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            if (newValue.toString().equals("true"))
+                PrefUtil.putString(context, Constants.PREFERENCE_DOWNLOAD_DIRECTORY, context.getFilesDir().getPath());
+            else
+                PrefUtil.putString(context, Constants.PREFERENCE_DOWNLOAD_DIRECTORY, PathUtil.getExtBaseDirectory());
             return true;
         });
     }

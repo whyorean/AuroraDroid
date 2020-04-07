@@ -24,6 +24,13 @@
 
     <SwitchPreferenceCompat
         app:defaultValue="false"
+        app:disableDependentsState="true"
+        app:key="PREFERENCE_DOWNLOAD_INTERNAL"
+        app:summary="@string/pref_downloader_internal_desc"
+        app:title="@string/pref_downloader_internal" />
+
+    <SwitchPreferenceCompat
+        app:defaultValue="false"
         app:key="PREFERENCE_DOWNLOAD_WIFI"
         app:title="@string/pref_downloads_wifi_title" />
 

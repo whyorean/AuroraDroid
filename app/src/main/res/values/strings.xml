@@ -193,6 +193,8 @@
     <string name="pref_ui_transparent">Transparent style</string>
     <string name="pref_ui_transparent_summary">Use transparent card style for category and link views</string>
     <string name="pref_downloads">Downloads</string>
+    <string name="pref_downloader_internal">"Download apps in internal storage"</string>
+    <string name="pref_downloader_internal_desc">"If enabled, you will not able to install apps via Aurora Services"</string>
     <string name="pref_downloads_active_summary">Maximum number of active downloads</string>
     <string name="pref_downloads_active_title">Active download</string>
     <string name="pref_downloads_debug_summary">Enable download debugging to get detailed logs</string>
