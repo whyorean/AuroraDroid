@@ -106,8 +106,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
 
     private boolean isSuggested(Package pkg) {
         try {
-            return app.getSuggestedVersionName().equals(pkg.getVersionName())
-                    && Long.parseLong(app.getSuggestedVersionCode()) == pkg.getVersionCode();
+            return app.getSuggestedVersionName().equals(pkg.getVersionName()) && app.getSuggestedVersionCode() == pkg.getVersionCode();
         } catch (Exception e) {
             return false;
         }
@@ -115,7 +114,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
 
     private void initDownload(Package pkg) {
         final String apkName = pkg.getApkName();
-        final Request request = new Request(DatabaseUtil.getDownloadURl(pkg), PathUtil.getApkPath(context, apkName));
+        final Request request = new Request(DatabaseUtil.getDownloadURl(pkg), PathUtil.getApkPath(context, pkg.getPackageName(), pkg.getVersionCode()));
         request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
         request.setGroupId(pkg.hashCode());
         request.setTag(pkg.getPackageName());
@@ -145,7 +144,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
             public void onCompleted(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
                 if (groupId == pkg.hashCode()) {
                     AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_COMPLETED));
-                    AuroraApplication.getInstaller().install(pkg.getApkName());
+                    AuroraApplication.getInstaller().install(pkg.getApkName(), pkg.getVersionCode());
                 }
             }
 
@@ -171,11 +170,11 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
         ImageView imgDownload;
         //@BindView(R.id.img)
         ImageView imgInstalled;
-       // @BindView(R.id.line1)
+        // @BindView(R.id.line1)
         TextView txtApkVersion;
-       // @BindView(R.id.line3)
+        // @BindView(R.id.line3)
         TextView txtApkRepo;
-      //  @BindView(R.id.img)
+        //  @BindView(R.id.img)
         TextView txtApkAdded;
         @BindView(R.id.line2)
         TextView txtApkArch;

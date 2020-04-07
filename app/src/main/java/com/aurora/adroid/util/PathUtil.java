@@ -53,12 +53,12 @@ public class PathUtil {
             return getExtBaseDirectory();
     }
 
-    public static String getApkPath(Context context, String apkName) {
-        return getRootApkPath(context) + "/" + apkName;
+    public static String getApkPath(Context context, String packageName, long versionCode) {
+        return getRootApkPath(context) + "/" + packageName + "." + versionCode + ".apk";
     }
 
-    public static boolean fileExists(Context context, String fileName) {
-        return new File(getApkPath(context, fileName)).exists();
+    public static boolean fileExists(Context context, String packageName, long versionCode) {
+        return new File(getApkPath(context, packageName, versionCode)).exists();
     }
 
     public static synchronized void deleteRepoFiles(Context context, String fileName) {

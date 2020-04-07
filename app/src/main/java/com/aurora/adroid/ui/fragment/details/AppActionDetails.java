@@ -110,7 +110,7 @@ public class AppActionDetails extends AbstractDetails {
 
         fetch.getFetchGroup(hashCode, fetchGroup -> {
             if (fetchGroup.getGroupDownloadProgress() == 100) {
-                if (!isInstalled && PathUtil.fileExists(context, app.getAppPackage().getApkName()))
+                if (!isInstalled && PathUtil.fileExists(context, app.getPackageName(), app.getAppPackage().getVersionCode()))
                     btnPositive.setOnClickListener(installAppListener());
             } else if (fetchGroup.getDownloadingDownloads().size() > 0) {
                 switchViews(true);
@@ -125,7 +125,6 @@ public class AppActionDetails extends AbstractDetails {
 
     private void runOrUpdate() {
         try {
-
             final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(app.getPackageName(), 0);
             final Package pkg = app.getAppPackage();
 
@@ -135,7 +134,7 @@ public class AppActionDetails extends AbstractDetails {
                 btnPositive.setText(R.string.action_open);
                 btnPositive.setOnClickListener(openAppListener());
             }
-            if (PathUtil.fileExists(context, pkg.getApkName())) {
+            if (PathUtil.fileExists(context, pkg.getPackageName(), pkg.getVersionCode())) {
                 btnPositive.setOnClickListener(installAppListener());
             }
         } catch (PackageManager.NameNotFoundException ignored) {

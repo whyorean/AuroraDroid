@@ -129,7 +129,7 @@ public class PackageItem extends AbstractItem<PackageItem.ViewHolder> {
                     super.onCompleted(groupId, download, fetchGroup);
                     if (groupId == app.getPackageName().hashCode()) {
                         AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_COMPLETED));
-                        AuroraApplication.getInstaller().install(pkg.getApkName());
+                        AuroraApplication.getInstaller().install(pkg.getApkName(), pkg.getVersionCode());
                         fetch.removeListener(this);
                     }
                 }
@@ -142,8 +142,7 @@ public class PackageItem extends AbstractItem<PackageItem.ViewHolder> {
 
         private boolean isSuggested(Package pkg, App app) {
             try {
-                return app.getSuggestedVersionName().equals(pkg.getVersionName())
-                        && Long.parseLong(app.getSuggestedVersionCode()) == pkg.getVersionCode();
+                return app.getSuggestedVersionName().equals(pkg.getVersionName()) && app.getSuggestedVersionCode() == pkg.getVersionCode();
             } catch (Exception e) {
                 return false;
             }

@@ -57,7 +57,7 @@ public class App {
     @NonNull
     private String packageName = "unknown";
     private String sourceCode;
-    private String suggestedVersionCode;
+    private long suggestedVersionCode;
     private String suggestedVersionName;
     private String summary;
     private String repoUrl = "https://f-droid.org/repo";
@@ -84,7 +84,7 @@ public class App {
     }
 
     public void setPackageList(List<Package> packageList) {
-        Collections.sort(packageList, (package1, package2) -> package2.getAdded().compareTo(package1.getAdded()));
+        Collections.sort(packageList, (package1, package2) -> package2.getVersionCode().compareTo(package1.getVersionCode()));
         this.setAppPackage(PackageUtil.getOptimumPackage(packageList));
         this.packageList = packageList;
     }

@@ -32,11 +32,11 @@ import com.aurora.adroid.model.Index;
 import com.aurora.adroid.model.Package;
 import com.aurora.adroid.util.Log;
 
-@Database(entities = {App.class, Package.class, Index.class}, version = 3, exportSchema = false)
+@Database(entities = {App.class, Package.class, Index.class}, version = 5, exportSchema = false)
 @TypeConverters(DatabaseConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
-    private static final String DATABASE_NAME = "AuroraDroid";
+    private static final String DATABASE_NAME = "AuroraDroid_5";
     private static AppDatabase instance;
 
     public static synchronized AppDatabase getDatabase(Context context) {

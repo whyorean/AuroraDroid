@@ -24,17 +24,17 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.aurora.adroid.AuroraApplication;
-
-import static com.aurora.adroid.Constants.INTENT_APK_FILE_NAME;
+import com.aurora.adroid.Constants;
 
 public class InstallReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle extras = intent.getExtras();
         if ((extras != null)) {
-            final String apkFileName = extras.getString(INTENT_APK_FILE_NAME, "");
-            if (!apkFileName.isEmpty()) {
-                AuroraApplication.getInstaller().install(apkFileName);
+            final String packageName = extras.getString(Constants.INTENT_PACKAGE_NAME, "");
+            final String versionCodeString = extras.getString(Constants.STRING_EXTRA, "");
+            if (!packageName.isEmpty() && !versionCodeString.isEmpty()) {
+                AuroraApplication.getInstaller().install(packageName, Long.parseLong(versionCodeString));
             }
         }
     }

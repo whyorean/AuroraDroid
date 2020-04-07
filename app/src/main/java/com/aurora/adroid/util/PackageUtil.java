@@ -127,7 +127,7 @@ public class PackageUtil {
             app.setPackageName(packageName);
             app.setName(packageManager.getApplicationLabel(packageInfo.applicationInfo).toString());
             app.setSuggestedVersionName(packageInfo.versionName);
-            app.setSuggestedVersionCode(String.valueOf(packageInfo.versionCode));
+            app.setSuggestedVersionCode(packageInfo.versionCode);
             if (extended) {
                 app.setSystemApp((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
                 app.setIconDrawable(packageManager.getApplicationIcon(packageName));

@@ -86,15 +86,15 @@ public class Installer implements AppInstallerAbstract.InstallationStatusListene
         installationQueue.remove(app);
 
         if (Util.isNativeInstallerEnforced(context))
-            install(app.getAppPackage().getApkName());
+            install(app.getPackageName(), app.getAppPackage().getVersionCode());
         else
             installSplit(app);
     }
 
-    public void install(String apkName) {
+    public void install(String packageName, long versionCode) {
         Log.i("Native Installer Called");
         Intent intent;
-        final File file = new File(PathUtil.getApkPath(context, apkName));
+        final File file = new File(PathUtil.getApkPath(context, packageName, versionCode));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
             intent.setData(FileProvider.getUriForFile(context, "com.aurora.adroid.fileProvider", file));
@@ -109,12 +109,12 @@ public class Installer implements AppInstallerAbstract.InstallationStatusListene
 
     private void installSplit(App app) {
         Log.i("Split Installer Called");
-        final String apkName = app.getAppPackage().getApkName();
+        final String packageName = app.getPackageName();
         final List<File> apkFiles = new ArrayList<>();
         final File apkDirectory = new File(PathUtil.getRootApkPath(context));
 
         for (File splitApk : apkDirectory.listFiles()) {
-            if (splitApk.getPath().contains(apkName)) {
+            if (splitApk.getPath().contains(packageName)) {
                 apkFiles.add(splitApk);
             }
         }

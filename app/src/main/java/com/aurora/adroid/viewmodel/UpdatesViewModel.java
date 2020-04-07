@@ -53,7 +53,6 @@ public class UpdatesViewModel extends BaseViewModel {
                             final PackageInfo packageInfo = PackageUtil.getPackageInfo(packageManager, app.getPackageName());
 
 
-
                             if (pkg != null && packageInfo != null) {
                                 final String RSA256 = CertUtil.getSHA256(getApplication(), app.getPackageName());
 
