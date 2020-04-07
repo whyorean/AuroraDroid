@@ -12,6 +12,7 @@ import com.aurora.adroid.R;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.task.NetworkTask;
 import com.aurora.adroid.util.Log;
+import com.aurora.adroid.util.ViewUtil;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mikepenz.fastadapter.listeners.ClickEventHook;
@@ -86,21 +87,28 @@ public class RepoItem extends AbstractItem<RepoItem.RepoItemHolder> {
             line2.setText(item.repo.getRepoUrl());
             checkBox.setChecked(item.checked);
 
-            Disposable disposable = Observable.fromCallable(() -> new NetworkTask(context)
-                    .getStatus(item.getRepo().getRepoUrl() + "/" + SIGNED_FILE_NAME))
-                    .subscribeOn(Schedulers.io())
-                    .map(code -> code == 200)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(success -> {
-                        line3.setText(success
-                                ? context.getString(R.string.list_repo_available)
-                                : context.getString(R.string.list_repo_unavailable));
-                        line3.setTextColor(success
-                                ? context.getResources().getColor(R.color.colorGreen)
-                                : context.getResources().getColor(R.color.colorRed));
-                    }, throwable -> {
-                        Log.e(throwable.getMessage());
-                    });
+            if (checkBox.isChecked()) {
+                line3.setText(context.getString(R.string.list_repo_availability));
+                line3.setTextColor(ViewUtil.getStyledAttribute(context, android.R.attr.textColorSecondary));
+                Disposable disposable = Observable.fromCallable(() -> new NetworkTask(context)
+                        .getStatus(item.getRepo().getRepoUrl() + "/" + SIGNED_FILE_NAME))
+                        .subscribeOn(Schedulers.io())
+                        .map(code -> code == 200)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(success -> {
+                            line3.setText(success
+                                    ? context.getString(R.string.list_repo_available)
+                                    : context.getString(R.string.list_repo_unavailable));
+                            line3.setTextColor(success
+                                    ? context.getResources().getColor(R.color.colorGreen)
+                                    : context.getResources().getColor(R.color.colorRed));
+                            line3.setVisibility(View.VISIBLE);
+                        }, throwable -> {
+                            Log.e(throwable.getMessage());
+                        });
+            } else {
+                line3.setVisibility(View.INVISIBLE);
+            }
         }
 
         @Override

@@ -87,6 +87,7 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
     private void setupRecycler() {
         fastItemAdapter = new FastItemAdapter<>();
         selectExtension = new SelectExtension<>(fastItemAdapter);
+
         selectExtension.setMultiSelect(true);
 
         fastItemAdapter.setOnClickListener((view, repoItemIAdapter, repoItem, integer) -> false);
@@ -94,8 +95,6 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
 
         fastItemAdapter.addExtension(selectExtension);
         fastItemAdapter.addEventHook(new RepoItem.CheckBoxClickEvent());
-
-        selectExtension.setMultiSelect(true);
 
         recyclerView.setAdapter(fastItemAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
