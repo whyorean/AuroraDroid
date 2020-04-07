@@ -251,7 +251,8 @@
     <string name="toast_apk_whitelisted">Whitelisted</string>
     <string name="toast_apk_copy_success">APK copied successfully</string>
     <string name="toast_apk_copy_failure">Failed to copy APK</string>
-
-
+    <string name="toast_repo_sync_empty">Select at least one repo to sync</string>
+    <string name="toast_repo_sync_completed">All repositories updated</string>
+    <string name="toast_repo_sync_no_updates">No updates available</string>
     <string name="details_new_changes">"What's New"</string>
 </resources>

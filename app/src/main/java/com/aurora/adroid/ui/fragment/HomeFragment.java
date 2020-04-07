@@ -19,6 +19,7 @@
 package com.aurora.adroid.ui.fragment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,16 +33,20 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.manager.RepoSyncManager;
 import com.aurora.adroid.model.items.IndexItem;
 import com.aurora.adroid.model.items.cluster.NewClusterItem;
 import com.aurora.adroid.model.items.cluster.UpdatesClusterItem;
+import com.aurora.adroid.service.SyncService;
 import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.ui.activity.GenericAppActivity;
 import com.aurora.adroid.ui.sheet.RepoDetailsBottomSheet;
+import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.viewmodel.ClusterAppsViewModel;
 import com.aurora.adroid.viewmodel.IndexModel;
@@ -57,6 +62,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment {
 
+    @BindView(R.id.swipe_layout)
+    SwipeRefreshLayout swipeLayout;
     @BindView(R.id.recycler_repo)
     RecyclerView recyclerViewIndices;
     @BindView(R.id.recycler_latest)
@@ -127,11 +134,51 @@ public class HomeFragment extends Fragment {
                         fastItemAdapterIndices.add(indexItems);
                     }, throwable -> Log.e(throwable.getMessage())));
         });
+
+        AuroraApplication.getRxBus().getBus()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(event -> {
+                    switch (event.getType()) {
+                        case SYNC_EMPTY:
+                            swipeLayout.setRefreshing(false);
+                            ContextUtil.toastLong(requireContext(), getString(R.string.toast_repo_sync_empty));
+                            break;
+                        case SYNC_COMPLETED:
+                            ContextUtil.toastLong(requireContext(), getString(R.string.toast_repo_sync_completed));
+                            swipeLayout.setRefreshing(false);
+                            break;
+                        case SYNC_NO_UPDATES:
+                            ContextUtil.toastLong(requireContext(), getString(R.string.toast_repo_sync_empty));
+                            swipeLayout.setRefreshing(false);
+                            break;
+                    }
+                })
+                .subscribe();
+        swipeLayout.setOnRefreshListener(this::startRepoSyncService);
+    }
+
+    private void startRepoSyncService() {
+        if (SyncService.isServiceRunning())
+            return;
+
+        final Intent intent = new Intent(requireActivity(), SyncService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            requireActivity().startForegroundService(intent);
+        } else {
+            requireActivity().startService(intent);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        swipeLayout.setRefreshing(false);
+        super.onPause();
     }
 
     @Override

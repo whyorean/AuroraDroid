@@ -20,8 +20,6 @@ package com.aurora.adroid.ui.activity;
 
 import android.Manifest;
 import android.app.ActivityOptions;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -35,7 +33,6 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
 import androidx.core.view.GravityCompat;
@@ -93,10 +90,6 @@ public class AuroraActivity extends BaseActivity {
         return currentDestination.getId() == destId;
     }
 
-    public BottomNavigationView getBottomNavigationView() {
-        return bottomNavigationView;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,24 +103,12 @@ public class AuroraActivity extends BaseActivity {
             showSyncDialog(false);
         } else if (DatabaseUtil.isDatabaseObsolete(this)) {
             showSyncDialog(true);
-        } else {
-            checkPermissions();
         }
 
-        createNotificationChannel();
         init();
 
-        AuroraApplication.getRxBus().getBus()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(event -> {
-                    switch (event.getType()) {
-                        case SYNC_EMPTY:
-                            ContextUtil.toastLong(this, "Select at least one repo to sync");
-                            break;
-                    }
-                })
-                .subscribe();
+        checkPermissions();
+
         onNewIntent(getIntent());
     }
 
@@ -357,36 +338,6 @@ public class AuroraActivity extends BaseActivity {
             startForegroundService(intent);
         } else {
             startService(intent);
-        }
-    }
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel alertChannel = new NotificationChannel(
-                    Constants.NOTIFICATION_CHANNEL_ALERT,
-                    getString(R.string.notification_channel_alert),
-                    NotificationManager.IMPORTANCE_HIGH);
-
-            NotificationChannel generalChannel = new NotificationChannel(
-                    Constants.NOTIFICATION_CHANNEL_GENERAL,
-                    getString(R.string.notification_channel_general),
-                    NotificationManager.IMPORTANCE_MIN);
-
-            alertChannel.enableLights(true);
-            alertChannel.enableVibration(true);
-            alertChannel.setShowBadge(true);
-            alertChannel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-
-            generalChannel.enableLights(false);
-            generalChannel.enableVibration(false);
-            generalChannel.setShowBadge(false);
-            generalChannel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PRIVATE);
-
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            if (notificationManager != null) {
-                notificationManager.createNotificationChannel(alertChannel);
-                notificationManager.createNotificationChannel(generalChannel);
-            }
         }
     }
 
