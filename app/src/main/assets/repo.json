@@ -2,22 +2,11 @@
   {
     "repoId": "01",
     "repoName": "F-Droid ",
-    "repoUrl": "https://mirror.cyberbits.eu/fdroid/repo",
+    "repoUrl": "https://f-droid.org/repo",
     "repoMirrors": [
-      "https://f-droid.org/repo",
+      "https://mirror.cyberbits.eu/fdroid/repo",
       "https://fdroid.tetaneutral.net/fdroid/repo",
       "https://bubu1.eu/fdroid/repo"
-    ],
-    "repoFingerprint": "43 23 8D 51 2C 1E 5E B2 D6 56 9F 4A 3A FB F5 52 34 18 B8 2E 0A 3E D1 55 27 70 AB B9 A9 C9 CC AB",
-    "repoDescription": "F-Droid's mainline repository, serving apps build and signed by F-Droid"
-  },
-  {
-    "repoId": "02",
-    "repoName": "F-Droid Archive",
-    "repoUrl": "https://f-droid.org/archive",
-    "repoMirrors": [
-      "https://ftp.fau.de/fdroid/archive",
-      "https://bubu1.eu/fdroid/archive"
     ],
     "repoFingerprint": "43 23 8D 51 2C 1E 5E B2 D6 56 9F 4A 3A FB F5 52 34 18 B8 2E 0A 3E D1 55 27 70 AB B9 A9 C9 CC AB",
     "repoDescription": "F-Droid's mainline repository, serving apps build and signed by F-Droid"
@@ -40,22 +29,6 @@
     "repoMirrors": [],
     "repoFingerprint": "9B D0 67 27 E6 27 96 C0 13 0E B6 DA B3 9B 73 15 74 51 58 2C BD 13 8E 86 C4 68 AC C3 95 D1 41 65",
     "repoDescription": "Official F-Droid repo for the open-source implementation of Google Play Services"
-  },
-  {
-    "repoId": "05",
-    "repoName": "microG Project Archive",
-    "repoUrl": "https://microg.org/fdroid/archive",
-    "repoMirrors": [],
-    "repoFingerprint": "9B D0 67 27 E6 27 96 C0 13 0E B6 DA B3 9B 73 15 74 51 58 2C BD 13 8E 86 C4 68 AC C3 95 D1 41 65",
-    "repoDescription": "Official F-Droid archive for the open-source implementation of Google Play Services "
-  },
-  {
-    "repoId": "06",
-    "repoName": "I2P ",
-    "repoUrl": "https://f-droid.i2p.io/repo",
-    "repoMirrors": [],
-    "repoFingerprint": "68 E7 65 61 AA F3 F5 3D D5 3B A7 C0 3D 79 52 13 D0 CA 17 72 C3 FA C0 15 9B 50 A5 AA 85 C4 5D C6",
-    "repoDescription": "I2P is an anonymous network, exposing a simple layer that applications can use to anonymously and securely send messages to each other"
   },
   {
     "repoId": "07",
@@ -82,36 +55,12 @@
     "repoDescription": "Bromite is Chromium plus ad blocking and enhanced privacy; take back your browser."
   },
   {
-    "repoId": "10",
-    "repoName": "Haagch",
-    "repoUrl": "https://haagch.frickel.club/files/fdroid/repo",
-    "repoMirrors": [],
-    "repoFingerprint": "",
-    "repoDescription": "Colorful little collection of mostly non-FOSS apps"
-  },
-  {
     "repoId": "11",
     "repoName": "Riot",
     "repoUrl": "https://fdroid.krombel.de/riot-stable/fdroid/repo",
     "repoMirrors": [],
     "repoFingerprint": "",
     "repoDescription": "Riot Messenger"
-  },
-  {
-    "repoId": "12",
-    "repoName": "StoryMaker",
-    "repoUrl": "https://s3.amazonaws.com/storymaker/fdroid/repo",
-    "repoMirrors": [],
-    "repoFingerprint": "",
-    "repoDescription": "Create audio, video and photo stories"
-  },
-  {
-    "repoId": "13",
-    "repoName": "Tox",
-    "repoUrl": "https://repo.tox.im/android",
-    "repoMirrors": [],
-    "repoFingerprint": "",
-    "repoDescription": "Tox Secure Messenger with audio and video capabilities"
   },
   {
     "repoId": "14",
@@ -146,14 +95,6 @@
     "repoDescription": "Open source apps created by Netsyms Technologies. Includes NotePost (Google Keep alternative), TerranQuest (similar to Pokemon Go), and a few other apps."
   },
   {
-    "repoId": "18",
-    "repoName": "VideLibri",
-    "repoUrl": "https://fdroid.videlibri.de/repo",
-    "repoMirrors": [],
-    "repoFingerprint": "38 89 88 e3 a5 3b 6f 91 d1 ae 39 78 4e a4 b5 f1 a1 2b 22 d3 4f 8e 33 63 e5 c7 f7 0a 1c 57 a6 f4",
-    "repoDescription": "The world’s first universal library app to track the books lend from a (mostly German) public library, renew them, and access other features of a library catalog/OPAC."
-  },
-  {
     "repoId": "19",
     "repoName": "KDE Android",
     "repoUrl": "https://cdn.kde.org/android/fdroid/repo",
@@ -162,36 +103,12 @@
     "repoDescription": "KDE Android Nightly builds"
   },
   {
-    "repoId": "20",
-    "repoName": "C:Geo",
-    "repoUrl": "https://fdroid.cgeo.org/nightly",
-    "repoMirrors": [],
-    "repoFingerprint": "37 0B B4 D5 50 C3 91 D5 DC CB 6C 81 FD 82 FD A4 89 29 64 76 4E 08 5A 09 B7 E0 75 E9 BA D5 ED 98",
-    "repoDescription": "Geo Caching software"
-  },
-  {
     "repoId": "21",
     "repoName": "Unofficial Mozilla ",
     "repoUrl": "https://rfc2822.gitlab.io/fdroid-firefox/fdroid/repo",
     "repoMirrors": [],
     "repoFingerprint": "8F 99 2B BB A0 34 0E FE 62 99 C7 A4 10 B3 6D 9C 88 89 11 4C A6 C5 80 13 C3 58 7C DA 41 1B 4A ED",
     "repoDescription": "Unofficial build of Mozilla apps for android"
-  },
-  {
-    "repoId": "22",
-    "repoName": "Onosendai",
-    "repoUrl": "https://onosendai.herokuapp.com/repo",
-    "repoMirrors": [],
-    "repoFingerprint": "ED 48 CA BC 66 D2 B3 3A 37 B0 A6 50 61 18 4B F5 77 1C 7E 7A 95 66 8E 34 B2 ED C2 D9 3D 17 6A 28",
-    "repoDescription": ""
-  },
-  {
-    "repoId": "23",
-    "repoName": "Feinstaub Widget",
-    "repoUrl": "https://kaffeemitkoffein.de",
-    "repoMirrors": [],
-    "repoFingerprint": "2F 27 5C B8 37 35 FE 79 75 44 9C E8 00 CA 84 07 B5 01 9D 5F 7B 6A BC B3 0F 36 51 C5 20 A3 72 61",
-    "repoDescription": "Displays sensor data from the Luftdaten.info project"
   },
   {
     "repoId": "24",
