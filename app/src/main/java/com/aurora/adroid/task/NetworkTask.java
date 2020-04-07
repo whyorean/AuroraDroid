@@ -21,11 +21,17 @@ public class NetworkTask {
         return builder.build();
     }
 
-    public String get(String url) throws Exception {
-        Log.e(url);
+    public String getRawResponse(String url) throws Exception {
         final OkHttpClient client = getOkHttpClient(context);
         final Request request = new Request.Builder().url(url).build();
         final Response response = client.newCall(request).execute();
         return response.body().string();
+    }
+
+    public int getStatus(String url) throws Exception {
+        final OkHttpClient client = getOkHttpClient(context);
+        final Request request = new Request.Builder().url(url).build();
+        final Response response = client.newCall(request).execute();
+        return response.code();
     }
 }

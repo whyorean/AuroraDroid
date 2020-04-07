@@ -35,9 +35,9 @@
         android:layout_height="42dp"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/margin_small"
-        android:background="@drawable/circle_bg_small"
         android:padding="@dimen/margin_small"
-        app:srcCompat="@drawable/ic_repo_alt" />
+        app:srcCompat="@drawable/ic_repo_alt"
+        app:tint="?colorAccent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/line1"
@@ -45,21 +45,29 @@
         android:layout_height="wrap_content"
         android:layout_toStartOf="@id/checkbox_repo"
         android:layout_toEndOf="@id/img"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="17sp"
-        android:textStyle="bold" />
+        android:textAppearance="@style/TextAppearance.Aurora.Line1" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/line3"
+        android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/line1"
         android:layout_alignStart="@id/line1"
         android:layout_toStartOf="@id/checkbox_repo"
+        android:layout_toEndOf="@id/img"
+        android:textAppearance="@style/TextAppearance.Aurora.Line2" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/line3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line2"
+        android:layout_alignStart="@id/line1"
+        android:layout_toStartOf="@id/checkbox_repo"
         android:ellipsize="end"
         android:singleLine="true"
-        android:textAlignment="viewStart"
-        android:textColor="?android:attr/textColorPrimary" />
+        android:text="@string/list_repo_availability"
+        android:textAppearance="@style/TextAppearance.Aurora.Line3" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/checkbox_repo"
@@ -70,5 +78,4 @@
         android:layout_marginStart="@dimen/margin_small"
         android:clickable="false"
         android:focusable="false" />
-
 </RelativeLayout>

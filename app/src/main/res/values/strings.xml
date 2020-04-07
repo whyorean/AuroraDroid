@@ -137,6 +137,9 @@
     <string name="list_updating">Updating</string>
     <string name="list_update_all_txt_one">"update available"</string>
     <string name="list_update_selected">"Update selected"</string>
+    <string name="list_repo_availability">"Checking availability"</string>
+    <string name="list_repo_available">"Available"</string>
+    <string name="list_repo_unavailable">"Unavailable"</string>
 
     <string name="notification_channel_alert">"Quick notification"</string>
     <string name="notification_channel_general">"General notification"</string>

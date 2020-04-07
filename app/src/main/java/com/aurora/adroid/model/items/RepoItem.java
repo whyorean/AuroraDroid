@@ -1,5 +1,6 @@
 package com.aurora.adroid.model.items;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -9,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.task.NetworkTask;
+import com.aurora.adroid.util.Log;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mikepenz.fastadapter.listeners.ClickEventHook;
@@ -21,7 +24,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import lombok.Getter;
+
+import static com.aurora.adroid.Constants.SIGNED_FILE_NAME;
 
 public class RepoItem extends AbstractItem<RepoItem.RepoItemHolder> {
 
@@ -55,28 +64,50 @@ public class RepoItem extends AbstractItem<RepoItem.RepoItemHolder> {
         @BindView(R.id.img)
         ImageView imgRepo;
         @BindView(R.id.line1)
-        TextView txtRepoTitle;
+        TextView line1;
+        @BindView(R.id.line2)
+        TextView line2;
         @BindView(R.id.line3)
-        TextView txtRepoUrl;
+        TextView line3;
         @BindView(R.id.checkbox_repo)
         CheckBox checkBox;
+
+        private Context context;
 
         RepoItemHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            this.context = view.getContext();
         }
 
         @Override
         public void bindView(@NotNull RepoItem item, @NotNull List<?> list) {
-            txtRepoTitle.setText(item.repo.getRepoName());
-            txtRepoUrl.setText(item.repo.getRepoUrl());
+            line1.setText(item.repo.getRepoName());
+            line2.setText(item.repo.getRepoUrl());
             checkBox.setChecked(item.checked);
+
+            Disposable disposable = Observable.fromCallable(() -> new NetworkTask(context)
+                    .getStatus(item.getRepo().getRepoUrl() + "/" + SIGNED_FILE_NAME))
+                    .subscribeOn(Schedulers.io())
+                    .map(code -> code == 200)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(success -> {
+                        line3.setText(success
+                                ? context.getString(R.string.list_repo_available)
+                                : context.getString(R.string.list_repo_unavailable));
+                        line3.setTextColor(success
+                                ? context.getResources().getColor(R.color.colorGreen)
+                                : context.getResources().getColor(R.color.colorRed));
+                    }, throwable -> {
+                        Log.e(throwable.getMessage());
+                    });
         }
 
         @Override
         public void unbindView(@NotNull RepoItem item) {
-            txtRepoTitle.setText(null);
-            txtRepoUrl.setText(null);
+            line1.setText(null);
+            line2.setText(null);
+            line3.setText(null);
         }
     }
 

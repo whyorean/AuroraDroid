@@ -23,6 +23,7 @@ import android.content.ContextWrapper;
 
 import com.aurora.adroid.database.AppDao;
 import com.aurora.adroid.database.AppDatabase;
+import com.aurora.adroid.util.Log;
 
 public class DatabaseTask extends ContextWrapper {
 
@@ -33,12 +34,13 @@ public class DatabaseTask extends ContextWrapper {
         this.context = context;
     }
 
-    public boolean clearAllTables() {
+    public boolean purgeDatabase() {
         try {
             final AppDatabase appDatabase = AppDatabase.getDatabase(context);
             appDatabase.clearAllTables();
             return true;
         } catch (Exception e) {
+            Log.e(e.getMessage());
             return false;
         }
     }
@@ -50,7 +52,7 @@ public class DatabaseTask extends ContextWrapper {
             appDao.clearRepo(repoID);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(e.getMessage());
             return false;
         }
     }
