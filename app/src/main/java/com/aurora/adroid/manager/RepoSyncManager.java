@@ -24,6 +24,7 @@ import android.content.Context;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.model.RepoHeader;
 import com.aurora.adroid.task.DatabaseTask;
 import com.aurora.adroid.util.PrefUtil;
 import com.google.gson.Gson;
@@ -38,6 +39,7 @@ public class RepoSyncManager {
 
     private final HashMap<String, Repo> repoHashMap = new HashMap<>();
     private final HashMap<String, Repo> syncHashMap = new HashMap<>();
+    private final HashMap<String, RepoHeader> headerHashMap = new HashMap<>();
 
     private Context context;
     private Gson gson;
@@ -47,6 +49,7 @@ public class RepoSyncManager {
         this.gson = new Gson();
         this.repoHashMap.putAll(getRepoHashMap());
         this.syncHashMap.putAll(getSyncedHashMap());
+        this.headerHashMap.putAll(getHeaderHashMap());
     }
 
     public void addToRepoMap(Repo repo) {
@@ -62,7 +65,16 @@ public class RepoSyncManager {
             if (!syncHashMap.containsKey(repo.getRepoId())) {
                 syncHashMap.put(repo.getRepoId(), repo);
             }
-            saveSyncList();
+            saveSyncMap();
+        }
+    }
+
+    public void addToHeaderMap(RepoHeader repoHeader) {
+        synchronized (headerHashMap) {
+            if (!headerHashMap.containsKey(repoHeader.getRepoId())) {
+                headerHashMap.put(repoHeader.getRepoId(), repoHeader);
+            }
+            saveRepoHeaderMap();
         }
     }
 
@@ -71,7 +83,7 @@ public class RepoSyncManager {
             for (Repo repo : repoList) {
                 addToRepoMap(repo);
             }
-            saveRepoList();
+            saveRepoMap();
         }
     }
 
@@ -84,6 +96,12 @@ public class RepoSyncManager {
     public List<Repo> getSyncList() {
         synchronized (syncHashMap) {
             return new ArrayList<>(syncHashMap.values());
+        }
+    }
+
+    public List<RepoHeader> getHeaderList() {
+        synchronized (headerHashMap) {
+            return new ArrayList<>(headerHashMap.values());
         }
     }
 
@@ -104,7 +122,24 @@ public class RepoSyncManager {
                     databaseTask.clearRepo(repo.getRepoId());
                 }
             }
-            saveSyncList();
+            saveSyncMap();
+        }
+    }
+
+    public void updateHeaderMap(List<Repo> repoList) {
+        synchronized (headerHashMap) {
+            final List<String> repoIdList = new ArrayList<>();
+            final List<RepoHeader> syncedList = getHeaderList();
+
+            for (Repo repo : repoList)
+                repoIdList.add(repo.getRepoId());
+
+            for (RepoHeader repoHeader : syncedList) {
+                if (!repoIdList.contains(repoHeader.getRepoId())) {
+                    headerHashMap.remove(repoHeader.getRepoId());
+                }
+            }
+            saveRepoHeaderMap();
         }
     }
 
@@ -135,27 +170,33 @@ public class RepoSyncManager {
     public void clear() {
         synchronized (repoHashMap) {
             repoHashMap.clear();
-            saveRepoList();
+            saveRepoMap();
         }
     }
 
-    private void saveRepoList() {
+    private void saveRepoMap() {
         synchronized (repoHashMap) {
             PrefUtil.putString(context, Constants.PREFERENCE_REPO_MAP, gson.toJson(repoHashMap));
         }
     }
 
-    private void saveSyncList() {
+    private void saveSyncMap() {
         synchronized (syncHashMap) {
             PrefUtil.putString(context, Constants.PREFERENCE_SYNC_MAP, gson.toJson(syncHashMap));
         }
     }
 
+    private void saveRepoHeaderMap() {
+        synchronized (headerHashMap) {
+            PrefUtil.putString(context, Constants.PREFERENCE_REPO_HEADER_MAP, gson.toJson(headerHashMap));
+        }
+    }
+
     private HashMap<String, Repo> getRepoHashMap() {
-        String rawList = PrefUtil.getString(context, Constants.PREFERENCE_REPO_MAP);
-        Type type = new TypeToken<HashMap<String, Repo>>() {
+        final String rawList = PrefUtil.getString(context, Constants.PREFERENCE_REPO_MAP);
+        final Type type = new TypeToken<HashMap<String, Repo>>() {
         }.getType();
-        HashMap<String, Repo> repoList = gson.fromJson(rawList, type);
+        final HashMap<String, Repo> repoList = gson.fromJson(rawList, type);
 
         if (repoList == null)
             return new HashMap<>();
@@ -164,14 +205,26 @@ public class RepoSyncManager {
     }
 
     private HashMap<String, Repo> getSyncedHashMap() {
-        String rawList = PrefUtil.getString(context, Constants.PREFERENCE_SYNC_MAP);
-        Type type = new TypeToken<HashMap<String, Repo>>() {
+        final String rawList = PrefUtil.getString(context, Constants.PREFERENCE_SYNC_MAP);
+        final Type type = new TypeToken<HashMap<String, Repo>>() {
         }.getType();
-        HashMap<String, Repo> repoList = gson.fromJson(rawList, type);
+        final HashMap<String, Repo> repoList = gson.fromJson(rawList, type);
 
         if (repoList == null)
             return new HashMap<>();
         else
             return repoList;
+    }
+
+    private HashMap<String, RepoHeader> getHeaderHashMap() {
+        final String jsonString = PrefUtil.getString(context, Constants.PREFERENCE_REPO_HEADER_MAP);
+        final Type type = new TypeToken<HashMap<String, RepoHeader>>() {
+        }.getType();
+        final HashMap<String, RepoHeader> repoHeaderList = gson.fromJson(jsonString, type);
+
+        if (repoHeaderList == null || repoHeaderList.isEmpty())
+            return new HashMap<>();
+        else
+            return repoHeaderList;
     }
 }

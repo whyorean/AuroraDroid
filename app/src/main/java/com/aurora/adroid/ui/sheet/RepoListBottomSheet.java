@@ -71,6 +71,7 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
                 .subscribe(repoList -> {
                     repoSyncManager.updateRepoMap(repoList);
                     repoSyncManager.updateSyncMap(repoList);
+                    repoSyncManager.updateHeaderMap(repoList);
                     ContextUtil.runOnUiThread(this::dismissAllowingStateLoss);
                 }, throwable -> Log.e(throwable.getMessage())));
     }
