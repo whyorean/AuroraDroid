@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 
 import androidx.annotation.Nullable;
 import androidx.core.graphics.ColorUtils;
@@ -40,6 +41,8 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
 
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
+    @BindView(R.id.checkbox_select)
+    CheckBox checkBox;
 
     private FastItemAdapter<RepoItem> fastItemAdapter;
     private SelectExtension<RepoItem> selectExtension;
@@ -59,6 +62,13 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
         super.onContentViewCreated(view, savedInstanceState);
         repoSyncManager = new RepoSyncManager(requireContext());
         setupRecycler();
+
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked)
+                selectAll();
+            else
+                deSelectAll();
+        });
     }
 
     @OnClick(R.id.btn_positive)
@@ -81,7 +91,6 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
         dismissAllowingStateLoss();
     }
 
-    @OnClick(R.id.btn_select_all)
     public void selectAll() {
         for (RepoItem repoItem : fastItemAdapter.getAdapterItems()) {
             repoItem.setSelected(true);
@@ -90,7 +99,6 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
         }
     }
 
-    @OnClick(R.id.btn_clear_all)
     public void deSelectAll() {
         for (RepoItem repoItem : fastItemAdapter.getAdapterItems()) {
             repoItem.setSelected(false);
@@ -108,6 +116,7 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
         selectExtension = new SelectExtension<>(fastItemAdapter);
 
         selectExtension.setMultiSelect(true);
+        selectExtension.setSelectWithItemUpdate(false);
 
         fastItemAdapter.setOnClickListener((view, repoItemIAdapter, repoItem, integer) -> false);
         fastItemAdapter.setOnPreClickListener((view, repoItemIAdapter, repoItem, integer) -> true);

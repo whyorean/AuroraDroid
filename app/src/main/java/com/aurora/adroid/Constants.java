@@ -41,7 +41,6 @@ public class Constants {
     public static final String PRIVILEGED_EXTENSION_PACKAGE_NAME = "com.aurora.services";
     public static final String PRIVILEGED_EXTENSION_SERVICE_INTENT = "com.aurora.services.IPrivilegedService";
 
-    public static final String PREFERENCE_REPO_HEADERS = "PREFERENCE_REPO_HEADERS";
     public static final String PREFERENCE_REPO_HEADER_MAP = "PREFERENCE_REPO_HEADER_MAP";
     public static final String PREFERENCE_FIRST_LAUNCH_2 = "PREFERENCE_FIRST_LAUNCH_2";
     public static final String PREFERENCE_BLACKLIST_PACKAGE_LIST = "PREFERENCE_BLACKLIST_PACKAGE_LIST";

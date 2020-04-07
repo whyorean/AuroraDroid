@@ -32,39 +32,32 @@
         android:text="@string/dialog_repo_list"
         android:textAppearance="@style/TextAppearance.Aurora.Title" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_title">
+        android:layout_below="@id/txt_title"
+        android:paddingStart="@dimen/padding_normal"
+        android:paddingEnd="@dimen/padding_normal">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_select_all"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/height_button"
-            android:layout_marginEnd="@dimen/margin_large"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_select_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_toStartOf="@id/checkbox_select"
             android:text="@string/action_select_all"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_clear_all"
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:rippleColor="@color/colorScrim" />
+            android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_clear_all"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/height_button"
-            android:layout_marginStart="@dimen/margin_large"
-            android:text="@string/action_clear_all"
-            android:textColor="@color/colorRed"
-            app:layout_constraintEnd_toStartOf="@id/btn_select_all"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:rippleColor="@color/colorScrim" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <CheckBox
+            android:id="@+id/checkbox_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:minWidth="0dp" />
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
