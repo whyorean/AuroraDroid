@@ -36,8 +36,7 @@ import com.aurora.adroid.util.Log;
 @TypeConverters(DatabaseConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
-
-    private static final String DATABASE_NAME = "app";
+    private static final String DATABASE_NAME = "AuroraDroid";
     private static AppDatabase instance;
 
     public static synchronized AppDatabase getDatabase(Context context) {

@@ -199,8 +199,8 @@ public class Util {
     }
 
     public static boolean isFirstLaunch(Context context) {
-        boolean first = getPrefs(context).getBoolean(Constants.PREFERENCE_FIRST_LAUNCH, true);
-        PrefUtil.putBoolean(context, Constants.PREFERENCE_FIRST_LAUNCH, false);
+        boolean first = getPrefs(context).getBoolean(Constants.PREFERENCE_FIRST_LAUNCH_2, true);
+        PrefUtil.putBoolean(context, Constants.PREFERENCE_FIRST_LAUNCH_2, false);
         return first;
     }
 
