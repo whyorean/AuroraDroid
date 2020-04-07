@@ -38,6 +38,7 @@ import com.aurora.adroid.R;
 import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.download.RequestBuilder;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.model.Package;
 import com.aurora.adroid.ui.fragment.DetailsFragment;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
@@ -123,16 +124,19 @@ public class AppActionDetails extends AbstractDetails {
 
     private void runOrUpdate() {
         try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(app.getPackageName(), 0);
-            if (info.versionName.compareTo(app.getAppPackage().getVersionName()) >= 0
-                    && info.versionCode >= app.getAppPackage().getVersionCode()) {
+
+            final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(app.getPackageName(), 0);
+            final Package pkg = app.getAppPackage();
+
+            if (PackageUtil.isCompatibleVersion(context, pkg, packageInfo)) {
+                btnPositive.setText(R.string.action_update);
+            } else {
                 btnPositive.setText(R.string.action_open);
                 btnPositive.setOnClickListener(openAppListener());
-                return;
-            } else if (PathUtil.fileExists(context, app.getAppPackage().getApkName())) {
+            }
+            if (PathUtil.fileExists(context, pkg.getApkName())) {
                 btnPositive.setOnClickListener(installAppListener());
             }
-            btnPositive.setText(R.string.action_update);
         } catch (PackageManager.NameNotFoundException ignored) {
         }
     }

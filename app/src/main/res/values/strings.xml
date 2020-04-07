@@ -210,7 +210,10 @@
     <string name="pref_proxy_type">Proxy type</string>
     <string name="pref_updates_title">Updates</string>
     <string name="pref_updates_repo_title">Repo Updates</string>
+    <string name="pref_updates_app_title">App Updates</string>
     <string name="pref_updates_repo_interval">Updates interval</string>
+    <string name="pref_updates_app_experimental">Allow experimental updates</string>
+    <string name="pref_updates_app_experimental_desc">If enabled, beta/alpha builds will override stable builds</string>
     <string name="pref_updates_manual">Manual</string>
     <string name="pref_updates_daily">1 day</string>
     <string name="pref_updates_2days">2 days</string>

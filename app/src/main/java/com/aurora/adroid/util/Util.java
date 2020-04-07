@@ -219,6 +219,10 @@ public class Util {
         return getPrefs(context).getBoolean(Constants.PREFERENCE_INSTALLATION_TYPE, false);
     }
 
+    public static boolean isExperimentalUpdatesEnabled(Context context) {
+        return getPrefs(context).getBoolean(Constants.PREFERENCE_UPDATES_EXPERIMENTAL, false);
+    }
+
     public static boolean isRootInstallEnabled(Context context) {
         String installMethod = getPrefs(context).getString(Constants.PREFERENCE_INSTALLATION_METHOD, "0");
         return installMethod.equals("1");

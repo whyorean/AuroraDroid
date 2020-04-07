@@ -15,8 +15,6 @@ import com.aurora.adroid.model.items.UpdatesItem;
 import com.aurora.adroid.util.CertUtil;
 import com.aurora.adroid.util.PackageUtil;
 
-import org.apache.maven.artifact.versioning.ComparableVersion;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,22 +49,19 @@ public class UpdatesViewModel extends BaseViewModel {
                     for (String packageName : packages) {
                         final App app = appRepository.getAppByPackageName(packageName);
                         if (app != null) {
-                            final Package appPackage = packageRepository.getAppPackage(packageName);
+                            final Package pkg = packageRepository.getAppPackage(packageName);
                             final PackageInfo packageInfo = PackageUtil.getPackageInfo(packageManager, app.getPackageName());
 
-                            if (appPackage != null && packageInfo != null) {
-                                final ComparableVersion installedVersion = new ComparableVersion(
-                                        packageInfo.versionName + "." + packageInfo.versionCode);
-                                final ComparableVersion repoVersion = new ComparableVersion(
-                                        appPackage.getVersionName() + "." + appPackage.getVersionCode());
-                                final String RSA256 = CertUtil.getSHA256(getApplication(),
-                                        app.getPackageName());
 
-                                if (installedVersion.compareTo(repoVersion) < 0
-                                        && RSA256.equals(appPackage.getSigner())
-                                        && (PackageUtil.isBestFitSupportedPackage(app.getAppPackage())
-                                        || PackageUtil.isSupportedPackage(app.getAppPackage()))) {
-                                    app.setAppPackage(appPackage);
+
+                            if (pkg != null && packageInfo != null) {
+                                final String RSA256 = CertUtil.getSHA256(getApplication(), app.getPackageName());
+
+                                if (pkg.getVersionCode() > packageInfo.versionCode
+                                        && (PackageUtil.isCompatibleVersion(getApplication(),pkg, packageInfo))
+                                        && RSA256.equals(pkg.getSigner())
+                                        && (PackageUtil.isBestFitSupportedPackage(app.getAppPackage()) || PackageUtil.isSupportedPackage(app.getAppPackage()))) {
+                                    app.setAppPackage(pkg);
                                     appList.add(app);
                                 }
                             }

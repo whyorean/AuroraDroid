@@ -26,4 +26,11 @@
         android:key="PREFERENCE_UPDATES_INTERVAL"
         android:title="@string/pref_updates_repo_interval"
         app:useSimpleSummaryProvider="true" />
+    <PreferenceCategory android:title="@string/pref_updates_app_title" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="PREFERENCE_UPDATES_EXPERIMENTAL"
+        android:title="@string/pref_updates_app_experimental"
+        android:summary="@string/pref_updates_app_experimental_desc"
+        app:useSimpleSummaryProvider="true" />
 </androidx.preference.PreferenceScreen>

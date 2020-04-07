@@ -249,4 +249,32 @@ public class PackageUtil {
         }
         return packageList.get(0);
     }
+
+    public static boolean isBeta(String versionName) {
+        return versionName.toLowerCase().contains("beta");
+    }
+
+    public static boolean isAlpha(String versionName) {
+        return versionName.toLowerCase().contains("alpha");
+    }
+
+    public static boolean isStable(String versionName) {
+        return !isBeta(versionName) && !isAlpha(versionName);
+    }
+
+    public static boolean isCompatibleVersion(Context context, Package pkg, PackageInfo packageInfo) {
+        if (pkg.getVersionCode() > packageInfo.versionCode) {
+            if (Util.isExperimentalUpdatesEnabled(context))
+                return true;
+            if (isAlpha(packageInfo.versionName) && (isAlpha(pkg.getVersionName()) || isBeta(pkg.getVersionName()) || isStable(pkg.getVersionName())))
+                return true;
+            else if (isBeta(packageInfo.versionName) && (isBeta(pkg.getVersionName()) || isStable(pkg.getVersionName())))
+                return true;
+            else if (isStable(packageInfo.versionName) && isStable(pkg.getVersionName()))
+                return true;
+            else
+                return false;
+        }
+        return false;
+    }
 }
