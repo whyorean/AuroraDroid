@@ -20,10 +20,14 @@ package com.aurora.adroid;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 
 import com.aurora.adroid.event.Event;
+import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.event.RxBus;
 import com.aurora.adroid.installer.Installer;
 import com.aurora.adroid.installer.InstallerService;
@@ -48,6 +52,17 @@ public class AuroraApplication extends Application {
     private static RxBus rxBus = null;
     private static boolean bulkUpdateAlive = false;
     private static List<App> ongoingUpdateList = new ArrayList<>();
+
+    private BroadcastReceiver packageUninstallReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getData() != null) {
+                final String packageName = intent.getData().getSchemeSpecificPart();
+                if (packageName != null)
+                    rxNotify(new Event(EventType.UNINSTALLED, packageName));
+            }
+        }
+    };
 
     public static RxBus getRxBus() {
         return rxBus;
@@ -105,6 +120,14 @@ public class AuroraApplication extends Application {
         //Check & start notification service
         Util.startNotificationService(this);
 
+        //Register global install/uninstall broadcast receiver.
+        final IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addDataScheme("package");
+        intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
+        intentFilter.addAction(Intent.ACTION_UNINSTALL_PACKAGE);
+        registerReceiver(packageUninstallReceiver, intentFilter);
+
         registerReceiver(installer.getPackageInstaller().getBroadcastReceiver(),
                 new IntentFilter(InstallerService.ACTION_INSTALLATION_STATUS_NOTIFICATION));
 
@@ -121,6 +144,7 @@ public class AuroraApplication extends Application {
     public void onTerminate() {
         super.onTerminate();
         try {
+            unregisterReceiver(packageUninstallReceiver);
             unregisterReceiver(installer.getPackageInstaller().getBroadcastReceiver());
         } catch (Exception ignored) {
         }

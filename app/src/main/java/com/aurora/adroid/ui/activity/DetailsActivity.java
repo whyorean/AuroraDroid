@@ -22,7 +22,6 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -76,20 +75,6 @@ public class DetailsActivity extends BaseActivity {
     private FavouritesManager favouritesManager;
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    private BroadcastReceiver localInstallReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String packageName = intent.getStringExtra("PACKAGE_NAME");
-            int statusCode = intent.getIntExtra("STATUS_CODE", -1);
-            if (packageName != null && packageName.equals(app.getPackageName())) {
-                ContextUtil.runOnUiThread(() -> drawButtons());
-                clearNotification(context, packageName);
-            }
-            if (statusCode == 0)
-                ContextUtil.toastLong(context, getString(R.string.installer_status_failure));
-        }
-    };
-
     private BroadcastReceiver globalInstallReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -119,8 +104,8 @@ public class DetailsActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(event -> {
                     if (event != null) {
-                        EventType eventEnum = event.getType();
-                        switch (eventEnum) {
+                        EventType eventType = event.getType();
+                        switch (eventType) {
                             case DOWNLOAD_INITIATED:
                                 ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_progress)));
                                 break;
@@ -132,6 +117,13 @@ public class DetailsActivity extends BaseActivity {
                                 break;
                             case DOWNLOAD_COMPLETED:
                                 ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_completed)));
+                                break;
+                        }
+
+                        switch (event.getType()) {
+                            case INSTALLED:
+                            case UNINSTALLED:
+                                drawButtons();
                                 break;
                         }
                     }
@@ -163,6 +155,18 @@ public class DetailsActivity extends BaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        try {
+            unregisterReceiver(globalInstallReceiver);
+            appActionDetails = null;
+            appPackages = null;
+            disposable.clear();
+        } catch (Exception ignored) {
+        }
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(final MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
@@ -190,26 +194,6 @@ public class DetailsActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.details_main, menu);
         return true;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        registerReceiver(localInstallReceiver, new IntentFilter("ACTION_INSTALL"));
-        registerReceiver(globalInstallReceiver, PackageUtil.getFilter());
-    }
-
-    @Override
-    protected void onPause() {
-        try {
-            unregisterReceiver(localInstallReceiver);
-            unregisterReceiver(globalInstallReceiver);
-            appActionDetails = null;
-            disposable.clear();
-            disposable.dispose();
-        } catch (Exception ignored) {
-        }
-        super.onPause();
     }
 
     private void setupActionBar() {
