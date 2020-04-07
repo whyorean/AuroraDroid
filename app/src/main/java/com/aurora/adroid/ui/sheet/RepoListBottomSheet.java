@@ -13,11 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.manager.RepoListManager;
-import com.aurora.adroid.manager.RepoManager;
-import com.aurora.adroid.manager.SyncManager;
+import com.aurora.adroid.manager.RepoSyncManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.model.items.RepoItem;
+import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.ImageUtil;
+import com.aurora.adroid.util.Log;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.drag.ItemTouchCallback;
 import com.mikepenz.fastadapter.drag.SimpleDragCallback;
@@ -33,6 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCallback, SimpleSwipeCallback.ItemSwipeCallback {
 
@@ -41,6 +43,7 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
 
     private FastItemAdapter<RepoItem> fastItemAdapter;
     private SelectExtension<RepoItem> selectExtension;
+    private RepoSyncManager repoSyncManager;
     private CompositeDisposable disposable = new CompositeDisposable();
 
     @Nullable
@@ -54,36 +57,27 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
     @Override
     protected void onContentViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onContentViewCreated(view, savedInstanceState);
+        repoSyncManager = new RepoSyncManager(requireContext());
         setupRecycler();
     }
 
     @OnClick(R.id.btn_positive)
     public void saveSelectedRepo() {
-
-        final RepoManager repoManager = new RepoManager(requireContext());
-        final SyncManager syncManager = new SyncManager(requireContext());
-        final List<Repo> syncedRepo = syncManager.getSyncedRepoList();
-
-        //Clear old selections
-        repoManager.clear();
-
-        Observable.fromIterable(fastItemAdapter.getAdapterItems())
+        disposable.add(Observable.fromIterable(fastItemAdapter.getAdapterItems())
+                .subscribeOn(Schedulers.io())
                 .filter(RepoItem::isChecked)
                 .map(RepoItem::getRepo)
                 .toList()
-                .doOnSuccess(repos -> {
-                    syncedRepo.removeAll(repos);
+                .subscribe(repoList -> {
+                    repoSyncManager.updateRepoMap(repoList);
+                    repoSyncManager.updateSyncMap(repoList);
+                    for (Repo repo : repoSyncManager.getRepoList())
+                        Log.e("Repo -> %s", repo.getRepoName());
 
-                    //Remove repos from synced list
-                    for (Repo repo : syncedRepo) {
-                        syncManager.removeFromSyncList(repo);
-                    }
-
-                    //Add new selections to repo list
-                    repoManager.addAllToRepoList(repos);
-                    dismissAllowingStateLoss();
-                })
-                .subscribe();
+                    for (Repo repo : repoSyncManager.getSyncList())
+                        Log.e("Sync -> %s", repo.getRepoName());
+                    ContextUtil.runOnUiThread(this::dismissAllowingStateLoss);
+                }, throwable -> Log.e(throwable.getMessage())));
     }
 
     @OnClick(R.id.btn_negative)
@@ -120,17 +114,15 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
         final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        final RepoManager repoManager = new RepoManager(requireContext());
-
-        Observable.fromIterable(fetchData())
-                .map(repo -> new RepoItem(repo, repoManager.isAdded(repo)))
+        disposable.add(Observable.fromIterable(fetchData())
+                .map(repo -> new RepoItem(repo, repoSyncManager.isAdded(repo)))
                 .toList()
-                .doOnSuccess(repoItems -> fastItemAdapter.add(repoItems))
-                .subscribe();
+                .subscribe(repoItems -> fastItemAdapter.add(repoItems), throwable -> Log.e(throwable.getMessage())));
     }
 
     @Override
     public void onDestroy() {
+        disposable.clear();
         super.onDestroy();
     }
 

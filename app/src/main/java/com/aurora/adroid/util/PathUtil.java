@@ -61,8 +61,8 @@ public class PathUtil {
         return new File(getApkPath(context, fileName)).exists();
     }
 
-    public static synchronized void deleteFile(Context context, String fileName) {
-        File[] files = new File(getBaseApkDirectory(context)).listFiles();
+    public static synchronized void deleteRepoFiles(Context context, String fileName) {
+        File[] files = new File(getRepoDirectory(context)).listFiles();
         if (files == null)
             return;
         for (File file : files)

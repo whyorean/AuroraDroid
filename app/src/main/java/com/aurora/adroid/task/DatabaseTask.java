@@ -50,6 +50,7 @@ public class DatabaseTask extends ContextWrapper {
             appDao.clearRepo(repoID);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

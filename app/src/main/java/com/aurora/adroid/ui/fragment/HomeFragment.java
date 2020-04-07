@@ -34,15 +34,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
+import com.aurora.adroid.manager.RepoSyncManager;
 import com.aurora.adroid.model.items.IndexItem;
 import com.aurora.adroid.model.items.cluster.NewClusterItem;
 import com.aurora.adroid.model.items.cluster.UpdatesClusterItem;
-import com.aurora.adroid.ui.activity.AuroraActivity;
 import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.ui.activity.GenericAppActivity;
 import com.aurora.adroid.ui.sheet.RepoDetailsBottomSheet;
+import com.aurora.adroid.util.Log;
 import com.aurora.adroid.viewmodel.ClusterAppsViewModel;
-import com.aurora.adroid.viewmodel.IndexViewModel;
+import com.aurora.adroid.viewmodel.IndexModel;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 
 import butterknife.BindView;
@@ -50,6 +51,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment {
@@ -68,6 +70,7 @@ public class HomeFragment extends Fragment {
     private FastItemAdapter<NewClusterItem> fastItemAdapterNew;
     private FastItemAdapter<UpdatesClusterItem> fastItemAdapterUpdates;
     private FastItemAdapter<IndexItem> fastItemAdapterIndices;
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     @Nullable
     @Override
@@ -87,34 +90,41 @@ public class HomeFragment extends Fragment {
         setupRepository();
 
         final ClusterAppsViewModel clusterModel = new ViewModelProvider(this).get(ClusterAppsViewModel.class);
-
         clusterModel.getNewAppsLiveData().observe(getViewLifecycleOwner(), apps -> {
-            Observable.fromIterable(apps)
+            disposable.add(Observable.fromIterable(apps)
                     .subscribeOn(Schedulers.io())
                     .map(NewClusterItem::new)
                     .toList()
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSuccess(clusterItems -> fastItemAdapterNew.add(clusterItems))
-                    .subscribe();
+                    .subscribe(clusterItems -> {
+                        fastItemAdapterNew.clear();
+                        fastItemAdapterNew.add(clusterItems);
+                    }, throwable -> Log.e(throwable.getMessage())));
         });
 
         clusterModel.getUpdatedAppsLiveData().observe(getViewLifecycleOwner(), apps -> {
-            Observable.fromIterable(apps)
+            disposable.add(Observable.fromIterable(apps)
                     .subscribeOn(Schedulers.io())
                     .map(UpdatesClusterItem::new)
                     .toList()
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSuccess(clusterItems -> fastItemAdapterUpdates.add(clusterItems))
-                    .subscribe();
+                    .subscribe(clusterItems -> {
+                        fastItemAdapterUpdates.clear();
+                        fastItemAdapterUpdates.add(clusterItems);
+                    }, throwable -> Log.e(throwable.getMessage())));
         });
 
-        final IndexViewModel indexViewModel = new ViewModelProvider(this).get(IndexViewModel.class);
-        indexViewModel.getAllIndicesLive().observe(getViewLifecycleOwner(), indices -> {
-            Observable.fromIterable(indices)
+        final IndexModel indexModel = new ViewModelProvider(this).get(IndexModel.class);
+        indexModel.getAllIndicesLive().observe(getViewLifecycleOwner(), indices -> {
+            final RepoSyncManager repoSyncManager = new RepoSyncManager(requireContext());
+            disposable.add(Observable.fromIterable(indices)
+                    .filter(index -> repoSyncManager.isSynced(index.getRepoId()))
                     .map(IndexItem::new)
                     .toList()
-                    .doOnSuccess(indexItems -> fastItemAdapterIndices.add(indexItems))
-                    .subscribe();
+                    .subscribe(indexItems -> {
+                        fastItemAdapterIndices.clear();
+                        fastItemAdapterIndices.add(indexItems);
+                    }, throwable -> Log.e(throwable.getMessage())));
         });
     }
 

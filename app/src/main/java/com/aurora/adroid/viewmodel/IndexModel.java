@@ -11,11 +11,11 @@ import com.aurora.adroid.model.Index;
 
 import java.util.List;
 
-public class IndexViewModel extends AndroidViewModel {
+public class IndexModel extends AndroidViewModel {
 
     private IndexRepository indexRepository;
 
-    public IndexViewModel(@NonNull Application application) {
+    public IndexModel(@NonNull Application application) {
         super(application);
         indexRepository = new IndexRepository(application);
     }

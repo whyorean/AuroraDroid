@@ -18,7 +18,7 @@ import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.event.LogEvent;
 import com.aurora.adroid.manager.RepoListManager;
-import com.aurora.adroid.manager.SyncManager;
+import com.aurora.adroid.manager.RepoSyncManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.task.CheckRepoUpdatesTask;
 import com.aurora.adroid.task.ExtractRepoTask;
@@ -127,7 +127,8 @@ public class SyncService extends Service {
     public void fetchRepo() {
         sendNotification(NotificationType.INIT);
         fetch = DownloadManager.getFetchInstance(this);
-        disposable.add(Observable.fromCallable(() -> new CheckRepoUpdatesTask(this).getRepoRequestList())
+        disposable.add(Observable.fromCallable(() -> new CheckRepoUpdatesTask(this)
+                .getRepoRequestList())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::enqueueDownloads, throwable -> {
@@ -154,7 +155,8 @@ public class SyncService extends Service {
 
     private void extractAllRepos() {
         sendNotification(NotificationType.SYNCING);
-        final SyncManager syncManager = new SyncManager(this);
+
+        final RepoSyncManager repoSyncManager = new RepoSyncManager(this);
         final File repoDirectory = new File(PathUtil.getRepoDirectory(this));
         final File[] files = repoDirectory.listFiles();
 
@@ -173,11 +175,11 @@ public class SyncService extends Service {
                         final Repo repo = repoBundle.getRepo();
                         if (repoBundle.isSynced()) {
                             AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_completed)));
-                            syncManager.addToSyncList(repo);
+                            repoSyncManager.addToSyncMap(repo);
                         } else {
                             AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_failed)));
                         }
-                        PathUtil.deleteFile(this, repo.getRepoId());
+                        PathUtil.deleteRepoFiles(this, repo.getRepoId());
                     })
                     .doOnComplete(this::notifyCompleted)
                     .doOnError(throwable -> {

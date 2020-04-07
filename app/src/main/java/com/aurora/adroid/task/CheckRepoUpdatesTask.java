@@ -7,7 +7,7 @@ import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.download.RequestBuilder;
 import com.aurora.adroid.event.LogEvent;
-import com.aurora.adroid.manager.RepoManager;
+import com.aurora.adroid.manager.RepoSyncManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.model.RepoHeader;
 import com.aurora.adroid.util.Log;
@@ -59,7 +59,9 @@ public class CheckRepoUpdatesTask extends ContextWrapper {
     }
 
     public List<Request> getRepoRequestList() {
-        final List<Repo> repoList = new RepoManager(this).getRepoList();
+
+        final RepoSyncManager repoSyncManager = new RepoSyncManager(this);
+        final List<Repo> repoList = repoSyncManager.getRepoList();
         final List<Request> requestList = RequestBuilder.buildRequest(this, repoList);
         final List<Request> filteredList = new ArrayList<>();
 
