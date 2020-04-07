@@ -80,6 +80,24 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
         dismissAllowingStateLoss();
     }
 
+    @OnClick(R.id.btn_select_all)
+    public void selectAll() {
+        for (RepoItem repoItem : fastItemAdapter.getAdapterItems()) {
+            repoItem.setSelected(true);
+            repoItem.setChecked(true);
+            fastItemAdapter.notifyAdapterDataSetChanged();
+        }
+    }
+
+    @OnClick(R.id.btn_clear_all)
+    public void deSelectAll() {
+        for (RepoItem repoItem : fastItemAdapter.getAdapterItems()) {
+            repoItem.setSelected(false);
+            repoItem.setChecked(false);
+            fastItemAdapter.notifyAdapterDataSetChanged();
+        }
+    }
+
     private List<Repo> fetchData() {
         return RepoListManager.getAllRepoList(requireContext());
     }

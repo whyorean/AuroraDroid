@@ -32,12 +32,46 @@
         android:text="@string/dialog_repo_list"
         android:textAppearance="@style/TextAppearance.Aurora.Title" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_title">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_select_all"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_button"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:text="@string/action_select_all"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_clear_all"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="@color/colorScrim" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_clear_all"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_button"
+            android:layout_marginStart="@dimen/margin_large"
+            android:text="@string/action_clear_all"
+            android:textColor="@color/colorRed"
+            app:layout_constraintEnd_toStartOf="@id/btn_select_all"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="@color/colorScrim" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/layout_bottom"
-        android:layout_below="@id/txt_title"
+        android:layout_below="@id/layout_top"
         android:clipToPadding="false"
         tools:itemCount="5"
         tools:listitem="@layout/item_repo" />
@@ -53,24 +87,26 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/height_button"
+            android:layout_marginEnd="@dimen/margin_large"
             android:text="@string/action_save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_negative"
             app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:rippleColor="@color/colorTransparent" />
+            app:rippleColor="@color/colorScrim" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_negative"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/height_button"
+            android:layout_marginStart="@dimen/margin_large"
             android:text="@string/action_close"
             android:textColor="@color/colorRed"
             app:layout_constraintEnd_toStartOf="@id/btn_positive"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:rippleColor="@color/colorTransparent" />
+            app:rippleColor="@color/colorScrim" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

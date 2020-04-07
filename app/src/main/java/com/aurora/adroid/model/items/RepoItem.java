@@ -30,14 +30,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import lombok.Getter;
+import lombok.Setter;
 
 import static com.aurora.adroid.Constants.SIGNED_FILE_NAME;
 
+@Getter
+@Setter
 public class RepoItem extends AbstractItem<RepoItem.RepoItemHolder> {
 
-    @Getter
     private Repo repo;
-    @Getter
     private boolean checked;
 
     public RepoItem(Repo repo, boolean checked) {

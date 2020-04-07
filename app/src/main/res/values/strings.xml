@@ -53,6 +53,7 @@
     <string name="action_resume">Resume</string>
     <string name="action_retry">Retry</string>
     <string name="action_save">Save</string>
+    <string name="action_select_all">Select all</string>
     <string name="action_settings">Settings</string>
     <string name="action_share">Share</string>
     <string name="action_sync">Synchronize</string>
