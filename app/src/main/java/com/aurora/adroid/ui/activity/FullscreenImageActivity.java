@@ -23,36 +23,35 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.adapter.BigScreenshotsAdapter;
-import com.aurora.adroid.ui.fragment.DetailsFragment;
-import com.aurora.adroid.util.DatabaseUtil;
-import com.aurora.adroid.util.ThemeUtil;
 import com.aurora.adroid.util.ViewUtil;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FullscreenImageActivity extends AppCompatActivity {
+public class FullscreenImageActivity extends BaseActivity {
 
     static public final String INTENT_SCREENSHOT_NUMBER = "INTENT_SCREENSHOT_NUMBER";
 
     @BindView(R.id.gallery)
     RecyclerView recyclerView;
 
-
-    private ThemeUtil themeUtil = new ThemeUtil();
+    private List<String> urlList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        themeUtil.onCreate(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -64,19 +63,30 @@ public class FullscreenImageActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        themeUtil.onResume(this);
-    }
-
-    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        SnapHelper snapHelper = new PagerSnapHelper();
+        if (intent != null) {
+
+            stringExtra = intent.getStringExtra(Constants.STRING_EXTRA);
+            intExtra = intent.getIntExtra(INTENT_SCREENSHOT_NUMBER, 0);
+
+            if (stringExtra != null) {
+                final Type type = new TypeToken<List<String>>() {
+                }.getType();
+                urlList = gson.fromJson(stringExtra, type);
+                setupRecycler();
+            }
+        } else {
+            finishAfterTransition();
+        }
+    }
+
+    private void setupRecycler() {
+        final SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
         recyclerView.setBackgroundColor(ViewUtil.getStyledAttribute(this, android.R.attr.colorBackground));
-        recyclerView.setAdapter(new BigScreenshotsAdapter(DatabaseUtil.getScreenshotURLs(DetailsFragment.app), this));
+        recyclerView.setAdapter(new BigScreenshotsAdapter(urlList, this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-        recyclerView.scrollToPosition(intent.getIntExtra(INTENT_SCREENSHOT_NUMBER, 0));
+        recyclerView.scrollToPosition(intExtra);
     }
 }

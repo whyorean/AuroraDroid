@@ -20,28 +20,33 @@ package com.aurora.adroid.ui.fragment.details;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.ui.fragment.DetailsFragment;
+import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.util.ViewUtil;
 
 import butterknife.ButterKnife;
 
 public abstract class AbstractDetails {
 
-    protected DetailsFragment fragment;
+    protected DetailsActivity activity;
     protected App app;
-    protected View view;
     protected Context context;
 
-    public AbstractDetails(DetailsFragment fragment, App app) {
-        this.fragment = fragment;
+    public AbstractDetails(DetailsActivity activity, App app) {
+        this.activity = activity;
+        this.context = activity;
         this.app = app;
-        this.context = fragment.getContext();
-        this.view = fragment.getView();
-        ButterKnife.bind(this, view);
+        ButterKnife.bind(this, activity);
+    }
+
+    public App getApp() {
+        return app;
+    }
+
+    public void setApp(App app) {
+        this.app = app;
     }
 
     abstract public void draw();

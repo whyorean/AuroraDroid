@@ -48,6 +48,9 @@ public interface PackageDao {
     @Query("SELECT * FROM Package WHERE packageName = :packageName and repoName =:repoName ORDER BY added DESC")
     List<Package> getPackageListByPackageNameAndRepo(String packageName, String repoName);
 
+    @Query("DELETE FROM PACKAGE WHERE repoName =:repoName")
+    void clearRepo(String repoName);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Package> packageList);
 

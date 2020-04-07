@@ -39,7 +39,7 @@ import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.download.RequestBuilder;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
-import com.aurora.adroid.ui.fragment.DetailsFragment;
+import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PackageUtil;
@@ -89,13 +89,14 @@ public class AppActionDetails extends AbstractDetails {
     private Fetch fetch;
     private FetchListener fetchListener;
 
-    public AppActionDetails(DetailsFragment fragment, App app) {
-        super(fragment, app);
+    public AppActionDetails(DetailsActivity activity, App app) {
+        super(activity, app);
     }
 
     @Override
     public void draw() {
         boolean isInstalled = PackageUtil.isInstalled(context, app.getPackageName());
+
         hashCode = app.getPackageName().hashCode();
         ViewUtil.setVisibility(btnNegative, isInstalled);
         btnNegative.setOnClickListener(uninstallAppListener());

@@ -31,7 +31,7 @@ import androidx.palette.graphics.Palette;
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.ui.fragment.DetailsFragment;
+import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.util.ColorUtil;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.TextUtil;
@@ -66,8 +66,8 @@ public class AppInfoDetails extends AbstractDetails {
     @BindView(R.id.btn_negative)
     MaterialButton btnNegative;
 
-    public AppInfoDetails(DetailsFragment fragment, App app) {
-        super(fragment, app);
+    public AppInfoDetails(DetailsActivity activity, App app) {
+        super(activity, app);
     }
 
     @Override

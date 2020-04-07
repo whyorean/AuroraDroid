@@ -19,6 +19,8 @@
 package com.aurora.adroid.util;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -36,6 +38,9 @@ import java.util.Map;
 
 public class PackageUtil {
 
+    private static final String ACTION_PACKAGE_REPLACED_NON_SYSTEM = "ACTION_PACKAGE_REPLACED_NON_SYSTEM";
+    private static final String ACTION_PACKAGE_INSTALLATION_FAILED = "ACTION_PACKAGE_INSTALLATION_FAILED";
+    private static final String ACTION_UNINSTALL_PACKAGE_FAILED = "ACTION_UNINSTALL_PACKAGE_FAILED";
     private static final List<String> archList = new ArrayList<>();
     private static final String PSEUDO_PACKAGE_MAP = "PSEUDO_PACKAGE_MAP";
     private static final String PSEUDO_URL_MAP = "PSEUDO_URL_MAP";
@@ -276,5 +281,20 @@ public class PackageUtil {
                 return false;
         }
         return false;
+    }
+
+    public static IntentFilter getFilter() {
+        IntentFilter filter = new IntentFilter();
+        filter.addDataScheme("package");
+        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        filter.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
+        filter.addAction(Intent.ACTION_PACKAGE_INSTALL);
+        filter.addAction(Intent.ACTION_UNINSTALL_PACKAGE);
+        filter.addAction(Intent.ACTION_PACKAGE_ADDED);
+        filter.addAction(Intent.ACTION_PACKAGE_REPLACED);
+        filter.addAction(ACTION_PACKAGE_REPLACED_NON_SYSTEM);
+        filter.addAction(ACTION_PACKAGE_INSTALLATION_FAILED);
+        filter.addAction(ACTION_UNINSTALL_PACKAGE_FAILED);
+        return filter;
     }
 }

@@ -233,6 +233,7 @@ public class SearchActivity extends BaseActivity implements ItemFilterListener<G
             final Intent intent = new Intent(this, DetailsActivity.class);
             intent.putExtra(Constants.INTENT_PACKAGE_NAME, app.getPackageName());
             intent.putExtra(Constants.STRING_EXTRA, gson.toJson(app));
+            intent.putExtra(Constants.STRING_REPO, app.getRepoName());
             startActivity(intent, ViewUtil.getEmptyActivityBundle(this));
             return false;
         });

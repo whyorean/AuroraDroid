@@ -227,6 +227,7 @@ public class FavouriteFragment extends BaseFragment {
             final Intent intent = new Intent(requireContext(), DetailsActivity.class);
             intent.putExtra(Constants.INTENT_PACKAGE_NAME, app.getPackageName());
             intent.putExtra(Constants.STRING_EXTRA, gson.toJson(app));
+            intent.putExtra(Constants.STRING_REPO, app.getRepoName());
             startActivity(intent, ViewUtil.getEmptyActivityBundle((AppCompatActivity) requireActivity()));
             return false;
         });

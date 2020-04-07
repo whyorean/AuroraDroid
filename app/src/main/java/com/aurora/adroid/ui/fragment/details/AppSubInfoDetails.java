@@ -31,7 +31,7 @@ import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 import com.aurora.adroid.section.ClusterAppSection;
-import com.aurora.adroid.ui.fragment.DetailsFragment;
+import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.ui.sheet.MoreInfoSheet;
 import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.Util;
@@ -76,13 +76,13 @@ public class AppSubInfoDetails extends AbstractDetails {
     @BindView(R.id.recycler_similar)
     RecyclerView recyclerSimilar;
 
-    public AppSubInfoDetails(DetailsFragment fragment, App app) {
-        super(fragment, app);
+    public AppSubInfoDetails(DetailsActivity activity, App app) {
+        super(activity, app);
     }
 
     @Override
     public void draw() {
-        final ClusterAppsViewModel clusterAppsViewModel = new ViewModelProvider(fragment).get(ClusterAppsViewModel.class);
+        final ClusterAppsViewModel clusterAppsViewModel = new ViewModelProvider(activity).get(ClusterAppsViewModel.class);
         final DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
         final Package pkg = app.getAppPackage();
 
@@ -97,14 +97,14 @@ public class AppSubInfoDetails extends AbstractDetails {
             chipCategory.setText(app.getCategories().get(0));
             layoutSimilar.setVisibility(View.VISIBLE);
             clusterAppsViewModel.getCategoryAppsLiveData(app.getCategories().get(0))
-                    .observe(fragment.getViewLifecycleOwner(), this::setupSimilarRecycler);
+                    .observe(activity, this::setupSimilarRecycler);
         } else
             ViewUtil.hideWithAnimation(chipCategory);
 
         imgMore.setOnClickListener(v -> {
             MoreInfoSheet moreInfoSheet = new MoreInfoSheet();
             moreInfoSheet.setApp(app);
-            moreInfoSheet.show(fragment.getChildFragmentManager(), "DESCRIPTION");
+            moreInfoSheet.show(activity.getSupportFragmentManager(), "DESCRIPTION");
         });
 
         if (app.getAuthorName() != null
@@ -112,7 +112,7 @@ public class AppSubInfoDetails extends AbstractDetails {
                 && !app.getAuthorName().equalsIgnoreCase("unknown")) {
             layoutDeveloper.setVisibility(View.VISIBLE);
             clusterAppsViewModel.getAuthorAppsLiveData(app.getAuthorName())
-                    .observe(fragment.getViewLifecycleOwner(), this::setupAuthorRecycler);
+                    .observe(activity, this::setupAuthorRecycler);
         }
     }
 

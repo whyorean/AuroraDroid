@@ -29,12 +29,14 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
 import com.aurora.adroid.ui.activity.FullscreenImageActivity;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -43,11 +45,11 @@ import butterknife.ButterKnife;
 
 public class SmallScreenshotsAdapter extends RecyclerView.Adapter<SmallScreenshotsAdapter.ViewHolder> {
 
-    private List<String> URLs;
     private Context context;
+    private List<String> urlList;
 
-    public SmallScreenshotsAdapter(List<String> URLs, Context context) {
-        this.URLs = URLs;
+    public SmallScreenshotsAdapter(List<String> urlList, Context context) {
+        this.urlList = urlList;
         this.context = context;
     }
 
@@ -63,7 +65,7 @@ public class SmallScreenshotsAdapter extends RecyclerView.Adapter<SmallScreensho
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         GlideApp
                 .with(context)
-                .load(URLs.get(position))
+                .load(urlList.get(position))
                 .transforms(new CenterCrop(), new RoundedCorners(15))
                 .placeholder(R.drawable.ic_placeholder_screenshots)
                 .priority(Priority.HIGH)
@@ -72,16 +74,17 @@ public class SmallScreenshotsAdapter extends RecyclerView.Adapter<SmallScreensho
         holder.imageView.setOnClickListener(v -> {
             Intent intent = new Intent(context, FullscreenImageActivity.class);
             intent.putExtra(FullscreenImageActivity.INTENT_SCREENSHOT_NUMBER, position);
+            intent.putExtra(Constants.STRING_EXTRA, new Gson().toJson(urlList));
             context.startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
-        return URLs.size();
+        return urlList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.img_screenshot)
         ImageView imageView;
 

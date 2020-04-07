@@ -27,7 +27,7 @@ import android.widget.LinearLayout;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.ui.fragment.DetailsFragment;
+import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.ui.sheet.PermissionBottomSheet;
 import com.aurora.adroid.ui.view.LinkView;
 import com.aurora.adroid.util.Log;
@@ -42,8 +42,8 @@ public class AppLinkDetails extends AbstractDetails {
     LinearLayout linkLayout;
 
 
-    public AppLinkDetails(DetailsFragment fragment, App app) {
-        super(fragment, app);
+    public AppLinkDetails(DetailsActivity activity, App app) {
+        super(activity, app);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class AppLinkDetails extends AbstractDetails {
         permLinkView.setOnClickListener(v -> {
             PermissionBottomSheet profileFragment = new PermissionBottomSheet();
             profileFragment.setApp(app);
-            profileFragment.show(fragment.getChildFragmentManager(), "PERMISSION");
+            profileFragment.show(activity.getSupportFragmentManager(), "PERMISSION");
         });
         permLinkView.build();
 

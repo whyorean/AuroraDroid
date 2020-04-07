@@ -82,6 +82,7 @@ public class Constants {
     public static final String INT_EXTRA = "INT_EXTRA";
     public static final String FLOAT_EXTRA = "FLOAT_EXTRA";
     public static final String STRING_EXTRA = "STRING_EXTRA";
+    public static final String STRING_REPO = "STRING_REPO";
 
     public static final String DOWNLOAD_PACKAGE_NAME = "DOWNLOAD_PACKAGE_NAME";
     public static final String DOWNLOAD_DISPLAY_NAME = "DOWNLOAD_DISPLAY_NAME";

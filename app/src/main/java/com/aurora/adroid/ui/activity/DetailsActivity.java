@@ -18,7 +18,11 @@
 
 package com.aurora.adroid.ui.activity;
 
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,33 +31,73 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
+import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.manager.FavouritesManager;
-import com.aurora.adroid.ui.fragment.DetailsFragment;
+import com.aurora.adroid.model.App;
+import com.aurora.adroid.ui.fragment.details.AppActionDetails;
+import com.aurora.adroid.ui.fragment.details.AppInfoDetails;
+import com.aurora.adroid.ui.fragment.details.AppLinkDetails;
+import com.aurora.adroid.ui.fragment.details.AppPackages;
+import com.aurora.adroid.ui.fragment.details.AppScreenshotsDetails;
+import com.aurora.adroid.ui.fragment.details.AppSubInfoDetails;
+import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
-
-import java.util.List;
+import com.aurora.adroid.util.PackageUtil;
+import com.aurora.adroid.viewmodel.DetailAppViewModel;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class DetailsActivity extends BaseActivity {
 
-    public static final String INTENT_PACKAGE_NAME = "INTENT_PACKAGE_NAME";
-    public static final String INTENT_REPO_NAME = "INTENT_REPO_NAME";
-
     @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    Toolbar toolbar;
+    @BindView(R.id.coordinator)
+    CoordinatorLayout coordinator;
 
     private String packageName;
     private String repoName;
-    private DetailsFragment detailsFragment;
+    private DetailAppViewModel model;
+
+    private App app;
+    private AppActionDetails appActionDetails;
     private FavouritesManager favouritesManager;
+    private CompositeDisposable disposable = new CompositeDisposable();
+
+    private BroadcastReceiver localInstallReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String packageName = intent.getStringExtra("PACKAGE_NAME");
+            int statusCode = intent.getIntExtra("STATUS_CODE", -1);
+            if (packageName != null && packageName.equals(app.getPackageName())) {
+                ContextUtil.runOnUiThread(() -> drawButtons());
+                clearNotification(context, packageName);
+            }
+            if (statusCode == 0)
+                ContextUtil.toastLong(context, getString(R.string.installer_status_failure));
+        }
+    };
+
+    private BroadcastReceiver globalInstallReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getData() == null || !TextUtils.equals(packageName, intent.getData().getSchemeSpecificPart())) {
+                return;
+            }
+            ContextUtil.runOnUiThread(() -> drawButtons());
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +105,37 @@ public class DetailsActivity extends BaseActivity {
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
         setupActionBar();
+
         favouritesManager = new FavouritesManager(this);
+        model = new ViewModelProvider(this).get(DetailAppViewModel.class);
+        model.getLiveApp().observe(this, app -> {
+            draw(app);
+        });
+
+        disposable.add(AuroraApplication.getRxBus()
+                .getBus()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(event -> {
+                    if (event != null) {
+                        EventType eventEnum = event.getType();
+                        switch (eventEnum) {
+                            case DOWNLOAD_INITIATED:
+                                ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_progress)));
+                                break;
+                            case DOWNLOAD_FAILED:
+                                ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_failed)));
+                                break;
+                            case DOWNLOAD_CANCELLED:
+                                ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_canceled)));
+                                break;
+                            case DOWNLOAD_COMPLETED:
+                                ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_completed)));
+                                break;
+                        }
+                    }
+                }));
+
         onNewIntent(getIntent());
     }
 
@@ -70,15 +144,21 @@ public class DetailsActivity extends BaseActivity {
         super.onNewIntent(intent);
 
         packageName = getIntentPackageName(intent);
-        repoName = intent.getStringExtra(INTENT_REPO_NAME);
+        stringExtra = intent.getStringExtra(Constants.STRING_EXTRA);
+        repoName = intent.getStringExtra(Constants.STRING_REPO);
 
         if (TextUtils.isEmpty(packageName)) {
-            Log.e("No package name provided");
-            finish();
-            return;
+            Log.d("No package name provided");
+            finishAfterTransition();
+        } else {
+            stringExtra = intent.getStringExtra(Constants.STRING_EXTRA);
+            if (stringExtra != null) {
+                app = gson.fromJson(stringExtra, App.class);
+            }
+
+            Log.i("Getting info about %s", packageName);
+            model.getFullAppByPackageName(packageName, repoName);
         }
-        Log.i("Getting info about %s", packageName);
-        grabDetails();
     }
 
     @Override
@@ -114,23 +194,25 @@ public class DetailsActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        registerReceiver(localInstallReceiver, new IntentFilter("ACTION_INSTALL"));
+        registerReceiver(globalInstallReceiver, PackageUtil.getFilter());
     }
 
     @Override
-    public void onBackPressed() {
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if (fragments.get(0) instanceof DetailsFragment) {
-            FragmentManager fm = fragments.get(0).getChildFragmentManager();
-            if (!fm.getFragments().isEmpty())
-                fm.popBackStack();
-            else
-                super.onBackPressed();
-        } else
-            super.onBackPressed();
+    protected void onPause() {
+        try {
+            unregisterReceiver(localInstallReceiver);
+            unregisterReceiver(globalInstallReceiver);
+            appActionDetails = null;
+            disposable.clear();
+            disposable.dispose();
+        } catch (Exception ignored) {
+        }
+        super.onPause();
     }
 
     private void setupActionBar() {
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null) {
             mActionBar.setDisplayHomeAsUpEnabled(true);
@@ -138,9 +220,30 @@ public class DetailsActivity extends BaseActivity {
         }
     }
 
+    private void draw(App mApp) {
+        app = mApp;
+        drawButtons();
+        new AppInfoDetails(this, app).draw();
+        new AppSubInfoDetails(this, app).draw();
+        new AppLinkDetails(this, app).draw();
+        new AppScreenshotsDetails(this, app).draw();
+        new AppPackages(this, app).draw();
+    }
+
+    public void drawButtons() {
+        appActionDetails = new AppActionDetails(this, app);
+        appActionDetails.draw();
+    }
+
+    private void notifyAction(String message) {
+        Snackbar snackbar = Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG);
+        snackbar.setDuration(BaseTransientBottomBar.LENGTH_SHORT);
+        snackbar.show();
+    }
+
     private String getIntentPackageName(Intent intent) {
-        if (intent.hasExtra(INTENT_PACKAGE_NAME)) {
-            return intent.getStringExtra(INTENT_PACKAGE_NAME);
+        if (intent.hasExtra(Constants.INTENT_PACKAGE_NAME)) {
+            return intent.getStringExtra(Constants.INTENT_PACKAGE_NAME);
         } else if (intent.getScheme() != null
                 && intent.getScheme().equals("https")
                 && intent.getData() != null) {
@@ -148,34 +251,23 @@ public class DetailsActivity extends BaseActivity {
             return data.getLastPathSegment();
         } else if (intent.getExtras() != null) {
             Bundle bundle = intent.getExtras();
-            return bundle.getString(INTENT_PACKAGE_NAME);
+            return bundle.getString(Constants.INTENT_PACKAGE_NAME);
         }
         return null;
-    }
-
-    public void grabDetails() {
-        detailsFragment = new DetailsFragment();
-        Bundle arguments = new Bundle();
-        arguments.putString("PackageName", packageName);
-        arguments.putString("RepoName", repoName);
-        detailsFragment.setArguments(arguments);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content, detailsFragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commitAllowingStateLoss();
-    }
-
-    public void redrawButtons() {
-        if (detailsFragment != null)
-            detailsFragment.drawButtons();
     }
 
     private void getShareIntent() {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("text/plain");
-        i.putExtra(Intent.EXTRA_SUBJECT, DetailsFragment.app.getName());
-        i.putExtra(Intent.EXTRA_TEXT, Constants.APP_SHARE_URL + DetailsFragment.app.getPackageName());
+        i.putExtra(Intent.EXTRA_SUBJECT, app.getName());
+        i.putExtra(Intent.EXTRA_TEXT, Constants.APP_SHARE_URL + app.getPackageName());
         startActivity(Intent.createChooser(i, getString(R.string.action_share)));
+    }
+
+    private void clearNotification(Context context, String packageName) {
+        final NotificationManager manager = (NotificationManager)
+                context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        if (manager != null)
+            manager.cancel(packageName, packageName.hashCode());
     }
 }

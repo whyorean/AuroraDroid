@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.manager.RepoSyncManager;
 import com.aurora.adroid.model.items.IndexItem;
@@ -177,7 +178,8 @@ public class HomeFragment extends Fragment {
         fastItemAdapterNew = new FastItemAdapter<>();
         fastItemAdapterNew.setOnClickListener((view, adapter, item, position) -> {
             Intent intent = new Intent(requireContext(), DetailsActivity.class);
-            intent.putExtra(DetailsActivity.INTENT_PACKAGE_NAME, item.getPackageName());
+            intent.putExtra(Constants.INTENT_PACKAGE_NAME, item.getPackageName());
+            intent.putExtra(Constants.STRING_REPO, item.getApp().getRepoName());
             startActivity(intent);
             return false;
         });
@@ -191,7 +193,8 @@ public class HomeFragment extends Fragment {
         fastItemAdapterUpdates = new FastItemAdapter<>();
         fastItemAdapterUpdates.setOnClickListener((view, adapter, item, position) -> {
             Intent intent = new Intent(requireContext(), DetailsActivity.class);
-            intent.putExtra(DetailsActivity.INTENT_PACKAGE_NAME, item.getPackageName());
+            intent.putExtra(Constants.INTENT_PACKAGE_NAME, item.getPackageName());
+            intent.putExtra(Constants.STRING_REPO, item.getApp().getRepoName());
             startActivity(intent);
             return false;
         });

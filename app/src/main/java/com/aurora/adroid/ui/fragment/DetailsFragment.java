@@ -133,22 +133,23 @@ public class DetailsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
         ButterKnife.bind(this, view);
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            packageName = arguments.getString("PackageName");
-            repoName = arguments.getString("RepoName");
-        }
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        DetailAppViewModel viewModel = new ViewModelProvider(this).get(DetailAppViewModel.class);
-        viewModel.getLiveApp().observe(getViewLifecycleOwner(), liveApps -> {
-            draw(liveApps);
-        });
-        viewModel.getFullAppByPackageName(packageName, repoName);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            packageName = arguments.getString("PackageName");
+            repoName = arguments.getString("RepoName");
+
+            DetailAppViewModel viewModel = new ViewModelProvider(this).get(DetailAppViewModel.class);
+            viewModel.getLiveApp().observe(getViewLifecycleOwner(), liveApps -> {
+                draw(liveApps);
+            });
+            viewModel.getFullAppByPackageName(packageName, repoName);
+        }
     }
 
     @Override
@@ -172,19 +173,19 @@ public class DetailsFragment extends Fragment {
     }
 
     private void draw(App mApp) {
-        app = mApp;
+       /* app = mApp;
         drawButtons();
         new AppInfoDetails(this, app).draw();
         new AppSubInfoDetails(this, app).draw();
         new AppLinkDetails(this, app).draw();
-        new AppScreenshotsDetails(this, app).draw();
+        new AppScreenshotsDetails(this, app).draw();*/
     }
 
     public void drawButtons() {
-        appActionDetails = new AppActionDetails(this, app);
+       /* appActionDetails = new AppActionDetails(this, app);
         AppPackages appPackages = new AppPackages(this, app);
         appActionDetails.draw();
-        appPackages.draw();
+        appPackages.draw();*/
     }
 
     private void notifyAction(String message) {

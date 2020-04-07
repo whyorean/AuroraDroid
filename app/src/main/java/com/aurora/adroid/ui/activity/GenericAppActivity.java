@@ -230,6 +230,7 @@ public class GenericAppActivity extends BaseActivity implements ItemFilterListen
             final App app = item.getApp();
             final Intent intent = new Intent(this, DetailsActivity.class);
             intent.putExtra(Constants.INTENT_PACKAGE_NAME, app.getPackageName());
+            intent.putExtra(Constants.STRING_REPO, app.getRepoName());
             intent.putExtra(Constants.STRING_EXTRA, gson.toJson(app));
             startActivity(intent, ViewUtil.getEmptyActivityBundle(this));
             return false;

@@ -119,7 +119,7 @@ public class RepoSyncManager {
             for (Repo repo : syncedList) {
                 if (!repoList.contains(repo)) {
                     syncHashMap.remove(repo.getRepoId());
-                    databaseTask.clearRepo(repo.getRepoId());
+                    databaseTask.clearRepo(repo);
                 }
             }
             saveSyncMap();

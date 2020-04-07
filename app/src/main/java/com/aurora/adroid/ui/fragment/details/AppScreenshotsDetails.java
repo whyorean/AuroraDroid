@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aurora.adroid.R;
 import com.aurora.adroid.adapter.SmallScreenshotsAdapter;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.ui.fragment.DetailsFragment;
+import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.util.DatabaseUtil;
 
 import butterknife.BindView;
@@ -36,8 +36,8 @@ public class AppScreenshotsDetails extends AbstractDetails {
     @BindView(R.id.screenshots_gallery)
     RecyclerView recyclerView;
 
-    public AppScreenshotsDetails(DetailsFragment fragment, App app) {
-        super(fragment, app);
+    public AppScreenshotsDetails(DetailsActivity activity, App app) {
+        super(activity, app);
     }
 
     @Override

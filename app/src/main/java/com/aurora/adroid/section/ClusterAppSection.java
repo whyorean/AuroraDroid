@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
@@ -53,7 +54,8 @@ public class ClusterAppSection extends Section {
         contentHolder.txtExtra.setText(app.getRepoName());
         contentHolder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailsActivity.class);
-            intent.putExtra(DetailsActivity.INTENT_PACKAGE_NAME, app.getPackageName());
+            intent.putExtra(Constants.INTENT_PACKAGE_NAME, app.getPackageName());
+            intent.putExtra(Constants.STRING_REPO, app.getRepoName());
             context.startActivity(intent);
         });
 

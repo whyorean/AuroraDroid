@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.items.PackageItem;
-import com.aurora.adroid.ui.fragment.DetailsFragment;
+import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.ViewUtil;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
@@ -52,8 +52,8 @@ public class AppPackages extends AbstractDetails {
     private FastItemAdapter<PackageItem> fastItemAdapter;
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    public AppPackages(DetailsFragment fragment, App app) {
-        super(fragment, app);
+    public AppPackages(DetailsActivity activity, App app) {
+        super(activity, app);
     }
 
     @Override

@@ -16,211 +16,205 @@
   ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinator"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:scrollbars="none">
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:scrollbars="none">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!-- App Info : Icon, Name, Package, Developer, Version -->
+        <include layout="@layout/include_details_info" />
+
+        <!-- Action : Download, Update, Uninstall -->
+        <include layout="@layout/include_details_subinfo" />
+
+        <!-- Action : Download, Update, Uninstall -->
+        <include layout="@layout/include_details_actions" />
+
+        <!--Short description of app-->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_summary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_margin="@dimen/margin_medium"
+            android:background="@drawable/generic_bg"
+            android:gravity="center"
+            android:minHeight="56dp"
+            android:padding="@dimen/margin_small"
+            android:textAlignment="center"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeTextType="uniform" />
 
-            <!-- App Info : Icon, Name, Package, Developer, Version -->
-            <include layout="@layout/include_details_info" />
+        <!--Read more description of app-->
+        <RelativeLayout
+            android:id="@+id/more_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium">
 
-            <!-- Action : Download, Update, Uninstall -->
-            <include layout="@layout/include_details_subinfo" />
-
-            <!-- Action : Download, Update, Uninstall -->
-            <include layout="@layout/include_details_actions" />
-
-            <!--Short description of app-->
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_summary"
+            <TextView
+                android:id="@+id/showLessMoreTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_medium"
-                android:background="@drawable/generic_bg"
-                android:gravity="center"
-                android:minHeight="56dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_toStartOf="@id/img_more"
+                android:background="?selectableItemBackground"
+                android:text="@string/details_more"
+                android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/img_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackgroundBorderless"
                 android:padding="@dimen/margin_small"
-                android:textAlignment="center"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="16sp"
-                android:visibility="gone"
-                app:autoSizeMaxTextSize="16sp"
-                app:autoSizeMinTextSize="12sp"
-                app:autoSizeTextType="uniform" />
+                app:srcCompat="@drawable/ic_arrow"
+                app:tint="?colorControlNormal" />
+        </RelativeLayout>
 
-            <!--Read more description of app-->
-            <RelativeLayout
-                android:id="@+id/more_layout"
+        <!-- Screenshot -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/screenshots_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/margin_small"
+            android:paddingEnd="@dimen/margin_small"
+            android:visibility="gone"
+            tools:listitem="@layout/item_screenshots_small" />
+
+        <!-- Packages -->
+        <RelativeLayout
+            android:id="@+id/layout_expand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_medium">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_other"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_medium"
-                android:layout_marginEnd="@dimen/margin_medium">
+                android:layout_alignBaseline="@id/img_expand"
+                android:layout_toStartOf="@id/img_expand"
+                android:paddingTop="@dimen/margin_small"
+                android:paddingBottom="@dimen/margin_small"
+                android:text="@string/details_other"
+                android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
 
-                <TextView
-                    android:id="@+id/showLessMoreTxt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_toStartOf="@id/img_more"
-                    android:background="?selectableItemBackground"
-                    android:text="@string/details_more"
-                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_expand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:padding="@dimen/margin_small"
+                app:srcCompat="@drawable/ic_expand"
+                app:tint="?colorControlNormal" />
+        </RelativeLayout>
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/img_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:padding="@dimen/margin_small"
-                    app:srcCompat="@drawable/ic_arrow"
-                    app:tint="?colorControlNormal" />
-            </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/layout_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
-            <!-- Screenshot -->
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/screenshots_gallery"
+                android:id="@+id/package_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
+                android:overScrollMode="never"
                 android:paddingStart="@dimen/margin_small"
                 android:paddingEnd="@dimen/margin_small"
-                android:visibility="gone"
                 tools:listitem="@layout/item_screenshots_small" />
+        </RelativeLayout>
 
-            <!-- Packages -->
-            <RelativeLayout
-                android:id="@+id/layout_expand"
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/layout_developer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_medium">
+                android:layout_marginTop="@dimen/margin_xsmall"
+                android:layout_marginEnd="@dimen/margin_xsmall"
+                android:layout_marginBottom="@dimen/margin_xsmall"
+                android:drawablePadding="@dimen/margin_small"
+                android:text="@string/details_more_apps_dev"
+                android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_other"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@id/img_expand"
-                    android:layout_toStartOf="@id/img_expand"
-                    android:paddingTop="@dimen/margin_small"
-                    android:paddingBottom="@dimen/margin_small"
-                    android:text="@string/details_other"
-                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/img_expand"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:padding="@dimen/margin_small"
-                    app:srcCompat="@drawable/ic_expand"
-                    app:tint="?colorControlNormal" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_version"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_developer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/package_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:overScrollMode="never"
-                    android:paddingStart="@dimen/margin_small"
-                    android:paddingEnd="@dimen/margin_small"
-                    tools:listitem="@layout/item_screenshots_small" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_developer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small"
-                android:orientation="vertical"
-                android:visibility="gone"
-                tools:visibility="visible">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_medium"
-                    android:layout_marginTop="@dimen/margin_xsmall"
-                    android:layout_marginEnd="@dimen/margin_xsmall"
-                    android:layout_marginBottom="@dimen/margin_xsmall"
-                    android:drawablePadding="@dimen/margin_small"
-                    android:text="@string/details_more_apps_dev"
-                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_developer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:paddingStart="@dimen/margin_small"
-                    android:paddingEnd="@dimen/margin_small"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_cluster" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_similar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small"
-                android:orientation="vertical"
-                android:visibility="gone"
-                tools:visibility="visible">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_medium"
-                    android:layout_marginTop="@dimen/margin_xsmall"
-                    android:layout_marginEnd="@dimen/margin_xsmall"
-                    android:layout_marginBottom="@dimen/margin_xsmall"
-                    android:drawablePadding="@dimen/margin_small"
-                    android:text="@string/details_more_apps_similar"
-                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_similar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:paddingStart="@dimen/margin_small"
-                    android:paddingEnd="@dimen/margin_small"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_cluster" />
-            </LinearLayout>
-
-            <!-- Links -->
-            <include layout="@layout/include_details_links" />
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/margin_small"
+                android:paddingEnd="@dimen/margin_small"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_cluster" />
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_similar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_xsmall"
+                android:layout_marginEnd="@dimen/margin_xsmall"
+                android:layout_marginBottom="@dimen/margin_xsmall"
+                android:drawablePadding="@dimen/margin_small"
+                android:text="@string/details_more_apps_similar"
+                android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_similar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/margin_small"
+                android:paddingEnd="@dimen/margin_small"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_cluster" />
+        </LinearLayout>
+
+        <!-- Links -->
+        <include layout="@layout/include_details_links" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
