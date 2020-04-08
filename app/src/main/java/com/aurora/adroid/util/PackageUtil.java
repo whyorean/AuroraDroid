@@ -253,6 +253,9 @@ public class PackageUtil {
         }
 
         for (Package pkg : packageList) {
+            if (pkg.getNativecode().isEmpty())
+                return pkg;
+
             final ArchType pkgArch = getArchFromNativeCode(pkg.getNativecode().get(0));
             final ArchType systemArch = getAltSystemArch();
             if (pkgArch == systemArch)
