@@ -113,7 +113,7 @@ public class AppActionDetails extends AbstractDetails {
             if (fetchGroup.getGroupDownloadProgress() == 100) {
                 if (!isInstalled && PathUtil.fileExists(context, app.getPackageName(), app.getAppPackage().getVersionCode()))
                     btnPositive.setOnClickListener(installAppListener());
-            } else if (fetchGroup.getDownloadingDownloads().size() > 0) {
+            } else if (fetchGroup.getDownloadingDownloads().size() > 0 || fetchGroup.getQueuedDownloads().size() > 0) {
                 switchViews(true);
                 fetchListener = getFetchListener();
                 fetch.addListener(fetchListener);

@@ -117,11 +117,22 @@ public class PackageItem extends AbstractItem<PackageItem.ViewHolder> {
 
             final Fetch fetch = DownloadManager.getFetchInstance(context);
             fetch.addListener(new AbstractFetchGroupListener() {
+
+                @Override
+                public void onQueued(int groupId, @NotNull Download download, boolean waitingNetwork, @NotNull FetchGroup fetchGroup) {
+                    super.onQueued(groupId, download, waitingNetwork, fetchGroup);
+                    if (groupId == app.getPackageName().hashCode()) {
+                        AuroraApplication.rxNotify(new Event(EventType.SUB_DOWNLOAD_INITIATED, app.getPackageName()));
+                    }
+                }
+
                 @Override
                 public void onCancelled(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
                     super.onCancelled(groupId, download, fetchGroup);
-                    AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_CANCELLED));
-                    fetch.removeListener(this);
+                    if (groupId == app.getPackageName().hashCode()) {
+                        AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_CANCELLED));
+                        fetch.removeListener(this);
+                    }
                 }
 
                 @Override
@@ -129,7 +140,6 @@ public class PackageItem extends AbstractItem<PackageItem.ViewHolder> {
                     super.onCompleted(groupId, download, fetchGroup);
                     if (groupId == app.getPackageName().hashCode()) {
                         AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_COMPLETED));
-                        AuroraApplication.getInstaller().install(pkg.getPackageName(), pkg.getVersionCode());
                         fetch.removeListener(this);
                     }
                 }

@@ -209,14 +209,10 @@ public class NotificationService extends Service {
 
                 case DOWNLOADING:
                     final String contentString = getString(R.string.download_progress);
-                    final String partString = StringUtils.joinWith("/",
-                            fetchGroup.getCompletedDownloads().size() + 1,
-                            fetchGroup.getDownloads().size());
                     final String speedString = Util.humanReadableByteSpeed(download.getDownloadedBytesPerSecond(), true);
 
                     progressBigText.bigText(StringUtils.joinWith(" \u2022 ",
                             contentString,
-                            partString,
                             speedString));
                     builder.setStyle(progressBigText);
 
@@ -235,13 +231,7 @@ public class NotificationService extends Service {
                     break;
 
                 case PAUSED:
-                    final String pauseString = getString(R.string.download_paused);
-                    final String filesString = StringUtils.joinWith("/",
-                            fetchGroup.getCompletedDownloads().size(),
-                            fetchGroup.getDownloads().size());
-                    progressBigText.bigText(StringUtils.joinWith(" \u2022 ",
-                            pauseString,
-                            filesString));
+                    progressBigText.bigText(getString(R.string.download_paused));
                     builder.setStyle(progressBigText);
                     builder.addAction(new NotificationCompat.Action.Builder(R.drawable.ic_download_pause,
                             getString(R.string.action_resume),
@@ -330,7 +320,7 @@ public class NotificationService extends Service {
 
     private PendingIntent getInstallIntent(String packageName, String versionCode) {
         final Intent intent = new Intent(this, InstallReceiver.class);
-        intent.putExtra(Constants.INTENT_PACKAGE_NAME, versionCode);
+        intent.putExtra(Constants.INTENT_PACKAGE_NAME, packageName);
         intent.putExtra(Constants.STRING_EXTRA, versionCode);
         return PendingIntent.getBroadcast(this, packageName.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }

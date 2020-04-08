@@ -47,7 +47,6 @@ import com.aurora.adroid.ui.fragment.details.AppScreenshotsDetails;
 import com.aurora.adroid.ui.fragment.details.AppSubInfoDetails;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
-import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.viewmodel.DetailAppViewModel;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -104,8 +103,14 @@ public class DetailsActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(event -> {
                     if (event != null) {
-                        EventType eventType = event.getType();
+                        final EventType eventType = event.getType();
                         switch (eventType) {
+                            case SUB_DOWNLOAD_INITIATED:
+                                if (event.getStringExtra().equals(app.getPackageName())) {
+                                    drawButtons();
+                                    ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_progress)));
+                                }
+                                break;
                             case DOWNLOAD_INITIATED:
                                 ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_progress)));
                                 break;

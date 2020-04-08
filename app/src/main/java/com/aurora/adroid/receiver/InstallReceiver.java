@@ -25,6 +25,7 @@ import android.os.Bundle;
 
 import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
+import com.aurora.adroid.util.Log;
 
 public class InstallReceiver extends BroadcastReceiver {
     @Override
@@ -33,6 +34,7 @@ public class InstallReceiver extends BroadcastReceiver {
         if ((extras != null)) {
             final String packageName = extras.getString(Constants.INTENT_PACKAGE_NAME, "");
             final String versionCodeString = extras.getString(Constants.STRING_EXTRA, "");
+            Log.e(packageName+"."+versionCodeString);
             if (!packageName.isEmpty() && !versionCodeString.isEmpty()) {
                 AuroraApplication.getInstaller().install(packageName, Long.parseLong(versionCodeString));
             }

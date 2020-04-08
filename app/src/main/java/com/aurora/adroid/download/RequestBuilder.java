@@ -90,9 +90,13 @@ public class RequestBuilder {
         stringMap.put(Constants.DOWNLOAD_PACKAGE_NAME, app.getPackageName());
         stringMap.put(Constants.DOWNLOAD_DISPLAY_NAME, app.getName());
         stringMap.put(Constants.DOWNLOAD_VERSION_NAME, app.getAppPackage().getVersionName());
-        stringMap.put(Constants.DOWNLOAD_VERSION_CODE, String.valueOf(app.getAppPackage().getVersionCode()));
+        stringMap.put(Constants.DOWNLOAD_VERSION_CODE, String.valueOf(pkg == null
+                ? app.getAppPackage().getVersionCode()
+                : pkg.getVersionCode()));
         stringMap.put(Constants.DOWNLOAD_ICON_URL, DatabaseUtil.getImageUrl(app));
-        stringMap.put(Constants.DOWNLOAD_APK_NAME, pkg == null ? app.getAppPackage().getApkName() : pkg.getApkName());
+        stringMap.put(Constants.DOWNLOAD_APK_NAME, pkg == null
+                ? app.getAppPackage().getApkName()
+                : pkg.getApkName());
 
         final Extras extras = new Extras(stringMap);
         request.setExtras(extras);
