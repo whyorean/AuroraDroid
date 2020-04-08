@@ -6,9 +6,9 @@
     <item
         android:id="@+id/action_blacklist"
         android:title="@string/action_blacklist" />
-    <item
+    <!--<item
         android:id="@+id/action_ignore"
-        android:title="@string/action_ignore" />
+        android:title="@string/action_ignore" />-->
     <item
         android:id="@+id/action_local"
         android:title="@string/action_get_local_apk" />

@@ -121,9 +121,6 @@ public class UpdatesFragment extends BaseFragment {
                     //Handle list update events
                     switch (event.getType()) {
                         case BLACKLIST:
-                            int adapterPosition = event.getIntExtra();
-                            removeItemByAdapterPosition(adapterPosition);
-                            break;
                         case INSTALLED:
                         case UNINSTALLED:
                             removeItemByPackageName(event.getStringExtra());

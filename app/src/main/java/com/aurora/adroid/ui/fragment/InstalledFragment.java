@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.RecyclerDataObserver;
@@ -81,9 +82,8 @@ public class InstalledFragment extends BaseFragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         setupRecycler();
 
         switchSystem.setChecked(PrefUtil.getBoolean(requireContext(), Constants.PREFERENCE_INCLUDE_SYSTEM));
@@ -95,6 +95,35 @@ public class InstalledFragment extends BaseFragment {
         model.getData().observe(getViewLifecycleOwner(), installedItems -> {
             dispatchAppsToAdapter(installedItems);
         });
+
+        AuroraApplication
+                .getRxBus()
+                .getBus()
+                .doOnNext(event -> {
+                    //Handle list update events
+                    switch (event.getType()) {
+                        case UNINSTALLED:
+                            removeItemByPackageName(event.getStringExtra());
+                            break;
+                    }
+                }).subscribe();
+    }
+
+    private void removeItemByPackageName(String packageName) {
+        int adapterPosition = -1;
+        for (InstalledItem installedItem : itemAdapter.getAdapterItems()) {
+            if (installedItem.getPackageName().equals(packageName)) {
+                adapterPosition = itemAdapter.getAdapterPosition(installedItem);
+                break;
+            }
+        }
+        removeItemByAdapterPosition(adapterPosition);
+    }
+
+    private void removeItemByAdapterPosition(int adapterPosition) {
+        if (adapterPosition >= 0 && itemAdapter != null) {
+            itemAdapter.remove(adapterPosition);
+        }
     }
 
     @Override
