@@ -17,6 +17,26 @@
   -->
 
 <resources>
+    <string name="about_libera">"Libera Pay"</string>
+    <string name="about_libera_summary">"Become patron on Libera Pay"</string>
+    <string name="about_bitcoin_btc">"Bitcoin"</string>
+    <string name="about_bitcoin_btc_summary">"Donate via Bitcoin (BTC)"</string>
+    <string name="about_bitcoin_bch">"Bitcoin Cash"</string>
+    <string name="about_bitcoin_bch_summary">"Donate via Bitcoin Cash (BCH)"</string>
+    <string name="about_bitcoin_eth">"Ethereum"</string>
+    <string name="about_bitcoin_eth_summary">"Donate via Ethereum (ETH)"</string>
+    <string name="about_bhim">"BHIM - UPI"</string>
+    <string name="about_bhim_summary">"Donate via UPI"</string>
+    <string name="about_paypal">"Paypal"</string>
+    <string name="about_paypal_summary">"Donate via PayPal"</string>
+    <string name="about_gitlab">"GitLab"</string>
+    <string name="about_gitlab_summary">"Get the Aurora Droid source code from Aurora OSS on GitLab."</string>
+    <string name="about_telegram">"Telegram"</string>
+    <string name="about_telegram_summary">"Join the Aurora Support group for discussions or suggestions."</string>
+    <string name="about_xda">"Dev Thread"</string>
+    <string name="about_xda_summary">"See the Aurora Droid XDA thread for discussions or suggestions."</string>
+
+    <string name="action_about">About</string>
     <string name="action_add">Add</string>
     <string name="action_ask">Ask</string>
     <string name="action_blacklist">Blacklist</string>
@@ -74,7 +94,7 @@
     <string name="details_no_description">No description provided by the developer</string>
     <string name="details_no_permissions">No permissions are used.</string>
     <string name="details_permissions">App permissions</string>
-    <string name="details_permissions_desc">Aurora Store uses following permissions</string>
+    <string name="details_permissions_desc">Aurora Droid uses following permissions</string>
     <string name="details_repo_desc">Select F-Droid repositories to sync</string>
     <string name="details_apk_suggested">Suggested</string>
 

@@ -18,7 +18,8 @@
 
 <resources>
     <string name="app_name_long">Aurora Droid - App store</string>
-    <string name="app_desc">Aurora Droid aka A-Droid, is FOSS client for F-Droid repositories,with an elegant design based of latest MD guidelines
+    <string name="app_desc">Aurora Droid aka A-Droid, is FOSS client for F-Droid repositories</string>
+    <string name="app_changelog">Aurora Droid aka A-Droid, is FOSS client for F-Droid repositories.
         \n
         \n
         \n Changelog : v1.0.4
@@ -38,7 +39,7 @@
         \n • Improved search results
         \n • Bug fixes and improvements
         \n
-        \n Changelog : v1.0.2
+        \n Changelog : v1.0.1
         \n • Initial release
         \n
     </string>

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
+import com.aurora.adroid.ui.fragment.AboutFragment;
 import com.aurora.adroid.ui.fragment.InstalledFragment;
 import com.aurora.adroid.ui.fragment.RepoFragment;
 import com.aurora.adroid.ui.fragment.preference.BlacklistFragment;
@@ -54,8 +55,8 @@ public class ContainerActivity extends BaseActivity {
 
         switch (fragmentName) {
             case Constants.FRAGMENT_ABOUT:
-                /*actionBar.setTitle(getString(R.string.action_about));
-                fragment = new AboutFragment();*/
+                actionBar.setTitle(getString(R.string.action_about));
+                fragment = new AboutFragment();
                 break;
             case Constants.FRAGMENT_INSTALLED:
                 actionBar.setTitle(getString(R.string.title_installed));
