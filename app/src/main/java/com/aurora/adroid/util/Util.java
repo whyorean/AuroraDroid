@@ -180,7 +180,7 @@ public class Util {
 
     public static String getDateFromMilli(Long timeInMilli) {
         try {
-            final DateFormat dateFormat = new SimpleDateFormat("dd MMM YY", Locale.getDefault());
+            final DateFormat dateFormat = new SimpleDateFormat("dd MMM yy", Locale.getDefault());
             final Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(timeInMilli);
             return dateFormat.format(calendar.getTime());
