@@ -20,6 +20,7 @@ package com.aurora.adroid.manager;
 
 import android.content.Context;
 
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PrefUtil;
@@ -31,127 +32,98 @@ import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 
 public class RepoListManager {
 
-    private static final String REPO_LIST = "REPO_LIST";
-    private static final String CUSTOM_REPO_LIST = "CUSTOM_REPO_LIST";
+    private final HashMap<String, Repo> repoHashMap = new HashMap<>();
 
     private Context context;
-    private ArrayList<String> repoList;
+    private Gson gson;
 
     public RepoListManager(Context context) {
         this.context = context;
-        repoList = PrefUtil.getListString(context, REPO_LIST);
+        this.gson = new Gson();
+        this.repoHashMap.putAll(getDefaultRepoMap());
     }
 
-    public synchronized static void addRepoToCustomList(Context context, Repo repo) {
-        Gson gson = new Gson();
-        List<Repo> repoList = getCustomRepoList(context);
-        repoList.remove(repo);
-        repoList.add(repo);
-        String json = gson.toJson(repoList);
-        PrefUtil.putString(context, CUSTOM_REPO_LIST, json);
+    public List<Repo> getAllRepoList() {
+        return new ArrayList<>(repoHashMap.values());
     }
 
-    public synchronized static void removeRepoFromCustomList(Context context, Repo repo) {
-        Gson gson = new Gson();
-        List<Repo> repoList = getCustomRepoList(context);
-        repoList.remove(repo);
-        for (Repo repo1 : repoList)
-            Log.e(repo1.getRepoName());
-        String json = gson.toJson(repoList);
-        PrefUtil.putString(context, CUSTOM_REPO_LIST, json);
+    public boolean addToRepoMap(Repo repo) {
+        synchronized (repoHashMap) {
+            if (repoHashMap.containsKey(repo.getRepoId())) {
+                return false;
+            } else {
+                repoHashMap.put(repo.getRepoId(), repo);
+                saveRepoMap();
+                return true;
+            }
+        }
     }
 
-    private static List<Repo> getCustomRepoList(Context context) {
-        Gson gson = new Gson();
-        Type type = new TypeToken<List<Repo>>() {
+    public Repo getRepoById(String repoId) {
+        synchronized (repoHashMap) {
+            if (repoHashMap.containsKey(repoId))
+                return repoHashMap.get(repoId);
+            else
+                return new Repo();
+        }
+    }
+
+    public void removeFromRepoMap(Repo repo) {
+        synchronized (repoHashMap) {
+            repoHashMap.remove(repo.getRepoId());
+            saveRepoMap();
+        }
+    }
+
+    private void saveRepoMap() {
+        synchronized (repoHashMap) {
+            PrefUtil.putString(context, Constants.PREFERENCE_DEFAULT_REPO_MAP, gson.toJson(repoHashMap));
+        }
+    }
+
+    public void clear() {
+        synchronized (repoHashMap) {
+            repoHashMap.clear();
+            saveRepoMap();
+        }
+    }
+
+    private HashMap<String, Repo> getDefaultRepoMap() {
+        final String rawList = PrefUtil.getString(context, Constants.PREFERENCE_DEFAULT_REPO_MAP);
+        final Type type = new TypeToken<HashMap<String, Repo>>() {
         }.getType();
-        String json = PrefUtil.getString(context, CUSTOM_REPO_LIST);
-        if (gson.fromJson(json, type) == null)
-            return new ArrayList<>();
+        final HashMap<String, Repo> repoHashMap = gson.fromJson(rawList, type);
+
+        if (repoHashMap == null|| repoHashMap.isEmpty())
+            return getDefaultRepoMapFromAssets();
         else
-            return gson.fromJson(json, type);
+            return repoHashMap;
     }
 
-    public static List<Repo> getAllRepoList(Context context) {
-        List<Repo> repoList = getDefaultRepoList(context);
-        repoList.addAll(RepoListManager.getCustomRepoList(context));
-        return repoList;
-    }
-
-    private static List<Repo> getDefaultRepoList(Context context) {
-        List<Repo> repoList = new ArrayList<>();
+    private HashMap<String, Repo> getDefaultRepoMapFromAssets() {
+        final HashMap<String, Repo> repoHashMap = new HashMap<>();
         try {
-            InputStream inputStream = context.getAssets().open("repo.json");
-            byte[] mByte = new byte[inputStream.available()];
-            inputStream.read(mByte);
+            final InputStream inputStream = context.getAssets().open("repo.json");
+            final byte[] bytes = new byte[inputStream.available()];
+
+            inputStream.read(bytes);
             inputStream.close();
-            Gson gson = new Gson();
-            String jsonOutput = new String(mByte, StandardCharsets.UTF_8);
-            Type listType = new TypeToken<List<Repo>>() {
+
+            final String rawJSON = new String(bytes, StandardCharsets.UTF_8);
+            final Type listType = new TypeToken<List<Repo>>() {
             }.getType();
-            repoList = gson.fromJson(jsonOutput, listType);
+            final List<Repo> repoList = gson.fromJson(rawJSON, listType);
+
+            for (Repo repo : repoList)
+                repoHashMap.put(repo.getRepoId(), repo);
         } catch (IOException e) {
-            Log.i(e.getMessage());
+            Log.e(e.getMessage());
         }
-        return repoList;
-    }
-
-    public static List<Repo> getSelectedRepos(Context context) {
-        List<Repo> repoList = new ArrayList<>();
-        List<String> savedList = PrefUtil.getListString(context, REPO_LIST);
-        for (Repo repo : getAllRepoList(context)) {
-            if (savedList.contains(repo.getRepoId()))
-                repoList.add(repo);
-        }
-        return repoList;
-    }
-
-    public static Repo getRepoById(Context context, String repoId) {
-        Repo tempRepo = new Repo();
-        for (Repo repo : getAllRepoList(context)) {
-            if (repo.getRepoId().equals(repoId))
-                tempRepo = repo;
-        }
-        return tempRepo;
-    }
-
-    public synchronized boolean addAll(ArrayList<String> arrayList) {
-        repoList.clear();
-        boolean result = repoList.addAll(new HashSet<>(arrayList));
-        save();
-        return result;
-    }
-
-    public ArrayList<String> get() {
-        return repoList;
-    }
-
-    public int getRepoCount() {
-        return repoList.size();
-    }
-
-    public boolean contains(String url) {
-        return repoList.contains(url);
-    }
-
-    public void remove(String url) {
-        boolean success = repoList.remove(url);
-        if (success)
-            save();
-    }
-
-    public void removeAll(ArrayList<String> urlList) {
-        boolean success = repoList.removeAll(urlList);
-        if (success)
-            save();
-    }
-
-    private void save() {
-        PrefUtil.putListString(context, REPO_LIST, repoList);
+        return repoHashMap;
     }
 }

@@ -49,6 +49,7 @@ public class RepoDetailsSheet extends BaseBottomSheet {
     TextView txtMirrorUrl;
 
     private ArrayList<String> mirrorCheckedList = new ArrayList<>();
+    private RepoListManager repoListManager;
     private Repo repo;
 
     @Nullable
@@ -62,7 +63,8 @@ public class RepoDetailsSheet extends BaseBottomSheet {
     @Override
     protected void onContentViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mirrorCheckedList = Util.getMirrorCheckedList(requireContext());
-        repo = RepoListManager.getRepoById(requireContext(), index.getRepoId());
+        repoListManager = new RepoListManager(requireContext());
+        repo = repoListManager.getRepoById(index.getRepoId());
 
         boolean hasMirror = repo.getRepoMirrors() != null && repo.getRepoMirrors().length >= 1;
 

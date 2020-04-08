@@ -25,18 +25,28 @@
 
     <TextView
         android:id="@+id/txt_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_normal"
         android:gravity="center"
-        android:padding="@dimen/margin_large"
         android:text="@string/dialog_repo_list"
         android:textAppearance="@style/TextAppearance.Aurora.Title" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_reset"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_title"
+        android:layout_centerHorizontal="true"
+        android:text="@string/action_reset" />
 
     <RelativeLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_title"
+        android:layout_below="@id/btn_reset"
         android:paddingStart="@dimen/padding_normal"
         android:paddingEnd="@dimen/padding_normal">
 

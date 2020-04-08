@@ -177,7 +177,6 @@ public class RepoItem extends AbstractItem<RepoItem.RepoItemHolder> {
             line2.setText(null);
             line3.setText(null);
             ViewUtil.collapse(layoutExtra);
-            disposable.clear();
         }
     }
 

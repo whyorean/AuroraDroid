@@ -71,7 +71,7 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
                 ss[1] = ss[1].replace("fingerprint=", "");
                 ss[1] = ss[1].replace("FINGERPRINT=", "");
                 repo.setRepoFingerprint(ss[1]);
-                RepoListManager.addRepoToCustomList(this, repo);
+                new RepoListManager(this).addToRepoMap(repo);
                 Toast.makeText(this, "Repo Added Successfully", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(this, "Failed to add repo", Toast.LENGTH_SHORT).show();

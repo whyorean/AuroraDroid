@@ -128,7 +128,6 @@
             android:configChanges="orientation|locale"
             android:launchMode="singleTop" />
         <activity android:name=".ui.activity.RepoDetailsActivity" />
-        <activity android:name=".ui.activity.RepoAddActivity" />
         <activity android:name=".ui.activity.GenericAppActivity" />
         <activity android:name=".ui.activity.SearchActivity" />
         <activity android:name=".ui.activity.ContainerActivity" />

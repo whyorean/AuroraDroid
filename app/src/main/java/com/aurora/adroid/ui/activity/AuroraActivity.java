@@ -42,14 +42,12 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
-import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.database.AppDatabase;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.service.SyncService;
-import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.TextUtil;
 import com.aurora.adroid.util.Util;
@@ -62,9 +60,7 @@ import com.google.android.material.navigation.NavigationView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class AuroraActivity extends BaseActivity {
 
@@ -128,14 +124,14 @@ public class AuroraActivity extends BaseActivity {
             String repoDataString = intent.getDataString();
             if (repoDataString.contains("fingerprint") || repoDataString.contains("FINGERPRINT")) {
                 try {
-                    String[] ss = repoDataString.split("\\?");
-                    Repo repo = new Repo();
-                    repo.setRepoName(Util.getDomainName(ss[0]));
+                    final String[] stringArray = repoDataString.split("\\?");
+                    final Repo repo = new Repo();
+                    repo.setRepoName(Util.getDomainName(stringArray[0]));
                     repo.setRepoId(String.valueOf(repo.getRepoName().hashCode()));
-                    repo.setRepoUrl(ss[0]);
-                    ss[1] = ss[1].replace("fingerprint=", "");
-                    ss[1] = ss[1].replace("FINGERPRINT=", "");
-                    repo.setRepoFingerprint(ss[1]);
+                    repo.setRepoUrl(stringArray[0]);
+                    stringArray[1] = stringArray[1].replace("fingerprint=", "");
+                    stringArray[1] = stringArray[1].replace("FINGERPRINT=", "");
+                    repo.setRepoFingerprint(stringArray[1]);
                     showAddRepoDialog(repo);
                 } catch (Exception ignored) {
                 }
@@ -143,7 +139,7 @@ public class AuroraActivity extends BaseActivity {
                     && intent.getData().getLastPathSegment() != null) {
                 if (intent.getData().getLastPathSegment().equalsIgnoreCase("repo")) {
                     try {
-                        Repo repo = new Repo();
+                        final Repo repo = new Repo();
                         repo.setRepoName(intent.getData().getPath());
                         repo.setRepoId(String.valueOf(repo.getRepoName().hashCode()));
                         repo.setRepoUrl(intent.getDataString());
@@ -323,7 +319,7 @@ public class AuroraActivity extends BaseActivity {
                         .append(repo.getRepoName())
                         .append(" ?"))
                 .setPositiveButton(getString(R.string.action_add), (dialog, which) -> {
-                    RepoListManager.addRepoToCustomList(this, repo);
+                    new RepoListManager(this).addToRepoMap(repo);
                 })
                 .setNegativeButton(getString(R.string.action_cancel), (dialog, which) -> {
                     dialog.dismiss();

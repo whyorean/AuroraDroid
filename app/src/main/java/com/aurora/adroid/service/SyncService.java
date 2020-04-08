@@ -55,6 +55,7 @@ public class SyncService extends Service {
 
     private Fetch fetch;
     private AbstractFetchGroupListener fetchListener;
+    private RepoListManager repoListManager;
     private CompositeDisposable disposable = new CompositeDisposable();
 
     public static boolean isServiceRunning() {
@@ -74,6 +75,7 @@ public class SyncService extends Service {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        repoListManager = new RepoListManager(this);
         startForeground(1337, getNotificationBuilder().build());
         fetchRepo();
     }
@@ -203,7 +205,7 @@ public class SyncService extends Service {
             @Override
             public void onCompleted(@NotNull Download download) {
                 super.onCompleted(download);
-                final Repo repo = RepoListManager.getRepoById(SyncService.this, download.getTag());
+                final Repo repo = repoListManager.getRepoById(download.getTag());
                 Log.i("Downloaded : %s", download.getUrl());
                 AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_completed)));
             }
@@ -211,7 +213,7 @@ public class SyncService extends Service {
             @Override
             public void onError(@NotNull Download download, @NotNull Error error, @Nullable Throwable throwable) {
                 super.onError(download, error, throwable);
-                final Repo repo = RepoListManager.getRepoById(SyncService.this, download.getTag());
+                final Repo repo = repoListManager.getRepoById(download.getTag());
                 Log.e("Download Failed : %s", download.getUrl());
                 AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_failed)));
             }

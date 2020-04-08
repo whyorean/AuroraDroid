@@ -32,9 +32,6 @@ public class Constants {
     public static final String JAR = "jar";
     public static final String JSON = ".json";
 
-    public static final String INTENT_APK_FILE_NAME = "INTENT_APK_FILE_NAME";
-    public static final String REQUEST_ID = "REQUEST_ID";
-
     public static final String NOTIFICATION_CHANNEL_ALERT = "NOTIFICATION_CHANNEL_ALERT";
     public static final String NOTIFICATION_CHANNEL_GENERAL = "NOTIFICATION_CHANNEL_GENERAL";
 
@@ -47,6 +44,7 @@ public class Constants {
     public static final String PREFERENCE_FAVOURITE_PACKAGE_LIST = "PREFERENCE_FAVOURITE_PACKAGE_LIST";
     public static final String PREFERENCE_REPO_MAP = "PREFERENCE_REPO_MAP";
     public static final String PREFERENCE_SYNC_MAP = "PREFERENCE_SYNC_MAP";
+    public static final String PREFERENCE_DEFAULT_REPO_MAP = "PREFERENCE_DEFAULT_REPO_MAP";
     public static final String PREFERENCE_INCLUDE_SYSTEM = "PREFERENCE_INCLUDE_SYSTEM";
     public static final String PREFERENCE_INSTALLATION_AUTO = "PREFERENCE_INSTALLATION_AUTO";
     public static final String PREFERENCE_INSTALLATION_TYPE = "PREFERENCE_INSTALLATION_TYPE";

@@ -26,8 +26,8 @@ import com.mikepenz.fastadapter.drag.SimpleDragCallback;
 import com.mikepenz.fastadapter.select.SelectExtension;
 import com.mikepenz.fastadapter.swipe.SimpleSwipeCallback;
 import com.mikepenz.fastadapter.swipe_drag.SimpleSwipeDragCallback;
-import com.mikepenz.fastadapter.utils.DragDropUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,7 +37,7 @@ import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCallback, SimpleSwipeCallback.ItemSwipeCallback {
+public class RepoListSheet extends BaseBottomSheet implements ItemTouchCallback, SimpleSwipeCallback.ItemSwipeCallback {
 
     public static final String TAG = "REPO_LIST_SHEET";
 
@@ -48,6 +48,8 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
 
     private FastItemAdapter<RepoItem> fastItemAdapter;
     private SelectExtension<RepoItem> selectExtension;
+
+    private RepoListManager repoListManager;
     private RepoSyncManager repoSyncManager;
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -62,6 +64,7 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
     @Override
     protected void onContentViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onContentViewCreated(view, savedInstanceState);
+        repoListManager = new RepoListManager(requireContext());
         repoSyncManager = new RepoSyncManager(requireContext());
         setupRecycler();
 
@@ -93,6 +96,12 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
         dismissAllowingStateLoss();
     }
 
+    @OnClick(R.id.btn_reset)
+    public void resetToDefault() {
+        repoListManager.clear();
+        dismissAllowingStateLoss();
+    }
+
     public void selectAll() {
         for (RepoItem repoItem : fastItemAdapter.getAdapterItems()) {
             repoItem.setSelected(true);
@@ -110,7 +119,7 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
     }
 
     private List<Repo> fetchData() {
-        return RepoListManager.getAllRepoList(requireContext());
+        return repoListManager.getAllRepoList();
     }
 
     private void setupRecycler() {
@@ -138,7 +147,9 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
         final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        disposable.add(Observable.fromIterable(fetchData())
+        final List<Repo> repoList = fetchData();
+        Collections.sort(repoList, (o1, o2) -> o1.getRepoName().compareToIgnoreCase(o2.getRepoName()));
+        disposable.add(Observable.fromIterable(repoList)
                 .map(repo -> new RepoItem(repo, repoSyncManager.isAdded(repo)))
                 .toList()
                 .subscribe(repoItems -> fastItemAdapter.add(repoItems), throwable -> Log.e(throwable.getMessage())));
@@ -157,12 +168,14 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
 
     @Override
     public boolean itemTouchOnMove(int oldPosition, int newPosition) {
-        DragDropUtil.onMove(fastItemAdapter.getItemAdapter(), oldPosition, newPosition);
-        return true;
+        //Will use when priority for repo is done
+        //DragDropUtil.onMove(fastItemAdapter.getItemAdapter(), oldPosition, newPosition);
+        return false;
     }
 
     @Override
     public void itemSwiped(int position, int direction) {
+        repoListManager.removeFromRepoMap(fastItemAdapter.getAdapterItem(position).getRepo());
         fastItemAdapter.remove(position);
         fastItemAdapter.notifyAdapterItemChanged(position);
     }

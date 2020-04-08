@@ -43,7 +43,7 @@ import com.aurora.adroid.ui.activity.AuroraActivity;
 import com.aurora.adroid.ui.activity.ContainerActivity;
 import com.aurora.adroid.ui.activity.IntroActivity;
 import com.aurora.adroid.ui.sheet.RepoAddSheet;
-import com.aurora.adroid.ui.sheet.RepoListBottomSheet;
+import com.aurora.adroid.ui.sheet.RepoListSheet;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -133,9 +133,9 @@ public class RepoFragment extends Fragment {
     @OnClick(R.id.layout_repo_list)
     public void showAllRepos(){
         final FragmentManager fragmentManager = getChildFragmentManager();
-        if (fragmentManager.findFragmentByTag(RepoListBottomSheet.TAG) == null) {
-            final RepoListBottomSheet sheet = new RepoListBottomSheet();
-            sheet.show(fragmentManager, RepoListBottomSheet.TAG);
+        if (fragmentManager.findFragmentByTag(RepoListSheet.TAG) == null) {
+            final RepoListSheet sheet = new RepoListSheet();
+            sheet.show(fragmentManager, RepoListSheet.TAG);
         }
     }
 

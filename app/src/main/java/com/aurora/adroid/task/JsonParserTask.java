@@ -58,11 +58,13 @@ public class JsonParserTask extends ContextWrapper {
 
     private File file;
     private String repoDir;
+    private RepoListManager repoListManager;
 
     public JsonParserTask(Context context, File file) {
         super(context);
         this.file = file;
         this.repoDir = PathUtil.getRepoDirectory(context);
+        this.repoListManager = new RepoListManager(context);
     }
 
     public RepoBundle parse() {
@@ -73,7 +75,7 @@ public class JsonParserTask extends ContextWrapper {
         final PackageDao packageDao = appDatabase.packageDao();
         final IndexDao indexDao = appDatabase.indexDao();
 
-        final Repo repo = RepoListManager.getRepoById(this, FilenameUtils.getBaseName(file.getName()));
+        final Repo repo = repoListManager.getRepoById(FilenameUtils.getBaseName(file.getName()));
 
         final File jsonFile = new File(repoDir + repo.getRepoId() + JSON);
         final Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
