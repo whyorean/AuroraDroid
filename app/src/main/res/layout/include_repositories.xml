@@ -16,43 +16,35 @@
   ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/margin_large">
 
-    <RelativeLayout
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:drawableStart="@drawable/ic_repo_filled"
+        android:drawablePadding="@dimen/margin_small"
+        android:paddingTop="@dimen/padding_xsmall"
+        android:paddingBottom="@dimen/padding_xsmall"
+        android:text="@string/title_repositories"
+        android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
+        app:drawableTint="?colorAccent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_normal"
-            android:layout_marginTop="@dimen/margin_xsmall"
-            android:layout_marginEnd="@dimen/margin_xsmall"
-            android:layout_marginBottom="@dimen/margin_xsmall"
-            android:drawableStart="@drawable/ic_repo_alt"
-            android:drawablePadding="@dimen/margin_small"
-            android:text="@string/title_repositories"
-            android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
-            android:textSize="18sp"
-            app:drawableTint="?colorAccent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_repo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/title"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:paddingStart="@dimen/margin_small"
-            android:paddingEnd="@dimen/margin_small"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_index" />
-    </RelativeLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_repo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/margin_small"
+        android:paddingEnd="@dimen/margin_small"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_index" />
+</RelativeLayout>
