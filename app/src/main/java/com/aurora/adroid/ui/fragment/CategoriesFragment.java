@@ -35,6 +35,7 @@ import com.aurora.adroid.section.CategoriesSection;
 import com.aurora.adroid.task.CategoriesTask;
 import com.aurora.adroid.util.Log;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -74,6 +75,7 @@ public class CategoriesFragment extends Fragment {
 
     private void setupRecycler(List<String> categoryList) {
         SectionedRecyclerViewAdapter adapter = new SectionedRecyclerViewAdapter();
+        Collections.sort(categoryList, String::compareToIgnoreCase);
         CategoriesSection section = new CategoriesSection(requireContext(), categoryList, getString(R.string.title_categories));
         adapter.addSection(section);
         recycler.setAdapter(adapter);
