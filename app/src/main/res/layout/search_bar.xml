@@ -20,8 +20,8 @@
 
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/Widget.AppBar"
     android:id="@+id/searchbar_layout"
+    style="@style/Widget.AppBar"
     android:layout_width="match_parent"
     android:layout_height="?actionBarSize"
     android:translationZ="1dp"
@@ -41,7 +41,8 @@
             android:background="?selectableItemBackgroundBorderless"
             android:paddingStart="@dimen/margin_medium"
             android:paddingEnd="@dimen/margin_medium"
-            app:srcCompat="@drawable/ic_arrow_back" />
+            app:srcCompat="@drawable/ic_arrow_back"
+            app:tint="?android:attr/colorControlNormal" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txt_input_search"
@@ -67,6 +68,7 @@
             android:background="?selectableItemBackgroundBorderless"
             android:paddingStart="@dimen/margin_medium"
             android:paddingEnd="@dimen/margin_medium"
-            app:srcCompat="@drawable/ic_round_search" />
+            app:srcCompat="@drawable/ic_round_search"
+            app:tint="?android:attr/colorControlNormal" />
     </RelativeLayout>
 </com.google.android.material.appbar.AppBarLayout>

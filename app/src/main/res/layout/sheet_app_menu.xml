@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_small"
         app:elevation="0dp"
+        android:background="@color/colorTransparent"
         app:itemTextAppearance="@style/TextAppearance.Aurora.Line1"
         app:menu="@menu/menu_action_apps" />
 </LinearLayout>
