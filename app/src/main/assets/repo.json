@@ -10,6 +10,17 @@
     "repoDescription": "F-Droid's mainline repository, serving apps build and signed by F-Droid"
   },
   {
+    "repoId": "02",
+    "repoName": "F-Droid Archive",
+    "repoUrl": "https://f-droid.org/archive",
+    "repoMirrors": [
+      "https://ftp.fau.de/fdroid/archive",
+      "https://bubu1.eu/fdroid/archive"
+    ],
+    "repoFingerprint": "43 23 8D 51 2C 1E 5E B2 D6 56 9F 4A 3A FB F5 52 34 18 B8 2E 0A 3E D1 55 27 70 AB B9 A9 C9 CC AB",
+    "repoDescription": "F-Droid's mainline repository, serving apps build and signed by F-Droid"
+  },
+  {
     "repoId": "03",
     "repoName": "Guardian Project",
     "repoUrl": "https://guardianproject.info/fdroid/repo",
@@ -26,6 +37,14 @@
     "repoMirrors": [],
     "repoFingerprint": "9B D0 67 27 E6 27 96 C0 13 0E B6 DA B3 9B 73 15 74 51 58 2C BD 13 8E 86 C4 68 AC C3 95 D1 41 65",
     "repoDescription": "Official F-Droid repo for the open-source implementation of Google Play Services"
+  },
+  {
+    "repoId": "05",
+    "repoName": "microG Project Archive",
+    "repoUrl": "https://microg.org/fdroid/archive",
+    "repoMirrors": [],
+    "repoFingerprint": "9B D0 67 27 E6 27 96 C0 13 0E B6 DA B3 9B 73 15 74 51 58 2C BD 13 8E 86 C4 68 AC C3 95 D1 41 65",
+    "repoDescription": "Official F-Droid archive for the open-source implementation of Google Play Services "
   },
   {
     "repoId": "07",
