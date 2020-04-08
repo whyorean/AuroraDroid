@@ -36,18 +36,48 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/line1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
         android:layout_marginEnd="@dimen/padding_small"
+        android:layout_toStartOf="@id/img"
         android:layout_toEndOf="@id/img_apk"
         android:textAppearance="@style/TextAppearance.Aurora.Line1" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_apk_suggested"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line1"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_toEndOf="@id/img_apk"
+        android:background="@drawable/green_padded_bg"
+        android:text="@string/details_apk_suggested"
+        android:textAppearance="@style/TextAppearance.Aurora.Line3"
+        android:textColor="@color/colorGreen"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_apk_installed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line1"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_toEndOf="@id/txt_apk_suggested"
+        android:background="@drawable/green_padded_bg"
+        android:text="@string/action_installed"
+        android:textAppearance="@style/TextAppearance.Aurora.Line3"
+        android:textColor="@color/colorGreen"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/line1"
+        android:layout_below="@id/txt_apk_suggested"
         android:layout_alignStart="@id/line1"
         android:layout_toStartOf="@id/img"
         android:textAppearance="@style/TextAppearance.Aurora.Line2" />
@@ -60,31 +90,6 @@
         android:layout_alignStart="@id/line2"
         android:layout_alignEnd="@id/line2"
         android:textAppearance="@style/TextAppearance.Aurora.Line3" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_apk_suggested"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/line1"
-        android:background="@drawable/green_padded_bg"
-        android:text="@string/details_apk_suggested"
-        android:textAppearance="@style/TextAppearance.Aurora.Line3"
-        android:textColor="@color/colorGreen"
-        android:visibility="gone"
-        tools:visibility="visible" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_apk_installed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small"
-        android:layout_toEndOf="@id/txt_apk_suggested"
-        android:background="@drawable/green_padded_bg"
-        android:text="@string/action_installed"
-        android:textAppearance="@style/TextAppearance.Aurora.Line3"
-        android:textColor="@color/colorGreen"
-        android:visibility="gone"
-        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img"
