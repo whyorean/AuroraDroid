@@ -62,8 +62,14 @@ public class CheckRepoUpdatesTask extends ContextWrapper {
             final okhttp3.Request okhttpRequest = new okhttp3.Request.Builder().url(request.getUrl()).head().build();
 
             try (Response response = client.newCall(okhttpRequest).execute()) {
-                final Long lastModified = Util.getMilliFromDate(response.header("Last-Modified"),
-                        Calendar.getInstance().getTimeInMillis());
+                final String header = response.header("Last-Modified");
+
+                if (header == null) {
+                    filteredList.add(request);
+                    continue;
+                }
+
+                final Long lastModified = Util.getMilliFromDate(header, Calendar.getInstance().getTimeInMillis());
                 if (repoHeader.getLastModified() == null) {
                     repoHeader.setRepoId(repoId);
                     repoHeader.setLastModified(lastModified);
@@ -77,7 +83,8 @@ public class CheckRepoUpdatesTask extends ContextWrapper {
                 repoSyncManager.addToHeaderMap(repoHeader);
             } catch (Exception e) {
                 AuroraApplication.rxNotify(new LogEvent("Unable to reach " + repoName));
-                Log.e("Unable to reach %s", repoUrl);
+                e.printStackTrace();
+                Log.e("Unable to reach %s", request.getUrl());
             }
         }
         return filteredList;

@@ -192,8 +192,8 @@ public class Util {
     public static long getMilliFromDate(String data, long Default) {
         try {
             return Date.parse(data);
-        } catch (Exception e) {
-            Log.e(e.getMessage());
+        } catch (Exception ignored) {
+
         }
         return Default;
     }

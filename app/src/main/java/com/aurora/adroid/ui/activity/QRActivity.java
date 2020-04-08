@@ -67,9 +67,12 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
                 Repo repo = new Repo();
                 repo.setRepoName(Util.getDomainName(ss[0]));
                 repo.setRepoId(String.valueOf(repo.getRepoName().hashCode()));
-                repo.setRepoUrl(ss[0]);
+
+                ss[0] = ss[0].replace("fdroidrepos","https");
                 ss[1] = ss[1].replace("fingerprint=", "");
                 ss[1] = ss[1].replace("FINGERPRINT=", "");
+
+                repo.setRepoUrl(ss[0]);
                 repo.setRepoFingerprint(ss[1]);
                 new RepoListManager(this).addToRepoMap(repo);
                 Toast.makeText(this, "Repo Added Successfully", Toast.LENGTH_SHORT).show();
