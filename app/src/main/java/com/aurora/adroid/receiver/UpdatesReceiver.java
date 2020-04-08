@@ -29,19 +29,20 @@ import com.aurora.adroid.service.SyncService;
 import com.aurora.adroid.util.Log;
 
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 public class UpdatesReceiver extends BroadcastReceiver {
     static public void setUpdatesInterval(Context context, int interval) {
-        Intent intent = new Intent(context, UpdatesReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        final Intent intent = new Intent(context, UpdatesReceiver.class);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null) {
             alarmManager.cancel(pendingIntent);
             if (interval > 0) {
                 alarmManager.setInexactRepeating(
                         AlarmManager.RTC_WAKEUP,
                         Calendar.getInstance().getTimeInMillis(),
-                        interval,
+                        TimeUnit.DAYS.toMillis(interval),
                         pendingIntent
                 );
             }
