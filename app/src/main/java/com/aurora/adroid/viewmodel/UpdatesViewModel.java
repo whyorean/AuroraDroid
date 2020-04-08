@@ -15,6 +15,8 @@ import com.aurora.adroid.model.items.UpdatesItem;
 import com.aurora.adroid.util.CertUtil;
 import com.aurora.adroid.util.PackageUtil;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,20 +48,27 @@ public class UpdatesViewModel extends BaseViewModel {
                 .subscribeOn(Schedulers.io())
                 .map(packages -> {
                     final List<App> appList = new ArrayList<>();
+
                     for (String packageName : packages) {
-                        final App app = appRepository.getAppByPackageName(packageName);
-                        if (app != null) {
-                            final Package pkg = packageRepository.getAppPackage(packageName);
+                        final List<App> repoAppList = appRepository.getAppsByPackageName(packageName);
+                        for (App app : repoAppList) {
+                            //Get all packages associated with this app, in specific repo.
+                            final List<Package> pkgList =  packageRepository.getAllPackages(packageName, app.getRepoName());
+                            //Get installed app signer
+                            final String RSA256 = CertUtil.getSHA256(getApplication(), app.getPackageName());
+
+                            if (!pkgList.isEmpty()) {
+                                //Find best matching app package for the app
+                                app.setPackageList(pkgList, RSA256, true);
+                            }
+
+                            final Package pkg = app.getAppPackage();
                             final PackageInfo packageInfo = PackageUtil.getPackageInfo(packageManager, app.getPackageName());
 
-
                             if (pkg != null && packageInfo != null) {
-                                final String RSA256 = CertUtil.getSHA256(getApplication(), app.getPackageName());
-
                                 if (pkg.getVersionCode() > packageInfo.versionCode
-                                        && (PackageUtil.isCompatibleVersion(getApplication(),pkg, packageInfo))
-                                        && RSA256.equals(pkg.getSigner())
-                                        && (PackageUtil.isBestFitSupportedPackage(app.getAppPackage()) || PackageUtil.isSupportedPackage(app.getAppPackage()))) {
+                                        && (PackageUtil.isCompatibleVersion(getApplication(), pkg, packageInfo))
+                                        && RSA256.equals(pkg.getSigner())) {
                                     app.setAppPackage(pkg);
                                     appList.add(app);
                                 }

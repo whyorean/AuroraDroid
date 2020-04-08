@@ -205,6 +205,7 @@ public class UpdatesFragment extends BaseFragment {
             final App app = item.getApp();
             final Intent intent = new Intent(requireContext(), DetailsActivity.class);
             intent.putExtra(Constants.INTENT_PACKAGE_NAME, app.getPackageName());
+            intent.putExtra(Constants.STRING_REPO, app.getRepoName());
             intent.putExtra(Constants.STRING_EXTRA, gson.toJson(app));
             startActivity(intent, ViewUtil.getEmptyActivityBundle((AppCompatActivity) requireActivity()));
             return false;

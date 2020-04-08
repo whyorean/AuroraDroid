@@ -83,9 +83,9 @@ public class App {
     public App() {
     }
 
-    public void setPackageList(List<Package> packageList) {
+    public void setPackageList(List<Package> packageList, String RSA256, boolean verifySigner) {
         Collections.sort(packageList, (package1, package2) -> package2.getVersionCode().compareTo(package1.getVersionCode()));
-        this.setAppPackage(PackageUtil.getOptimumPackage(packageList));
+        this.setAppPackage(PackageUtil.getOptimumPackage(packageList, RSA256, verifySigner));
         this.packageList = packageList;
     }
 

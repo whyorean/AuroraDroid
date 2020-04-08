@@ -144,7 +144,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
             public void onCompleted(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
                 if (groupId == pkg.hashCode()) {
                     AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_COMPLETED));
-                    AuroraApplication.getInstaller().install(pkg.getApkName(), pkg.getVersionCode());
+                    AuroraApplication.getInstaller().install(pkg.getPackageName(), pkg.getVersionCode());
                 }
             }
 

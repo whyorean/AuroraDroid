@@ -129,7 +129,7 @@ public class PackageItem extends AbstractItem<PackageItem.ViewHolder> {
                     super.onCompleted(groupId, download, fetchGroup);
                     if (groupId == app.getPackageName().hashCode()) {
                         AuroraApplication.rxNotify(new Event(EventType.DOWNLOAD_COMPLETED));
-                        AuroraApplication.getInstaller().install(pkg.getApkName(), pkg.getVersionCode());
+                        AuroraApplication.getInstaller().install(pkg.getPackageName(), pkg.getVersionCode());
                         fetch.removeListener(this);
                     }
                 }

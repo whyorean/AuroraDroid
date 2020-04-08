@@ -235,10 +235,16 @@ public class PackageUtil {
         return pkgArch == systemArch || pkgArch == systemArch2;
     }
 
-    public static Package getOptimumPackage(List<Package> packageList) {
+    public static Package getOptimumPackage(List<Package> packageList, String signer, boolean verifySigner) {
+
         for (Package pkg : packageList) {
-            if (isBestFitSupportedPackage(pkg))
-                return pkg;
+            if (verifySigner) {
+                if (pkg.getSigner().equals(signer) && isBestFitSupportedPackage(pkg))
+                    return pkg;
+            } else {
+                if (isBestFitSupportedPackage(pkg))
+                    return pkg;
+            }
         }
 
         for (Package pkg : packageList) {

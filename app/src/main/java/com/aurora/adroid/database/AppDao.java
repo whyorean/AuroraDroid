@@ -40,6 +40,9 @@ public interface AppDao {
     @Query("SELECT DISTINCT * FROM app WHERE packageName IN (:packageName)")
     LiveData<List<App>> getAppsByPackageName(List<String> packageName);
 
+    @Query("SELECT * FROM app WHERE packageName =:packageName")
+    List<App> getAppsByPackageName(String packageName);
+
     @Query("SELECT * FROM app WHERE packageName = :packageName")
     LiveData<App> getLiveAppByPackageName(String packageName);
 

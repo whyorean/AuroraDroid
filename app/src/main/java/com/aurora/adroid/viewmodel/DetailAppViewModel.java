@@ -10,6 +10,7 @@ import com.aurora.adroid.database.AppRepository;
 import com.aurora.adroid.database.PackageRepository;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
+import com.aurora.adroid.util.CertUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -42,11 +43,16 @@ public class DetailAppViewModel extends AndroidViewModel {
                 ? appRepository.getAppByPackageName(packageName)
                 : appRepository.getAppByPackageNameAndRepo(packageName, repoName))
                 .map(app -> {
+
                     final List<Package> pkgList = StringUtils.isEmpty(repoName)
                             ? packageRepository.getAllPackages(packageName)
                             : packageRepository.getAllPackages(packageName, repoName);
-                    if (!pkgList.isEmpty())
-                        app.setPackageList(pkgList);
+
+                    if (!pkgList.isEmpty()) {
+                        final String RSA256 = CertUtil.getSHA256(getApplication(), app.getPackageName());
+                        app.setPackageList(pkgList, RSA256, true);
+                    }
+
                     return app;
                 })
                 .map(app -> {

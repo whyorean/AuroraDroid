@@ -43,6 +43,10 @@ public class AppRepository {
         return appDao.getAppByPackageName(packageName);
     }
 
+    public List<App> getAppsByPackageName(String packageName) {
+        return appDao.getAppsByPackageName(packageName);
+    }
+
     public App getAppByPackageNameAndRepo(String packageName, String repoName) {
         return appDao.getAppByPackageNameAndRepo(packageName, repoName);
     }

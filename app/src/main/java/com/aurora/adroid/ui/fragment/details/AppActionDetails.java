@@ -40,6 +40,7 @@ import com.aurora.adroid.download.RequestBuilder;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 import com.aurora.adroid.ui.activity.DetailsActivity;
+import com.aurora.adroid.util.CertUtil;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PackageUtil;
@@ -127,8 +128,9 @@ public class AppActionDetails extends AbstractDetails {
         try {
             final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(app.getPackageName(), 0);
             final Package pkg = app.getAppPackage();
+            final String RSA256 = CertUtil.getSHA256(activity, app.getPackageName());
 
-            if (PackageUtil.isCompatibleVersion(context, pkg, packageInfo)) {
+            if (PackageUtil.isCompatibleVersion(context, pkg, packageInfo) && RSA256.equals(pkg.getSigner())) {
                 btnPositive.setText(R.string.action_update);
             } else {
                 btnPositive.setText(R.string.action_open);
