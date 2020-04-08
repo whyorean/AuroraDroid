@@ -57,18 +57,18 @@ public class RepoAddActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_repo_add);
+        setContentView(R.layout.sheet_repo_add);
         ButterKnife.bind(this);
         setupActionbar();
     }
 
-    @OnClick(R.id.btn_add)
+    @OnClick(R.id.btn_positive)
     public void addRepo() {
         saveRepoToCustomList();
         finish();
     }
 
-    @OnClick(R.id.btn_cancel)
+    @OnClick(R.id.btn_negative)
     public void cancelRepo() {
         finish();
     }

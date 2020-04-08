@@ -33,6 +33,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
@@ -41,6 +42,7 @@ import com.aurora.adroid.service.SyncService;
 import com.aurora.adroid.ui.activity.AuroraActivity;
 import com.aurora.adroid.ui.activity.ContainerActivity;
 import com.aurora.adroid.ui.activity.IntroActivity;
+import com.aurora.adroid.ui.sheet.RepoAddSheet;
 import com.aurora.adroid.ui.sheet.RepoListBottomSheet;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -48,6 +50,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -56,7 +59,7 @@ public class RepoFragment extends Fragment {
 
     @BindView(R.id.coordinator)
     CoordinatorLayout coordinatorLayout;
-    @BindView(R.id.repo_list)
+    @BindView(R.id.layout_repo_list)
     RelativeLayout repoLayout;
     @BindView(R.id.txtLog)
     TextView txtLog;
@@ -67,8 +70,8 @@ public class RepoFragment extends Fragment {
     private CompositeDisposable disposable = new CompositeDisposable();
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         disposable.add(AuroraApplication.getRxBus()
                 .getBus()
                 .subscribeOn(Schedulers.io())
@@ -94,12 +97,6 @@ public class RepoFragment extends Fragment {
                 }));
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -116,23 +113,35 @@ public class RepoFragment extends Fragment {
     }
 
     @Override
-    public void onStop() {
+    public void onDestroy() {
         try {
             disposable.clear();
         } catch (Exception ignored) {
         }
-        super.onStop();
+        super.onDestroy();
+    }
+
+    @OnClick(R.id.layout_repo_add)
+    public void addRepo(){
+        final FragmentManager fragmentManager = getChildFragmentManager();
+        if (fragmentManager.findFragmentByTag(RepoAddSheet.TAG) == null) {
+            final RepoAddSheet sheet = new RepoAddSheet();
+            sheet.show(fragmentManager, RepoAddSheet.TAG);
+        }
+    }
+
+    @OnClick(R.id.layout_repo_list)
+    public void showAllRepos(){
+        final FragmentManager fragmentManager = getChildFragmentManager();
+        if (fragmentManager.findFragmentByTag(RepoListBottomSheet.TAG) == null) {
+            final RepoListBottomSheet sheet = new RepoListBottomSheet();
+            sheet.show(fragmentManager, RepoListBottomSheet.TAG);
+        }
     }
 
     private void init() {
-        repoLayout.setOnClickListener(v -> {
-            RepoListBottomSheet repoListBottomSheet = new RepoListBottomSheet();
-            repoListBottomSheet.show(getParentFragmentManager(), "REPO_LIST_SHEET");
-        });
-
         btnSync.setOnClickListener(v -> startRepoSyncService());
         txtLog.setMovementMethod(new ScrollingMovementMethod());
-
         if (SyncService.isServiceRunning())
             blockSync();
     }

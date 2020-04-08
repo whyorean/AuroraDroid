@@ -21,17 +21,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?colorSecondaryVariant"
+    android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <include layout="@layout/toolbar_main" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,11 +34,35 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_margin="@dimen/margin_normal"
-                android:text="@string/repo_id"
-                android:textAppearance="@style/TextAppearance.Aurora.DialogSubTitle" />
+                android:text="@string/title_repo_add"
+                android:textAppearance="@style/TextAppearance.Aurora.Title" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_scan_qr"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                app:srcCompat="@drawable/ic_qr_scan"
+                app:tint="?colorAccent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/repo_qr_scan"
+                android:textAppearance="@style/TextAppearance.Aurora.Line1" />
+
+            <View
+                android:layout_width="@dimen/icon_size_qr"
+                android:layout_height="2dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/margin_normal"
+                android:background="@color/colorScrim" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -51,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_normal"
                 android:layout_marginEnd="@dimen/margin_normal"
+                android:layout_marginBottom="@dimen/margin_normal"
                 android:hint="@string/repo_id">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -61,19 +81,13 @@
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_normal"
-                android:text="@string/repo_name"
-                android:textAppearance="@style/TextAppearance.Aurora.DialogSubTitle" />
-
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_normal"
                 android:layout_marginEnd="@dimen/margin_normal"
+                android:layout_marginBottom="@dimen/margin_normal"
                 android:hint="@string/repo_name">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -84,19 +98,13 @@
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_normal"
-                android:text="@string/repo_addr"
-                android:textAppearance="@style/TextAppearance.Aurora.DialogSubTitle" />
-
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_normal"
                 android:layout_marginEnd="@dimen/margin_normal"
+                android:layout_marginBottom="@dimen/margin_normal"
                 android:hint="https://">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -107,19 +115,13 @@
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_normal"
-                android:text="@string/repo_fingerprint"
-                android:textAppearance="@style/TextAppearance.Aurora.DialogSubTitle" />
-
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_normal"
                 android:layout_marginEnd="@dimen/margin_normal"
+                android:layout_marginBottom="@dimen/margin_normal"
                 android:hint="Fingerprint (Optional)">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -130,37 +132,38 @@
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_bottom"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_normal"
-                android:layout_marginTop="@dimen/margin_large"
-                android:layout_marginEnd="@dimen/margin_normal"
-                android:layout_marginBottom="@dimen/margin_large"
-                android:gravity="end"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_cancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="52dp"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="@dimen/margin_xsmall"
-                    android:maxLines="1"
-                    android:paddingStart="@dimen/margin_large"
-                    android:paddingEnd="@dimen/margin_large"
-                    android:text="@string/action_cancel" />
+                    android:id="@+id/btn_positive"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/height_button"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:text="@string/action_save"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btn_negative"
+                    app:layout_constraintTop_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:rippleColor="@color/colorScrim" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="52dp"
-                    android:layout_gravity="end"
-                    android:maxLines="1"
-                    android:paddingStart="@dimen/margin_large"
-                    android:paddingEnd="@dimen/margin_large"
-                    android:text="@string/action_add" />
-            </LinearLayout>
+                    android:id="@+id/btn_negative"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/height_button"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:text="@string/action_close"
+                    android:textColor="@color/colorRed"
+                    app:layout_constraintEnd_toStartOf="@id/btn_positive"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:rippleColor="@color/colorScrim" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

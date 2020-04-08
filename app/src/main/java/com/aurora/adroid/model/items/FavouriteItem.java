@@ -84,7 +84,7 @@ public class FavouriteItem extends AbstractItem<FavouriteItem.ViewHolder> {
             line1.setText(app.getName());
             line2.setText(context.getText(PackageUtil.isInstalled(context, app.getPackageName())
                     ? R.string.list_installed
-                    : R.string.list_not_installd));
+                    : R.string.list_not_installed));
             checkBox.setChecked(item.checked);
 
             GlideApp

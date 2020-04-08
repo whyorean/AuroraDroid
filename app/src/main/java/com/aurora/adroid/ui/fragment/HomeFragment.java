@@ -45,7 +45,7 @@ import com.aurora.adroid.model.items.cluster.UpdatesClusterItem;
 import com.aurora.adroid.service.SyncService;
 import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.ui.activity.GenericAppActivity;
-import com.aurora.adroid.ui.sheet.RepoDetailsBottomSheet;
+import com.aurora.adroid.ui.sheet.RepoDetailsSheet;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.viewmodel.ClusterAppsViewModel;
@@ -211,9 +211,9 @@ public class HomeFragment extends Fragment {
             return false;
         });
         fastItemAdapterIndices.setOnLongClickListener((view, adapter, item, position) -> {
-            RepoDetailsBottomSheet.index = item.getIndex();
-            RepoDetailsBottomSheet repoDetailsBottomSheet = new RepoDetailsBottomSheet();
-            repoDetailsBottomSheet.show(requireActivity().getSupportFragmentManager(), "REPO_DETAILS_SHEET");
+            RepoDetailsSheet.index = item.getIndex();
+            RepoDetailsSheet repoDetailsSheet = new RepoDetailsSheet();
+            repoDetailsSheet.show(requireActivity().getSupportFragmentManager(), "REPO_DETAILS_SHEET");
             return true;
         });
         recyclerViewIndices.setAdapter(fastItemAdapterIndices);

@@ -131,7 +131,7 @@
     <string name="list_empty_fav">No favourites</string>
     <string name="list_empty_updates">No updates available</string>
     <string name="list_installed">Installed</string>
-    <string name="list_not_installd">Not installed</string>
+    <string name="list_not_installed">Not installed</string>
     <string name="list_selected">Apps selected</string>
     <string name="list_update_all">Update all</string>
     <string name="list_update_all_txt">update(s) available"</string>
@@ -159,6 +159,7 @@
     <string name="title_categories">Categories</string>
     <string name="title_latest_updated">Latest updated</string>
     <string name="title_repo_add">Add new repository</string>
+    <string name="title_repo_add_desc">Add a custom repository to sync</string>
     <string name="title_perm">Permissions</string>
     <string name="title_repositories">Repositories</string>
     <string name="title_search">Search apps &amp; games</string>

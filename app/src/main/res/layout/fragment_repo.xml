@@ -32,7 +32,7 @@
             android:layout_width="@dimen/icon_size_large"
             android:layout_height="@dimen/icon_size_large"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_xlarge"
+            android:layout_marginTop="@dimen/margin_normal"
             app:srcCompat="@drawable/ic_repository" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -43,8 +43,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_normal"
             android:text="@string/title_sync_repo"
-            android:textAppearance="@style/TextAppearance.Aurora.Toolbar.Title"
-            android:textSize="20sp" />
+            android:textAppearance="@style/TextAppearance.Aurora.Title" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_sync_desc"
@@ -52,13 +51,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_sync"
             android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_small"
             android:text="@string/details_repo_desc"
             android:textAlignment="center"
             android:textColor="?android:attr/textColorPrimary" />
 
         <RelativeLayout
-            android:id="@+id/repo_list"
+            android:id="@+id/layout_repo_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_sync_desc"
@@ -70,15 +69,12 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img"
-                android:layout_width="@dimen/icon_size_small"
-                android:layout_height="@dimen/icon_size_small"
+                android:layout_width="@dimen/icon_size_category"
+                android:layout_height="@dimen/icon_size_category"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/margin_small"
-                android:background="@drawable/circle_bg_small"
-                android:backgroundTint="?colorAccent"
-                android:padding="@dimen/margin_medium"
                 android:src="@drawable/ic_repo"
-                android:tint="#FFF" />
+                app:tint="?colorAccent" />
 
             <TextView
                 android:id="@+id/txt_repo_list"
@@ -105,12 +101,56 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/layout_repo_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_repo_list"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:background="@drawable/generic_padded_bg"
+            android:minHeight="56dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_repo_add"
+                android:layout_width="@dimen/icon_size_category"
+                android:layout_height="@dimen/icon_size_category"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:src="@drawable/ic_add"
+                app:tint="?colorAccent" />
+
+            <TextView
+                android:id="@+id/txt_repo_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_toEndOf="@id/img_repo_add"
+                android:text="@string/title_repo_add"
+                android:textAlignment="viewStart"
+                android:textAppearance="@style/TextAppearance.Aurora.Title"
+                android:textColor="?android:attr/textColorPrimary" />
+
+            <TextView
+                android:id="@+id/txt_repo_add_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_repo_add"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_toEndOf="@id/img_repo_add"
+                android:text="@string/title_repo_add_desc"
+                android:textAlignment="viewStart"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtLog"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/btn_sync"
-            android:layout_below="@id/repo_list"
+            android:layout_below="@id/layout_repo_add"
             android:layout_marginStart="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginEnd="@dimen/margin_normal"

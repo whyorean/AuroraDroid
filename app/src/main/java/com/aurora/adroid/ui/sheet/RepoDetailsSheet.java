@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RepoDetailsBottomSheet extends BaseBottomSheet {
+public class RepoDetailsSheet extends BaseBottomSheet {
 
     public static Index index;
 
@@ -49,7 +49,6 @@ public class RepoDetailsBottomSheet extends BaseBottomSheet {
     TextView txtMirrorUrl;
 
     private ArrayList<String> mirrorCheckedList = new ArrayList<>();
-    private boolean hasMirror;
     private Repo repo;
 
     @Nullable
@@ -64,49 +63,47 @@ public class RepoDetailsBottomSheet extends BaseBottomSheet {
     protected void onContentViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mirrorCheckedList = Util.getMirrorCheckedList(requireContext());
         repo = RepoListManager.getRepoById(requireContext(), index.getRepoId());
-        hasMirror = repo.getRepoMirrors() != null && repo.getRepoMirrors().length >= 1;
+
+        boolean hasMirror = repo.getRepoMirrors() != null && repo.getRepoMirrors().length >= 1;
+
         txtName.setText(repo.getRepoName());
         txtUrl.setText(repo.getRepoUrl());
-        if (hasMirror)
+
+        if (hasMirror) {
             txtMirrorUrl.setText(repo.getRepoMirrors()[0]);
+            mirrorSwitch.setChecked(mirrorCheckedList.contains(repo.getRepoId()));
+            mirrorSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (mirrorSwitch.isChecked()) {
+                    mirrorCheckedList.add(repo.getRepoId());
+                    Util.putMirrorCheckedList(requireContext(), mirrorCheckedList);
+                } else {
+                    mirrorCheckedList.remove(repo.getRepoId());
+                    Util.putMirrorCheckedList(requireContext(), mirrorCheckedList);
+                }
+            });
+        } else
+            mirrorSwitch.setVisibility(View.GONE);
+
         txtFingerPrint.setText(repo.getRepoFingerprint());
         txtDescription.setText(repo.getRepoDescription());
 
-        if (!hasMirror)
-            mirrorSwitch.setVisibility(View.GONE);
-
-        if (mirrorCheckedList.contains(repo.getRepoId()))
-            mirrorSwitch.setChecked(true);
-
-        mirrorSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (mirrorSwitch.isChecked()) {
-                mirrorCheckedList.add(repo.getRepoId());
-                Util.putMirrorCheckedList(requireContext(), mirrorCheckedList);
-            } else {
-                mirrorCheckedList.remove(repo.getRepoId());
-                Util.putMirrorCheckedList(requireContext(), mirrorCheckedList);
-            }
-        });
         generateQR();
     }
 
     private void generateQR() {
         QRCodeWriter writer = new QRCodeWriter();
         try {
-            final StringBuilder content = new StringBuilder()
-                    .append(repo.getRepoUrl())
-                    .append("/?fingerprint=")
-                    .append(StringUtils.deleteWhitespace(repo.getRepoFingerprint()));
-            final BitMatrix bitMatrix = writer.encode(content.toString(), BarcodeFormat.QR_CODE, 512, 512);
+            String content = repo.getRepoUrl() + "/?fingerprint=" + StringUtils.deleteWhitespace(repo.getRepoFingerprint());
+            final BitMatrix bitMatrix = writer.encode(content, BarcodeFormat.QR_CODE, 512, 512);
             final int width = bitMatrix.getWidth();
             final int height = bitMatrix.getHeight();
-            final Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+            final Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
-                    bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
+                    bitmap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
                 }
             }
-            imgQR.setImageBitmap(bmp);
+            imgQR.setImageBitmap(bitmap);
         } catch (WriterException e) {
             e.printStackTrace();
         }

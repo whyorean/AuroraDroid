@@ -39,6 +39,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCallback, SimpleSwipeCallback.ItemSwipeCallback {
 
+    public static final String TAG = "REPO_LIST_SHEET";
+
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
     @BindView(R.id.checkbox_select)
@@ -52,7 +54,7 @@ public class RepoListBottomSheet extends BaseBottomSheet implements ItemTouchCal
     @Nullable
     @Override
     protected View onCreateContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.sheet_repository_list, container, false);
+        View view = inflater.inflate(R.layout.sheet_repo_list, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
