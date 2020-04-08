@@ -63,6 +63,7 @@
     <string name="action_installed">Installed</string>
     <string name="action_installations">Installations</string>
     <string name="action_later">Later</string>
+    <string name="action_loading">Loading</string>
     <string name="action_more">More</string>
     <string name="action_next">Next</string>
     <string name="action_open">Open</string>

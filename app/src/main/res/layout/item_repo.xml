@@ -90,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
+                app:tint="?android:textColorPrimary"
                 app:srcCompat="@drawable/ic_expand" />
 
             <View
