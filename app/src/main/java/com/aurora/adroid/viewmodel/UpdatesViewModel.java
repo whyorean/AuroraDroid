@@ -15,8 +15,6 @@ import com.aurora.adroid.model.items.UpdatesItem;
 import com.aurora.adroid.util.CertUtil;
 import com.aurora.adroid.util.PackageUtil;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +42,7 @@ public class UpdatesViewModel extends BaseViewModel {
     }
 
     public void fetchUpdatableApps() {
-        disposable.add(Observable.fromCallable(() -> getInstalledPackages(true))
+        disposable.add(Observable.fromCallable(() -> getInstalledPackages())
                 .subscribeOn(Schedulers.io())
                 .map(packages -> {
                     final List<App> appList = new ArrayList<>();
@@ -53,7 +51,7 @@ public class UpdatesViewModel extends BaseViewModel {
                         final List<App> repoAppList = appRepository.getAppsByPackageName(packageName);
                         for (App app : repoAppList) {
                             //Get all packages associated with this app, in specific repo.
-                            final List<Package> pkgList =  packageRepository.getAllPackages(packageName, app.getRepoName());
+                            final List<Package> pkgList = packageRepository.getAllPackages(packageName, app.getRepoName());
                             //Get installed app signer
                             final String RSA256 = CertUtil.getSHA256(getApplication(), app.getPackageName());
 

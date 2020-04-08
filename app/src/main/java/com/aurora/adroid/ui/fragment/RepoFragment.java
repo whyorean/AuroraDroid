@@ -18,7 +18,6 @@
 
 package com.aurora.adroid.ui.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -66,7 +65,6 @@ public class RepoFragment extends Fragment {
     @BindView(R.id.btn_sync)
     MaterialButton btnSync;
 
-    private Context context;
     private CompositeDisposable disposable = new CompositeDisposable();
 
     @Override
@@ -122,7 +120,7 @@ public class RepoFragment extends Fragment {
     }
 
     @OnClick(R.id.layout_repo_add)
-    public void addRepo(){
+    public void addRepo() {
         final FragmentManager fragmentManager = getChildFragmentManager();
         if (fragmentManager.findFragmentByTag(RepoAddSheet.TAG) == null) {
             final RepoAddSheet sheet = new RepoAddSheet();
@@ -131,7 +129,7 @@ public class RepoFragment extends Fragment {
     }
 
     @OnClick(R.id.layout_repo_list)
-    public void showAllRepos(){
+    public void showAllRepos() {
         final FragmentManager fragmentManager = getChildFragmentManager();
         if (fragmentManager.findFragmentByTag(RepoListSheet.TAG) == null) {
             final RepoListSheet sheet = new RepoListSheet();
@@ -147,11 +145,11 @@ public class RepoFragment extends Fragment {
     }
 
     private void startRepoSyncService() {
-        Intent intent = new Intent(context, SyncService.class);
+        Intent intent = new Intent(requireActivity(), SyncService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(intent);
+            requireActivity().startForegroundService(intent);
         } else {
-            context.startService(intent);
+            requireActivity().startService(intent);
         }
         blockSync();
     }
@@ -168,7 +166,7 @@ public class RepoFragment extends Fragment {
 
         if (getActivity() instanceof IntroActivity)
             btnSync.setOnClickListener(v -> {
-                getActivity().startActivity(new Intent(context, AuroraActivity.class));
+                getActivity().startActivity(new Intent(requireActivity(), AuroraActivity.class));
                 getActivity().finish();
             });
         else if (getActivity() instanceof ContainerActivity)

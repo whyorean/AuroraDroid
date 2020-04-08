@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
+import com.aurora.adroid.manager.BlacklistManager;
 import com.aurora.adroid.model.App;
 
 import java.util.ArrayList;
@@ -29,6 +30,12 @@ public class BaseViewModel extends AndroidViewModel {
         return appList;
     }
 
+    public List<String> getInstalledPackages() {
+        List<String> packageList = getInstalledPackages(true);
+        packageList = filterBlacklistedApps(packageList);
+        return packageList;
+    }
+
     public List<String> getInstalledPackages(boolean includeSystem) {
         List<String> packageList = new ArrayList<>();
         PackageManager packageManager = getApplication().getPackageManager();
@@ -43,6 +50,11 @@ public class BaseViewModel extends AndroidViewModel {
 
             packageList.add(packageName);
         }
+        return packageList;
+    }
+
+    public List<String> filterBlacklistedApps(List<String> packageList) {
+        packageList.removeAll(new BlacklistManager(getApplication()).getBlacklistedPackages());
         return packageList;
     }
 }
