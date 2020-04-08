@@ -43,7 +43,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_normal"
             android:text="@string/title_sync_repo"
-            android:textAppearance="@style/TextAppearance.Aurora.Title" />
+            android:textAppearance="@style/TextAppearance.Aurora.Head" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_sync_desc"
@@ -54,7 +54,7 @@
             android:layout_marginTop="@dimen/margin_small"
             android:text="@string/details_repo_desc"
             android:textAlignment="center"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:textAppearance="@style/TextAppearance.Aurora.SubTitle"/>
 
         <RelativeLayout
             android:id="@+id/layout_repo_list"
@@ -84,7 +84,7 @@
                 android:layout_toEndOf="@id/img"
                 android:text="@string/repo_list"
                 android:textAlignment="viewStart"
-                android:textAppearance="@style/TextAppearance.Aurora.Title"
+                android:textAppearance="@style/TextAppearance.Aurora.Line1"
                 android:textColor="?android:attr/textColorPrimary" />
 
             <TextView
@@ -129,7 +129,7 @@
                 android:layout_toEndOf="@id/img_repo_add"
                 android:text="@string/title_repo_add"
                 android:textAlignment="viewStart"
-                android:textAppearance="@style/TextAppearance.Aurora.Title"
+                android:textAppearance="@style/TextAppearance.Aurora.Line1"
                 android:textColor="?android:attr/textColorPrimary" />
 
             <TextView

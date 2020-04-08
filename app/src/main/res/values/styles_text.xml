@@ -19,10 +19,21 @@
 <resources>
 
     <style name="TextAppearance.Aurora.Title" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:letterSpacing">0.05</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:alpha">1</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.Aurora.Head" parent="TextAppearance.Aurora.Title">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TextAppearance.Aurora.SubTitle" parent="TextAppearance.Aurora.Title">
+        <item name="android:letterSpacing">0.025</item>
         <item name="android:textSize">18sp</item>
     </style>
 
@@ -44,11 +55,6 @@
 
     <style name="TextAppearance.Aurora.SearchBar" parent="TextAppearance.Aurora.Line1">
         <item name="android:textSize">18sp</item>
-    </style>
-
-    <style name="TextAppearance.Aurora.SubTitle" parent="TextAppearance.Aurora.Title">
-        <item name="android:letterSpacing">0.025</item>
-        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="TextAppearance.Aurora.BottomNav.Active" parent="TextAppearance.Aurora.Line1">

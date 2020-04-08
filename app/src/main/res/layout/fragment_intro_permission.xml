@@ -43,8 +43,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_normal"
             android:text="@string/title_perm"
-            android:textAppearance="@style/TextAppearance.Aurora.Toolbar.Title"
-            android:textSize="20sp" />
+            android:textAppearance="@style/TextAppearance.Aurora.Title" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/perm_desc"
@@ -52,10 +51,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/acc_txt"
             android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_small"
             android:text="@string/details_permissions_desc"
             android:textAlignment="center"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
