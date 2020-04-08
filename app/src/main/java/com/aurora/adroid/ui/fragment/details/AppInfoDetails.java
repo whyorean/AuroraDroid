@@ -18,6 +18,8 @@
 
 package com.aurora.adroid.ui.fragment.details;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -34,6 +36,7 @@ import com.aurora.adroid.model.App;
 import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.util.ColorUtil;
 import com.aurora.adroid.util.DatabaseUtil;
+import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.TextUtil;
 import com.aurora.adroid.util.ThemeUtil;
 import com.bumptech.glide.load.DataSource;
@@ -94,10 +97,6 @@ public class AppInfoDetails extends AbstractDetails {
                     .into(imgIcon);
 
         txtName.setText(app.getName());
-        txtVersion.setText(new StringBuilder()
-                .append(app.getAppPackage().getVersionName())
-                .append(".")
-                .append(app.getAppPackage().getVersionCode()));
         setText(txtPackageName, app.getPackageName());
         setText(txtDevName, app.getAuthorName());
 
@@ -111,6 +110,35 @@ public class AppInfoDetails extends AbstractDetails {
 
         if (!summary.isEmpty()) {
             setText(txtSummary, StringUtils.capitalize(summary.trim()));
+        }
+
+        if (PackageUtil.isInstalled(context, app.getPackageName()))
+            drawVersion();
+        else
+            txtVersion.setText(StringUtils.joinWith(".",
+                    app.getAppPackage().getVersionName(),
+                    app.getAppPackage().getVersionCode()));
+    }
+
+    private void drawVersion() {
+        try {
+            final PackageInfo info = context.getPackageManager().getPackageInfo(app.getPackageName(), 0);
+            final String currentVersion = StringUtils.joinWith(".",
+                    info.versionName,
+                    info.versionCode);
+            final String updateVersion = StringUtils.joinWith(".",
+                    app.getAppPackage().getVersionName(),
+                    app.getAppPackage().getVersionCode());
+
+            if (app.getAppPackage().getVersionCode() > info.versionCode)
+                txtVersion.setText(new StringBuilder()
+                        .append(currentVersion)
+                        .append(" >> ")
+                        .append(updateVersion));
+            else
+                txtVersion.setText(currentVersion);
+        } catch (PackageManager.NameNotFoundException e) {
+            // We've checked for that already
         }
     }
 
