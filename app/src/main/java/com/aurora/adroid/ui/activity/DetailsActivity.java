@@ -64,11 +64,11 @@ public class DetailsActivity extends BaseActivity {
     @BindView(R.id.coordinator)
     CoordinatorLayout coordinator;
 
+    private App app;
     private String packageName;
     private String repoName;
     private DetailAppViewModel model;
 
-    private App app;
     private AppActionDetails appActionDetails;
     private AppPackages appPackages;
     private FavouritesManager favouritesManager;
@@ -203,15 +203,15 @@ public class DetailsActivity extends BaseActivity {
 
     private void setupActionBar() {
         setSupportActionBar(toolbar);
-        ActionBar mActionBar = getSupportActionBar();
-        if (mActionBar != null) {
-            mActionBar.setDisplayHomeAsUpEnabled(true);
-            mActionBar.setDisplayShowTitleEnabled(false);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(false);
         }
     }
 
-    private void draw(App mApp) {
-        app = mApp;
+    private void draw(App app) {
+        this.app = app;
         drawButtons();
         new AppInfoDetails(this, app).draw();
         new AppSubInfoDetails(this, app).draw();
@@ -248,11 +248,11 @@ public class DetailsActivity extends BaseActivity {
     }
 
     private void getShareIntent() {
-        Intent i = new Intent(Intent.ACTION_SEND);
-        i.setType("text/plain");
-        i.putExtra(Intent.EXTRA_SUBJECT, app.getName());
-        i.putExtra(Intent.EXTRA_TEXT, Constants.APP_SHARE_URL + app.getPackageName());
-        startActivity(Intent.createChooser(i, getString(R.string.action_share)));
+        final Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, app.getName());
+        intent.putExtra(Intent.EXTRA_TEXT, Constants.APP_SHARE_URL + app.getPackageName());
+        startActivity(Intent.createChooser(intent, getString(R.string.action_share)));
     }
 
     private void clearNotification(Context context, String packageName) {

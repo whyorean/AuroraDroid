@@ -88,7 +88,6 @@ public class AppActionDetails extends AbstractDetails {
     private int hashCode;
 
     private Fetch fetch;
-    private FetchListener fetchListener;
 
     public AppActionDetails(DetailsActivity activity, App app) {
         super(activity, app);
@@ -115,8 +114,7 @@ public class AppActionDetails extends AbstractDetails {
                     btnPositive.setOnClickListener(installAppListener());
             } else if (fetchGroup.getDownloadingDownloads().size() > 0 || fetchGroup.getQueuedDownloads().size() > 0) {
                 switchViews(true);
-                fetchListener = getFetchListener();
-                fetch.addListener(fetchListener);
+                fetch.addListener(getFetchListener());
             } else if (fetchGroup.getPausedDownloads().size() > 0) {
                 isPaused = true;
                 btnPositive.setOnClickListener(resumeAppListener());
@@ -174,8 +172,7 @@ public class AppActionDetails extends AbstractDetails {
         btnPositive.setText(R.string.download_resume);
         return v -> {
             switchViews(true);
-            fetchListener = getFetchListener();
-            fetch.addListener(fetchListener);
+            fetch.addListener(getFetchListener());
             fetch.resumeGroup(hashCode);
         };
     }
@@ -241,9 +238,7 @@ public class AppActionDetails extends AbstractDetails {
         final List<Request> requestList = new ArrayList<>();
         requestList.add(request);
 
-        fetchListener = getFetchListener();
-        fetch.addListener(fetchListener);
-
+        fetch.addListener(getFetchListener());
         fetch.enqueue(requestList, updatedRequestList ->
                 Log.i("Downloading Apks : %s", app.getPackageName()));
     }
@@ -328,10 +323,7 @@ public class AppActionDetails extends AbstractDetails {
                         //Call the installer
                         AuroraApplication.getInstaller().install(app);
                     }
-                    if (fetchListener != null) {
-                        fetch.removeListener(fetchListener);
-                        fetchListener = null;
-                    }
+                    fetch.removeListener(this);
                 }
             }
 
@@ -343,6 +335,7 @@ public class AppActionDetails extends AbstractDetails {
                         progressBar.setIndeterminate(true);
                         progressStatus.setText(R.string.download_canceled);
                     });
+                    fetch.removeListener(this);
                 }
             }
         };
