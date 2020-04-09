@@ -16,51 +16,54 @@
   ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/card_width"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="?android:colorBackground"
-    app:cardCornerRadius="15dp"
-    app:cardUseCompatPadding="true">
+    android:layout_marginStart="@dimen/margin_xsmall"
+    android:layout_marginEnd="@dimen/margin_xsmall">
 
-    <RelativeLayout
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/icon_size_large"
+        android:layout_height="@dimen/icon_size_large"
+        android:padding="@dimen/margin_xsmall" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/line1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img"
+        android:layout_alignStart="@id/img"
+        android:layout_alignEnd="@id/img"
+        android:layout_marginTop="@dimen/margin_xsmall"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.Aurora.Line1"
+        tools:text="Aurora Store" />
 
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="@dimen/icon_size_large"
-            android:layout_height="@dimen/icon_size_large"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:scaleType="centerCrop" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/line2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line1"
+        android:layout_marginBottom="@dimen/margin_xxsmall"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.Aurora.Line3"
+        tools:text="6 MB" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/line1"
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_below="@id/img"
-            android:layout_margin="@dimen/margin_xsmall"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="2"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Aurora.Line1"
-            app:autoSizeMaxTextSize="15sp"
-            app:autoSizeMinTextSize="12sp"
-            app:autoSizeTextType="uniform" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/line2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/line1"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:layout_marginBottom="@dimen/margin_small"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Aurora.Line2" />
-    </RelativeLayout>
-</com.google.android.material.card.MaterialCardView>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/line3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line2"
+        android:layout_marginBottom="@dimen/margin_xxsmall"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.Aurora.Line3"
+        tools:text="6 MB" />
+</RelativeLayout>

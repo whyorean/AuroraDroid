@@ -39,6 +39,7 @@ import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.service.BulkUpdateService;
 import com.aurora.adroid.service.NotificationService;
+import com.aurora.adroid.service.SyncService;
 import com.aurora.adroid.ui.activity.AuroraActivity;
 import com.tonyodev.fetch2.Status;
 import com.tonyodev.fetch2core.Downloader;
@@ -387,6 +388,15 @@ public class Util {
         try {
             if (BulkUpdateService.isServiceRunning())
                 context.stopService(new Intent(context, BulkUpdateService.class));
+        } catch (IllegalStateException e) {
+            Log.e(e.getMessage());
+        }
+    }
+
+    public static void stopSyncService(Context context) {
+        try {
+            if (SyncService.isServiceRunning())
+                context.stopService(new Intent(context, SyncService.class));
         } catch (IllegalStateException e) {
             Log.e(e.getMessage());
         }

@@ -134,10 +134,12 @@ public class RepoFragment extends Fragment {
         if (fragmentManager.findFragmentByTag(RepoListSheet.TAG) == null) {
             final RepoListSheet sheet = new RepoListSheet();
             sheet.show(fragmentManager, RepoListSheet.TAG);
+            init();
         }
     }
 
     private void init() {
+        btnSync.setText(getString(R.string.action_sync));
         btnSync.setOnClickListener(v -> startRepoSyncService());
         txtLog.setMovementMethod(new ScrollingMovementMethod());
         if (SyncService.isServiceRunning())
@@ -145,7 +147,7 @@ public class RepoFragment extends Fragment {
     }
 
     private void startRepoSyncService() {
-        Intent intent = new Intent(requireActivity(), SyncService.class);
+        final Intent intent = new Intent(requireActivity(), SyncService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             requireActivity().startForegroundService(intent);
         } else {

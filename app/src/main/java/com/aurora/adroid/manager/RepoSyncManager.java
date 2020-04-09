@@ -26,11 +26,15 @@ import com.aurora.adroid.Constants;
 import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.model.RepoHeader;
 import com.aurora.adroid.task.DatabaseTask;
+import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PrefUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +60,16 @@ public class RepoSyncManager {
         synchronized (repoHashMap) {
             if (!repoHashMap.containsKey(repo.getRepoId())) {
                 repoHashMap.put(repo.getRepoId(), repo);
+            }
+        }
+    }
+
+    public void addDefault() {
+        synchronized (repoHashMap) {
+            final Repo repo = getDefaultFromAssets();
+            if (repo != null && !repoHashMap.containsKey(repo.getRepoId())) {
+                repoHashMap.put(repo.getRepoId(), repo);
+                saveRepoMap();
             }
         }
     }
@@ -226,5 +240,21 @@ public class RepoSyncManager {
             return new HashMap<>();
         else
             return repoHeaderList;
+    }
+
+    private Repo getDefaultFromAssets() {
+        try {
+            final InputStream inputStream = context.getAssets().open("default.json");
+            final byte[] bytes = new byte[inputStream.available()];
+
+            inputStream.read(bytes);
+            inputStream.close();
+
+            final String rawJSON = new String(bytes, StandardCharsets.UTF_8);
+            return gson.fromJson(rawJSON, Repo.class);
+        } catch (IOException e) {
+            Log.e(e.getMessage());
+            return null;
+        }
     }
 }

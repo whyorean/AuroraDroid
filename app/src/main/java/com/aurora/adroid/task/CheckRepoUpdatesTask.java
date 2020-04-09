@@ -39,12 +39,14 @@ public class CheckRepoUpdatesTask extends ContextWrapper {
 
         final RepoSyncManager repoSyncManager = new RepoSyncManager(this);
         final List<Repo> repoList = repoSyncManager.getRepoList();
-        final List<Request> requestList = RequestBuilder.buildRequest(this, repoList);
-        final List<Request> filteredList = new ArrayList<>();
 
         if (repoList.isEmpty()) {
-            return new ArrayList<>();
+            repoSyncManager.addDefault();
+            repoList.addAll(repoSyncManager.getRepoList());
         }
+
+        final List<Request> requestList = RequestBuilder.buildRequest(this, repoList);
+        final List<Request> filteredList = new ArrayList<>();
 
         final OkHttpClient client = new OkHttpClient();
         for (Request request : requestList) {

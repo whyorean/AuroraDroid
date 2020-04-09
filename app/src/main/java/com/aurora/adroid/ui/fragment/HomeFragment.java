@@ -28,6 +28,7 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -48,6 +49,7 @@ import com.aurora.adroid.ui.activity.GenericAppActivity;
 import com.aurora.adroid.ui.sheet.RepoDetailsSheet;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
+import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.viewmodel.ClusterAppsViewModel;
 import com.aurora.adroid.viewmodel.IndexModel;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
@@ -227,7 +229,7 @@ public class HomeFragment extends Fragment {
             Intent intent = new Intent(requireContext(), DetailsActivity.class);
             intent.putExtra(Constants.INTENT_PACKAGE_NAME, item.getPackageName());
             intent.putExtra(Constants.STRING_REPO, item.getApp().getRepoName());
-            startActivity(intent);
+            startActivity(intent, ViewUtil.getEmptyActivityBundle((AppCompatActivity) requireActivity()));
             return false;
         });
 
@@ -242,7 +244,7 @@ public class HomeFragment extends Fragment {
             Intent intent = new Intent(requireContext(), DetailsActivity.class);
             intent.putExtra(Constants.INTENT_PACKAGE_NAME, item.getPackageName());
             intent.putExtra(Constants.STRING_REPO, item.getApp().getRepoName());
-            startActivity(intent);
+            startActivity(intent, ViewUtil.getEmptyActivityBundle((AppCompatActivity) requireActivity()));
             return false;
         });
 

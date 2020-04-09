@@ -47,6 +47,7 @@ import com.aurora.adroid.ui.fragment.details.AppScreenshotsDetails;
 import com.aurora.adroid.ui.fragment.details.AppSubInfoDetails;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
+import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.viewmodel.DetailAppViewModel;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -190,6 +191,10 @@ public class DetailsActivity extends BaseActivity {
                     favouritesManager.addToFavourites(packageName);
                     menuItem.setIcon(R.drawable.ic_favourite_red);
                 }
+                return true;
+            case R.id.action_downloads:
+                final Intent intent = new Intent(this, DownloadsActivity.class);
+                startActivity(intent, ViewUtil.getEmptyActivityBundle(this));
                 return true;
         }
         return super.onOptionsItemSelected(menuItem);
