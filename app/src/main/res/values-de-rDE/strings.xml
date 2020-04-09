@@ -159,7 +159,7 @@
     <string name="pref_install_mode_root_warn">"Die Root-Installationsmethode erfordert, dass die APK in App-Daten heruntergeladen wird, um über die adb-Shell zu installieren, Android Pie +"</string>
 
     <!-- Fuzzy -->
-    <string name="pref_install_mode_no_services">"Aurora Services werden benötigt"</string>
+    <string name="pref_install_mode_no_services">"Aurora Services nicht installiert, bitte zuerst installieren"</string>
 
     <!-- Fuzzy -->
     <string name="pref_install_mode_offline_services">"Aurora Services sind nicht verbunden, stelle sicher, dass sie aktiviert sind und die richtige Version der App installiert ist"</string>
@@ -221,7 +221,7 @@
     <string name="error_no_updates">"Keine Aktualisierung verfügbar"</string>
 
     <!-- Fuzzy -->
-    <string name="notification_installation_auto">"Heruntergeladen, tippe zum Installieren"</string>
+    <string name="notification_installation_auto">"Tippe zum Installieren"</string>
     <string name="toast_apk_blacklisted">"Wird blockiert"</string>
     <string name="toast_apk_whitelisted">"Auf weißer Liste"</string>
     <string name="toast_apk_copy_success">"APK erfolgreich kopiert"</string>
@@ -279,4 +279,10 @@
     <string name="about_xda">"Entwickler Thread"</string>
     <string name="about_xda_summary">"Besuche den Aurora Droid XDA Thread für Feedback"</string>
     <string name="action_about">"Informationen"</string>
+    <string name="action_loading">"Lädt"</string>
+    <string name="pref_default">"Standard"</string>
+    <string name="pref_locale_title">"Sprache"</string>
+    <string name="pref_locale_custom_title">"Sprache ändern"</string>
+    <string name="pref_locale_custom_summary">"Sprache innerhalb der App ändern"</string>
+    <string name="pref_locale_list_title">"Sprache auswählen"</string>
 </resources>
