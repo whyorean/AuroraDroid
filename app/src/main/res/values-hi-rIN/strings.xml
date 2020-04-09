@@ -263,4 +263,10 @@
     <string name="about_xda">"डिवेलपर साइट"</string>
     <string name="about_xda_summary">"कोई चर्चा या सुझाव के लिए अरोरा स्टोर XDA पर जाए"</string>
     <string name="action_about">"ऐप के बारे में"</string>
+    <string name="action_loading">"लोड हो रहा है"</string>
+    <string name="pref_default">"मूल सैटिंगस"</string>
+    <string name="pref_locale_title">"भाषा"</string>
+    <string name="pref_locale_custom_title">"अपनी भाषा चुनें"</string>
+    <string name="pref_locale_custom_summary">"चुनी हुई भाषा लागू करें"</string>
+    <string name="pref_locale_list_title">"अपना क्षेत्र चुनें"</string>
 </resources>
