@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.PackageUtil;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -106,12 +107,15 @@ public class FavouriteItem extends AbstractItem<FavouriteItem.ViewHolder> {
                     : R.string.list_not_installed));
             checkBox.setChecked(item.checked);
 
-            GlideApp
-                    .with(context)
-                    .load(app.getIcon())
-                    .transition(new DrawableTransitionOptions().crossFade())
-                    .transforms(new CenterCrop(), new RoundedCorners(30))
-                    .into(img);
+            if (app.getIcon() == null)
+                img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_placeholder));
+            else
+                GlideApp
+                        .with(context)
+                        .asBitmap()
+                        .load(DatabaseUtil.getImageUrl(app))
+                        .placeholder(R.drawable.ic_placeholder)
+                        .into(img);
 
         }
 
