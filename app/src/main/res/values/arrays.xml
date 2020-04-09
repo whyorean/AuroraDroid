@@ -118,6 +118,8 @@
         <item>French</item>
         <item>German</item>
         <item>Hindi</item>
+        <item>Indonesian</item>
+        <item>Italian</item>
         <item>Kannada</item>
         <item>Malayalam</item>
         <item>Polish</item>
@@ -126,6 +128,7 @@
         <item>Romanian</item>
         <item>Russian</item>
         <item>Sardinian</item>
+        <item>Spanish</item>
         <item>Turkish</item>
     </string-array>
 
@@ -137,6 +140,8 @@
         <item>fr-FR</item>
         <item>de-DE</item>
         <item>hi-IN</item>
+        <item>in-ID</item>
+        <item>it-IT</item>
         <item>kn-IN</item>
         <item>ml-IN</item>
         <item>pl-PL</item>
@@ -145,6 +150,7 @@
         <item>ro-RO</item>
         <item>ru-RU</item>
         <item>sc-IT</item>
+        <item>es-ES</item>
         <item>tr-TR</item>
     </string-array>
 </resources>
