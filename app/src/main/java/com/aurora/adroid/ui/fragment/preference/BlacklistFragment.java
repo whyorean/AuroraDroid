@@ -52,6 +52,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class BlacklistFragment extends Fragment {
@@ -107,6 +108,13 @@ public class BlacklistFragment extends Fragment {
         if (dataObserver != null && !fastItemAdapter.getAdapterItems().isEmpty()) {
             dataObserver.hideProgress();
         }
+    }
+
+    @OnClick(R.id.btn_clear_all)
+    public void clearAll() {
+        blacklistManager.clear();
+        fastItemAdapter.notifyAdapterDataSetChanged();
+        updateCount();
     }
 
     /*
