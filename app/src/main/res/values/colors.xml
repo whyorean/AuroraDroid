@@ -18,34 +18,32 @@
 
 <resources>
 
-    <!--Fallback Accent-->
-    <color name="colorAccent">@color/colorBlue</color>
-
     <!--LightTheme-->
-    <color name="colorPrimary">@color/colorBlue</color>
-    <color name="colorPrimaryDark">#EEE</color>
-    <color name="colorPrimaryVariant">@color/colorWhite</color>
-    <color name="colorSecondary">@color/colorPrimary</color>
-    <color name="colorSecondaryVariant">@color/colorWhite</color>
-    <color name="colorBackground">@color/colorWhite</color>
-    <color name="colorWindowBackground">@color/colorBackground</color>
-    <color name="colorNavigation">@color/colorPrimaryDark</color>
+    <color name="colorAccent">@color/colorBlue</color>
+    <color name="colorPrimary">@color/colorWhite</color>
+    <color name="colorPrimaryDark">@color/colorOffWhite</color>
 
     <!--Dark Theme-->
+    <color name="colorDarkAccent">#4285f4</color>
+    <color name="colorDarkPrimary">#202124</color>
     <color name="colorDarkPrimaryDark">#202124</color>
     <color name="colorDarkBackground">#2d2e31</color>
     <color name="colorDarkWindowBackground">#202124</color>
-    <color name="colorDarkPrimaryVariant">@color/colorDarkPrimaryDark</color>
-    <color name="colorDarkSecondaryVariant">#121212</color>
-    <color name="colorDarkNavigation">@color/colorDarkPrimaryDark</color>
+
+    <!--Pitch Black-->
+    <color name="colorBlackAccent">@color/colorBlue</color>
 
     <color name="colorWhite">#FFF</color>
+    <color name="colorOffWhite">#EEE</color>
     <color name="colorBlack">#000</color>
+    <color name="colorGreyDark">#545454</color>
     <color name="colorGreyLight">#E5E5E5</color>
 
     <color name="colorScrim">#11000000</color>
+    <color name="colorScrimAccent">#224768FD</color>
+    <color name="colorScrimWhite">#22FFFFFF</color>
+    <color name="colorScrimBlack">#30000000</color>
     <color name="colorTransparent">#00000000</color>
-
 
     <color name="colorScrollTrack">#22545454</color>
     <color name="colorScrollThumb">#66545454</color>
