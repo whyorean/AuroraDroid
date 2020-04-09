@@ -248,10 +248,13 @@ public class GenericAppActivity extends BaseActivity implements ItemFilterListen
 
         itemAdapter.getItemFilter().setFilterPredicate((genericItem, charSequence) -> {
             final App app = genericItem.getApp();
-            final String query = charSequence.toString().toLowerCase();
+            String query = charSequence.toString();
+            query = TextUtil.cleanUpString(query);
 
-            if (app.getName().toLowerCase().contains(query)) {
-                genericItem.setQuery(query);
+            String appName = app.getName();
+            appName = TextUtil.cleanUpString(appName);
+
+            if (appName.contains(query)) {
                 return true;
             }
 
@@ -263,13 +266,12 @@ public class GenericAppActivity extends BaseActivity implements ItemFilterListen
             } else
                 summary = TextUtil.emptyIfNull(app.getSummary());
 
-            if (!summary.isEmpty() && summary.toLowerCase().contains(query)) {
-                genericItem.setQuery(query);
-                return true;
-            } else {
-                genericItem.setQuery("");
-                return false;
+            if (!summary.isEmpty()) {
+                summary = TextUtil.cleanUpString(summary);
+                return summary.contains(query);
             }
+
+            return false;
         });
 
         itemAdapter.getItemFilter().setItemFilterListener(this);

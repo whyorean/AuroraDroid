@@ -33,4 +33,10 @@ public class TextUtil {
     public static String emptyIfNull(@Nullable String str) {
         return str == null ? "" : str;
     }
+
+    public static String cleanUpString(String string) {
+        string = string.toLowerCase();
+        string = string.replaceAll("[\\W\\s]", "");
+        return string;
+    }
 }
