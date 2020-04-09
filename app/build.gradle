@@ -28,8 +28,8 @@ android {
         applicationId "com.aurora.adroid"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 4
-        versionName "1.0.4"
+        versionCode 5
+        versionName "1.0.5"
 
         resConfigs "ar-rSA", "de-rDE", "et-rEE", "fr-rFR", "hi-rIN", "kn-rIN", "ml-rIN", "pa-rIN", "pl-rPL", "pt-rPT", "ro-rRO", "ru-rRU", "sc-rIT", "tr-rTR", "es-rES", "in-rID", "it-rIT"
 
