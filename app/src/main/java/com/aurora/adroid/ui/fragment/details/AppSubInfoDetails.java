@@ -122,6 +122,7 @@ public class AppSubInfoDetails extends AbstractDetails {
     private void setupAuthorRecycler(List<App> appList) {
         FastItemAdapter<GenericClusterItem> fastItemAdapter = new FastItemAdapter<>();
         fastItemAdapter.setOnClickListener((view, iAdapter, item, position) -> {
+            App app = item.getApp();
             Intent intent = new Intent(context, DetailsActivity.class);
             intent.putExtra(Constants.INTENT_PACKAGE_NAME, app.getPackageName());
             intent.putExtra(Constants.STRING_REPO, app.getRepoName());
@@ -142,6 +143,7 @@ public class AppSubInfoDetails extends AbstractDetails {
     private void setupSimilarRecycler(List<App> appList) {
         FastItemAdapter<GenericClusterItem> fastItemAdapter = new FastItemAdapter<>();
         fastItemAdapter.setOnClickListener((view, iAdapter, item, position) -> {
+            App app = item.getApp();
             Intent intent = new Intent(context, DetailsActivity.class);
             intent.putExtra(Constants.INTENT_PACKAGE_NAME, app.getPackageName());
             intent.putExtra(Constants.STRING_REPO, app.getRepoName());
