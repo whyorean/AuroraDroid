@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_add">"Annanghe"</string>
+    <string name="action_ask">"Pedi"</string>
+    <string name="action_blacklist">"Lista niedda"</string>
+    <string name="action_cancel">"Annulla"</string>
+    <string name="action_clear">"Isbòida"</string>
+    <string name="action_clear_all">"Isbòida totu"</string>
+    <string name="action_close">"Serra"</string>
+    <string name="action_copy">"Còpia su ligàmene"</string>
+    <string name="action_copied">"Ligàmene copiadu in punta de billete"</string>
+    <string name="action_download">"Iscàrriga"</string>
+    <string name="action_downloads">"Iscarrigamentos"</string>
+    <string name="action_export">"Esporta"</string>
+    <string name="action_finish">"Acaba"</string>
+    <string name="action_favourites">"Apl. preferidas"</string>
+    <string name="action_favourite_add">"Annanghe a sas preferidas"</string>
+    <string name="action_favourite_remove">"Boga dae sas preferidas"</string>
+    <string name="action_get_local_apk">"Otene s'APK locale"</string>
+    <string name="action_home">"Printzipale"</string>
+    <string name="action_import">"Importa"</string>
+    <string name="action_info">"Informatziones de s'apl."</string>
+    <string name="action_install">"Installa"</string>
+    <string name="action_installing">"Installende"</string>
+    <string name="action_installed">"Installada"</string>
+    <string name="action_installations">"Installatziones"</string>
+    <string name="action_later">"Prus a tardu"</string>
+    <string name="action_more">"Àteru"</string>
+    <string name="action_next">"Imbeniente"</string>
+    <string name="action_open">"Aberi"</string>
+    <string name="action_pause">"Pone in pàusa"</string>
+    <string name="action_recheck">"Torra a verificare"</string>
+    <string name="action_remove">"Boga"</string>
+    <string name="action_restart">"Torra a allùghere"</string>
+    <string name="action_resume">"Sighi"</string>
+    <string name="action_retry">"Torra a proare"</string>
+    <string name="action_settings">"Impostatziones"</string>
+    <string name="action_share">"Cumpartzi"</string>
+    <string name="action_sync">"Sincroniza"</string>
+    <string name="action_uninstall">"Disinstalla"</string>
+    <string name="action_update">"Agiorna"</string>
+    <string name="action_updates">"Agiornamentos"</string>
+    <string name="action_use_mirror">"Imprea s'URL de un'ispricu"</string>
+    <string name="action_unsupported">"Apl. non cumpatìbile"</string>
+    <string name="action_whitelist">"Lista bianca"</string>
+    <string name="details_more">"Leghe àteru"</string>
+    <string name="details_more_apps_dev">"Àteras apl. dae su matessi isvilupadore"</string>
+    <string name="details_more_apps_similar">"Apl. cun categorias simigiantes"</string>
+    <string name="details_other">"Àteras versiones"</string>
+    <string name="details_no_description">"Peruna descritzione frunida dae s'isvilupadore"</string>
+    <string name="details_no_permissions">"Perunu permissu impreadu."</string>
+    <string name="details_permissions">"Permissos pro s'aplicatzione"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_permissions_desc">"Aurora Store impreat sos permissos chi sighent"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_repo_desc">"Ischerta sos depòsitos de F-Droid de sincronizare"</string>
+    <string name="dialog_sync_title">"Agiornamentos de sos depòsitos"</string>
+    <string name="dialog_sync_desc">"Cheres agiornare sas apl. dae sos depòsitos?"</string>
+    <string name="dialog_sync_desc_alt">"Sunt istados agatados datos betzos, e bi diant pòdere èssere agiornamentos noos. Cheres sincronizare totu sos depòsitos?"</string>
+    <string name="dialog_sync_completed_desc">"Totu sos depòsitos sunt agiornados. Ti racumandamus de torrare a allùghere s'aplicatzione a pustis de sos agiornamentos."</string>
+    <string name="dialog_sync_positive">"Eja"</string>
+    <string name="dialog_sync_negative">"Nono"</string>
+    <string name="dialog_sync_complete_positive">"Torra a allùghere como"</string>
+    <string name="dialog_repo_title">"Annanghe unu depòsitu"</string>
+    <string name="dialog_repo_desc">"Cheres a beru annànghere"</string>
+    <string name="menu_downloads">"Iscarrigamentos"</string>
+    <string name="download_cancel_all">"Annulla totu"</string>
+    <string name="download_canceled">"Annulladu"</string>
+    <string name="download_clear_completed">"Boga sos acabados"</string>
+    <string name="download_completed">"Acabadu"</string>
+
+    <!-- Fuzzy -->
+    <string name="download_failed">"Fallidu"</string>
+    <string name="download_force_clear_all">"Fortza Iscantzella totu"</string>
+    <string name="download_none">"Perunu iscarrigamentu"</string>
+    <string name="download_pause_all">"Pone totu in pàusa"</string>
+    <string name="download_paused">"In pàusa"</string>
+    <string name="download_progress">"Iscarrighende"</string>
+    <string name="download_queued">"In isetu"</string>
+    <string name="download_resume">"Sighi"</string>
+    <string name="download_resume_all">"Sighi cun totu"</string>
+    <string name="filter_name_az">"Nùmene A-Z"</string>
+    <string name="filter_name_za">"Nùmene Z-A"</string>
+    <string name="filter_size_min">"Mannària min."</string>
+    <string name="filter_size_max">"Mannària màss."</string>
+    <string name="filter_date_updated">"Data de s'agiornamentu"</string>
+    <string name="filter_date_added">"Data de annanghidura"</string>
+    <string name="installer_status_failure">"Installatzione fallida"</string>
+    <string name="installer_status_failure_aborted">"Installatzione annullada"</string>
+    <string name="installer_status_failure_blocked">"S'installatzione est istada blocada"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_conflict">"Bi sunt pachetes in cunflitu"</string>
+    <string name="installer_status_failure_incompatible">"Apl. non cumpatìbile"</string>
+    <string name="installer_status_failure_invalid">"APK non vàlidu o corrùmpidu"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_storage">"Ispàtziu in memòria non bastante"</string>
+    <string name="installer_status_success">"Installatzione resèssida"</string>
+    <string name="installer_status_unknown">"Disconnotu"</string>
+    <string name="installer_status_user_action">"Isetende pro sa cunfirma de s'impreadore"</string>
+    <string name="list_blacklist">"Aplicatziones in sa lista niedda"</string>
+    <string name="list_blacklist_none">"Peruna aplicatzione in sa lista niedda"</string>
+    <string name="list_empty_fav">"Peruna predefinida"</string>
+    <string name="list_empty_updates">"Perunu agiornamentu disponìbile"</string>
+    <string name="list_installed">"Installadas"</string>
+    <string name="list_selected">"Aplicatziones ischertadas"</string>
+    <string name="list_update_all">"Agiorna totu"</string>
+    <string name="list_update_all_txt">"agiornamentu(os) disponìbile(es)"</string>
+    <string name="list_updating">"Agiornende"</string>
+    <string name="sync_completed">"Sincronizadu"</string>
+    <string name="sync_completed_all">"Totu sos depòsitos sunt istados sincronizados"</string>
+    <string name="sync_progress">"Sincronizende sos depòsitos"</string>
+    <string name="sync_failed">"Sincronizatzione fallida"</string>
+
+    <!-- Fuzzy -->
+    <string name="title_home">"Aurora Store"</string>
+    <string name="title_apps_new">"Apl. noas"</string>
+    <string name="title_categories">"Categorias"</string>
+    <string name="title_latest_updated">"Agiornadas dae pagu"</string>
+    <string name="title_repo_add">"Annanghe unu depòsitu nou"</string>
+    <string name="title_perm">"Permissos"</string>
+    <string name="title_repositories">"Depòsitos"</string>
+    <string name="title_search">"Chirca aplicatziones e giogos"</string>
+    <string name="title_sync_repo">"Sincroniza sos depòsitos"</string>
+    <string name="title_update_all">"Agiorna totu sas apl."</string>
+    <string name="title_welcome">"Bene bènnidu"</string>
+    <string name="title_url">"URL"</string>
+    <string name="title_fingerprint">"Imprenta digitale"</string>
+    <string name="title_desc">"Descritzione"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_dialog_to_apply_restart">"Custa impostatzione at a èssere aplicada cando as a torrare a allùghere s'aplicatzione"</string>
+    <string name="pref_installations">"Installatziones"</string>
+    <string name="pref_install_auto_summary">"Sas aplicatziones benint installadas automaticamente a pustis de s'acabu de s'iscarrigamentu"</string>
+    <string name="pref_install_auto_title">"Installa automaticamente sos APK a pustis de s'iscarrigamentu"</string>
+    <string name="pref_install_delete_summary">"In sos dispositivos chi tenent Android Pie + cun sa modalidade de installatzione root, sos APKs benint iscantzellados cun s'impostatzione predefinida"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_delete_title">"Iscantzella sos apk a pustis de s'installatzione"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_type_summary">"IMprea s'installadore nativu pro installare sos pachetes, truncat sas installatziones de apks agrupados"</string>
+    <string name="pref_install_type_title">"Fortza s'installadore nativu"</string>
+    <string name="pref_install_mode_summary">"Ischerta sa manera de installatzione de sos APK"</string>
+    <string name="pref_install_mode_title">"Manera de installatzione"</string>
+    <string name="pref_install_mode_native">"Nativa"</string>
+    <string name="pref_install_mode_root">"Root"</string>
+    <string name="pref_install_mode_services">"Aurora Services"</string>
+    <string name="pref_install_mode_no_root">"Atzessu root non disponìbile, faghe in modu chi su dispositivu tuo tèngiat s'atzessu root"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_root_warn">"Sa manera de installatzione root tenet bisòngiu chi s'apk siat iscarrigadu in sos datos aplicatzione, pro lu pòdere installare impreende sa shell adb, Android Pie +"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_no_services">"Aurora Services no est installadu, installa·lu pro sighire"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_offline_services">"Aurora Services no est connessu, verìfica chi siat abilitadu e de tènnere sa versione curreta de s'aplicatzione"</string>
+    <string name="pref_ui">"Interfache de s'impreadore"</string>
+    <string name="pref_ui_theme_title">"Tema"</string>
+    <string name="pref_ui_theme_light">"Craru"</string>
+    <string name="pref_ui_theme_dark">"Iscuru"</string>
+    <string name="pref_ui_theme_black">"Nieddu"</string>
+    <string name="pref_ui_transparent">"Istile trasparente"</string>
+    <string name="pref_ui_transparent_summary">"Imprea un'istile a ischedas trasparentes pro ammustrare sas categorias e sos ligàmenes"</string>
+    <string name="pref_downloads">"Iscarrigamentos"</string>
+    <string name="pref_downloads_active_summary">"Nùmeru màssimu de iscarrigamentos ativos"</string>
+    <string name="pref_downloads_active_title">"Iscarrigamentos ativos"</string>
+    <string name="pref_downloads_debug_summary">"Abìlita sa depuratzione (su debug) de sos iscarrigamentos pro otènnere registros fatos a sa minuda"</string>
+    <string name="pref_downloads_debug_title">"Depuratzione (debug) de sos iscarrigamentos"</string>
+    <string name="pref_downloads_strategy_summary">"Ischerta s'istrategia predefinida de iscarrigamentu. Ti racumandamus s'istrategia parallela, pro tènnere iscarrigamentos prus lestros"</string>
+    <string name="pref_downloads_strategy_title">"Istrategia de iscarrigamentu"</string>
+    <string name="pref_downloads_strategy_sequential">"Iscarrigamentu secuentziale"</string>
+    <string name="pref_downloads_strategy_parallel">"Iscarrigamentu parallelu (Splits)"</string>
+    <string name="pref_downloads_path_title">"Àndala de iscarrigamentu"</string>
+    <string name="pref_downloads_wifi_title">"Iscàrriga impreende su wifi ebbia"</string>
+    <string name="pref_network">"Retzas"</string>
+    <string name="pref_proxy_enable">"Abìlita su server intermèdiu (proxy)"</string>
+    <string name="pref_proxy_host">"Host de su server"</string>
+    <string name="pref_proxy_port">"Ghenna de su server"</string>
+    <string name="pref_proxy_type">"Casta de server"</string>
+    <string name="pref_updates_title">"Agiornamentos"</string>
+    <string name="pref_updates_repo_title">"Agiornamentos de sos depòsitos"</string>
+    <string name="pref_updates_app_title">"Agiornamentos de sas apl."</string>
+    <string name="pref_updates_repo_interval">"Intervallu de agiornamentu"</string>
+    <string name="pref_updates_manual">"Manuale"</string>
+    <string name="pref_updates_daily">"1 die"</string>
+    <string name="pref_updates_2days">"2 dies"</string>
+    <string name="pref_updates_3days">"3 dies"</string>
+    <string name="pref_updates_7days">"7 dies"</string>
+    <string name="pref_services_title">"Aurora Services"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_services_desc">"Allughe Aurora Services"</string>
+    <string name="pref_services_desc_alt">"Aurora Services no est disponìbile"</string>
+    <string name="repo_list">"Lista de depòsitos"</string>
+    <string name="repo_list_select">"Ischerta sos depòsitos chi cheres agiornare"</string>
+    <string name="repo_qr_scan">"Iscansi su còdighe QR"</string>
+    <string name="repo_id">"ID de su depòsitu"</string>
+    <string name="repo_name">"Nùmene de su depòsitu"</string>
+    <string name="repo_addr">"Indiritzu de su depòsitu"</string>
+    <string name="repo_fingerprint">"Imprenta digitale de su depòsitu"</string>
+    <string name="sys_log">"Registru de sincronizatzione"</string>
+    <string name="toast_no_repo_selected">"Perunu depòsitu ischertadu"</string>
+    <string name="error_app_not_found">"Aplicatzione no agatada"</string>
+    <string name="error_app_not_installed">"Peruna apl. installada"</string>
+    <string name="error_no_network">"Peruna connessione de retza"</string>
+    <string name="error_search_not_found">"Peruna aplicatzione currispondente agatada"</string>
+    <string name="error_unknown">"B'at àpidu una faddina disconnota"</string>
+    <string name="error_no_updates">"Perunu agiornamentu disponìbile"</string>
+
+    <!-- Fuzzy -->
+    <string name="notification_installation_auto">"Iscarrigada, incarca pro installare"</string>
+    <string name="toast_apk_blacklisted">"In sa lista niedda"</string>
+    <string name="toast_apk_whitelisted">"In sa lista bianca"</string>
+    <string name="toast_apk_copy_success">"S'APK est istadu copiadu"</string>
+    <string name="toast_apk_copy_failure">"Còpia de s'APK fallida"</string>
+    <string name="action_ignore">"Ignora custa versione"</string>
+    <string name="action_save">"Sarva"</string>
+    <string name="action_show_user_only">"Ammustra sas apl. de s'impreadore ebbia"</string>
+    <string name="action_sortBy">"Òrdina pro"</string>
+    <string name="details_apk_suggested">"Cunsigiada"</string>
+    <string name="dialog_sync_completed_desc_alt">"Perunu agiornamentu nou a disponimentu"</string>
+    <string name="dialog_repo_list">"Lista de depòsitos"</string>
+    <string name="menu_repository">"Depòsitu"</string>
+    <string name="menu_setting">"Impostatziones"</string>
+    <string name="menu_about">"Informatziones"</string>
+    <string name="download_metadata">"Retzende metadatos"</string>
+    <string name="list_update_all_txt_one">"agiornamentu disponìbile"</string>
+    <string name="list_update_selected">"Agiornamentu disponìbile"</string>
+    <string name="notification_channel_alert">"Notìfica lestra"</string>
+    <string name="notification_channel_general">"Notìfica generale"</string>
+    <string name="sync_service">"Servìtziu de sincronizatzione de sos depòsitos ativu"</string>
+    <string name="sync_init">"Chirchende agiornamentos"</string>
+    <string name="sync_downloading">"Iscarrighende depòsitos"</string>
+    <string name="title_installed">"Aplicatziones e giogos meos"</string>
+    <string name="pref_updates_app_experimental">"Permiti agiornamentos isperimentales"</string>
+    <string name="pref_updates_app_experimental_desc">"Si est abilitadu, sas versiones beta/alpha ant a subraiscrìere cussa stàbiles."</string>
+    <string name="details_new_changes">"Ite b'at de nou"</string>
+    <string name="pref_downloader_internal">"Iscàrriga sas apl. in sa memòria interna"</string>
+    <string name="pref_downloader_internal_desc">"Si est abilitadu no as a pòdere installare aplicatziones impreende Aurora Services"</string>
+    <string name="action_reset">"Torra a sos valores predefinidos"</string>
+    <string name="action_select_all">"Ischerta totu"</string>
+    <string name="list_not_installed">"No installada"</string>
+    <string name="list_repo_availability">"Verifichende sa disponibilidade"</string>
+    <string name="list_repo_available">"Disponìbile"</string>
+    <string name="list_repo_unavailable">"Non disponìbile"</string>
+    <string name="title_repo_add_desc">"Annanghe unu depòsitu personalizadu de sincronizare"</string>
+    <string name="toast_repo_sync_empty">"Ischerta a su mancu unu depòsitu de sincronizare"</string>
+    <string name="toast_repo_sync_completed">"Totu sos depòsitos sunt agiornados"</string>
+    <string name="toast_repo_sync_no_updates">"Perunu agiornamentu disponìbile"</string>
+</resources>

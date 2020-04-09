@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_add">"Dodaj"</string>
+    <string name="action_ask">"Zapytaj"</string>
+    <string name="action_blacklist">"Czarna lista"</string>
+    <string name="action_cancel">"Anuluj"</string>
+    <string name="action_clear">"Wyczyść"</string>
+    <string name="action_clear_all">"Wyczyścić wszystkie"</string>
+    <string name="action_close">"Zamknij"</string>
+    <string name="action_copy">"Kopiuj link"</string>
+    <string name="action_copied">"Link skopiowany do schowka"</string>
+    <string name="action_download">"Pobierz"</string>
+    <string name="action_downloads">"Pobrane"</string>
+    <string name="action_export">"Eksportuj"</string>
+    <string name="action_finish">"Ukończ"</string>
+    <string name="action_favourites">"Ulubione aplikacje"</string>
+    <string name="action_favourite_add">"Dodaj do ulubionych"</string>
+    <string name="action_favourite_remove">"Usuń z ulubionych"</string>
+    <string name="action_get_local_apk">"Zainstaluj lokalny APK"</string>
+    <string name="action_home">"Ekran główny"</string>
+    <string name="action_import">"Importuj"</string>
+    <string name="action_info">"Informacje o aplikacji"</string>
+    <string name="action_install">"Instaluj"</string>
+    <string name="action_installing">"Instalowanie"</string>
+    <string name="action_installed">"Zainstalowano"</string>
+    <string name="action_installations">"Instalacje"</string>
+    <string name="action_later">"Później"</string>
+    <string name="action_more">"Więcej"</string>
+    <string name="action_next">"Dalej"</string>
+    <string name="action_open">"Otwórz"</string>
+    <string name="action_pause">"Pauza"</string>
+    <string name="action_recheck">"Sprawdź ponownie"</string>
+    <string name="action_remove">"Usuń"</string>
+    <string name="action_restart">"Restart"</string>
+    <string name="action_resume">"Wznów"</string>
+    <string name="action_retry">"Ponów"</string>
+    <string name="action_settings">"Ustawienia"</string>
+    <string name="action_share">"Udostępnij"</string>
+    <string name="action_sync">"Synchronizuj"</string>
+    <string name="action_uninstall">"Usuń"</string>
+    <string name="action_update">"Zaktualizuj"</string>
+    <string name="action_updates">"Aktualizacje"</string>
+    <string name="action_use_mirror">"Użyj adresu lustrzanego"</string>
+    <string name="action_unsupported">"Niekompatybilna aplikacja"</string>
+    <string name="action_whitelist">"Biała lista"</string>
+    <string name="details_more">"Czytaj więcej "</string>
+    <string name="details_more_apps_dev">"Więcej aplikacji od tego programisty"</string>
+    <string name="details_more_apps_similar">"Aplikacje podobnej kategorii"</string>
+    <string name="details_other">"Inne wersje"</string>
+    <string name="details_no_description">"Programista nie zamieścił opisu"</string>
+    <string name="details_no_permissions">"Nie wymaga żadnych uprawnień"</string>
+    <string name="details_permissions">"Uprawnienia aplikacji"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_permissions_desc">"Sklep Aurora wymaga następujących uprawnień"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_repo_desc">"Wybierz repozytorium F-Droid aby zsynchronizować"</string>
+    <string name="dialog_sync_title">"Aktualizacje repozytorium"</string>
+    <string name="dialog_sync_desc">"Czy chcesz zaktualizować aplikacje z repozytorium?"</string>
+    <string name="dialog_sync_desc_alt">"Wykryto stare dane, mogą być już nowe aktualizacje. Czy chcesz zsynchronizować wszystkie repozytoria?"</string>
+    <string name="dialog_sync_completed_desc">"Wszystkie repozytoria zaktualizowane, polecane jest uruchomienie ponowne aplikacji."</string>
+    <string name="dialog_sync_positive">"Tak"</string>
+    <string name="dialog_sync_negative">"Nie"</string>
+    <string name="dialog_sync_complete_positive">"Uruchom ponownie teraz"</string>
+    <string name="dialog_repo_title">"Dodaj repozytorium"</string>
+    <string name="dialog_repo_desc">"Czy na pewno chcesz dodać"</string>
+    <string name="menu_downloads">"Pobrane"</string>
+    <string name="download_cancel_all">"Anuluj wszystko"</string>
+    <string name="download_canceled">"Anulowano"</string>
+    <string name="download_clear_completed">"Czyszczenie zakończone"</string>
+    <string name="download_completed">"Pobrano"</string>
+
+    <!-- Fuzzy -->
+    <string name="download_failed">"Pobieranie zakończone niepowodzeniem"</string>
+    <string name="download_force_clear_all">"Wymuś czyszczenie wszystkiego"</string>
+    <string name="download_none">"Brak pobierań"</string>
+    <string name="download_pause_all">"Wstrzymaj wszystko"</string>
+    <string name="download_paused">"Wstrzymano"</string>
+    <string name="download_progress">"Pobieranie"</string>
+    <string name="download_queued">"W kolejce"</string>
+    <string name="download_resume">"Wznów"</string>
+    <string name="download_resume_all">"Wznów wszystko"</string>
+    <string name="filter_name_az">"Nazwa A-Z"</string>
+    <string name="filter_name_za">"Nazwa Z-A"</string>
+    <string name="filter_size_min">"Rozmiar min"</string>
+    <string name="filter_size_max">"Rozmiar maks"</string>
+    <string name="filter_date_updated">"Data aktualizacji"</string>
+    <string name="filter_date_added">"Data dodania"</string>
+    <string name="installer_status_failure">"Instalacja zakończona niepowodzeniem"</string>
+    <string name="installer_status_failure_aborted">"Instalacja anulowana"</string>
+    <string name="installer_status_failure_blocked">"Instalacja została zablokowana"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_conflict">"Istnieje pakiet o konfliktującej sygnaturze"</string>
+    <string name="installer_status_failure_incompatible">"Aplikacja niekompatybilna"</string>
+    <string name="installer_status_failure_invalid">"Nieprawidłowe lub uszkodzone APK"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_storage">"Brak miejsca w pamięci"</string>
+    <string name="installer_status_success">"Poprawnie zainstalowano"</string>
+    <string name="installer_status_unknown">"Nieznany"</string>
+    <string name="installer_status_user_action">"Oczekiwanie na potwierdzenie"</string>
+    <string name="list_blacklist">"Aplikacje na czarnej liście"</string>
+    <string name="list_blacklist_none">"Brak aplikacji na czarnej liście"</string>
+    <string name="list_empty_fav">"Brak ulubionych"</string>
+    <string name="list_empty_updates">"Brak dostępnych aktualizacji"</string>
+    <string name="list_installed">"Zainstalowane"</string>
+    <string name="list_selected">"Wybrane aplikacje"</string>
+    <string name="list_update_all">"Aktualizuj wszystko"</string>
+    <string name="list_update_all_txt">"Dostępne aktualizacje"</string>
+    <string name="list_updating">"Aktualizowanie"</string>
+    <string name="sync_completed">"Zsynchronizowano"</string>
+    <string name="sync_completed_all">"Wszystkie repozytoria zynchronizowane"</string>
+    <string name="sync_progress">"Synchronizacja repozytorium"</string>
+    <string name="sync_failed">"Synchronizacja zakończona niepowodzeniem"</string>
+
+    <!-- Fuzzy -->
+    <string name="title_home">"Aurora Droid"</string>
+    <string name="title_apps_new">"Nowe aplikacje"</string>
+    <string name="title_categories">"Kategorie"</string>
+    <string name="title_latest_updated">"Ostatnio zaktualizowane"</string>
+    <string name="title_repo_add">"Dodaj nowe repozytorium"</string>
+    <string name="title_perm">"Uprawnienia"</string>
+    <string name="title_repositories">"Repozytoria"</string>
+    <string name="title_search">"Szukaj aplikacji i gier"</string>
+    <string name="title_sync_repo">"Synchronizuj repozytoria"</string>
+    <string name="title_update_all">"Zaktualizuj wszystkie aplikacje"</string>
+    <string name="title_welcome">"Witaj"</string>
+    <string name="title_url">"URL"</string>
+    <string name="title_fingerprint">"Odcisk"</string>
+    <string name="title_desc">"Opis"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_dialog_to_apply_restart">"Ustawienie zostanie zastosowane po ponownym uruchomieniu aplikacji"</string>
+    <string name="pref_installations">"Instalacje"</string>
+    <string name="pref_install_auto_summary">"Aplikacje zostaną zainstalowane od razu po zakończeniu pobierania"</string>
+    <string name="pref_install_auto_title">"Automatycznie instaluj aplikacje po pobraniu"</string>
+    <string name="pref_install_delete_summary">"Na urządzeniach z systemem Pie + z metodą instalacji root aplikacje zostaną domyślnie usunięte"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_delete_title">"Usuń plik apk po instalacji"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_type_summary">"Użyj natywnego instalatora aplikacji, psuje to niektóre pakiety"</string>
+    <string name="pref_install_type_title">"Wymuś natywny instalator"</string>
+    <string name="pref_install_mode_summary">"Wybierz tryb instalowania aplikacji"</string>
+    <string name="pref_install_mode_title">"Metoda instalacji"</string>
+    <string name="pref_install_mode_native">"Natywna"</string>
+    <string name="pref_install_mode_root">"Root"</string>
+    <string name="pref_install_mode_services">"Usługi Aurora"</string>
+    <string name="pref_install_mode_no_root">"Nie wykryto uprawnień roota, upewnij się że urządzenie jest zrootowane"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_root_warn">"Instalacja metodą root wymaga, aby plik apk pobierał się do danych aplikacji, aby zainstalować ją przez adb, Pie +"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_no_services">"Usługi Aurora nie są zainstalowane, prosimy o instalację"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_offline_services">"Usługi Aurora nie mogły się połączyć. Upewnij się że są włączone, i że posiadasz poprawną wersję aplikacji"</string>
+    <string name="pref_ui">"Interfejs użytkownika"</string>
+    <string name="pref_ui_theme_title">"Motyw"</string>
+    <string name="pref_ui_theme_light">"Jasny"</string>
+    <string name="pref_ui_theme_dark">"Ciemny"</string>
+    <string name="pref_ui_theme_black">"Czarny"</string>
+    <string name="pref_ui_transparent">"Styl przeźroczysty"</string>
+    <string name="pref_ui_transparent_summary">"Użyj stylu przeźroczystego do widoku kategorii i linków"</string>
+    <string name="pref_downloads">"Pobrane"</string>
+    <string name="pref_downloads_active_summary">"Maksymalna liczba aktywnych pobierań"</string>
+    <string name="pref_downloads_active_title">"Aktywne pobierania"</string>
+    <string name="pref_downloads_debug_summary">"Włącz debugowanie pobierań by zebrać szczegółowe logi"</string>
+    <string name="pref_downloads_debug_title">"Debugowanie pobierania"</string>
+    <string name="pref_downloads_strategy_summary">"Wybierz domyślną metodę pobierania, dla największej prędkości rekomendujemy pobieranie równolegle"</string>
+    <string name="pref_downloads_strategy_title">"Metoda pobierania"</string>
+    <string name="pref_downloads_strategy_sequential">"Pobieranie sekwencyjne"</string>
+    <string name="pref_downloads_strategy_parallel">"Pobieranie równolegle"</string>
+    <string name="pref_downloads_path_title">"Ścieżka pobierania"</string>
+    <string name="pref_downloads_wifi_title">"Pobierz tylko przez wifi"</string>
+    <string name="pref_network">"Sieci"</string>
+    <string name="pref_proxy_enable">"Włącz proxy"</string>
+    <string name="pref_proxy_host">"Host proxy"</string>
+    <string name="pref_proxy_port">"Port proxy"</string>
+    <string name="pref_proxy_type">"Typ proxy"</string>
+    <string name="pref_updates_title">"Aktualizacje"</string>
+    <string name="pref_updates_repo_title">"Aktualizacje repozytorium"</string>
+    <string name="pref_updates_app_title">"Aktualizacje aplikacji"</string>
+    <string name="pref_updates_repo_interval">"Interwał aktualizacji"</string>
+    <string name="pref_updates_manual">"Manualne"</string>
+    <string name="pref_updates_daily">"1 dzień"</string>
+    <string name="pref_updates_2days">"2 dni"</string>
+    <string name="pref_updates_3days">"3 dni"</string>
+    <string name="pref_updates_7days">"7 dni"</string>
+    <string name="pref_services_title">"Usługi Aurora"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_services_desc">"Włącz Usługi Aurora"</string>
+    <string name="pref_services_desc_alt">"Usługi Aurora są niedostępne. Kliknij aby przejść do repozytorium usług aby dowiedzieć się więcej."</string>
+    <string name="repo_list">"Lista repozytorium"</string>
+    <string name="repo_list_select">"Wybierz repozytoria które chcesz synchronizować"</string>
+    <string name="repo_qr_scan">"Skanuj kod QR"</string>
+    <string name="repo_id">"ID repozytorium"</string>
+    <string name="repo_name">"Nazwa repozytorium"</string>
+    <string name="repo_addr">"Adres repozytorium"</string>
+    <string name="repo_fingerprint">"Odcisk repozytorium"</string>
+    <string name="sys_log">"Log synchronizacji"</string>
+    <string name="toast_no_repo_selected">"Nie wybrano repozytorium"</string>
+    <string name="error_app_not_found">"Nie znaleziono aplikacji"</string>
+    <string name="error_app_not_installed">"Nie zainstalowano aplikacji"</string>
+    <string name="error_no_network">"Brak połączenia z internetem"</string>
+    <string name="error_search_not_found">"Nie znaleziono pasujących aplikacji"</string>
+    <string name="error_unknown">"Wystąpił nieznany błąd"</string>
+    <string name="error_no_updates">"Brak aktualizacji"</string>
+
+    <!-- Fuzzy -->
+    <string name="notification_installation_auto">"Pobrano, kliknij aby zainstalować"</string>
+    <string name="toast_apk_blacklisted">"Czarna lista"</string>
+    <string name="toast_apk_whitelisted">"Biała lista"</string>
+    <string name="toast_apk_copy_success">"APK poprawnie skopiowany"</string>
+    <string name="toast_apk_copy_failure">"Nie udało się skopiować APK"</string>
+</resources>

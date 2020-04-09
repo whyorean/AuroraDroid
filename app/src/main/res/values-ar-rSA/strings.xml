@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_add">"اضافة"</string>
+    <string name="action_ask">"سؤال"</string>
+    <string name="action_blacklist">"القائمة السوداء"</string>
+    <string name="action_cancel">"تجاهل"</string>
+    <string name="action_clear">"مسح"</string>
+    <string name="action_clear_all">"مسح الكل"</string>
+    <string name="action_close">"إغلاق"</string>
+    <string name="action_copy">"نسخ الرابط"</string>
+    <string name="action_copied">"نسخ الرابط الى الحافظة"</string>
+    <string name="action_download">"تنزيل"</string>
+    <string name="action_downloads">"التنزيلات"</string>
+    <string name="action_export">"تصدير"</string>
+    <string name="action_finish">"أنتهى"</string>
+    <string name="action_favourites">"التطبيقات المفضلة"</string>
+    <string name="action_favourite_add">"إضافة الى المفضلة"</string>
+    <string name="action_favourite_remove">"مسح من المفضلة"</string>
+    <string name="action_get_local_apk">"الحصول على تطبيق محلي"</string>
+    <string name="action_home">"الرئيسية"</string>
+    <string name="action_import">"إستيراد"</string>
+    <string name="action_info">"معلومات التطبيق"</string>
+    <string name="action_install">"تثبيت"</string>
+    <string name="action_installing">"يتم التثبيت"</string>
+    <string name="action_installed">"مثبت"</string>
+    <string name="action_installations">"التثبيتات"</string>
+    <string name="action_later">"فيما بعد"</string>
+    <string name="action_more">"المزيد"</string>
+    <string name="action_next">"التالي"</string>
+    <string name="action_open">"فتح"</string>
+    <string name="action_pause">"إيقاف"</string>
+    <string name="action_recheck">"أعادة التحقق"</string>
+    <string name="action_remove">"حذف"</string>
+    <string name="action_restart">"إعادة"</string>
+    <string name="action_resume">"أستكمال"</string>
+    <string name="action_retry">"أعد المحاولة"</string>
+    <string name="action_settings">"الإعدادات "</string>
+    <string name="action_share">"مشاركة"</string>
+    <string name="action_sync">"مزامنة"</string>
+    <string name="action_uninstall">"إلغاء التثبيت"</string>
+    <string name="action_update">"تحديث"</string>
+    <string name="action_updates">"التحديثات"</string>
+    <string name="action_use_mirror">"أستخدام رابط عكسي"</string>
+    <string name="action_unsupported">"تطبيق غير متوافق"</string>
+    <string name="action_whitelist">"القائمة البيضاء"</string>
+    <string name="details_more">"قراءة المزيد"</string>
+    <string name="details_more_apps_dev">"المزيد من تطبيقات هذا المطور"</string>
+    <string name="details_more_apps_similar">"تطبيقات من نفس الفئة"</string>
+    <string name="details_other">"الإصدارات الأخرى"</string>
+    <string name="details_no_description">"لم يتم توفير وصف من قبل المطور"</string>
+    <string name="details_no_permissions">"لم يتم إستخدام اي صلاحيات"</string>
+    <string name="details_permissions">"صلاحيات التطبيق"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_permissions_desc">"أورورا درويد يستخدم الصلاحيات التالية"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_repo_desc">"أختر مستودع إف-درويد لمزامنته"</string>
+    <string name="dialog_sync_title">"تحديث المستودعات"</string>
+    <string name="dialog_sync_desc">"هل تريد تحديث التطبيقات من المستودعات?"</string>
+    <string name="dialog_sync_desc_alt">"تم اكتشاف بيانات قديمة ، قد تكون هناك تحديثات جديدة ، هل ترغب في مزامنة جميع المستودعات؟"</string>
+    <string name="dialog_sync_completed_desc">"تم تحديث جميع المستودعات ، يرجى إعادة تشغيل التطبيق بعد التحديثات"</string>
+    <string name="dialog_sync_positive">"نعم"</string>
+    <string name="dialog_sync_negative">"لا"</string>
+    <string name="dialog_sync_complete_positive">"أعادة التشغيل الأن"</string>
+    <string name="dialog_repo_title">"اضافة مستودع"</string>
+    <string name="dialog_repo_desc">"هل تريد حقا اضافة"</string>
+    <string name="menu_downloads">"التنزيلات"</string>
+    <string name="download_cancel_all">"تنظيف الكل"</string>
+    <string name="download_canceled">"ملغية"</string>
+    <string name="download_clear_completed">"مسح المكتملة"</string>
+    <string name="download_completed">"تم تنزيها"</string>
+
+    <!-- Fuzzy -->
+    <string name="download_failed">"فشل التحميل"</string>
+    <string name="download_force_clear_all">"إجبار مسح الكل"</string>
+    <string name="download_none">"لاتوجد تنزيلات"</string>
+    <string name="download_pause_all">"إيقاف التنزيل"</string>
+    <string name="download_paused">"متوقفة"</string>
+    <string name="download_progress">"يتم التنزيل"</string>
+    <string name="download_queued">"في قائمة الإنتظار"</string>
+    <string name="download_resume">"أستكمال"</string>
+    <string name="download_resume_all">"إستئناف الكل"</string>
+    <string name="filter_name_az">"بالأسم من أ-ي"</string>
+    <string name="filter_name_za">"بالأسم من ي-أ"</string>
+    <string name="filter_size_min">"الحجم بالأصغر"</string>
+    <string name="filter_size_max">"الحجم بالأكبر"</string>
+    <string name="filter_date_updated">"تاريخ التحديث"</string>
+    <string name="filter_date_added">"تاريخ الإضافة"</string>
+    <string name="installer_status_failure">"فسل التثبيت"</string>
+    <string name="installer_status_failure_aborted">"تم إلغاء التثبيت"</string>
+    <string name="installer_status_failure_blocked">"تم حجب التثبيت"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_conflict">"يوجد ملف حزمة بنفس الأسم"</string>
+    <string name="installer_status_failure_incompatible">"تطبيق غير متوافق"</string>
+    <string name="installer_status_failure_invalid">"حزمة تطبيق تالفة او غير معروفة"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_storage">"مساحة الذاكرة غير كافية"</string>
+    <string name="installer_status_success">"تم التثبيت بنجاح"</string>
+    <string name="installer_status_unknown">"غير معروف"</string>
+    <string name="installer_status_user_action">"بأنتظار تأكيد المستخدم"</string>
+    <string name="list_blacklist">"التطبيقات التي تم وضعها في القائمة السوداء"</string>
+    <string name="list_blacklist_none">"لاتوجد تطبيقات في القائمة السوداء"</string>
+    <string name="list_empty_fav">"لاتوجد مفضلة"</string>
+    <string name="list_empty_updates">"لاتوجد تحديثات متاحة"</string>
+    <string name="list_installed">"مثبته"</string>
+    <string name="list_selected">"تطبيقات تم أختيارها"</string>
+    <string name="list_update_all">"تحديث الكل"</string>
+    <string name="list_update_all_txt">"تحديث(ات)متاحة"</string>
+    <string name="list_updating">"يتم التحديث"</string>
+    <string name="sync_completed">"تمت المزامنة"</string>
+    <string name="sync_completed_all">"تمت مزامنة جميع المستودعات"</string>
+    <string name="sync_progress">"تتم مزامنة المستودعات"</string>
+    <string name="sync_failed">"فشلت المزامنة"</string>
+
+    <!-- Fuzzy -->
+    <string name="title_home">"Aurora Droid"</string>
+    <string name="title_apps_new">"تطبيقات جديدة"</string>
+    <string name="title_categories">"الفئات"</string>
+    <string name="title_latest_updated">"المحدثة مؤخرا"</string>
+    <string name="title_repo_add">"إضافة مستودع جديد"</string>
+    <string name="title_perm">"الأذونات"</string>
+    <string name="title_repositories">"المستدوعات"</string>
+    <string name="title_search">"البحث عن التطبيقات والألعاب"</string>
+    <string name="title_sync_repo">"مزامنة المستودعات"</string>
+    <string name="title_update_all">"تحديث جميع التطبيقات"</string>
+    <string name="title_welcome">"مرحبا"</string>
+    <string name="title_url">"العنوان"</string>
+    <string name="title_fingerprint">"البصمة"</string>
+    <string name="title_desc">"الوصف"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_dialog_to_apply_restart">"يتم تطبيق هذا الإعداد بعد إعادة تشغيل التطبيق"</string>
+    <string name="pref_installations">"التثبيتات"</string>
+    <string name="pref_install_auto_summary">"يتم تثبيت التطبيقات مباشرة بعد تنزيلها"</string>
+    <string name="pref_install_auto_title">"تثبيت التطبيقات تلقائيا  بعد التنزيل"</string>
+    <string name="pref_install_delete_summary">"على الأجهزة التي تعمل بنظام Android Pie + مع طريقة تثبيت عبر الروت ، يتم حذف ملفات APK بشكل افتراضي"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_delete_title">"حذف apk بعد التثبيت"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_type_summary">"استخدم أداة التثبيت الأصلية لتثبيت الحزم ، قد يتم تعطيل تثبيت حزم التطبيقات المجمعة"</string>
+    <string name="pref_install_type_title">"إجبار المثبت الأفتراضي"</string>
+    <string name="pref_install_mode_summary">"أختيار وضع تثبيت التطبيقات"</string>
+    <string name="pref_install_mode_title">"طريقة التثبيت"</string>
+    <string name="pref_install_mode_native">"أفتراضي"</string>
+    <string name="pref_install_mode_root">"روت"</string>
+    <string name="pref_install_mode_services">"خدمات اورورا"</string>
+    <string name="pref_install_mode_no_root">"صلاحية الروت غير متاحة, تاجد من توفر صلاحية الروت في جهازك"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_root_warn">"تتطلب طريقة تثبيت الجذر تنزيل ملف apk في قسم data للنظام ، من أجل التثبيت عبر adb shell "</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_no_services">"خدمات اورورا غير مثبتة,  الرجاء تثبيتها"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_offline_services">"خدمات Aurora غير متصلة ، يرجى التأكد من تمكينها وبأن لديك الإصدار الصحيح من التطبيق"</string>
+    <string name="pref_ui">"واجهة المستخدم"</string>
+    <string name="pref_ui_theme_title">"الثيم"</string>
+    <string name="pref_ui_theme_light">"مضيئ"</string>
+    <string name="pref_ui_theme_dark">"داكن"</string>
+    <string name="pref_ui_theme_black">"أسود"</string>
+    <string name="pref_ui_transparent">"الوضع الشفاف"</string>
+    <string name="pref_ui_transparent_summary">"استخدام البطاقة الشافة للفئات وعرض الروابط"</string>
+    <string name="pref_downloads">"التنزيلات"</string>
+    <string name="pref_downloads_active_summary">"العدد الأقصى لعمليات التنزيل"</string>
+    <string name="pref_downloads_active_title">"التحميل النشط"</string>
+    <string name="pref_downloads_debug_summary">"تمكين تصحيح عمليات التنزيل للحصول على سجلات مفصلة"</string>
+    <string name="pref_downloads_debug_title">"سجل التصحيح لتنزيلات"</string>
+    <string name="pref_downloads_strategy_summary">"حدد استراتيجية التنزيل الافتراضية ، و يوصى بالتنزيل النتتابع  لأسرع تنزيل"</string>
+    <string name="pref_downloads_strategy_title">"أستراجية التنزيل"</string>
+    <string name="pref_downloads_strategy_sequential">"تحميل متسلسل"</string>
+    <string name="pref_downloads_strategy_parallel">"التحميل الموازي (المجزى)"</string>
+    <string name="pref_downloads_path_title">"مسار التنزيل"</string>
+    <string name="pref_downloads_wifi_title">"التحميل بأستخدام شبكة الوايفاي فقط"</string>
+    <string name="pref_network">"الشبكة"</string>
+    <string name="pref_proxy_enable">"تفعيل البروكسي"</string>
+    <string name="pref_proxy_host">"خادم البروكسي"</string>
+    <string name="pref_proxy_port">"منفذ البروكسي"</string>
+    <string name="pref_proxy_type">"نوع البروكسي"</string>
+    <string name="pref_updates_title">"التحديثات"</string>
+    <string name="pref_updates_repo_title">"تحديث المستودعات"</string>
+    <string name="pref_updates_app_title">"تحديث التطبيقات"</string>
+    <string name="pref_updates_repo_interval">"فترات التحديث"</string>
+    <string name="pref_updates_manual">"يدوي"</string>
+    <string name="pref_updates_daily">"يوم"</string>
+    <string name="pref_updates_2days">"يومين"</string>
+    <string name="pref_updates_3days">"3 أيام"</string>
+    <string name="pref_updates_7days">"7 ايام"</string>
+    <string name="pref_services_title">"خدمات اورورا"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_services_desc">"تشغيل خدمات اورورا"</string>
+    <string name="pref_services_desc_alt">"خدمات اورورا غير متاحة. أضغط لذهاب الى مستودع الخدمة لمعرفة المزيد."</string>
+    <string name="repo_list">"قائمة المستودعات"</string>
+    <string name="repo_list_select">"أختر مستودعات تريد مزامنتها"</string>
+    <string name="repo_qr_scan">"مسح الباركود"</string>
+    <string name="repo_id">"رمز المسودع التعريفي"</string>
+    <string name="repo_name">"أسم المستودع"</string>
+    <string name="repo_addr">"عنوان المستودع"</string>
+    <string name="repo_fingerprint">"بصمة المستودع"</string>
+    <string name="sys_log">"سجل المزامنة"</string>
+    <string name="toast_no_repo_selected">"لم يتم أختيار اي مستودعات"</string>
+    <string name="error_app_not_found">"لم يتم العثور على التطبيق"</string>
+    <string name="error_app_not_installed">"لاتوجد تطبيقات مثبته"</string>
+    <string name="error_no_network">"لايوجد إتصال بالأنترنت"</string>
+    <string name="error_search_not_found">"لم يتم العثور على تطبيقات مشابهة"</string>
+    <string name="error_unknown">"حصل خطأ غير معروف"</string>
+    <string name="error_no_updates">"لاتوجد تحديثات متوفرة"</string>
+
+    <!-- Fuzzy -->
+    <string name="notification_installation_auto">"تم التحميل أضغط لتثبيت"</string>
+    <string name="toast_apk_blacklisted">"تم إضافته للقائمة السوداء"</string>
+    <string name="toast_apk_whitelisted">"تم إضافته للقائمة البيضاء"</string>
+    <string name="toast_apk_copy_success">"تم نسخ التطبيق بنجاح"</string>
+    <string name="toast_apk_copy_failure">"فشل في نسخ التطبيق"</string>
+</resources>

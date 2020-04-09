@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_add">"Adaugă"</string>
+    <string name="action_ask">"Întreabă"</string>
+    <string name="action_blacklist">"Adaugă la Lista Neagră"</string>
+    <string name="action_cancel">"Anulează"</string>
+    <string name="action_clear">"Curăță"</string>
+    <string name="action_clear_all">"Curăță tot"</string>
+    <string name="action_close">"Închide"</string>
+    <string name="action_copy">"Copiază Linkul"</string>
+
+    <!-- Fuzzy -->
+    <string name="action_copied">"Linkul a fost copiat în clipboard"</string>
+    <string name="action_download">"Descarcă"</string>
+    <string name="action_downloads">"Descărcări"</string>
+    <string name="action_export">"Exportă"</string>
+    <string name="action_finish">"Finalizare"</string>
+    <string name="action_favourites">"Aplicații favorite"</string>
+    <string name="action_favourite_add">"Adaugă la favorite"</string>
+    <string name="action_favourite_remove">"Elimină de la favorite"</string>
+    <string name="action_get_local_apk">"Ia APK local"</string>
+    <string name="action_home">"Acasă"</string>
+    <string name="action_import">"Importă"</string>
+    <string name="action_info">"Informații Aplicație"</string>
+    <string name="action_install">"Instalează"</string>
+    <string name="action_installing">"Se Instalează"</string>
+    <string name="action_installed">"Instalat"</string>
+    <string name="action_installations">"Instalații"</string>
+    <string name="action_later">"Mai târziu"</string>
+    <string name="action_more">"Mai multe"</string>
+    <string name="action_next">"Următorul"</string>
+    <string name="action_open">"Deschide"</string>
+    <string name="action_pause">"Întrerupe"</string>
+    <string name="action_recheck">"Re-verifică"</string>
+    <string name="action_remove">"Înlătură"</string>
+    <string name="action_restart">"Repornește"</string>
+    <string name="action_resume">"Reia"</string>
+    <string name="action_retry">"Reîncarcă"</string>
+    <string name="action_settings">"Setări"</string>
+    <string name="action_share">"Partajează"</string>
+    <string name="action_sync">"Sincronizează"</string>
+    <string name="action_uninstall">"Dezinstalează"</string>
+    <string name="action_update">"Actualizează"</string>
+    <string name="action_updates">"Actualizări"</string>
+
+    <!-- Fuzzy -->
+    <string name="action_use_mirror">"Folosește URL oglindă"</string>
+    <string name="action_unsupported">"Aplicație Incompatibilă"</string>
+    <string name="action_whitelist">"Adaugă la Lista Albă"</string>
+    <string name="details_more">"Citește mai mult"</string>
+    <string name="details_more_apps_dev">"Mai multe aplicații de la dezvoltator"</string>
+    <string name="details_more_apps_similar">"Aplicații din categorii similare"</string>
+    <string name="details_other">"Alte versiuni"</string>
+    <string name="details_no_description">"Nicio descriere furnizată de către dezvoltator"</string>
+    <string name="details_no_permissions">"Nicio permisiune nu este utilizată."</string>
+    <string name="details_permissions">"Permisiuni aplicație"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_permissions_desc">"Aurora Store utilizează următoarele permisiuni"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_repo_desc">"Selectează depozite F-Droid pentru sincronizare"</string>
+    <string name="dialog_sync_title">"Actualizări Depozite"</string>
+    <string name="dialog_sync_desc">"Dorești să actualizezi aplicații din depozite?"</string>
+    <string name="dialog_sync_desc_alt">"Date vechi detectate, ar putea exista actualizări, dorești să sincronizezi toate depozitele?"</string>
+    <string name="dialog_sync_completed_desc">"Toate depozitele actualizate, se recomandă repornirea aplicației după actualizări."</string>
+    <string name="dialog_sync_positive">"Da"</string>
+    <string name="dialog_sync_negative">"Nu"</string>
+    <string name="dialog_sync_complete_positive">"Repornește Acum"</string>
+    <string name="dialog_repo_title">"Adaugă Depozit"</string>
+    <string name="dialog_repo_desc">"Sigur dorești să adaugi"</string>
+    <string name="menu_downloads">"Descărcări"</string>
+    <string name="download_cancel_all">"Anulează tot"</string>
+    <string name="download_canceled">"Anulat"</string>
+    <string name="download_clear_completed">"Curățare completă"</string>
+    <string name="download_completed">"Descărcat"</string>
+
+    <!-- Fuzzy -->
+    <string name="download_failed">"Descărcare Eșuată"</string>
+    <string name="download_force_clear_all">"Forțează curățare totală"</string>
+    <string name="download_none">"Nicio descărcare"</string>
+    <string name="download_pause_all">"Întrerupe tot"</string>
+    <string name="download_paused">"Întrerupt"</string>
+    <string name="download_progress">"Se Descarcă"</string>
+    <string name="download_queued">"În Coadă"</string>
+    <string name="download_resume">"Reia"</string>
+    <string name="download_resume_all">"Reia tot"</string>
+    <string name="filter_name_az">"Nume A-Z"</string>
+    <string name="filter_name_za">"Nume Z-A"</string>
+    <string name="filter_size_min">"Dimensiune Min"</string>
+    <string name="filter_size_max">"Dimensiune Max"</string>
+    <string name="filter_date_updated">"Data Actualizării"</string>
+    <string name="filter_date_added">"Data Adăugării"</string>
+    <string name="installer_status_failure">"Instalare eșuată"</string>
+    <string name="installer_status_failure_aborted">"Instalare anulată"</string>
+    <string name="installer_status_failure_blocked">"Instalarea a fost blocată"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_conflict">"Există un pachet în conflict"</string>
+    <string name="installer_status_failure_incompatible">"Aplicație incompatibilă"</string>
+    <string name="installer_status_failure_invalid">"APK invalid sau corupt"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_storage">"Spațiu de stocare insuficient"</string>
+    <string name="installer_status_success">"Instalat cu succes"</string>
+    <string name="installer_status_unknown">"Necunoscut"</string>
+    <string name="installer_status_user_action">"Se așteaptă confirmare de la utilizator"</string>
+    <string name="list_blacklist">"Aplicații pe lista neagră"</string>
+    <string name="list_blacklist_none">"Nicio aplicație pe lista neagră"</string>
+    <string name="list_empty_fav">"Nicio aplicație favorită"</string>
+    <string name="list_empty_updates">"Nicio actualizare disponibilă"</string>
+    <string name="list_installed">"Instalate"</string>
+    <string name="list_selected">"Aplicații selectate"</string>
+    <string name="list_update_all">"Actualizează tot"</string>
+    <string name="list_update_all_txt">"actualizări disponibile"</string>
+    <string name="list_updating">"Se actualizează"</string>
+    <string name="sync_completed">"Sincronizat"</string>
+    <string name="sync_completed_all">"Toate depozitele sincronizează"</string>
+    <string name="sync_progress">"Se sincronizează depozitele"</string>
+    <string name="sync_failed">"Sincronizare eșuată"</string>
+
+    <!-- Fuzzy -->
+    <string name="title_home">"Aurora Droid"</string>
+    <string name="title_apps_new">"Aplicații Noi"</string>
+    <string name="title_categories">"Categorii"</string>
+    <string name="title_latest_updated">"Ultimele actualizate"</string>
+    <string name="title_repo_add">"Adaugă depozit nou"</string>
+    <string name="title_perm">"Permisiuni"</string>
+    <string name="title_repositories">"Depozite"</string>
+    <string name="title_search">"Caută aplicații și jocuri"</string>
+    <string name="title_sync_repo">"Sincronizează Depozite"</string>
+    <string name="title_update_all">"Actualizează Toate Aplicațiile"</string>
+    <string name="title_welcome">"Bun Venit"</string>
+    <string name="title_url">"URL"</string>
+    <string name="title_fingerprint">"Amprentă"</string>
+    <string name="title_desc">"Descriere"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_dialog_to_apply_restart">"Această setare va fi aplicată după ce repornești aplicația"</string>
+    <string name="pref_installations">"Instalări"</string>
+    <string name="pref_install_auto_summary">"Aplicațiile sunt instalate instant după terminarea descărcării"</string>
+    <string name="pref_install_auto_title">"Instalează APK-urile automat după descărcare"</string>
+    <string name="pref_install_delete_summary">"Pe dispozitivele care rulează Android Pie + cu metoda de instalare Root, APK-urile sunt șterse implicit"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_delete_title">"Șterge apk după instalare"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_type_summary">"Utilizează instalatorul nativ pentru instalarea pachetelor, strică instalările apk-urilor împachetate"</string>
+    <string name="pref_install_type_title">"Impune instalatorul nativ"</string>
+    <string name="pref_install_mode_summary">"Selectează modul de instalare al APK-urilor"</string>
+    <string name="pref_install_mode_title">"Metodă de instalare"</string>
+    <string name="pref_install_mode_native">"Nativ"</string>
+    <string name="pref_install_mode_root">"Root"</string>
+    <string name="pref_install_mode_services">"Aurora Services"</string>
+    <string name="pref_install_mode_no_root">"Accesul root nu este disponibil, asigură-te că dispozitivul tău este rooted"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_root_warn">"Metodă de instalare root necesită ca apk-ul să fie descărcat în app data pentru instalare prin adb shell, Android Pie +"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_no_services">"Aurora Services nu este instalat, instalează serviciile întâi"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_offline_services">"Aurora Services nu este conectat, asigură-te că ai versiunea corectă a aplicației"</string>
+    <string name="pref_ui">"Interfață Utilizator"</string>
+    <string name="pref_ui_theme_title">"Temă"</string>
+    <string name="pref_ui_theme_light">"Deschis"</string>
+    <string name="pref_ui_theme_dark">"Închis"</string>
+    <string name="pref_ui_theme_black">"Negru"</string>
+    <string name="pref_ui_transparent">"Stil transparent"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_ui_transparent_summary">"Utilizează stilul de carduri transparente pentru vederile de categorie și link"</string>
+    <string name="pref_downloads">"Descărcări"</string>
+    <string name="pref_downloads_active_summary">"Numărul maxim de descărcări active"</string>
+    <string name="pref_downloads_active_title">"Descărcare activă"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_downloads_debug_summary">"Activează depanarea descărcărilor pentru a obține jurnale detaliate"</string>
+    <string name="pref_downloads_debug_title">"Depanare descărcări"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_downloads_strategy_summary">"Selectează strategia implicită de descărcare, se recomandă Strategia Paralelă pentru descărcare rapidă"</string>
+    <string name="pref_downloads_strategy_title">"Strategie de descărcare"</string>
+    <string name="pref_downloads_strategy_sequential">"Descărcare secvențială"</string>
+    <string name="pref_downloads_strategy_parallel">"Descărcare paralelă (Împărțire)"</string>
+    <string name="pref_downloads_path_title">"Cale descărcare"</string>
+    <string name="pref_downloads_wifi_title">"Descarcă doar folosind wifi"</string>
+    <string name="pref_network">"Rețele"</string>
+    <string name="pref_proxy_enable">"Activează proxy"</string>
+    <string name="pref_proxy_host">"Gazdă proxy"</string>
+    <string name="pref_proxy_port">"Port proxy"</string>
+    <string name="pref_proxy_type">"Tip proxy"</string>
+    <string name="pref_updates_title">"Actualizări"</string>
+    <string name="pref_updates_repo_title">"Actualizări Depozit"</string>
+    <string name="pref_updates_app_title">"Actualizări Aplicații"</string>
+    <string name="pref_updates_repo_interval">"Interval de actualizare"</string>
+    <string name="pref_updates_manual">"Manual"</string>
+    <string name="pref_updates_daily">"1 zi"</string>
+    <string name="pref_updates_2days">"2 zile"</string>
+    <string name="pref_updates_3days">"3 zile"</string>
+    <string name="pref_updates_7days">"7 zile"</string>
+    <string name="pref_services_title">"Aurora Services"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_services_desc">"Lansează Aurora Services"</string>
+    <string name="pref_services_desc_alt">"Aurora Services indisponibil. Fă click pentru a merge la repozitorul serviciilor și a afla mai multe."</string>
+    <string name="repo_list">"Listă depozite"</string>
+    <string name="repo_list_select">"Selectează depozitele pe care dorești să le sincronizezi"</string>
+    <string name="repo_qr_scan">"Scanează cod QR"</string>
+    <string name="repo_id">"ID Depozit"</string>
+    <string name="repo_name">"Nume Depozit"</string>
+    <string name="repo_addr">"Adresă Depozit"</string>
+    <string name="repo_fingerprint">"Amprentă Depozit"</string>
+    <string name="sys_log">"Jurnal Sincronizare"</string>
+    <string name="toast_no_repo_selected">"Niciun depozit nu este selectat"</string>
+    <string name="error_app_not_found">"Aplicația nu a fost găsită"</string>
+    <string name="error_app_not_installed">"Nicio aplicație instalată"</string>
+    <string name="error_no_network">"Nu există conexiune la rețea"</string>
+    <string name="error_search_not_found">"Nicio aplicație potrivită găsită"</string>
+    <string name="error_unknown">"Eroare necunoscută"</string>
+    <string name="error_no_updates">"Nicio actualizare disponibilă"</string>
+
+    <!-- Fuzzy -->
+    <string name="notification_installation_auto">"Descărcat, click pentru instalare"</string>
+    <string name="toast_apk_blacklisted">"Adăugat la lista neagră"</string>
+    <string name="toast_apk_whitelisted">"Adăugat la lista albă"</string>
+    <string name="toast_apk_copy_success">"Copiere APK reușită"</string>
+    <string name="toast_apk_copy_failure">"Copiere APK eșuată"</string>
+</resources>

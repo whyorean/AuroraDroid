@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
+import com.aurora.adroid.manager.LocaleManager;
 
 
 public class ThemeUtil {
@@ -53,6 +54,7 @@ public class ThemeUtil {
     }
 
     public void onCreate(AppCompatActivity activity) {
+        new LocaleManager(activity).setLocale();
         currentTheme = getSelectedTheme(activity);
         activity.setTheme(currentTheme);
     }

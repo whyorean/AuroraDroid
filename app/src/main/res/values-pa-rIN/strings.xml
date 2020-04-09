@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_add">"ਸ਼ਾਮਿਲ ਕਰੋ"</string>
+    <string name="action_ask">"ਪੁੱਛੋ"</string>
+    <string name="action_blacklist">"ਬਲੈਕ ਲਿਸਟ"</string>
+    <string name="action_cancel">"ਰੱਦ ਕਰੋ"</string>
+    <string name="action_clear">"ਮਿਟਾਓ"</string>
+    <string name="action_clear_all">"ਸਾਰਾ ਮਿਟਾਓ"</string>
+    <string name="action_close">"ਬੰਦ ਕਰੋ"</string>
+    <string name="action_copy">"ਲਿੰਕ ਕਾਪੀ ਕਰੋ"</string>
+    <string name="action_copied">"ਲਿੰਕ ਕਾਪੀ ਹੋ ਗਿਆ ਹੈ"</string>
+    <string name="action_download">"ਡਾਊਨਲੋਡ ਕਰੋ"</string>
+    <string name="action_downloads">"ਡਾਊਨਲੋਡ ਸੂਚੀ"</string>
+    <string name="action_export">"Export ਕਰੋ"</string>
+    <string name="action_finish">"ਮੁਕੰਮਲ ਹੋ ਗਿਆ ਹੈ"</string>
+    <string name="action_favourites">"ਮਨਪਸੰਦ ਐਪਸ"</string>
+    <string name="action_favourite_add">"ਮਨਪਸੰਦ ਵਿੱਚ ਸ਼ਾਮਿਲ ਕਰੋ"</string>
+    <string name="action_favourite_remove">"ਮਨਪਸੰਦ ਵਿਚੋਂ ਹਟਾਓ"</string>
+    <string name="action_get_local_apk">"ਲੋਕਲ APK ਪ੍ਰਾਪਤ ਕਰੋ"</string>
+    <string name="action_home">"ਮੁੱਖ ਪੰਨਾ"</string>
+    <string name="action_import">"Import ਕਰੋ"</string>
+    <string name="action_info">"ਐਪ ਬਾਰੇ"</string>
+    <string name="action_install">"ਇੰਸਟਾਲ ਕਰੋ"</string>
+    <string name="action_installing">"ਇੰਸਟਾਲ ਹੋ ਰਿਹਾ ਹੈ"</string>
+    <string name="action_installed">"ਇੰਸਟਾਲ ਮੁਕੰਮਲ"</string>
+    <string name="action_installations">"ਇੰਸਟਾਲੇਸ਼ਨਾਂ"</string>
+    <string name="action_later">"ਬਾਅਦ ਵਿੱਚ"</string>
+    <string name="action_more">"ਹੋਰ"</string>
+    <string name="action_next">"ਅਗਲਾ"</string>
+    <string name="action_open">"ਖੋਲੋ"</string>
+    <string name="action_pause">"ਰੋਕੋ"</string>
+    <string name="action_recheck">"ਜਾਂਚ ਕਰੋ"</string>
+    <string name="action_remove">"ਹਟਾਓ"</string>
+    <string name="action_restart">"ਦੋਬਾਰਾ ਚਲਾਓ"</string>
+    <string name="action_resume">"ਚਾਲੂ ਕਰੋ"</string>
+    <string name="action_retry">"ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ"</string>
+    <string name="action_settings">"ਸੈਟਿੰਗਾਂ"</string>
+    <string name="action_share">"ਸਾਂਝਾ ਕਰੋ"</string>
+    <string name="action_sync">"ਸਿੰਕ ਕਰੋ"</string>
+    <string name="action_uninstall">"ਅਨਿੰਸਟਾਲ"</string>
+    <string name="action_update">"ਅੱਪਡੇਟ"</string>
+    <string name="action_updates">"ਅੱਪਡੇਟਾਂ"</string>
+    <string name="action_use_mirror">"ਵਿਕਲਪ URL ਵਰਤੋ"</string>
+    <string name="action_unsupported">"ਬੇ-ਮੇਲ ਐਪ"</string>
+    <string name="action_whitelist">"ਵਾਈਟ ਲਿਸਟ"</string>
+    <string name="details_more">"ਹੋਰ ਪੜ੍ਹੋ"</string>
+    <string name="details_more_apps_dev">"ਇਸ ਡਿਵੈਲਪਰ ਵੱਲੋਂ ਹੋਰ ਐਪਸ"</string>
+    <string name="details_more_apps_similar">"ਇਸੇ ਸ਼੍ਰੇਣੀ ਦੇ ਕੁੱਝ ਹੋਰ ਐਪਸ"</string>
+    <string name="details_other">"ਹੋਰ ਸੰਸਕਰਣ"</string>
+    <string name="details_no_description">"ਡਿਵੈਲਪਰ ਵਲੋਂ ਕੋਈ ਵੇਰਵਾ ਪ੍ਰਦਾਨ ਨਹੀਂ ਕੀਤਾ ਗਿਆ"</string>
+    <string name="details_no_permissions">"ਕੋਈ ਅਧਿਕਾਰ ਨਹੀਂ ਵਰਤੇ ਗਏ"</string>
+    <string name="details_permissions">"ਐਪਸ ਦੀ ਅਗਿਆਵਾਂ"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_permissions_desc">"ਔਰੋਰਾ ਡ੍ਰੋਆਇਡ ਹੇਂਠ ਲਿੱਖੇ ਅਧਿਕਾਰਾਂ ਦੀ ਵਰਤੋਂ ਕਰਦਾ ਹੈ"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_repo_desc">"ਸਿੰਕ ਕਰਨ ਵਾਸਤੇ F-Droid ਰਿਪੌਜ਼ੀਟਰੀਆਂ ਚੁਣੋ"</string>
+    <string name="dialog_sync_title">"ਰਿਪੌਜ਼ੀਟਰੀ ਅੱਪਡੇਟਾਂ"</string>
+    <string name="dialog_sync_desc">"ਕੀ ਤੁਸੀਂ ਰਿਪੌਜ਼ੀਟਰੀਆਂ ਤੋਂ ਐਪਸ ਨੂੰ ਅਪਡੇਟ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ?"</string>
+    <string name="dialog_sync_desc_alt">"ਡਾਟਾ ਪੁਰਾਣਾ ਹੈ, ਨਵੇਂ ਅੱਪਡੇਟ ਮਿਲ ਸਕਦੇ ਹਨ, ਕੀ ਤੁਸੀਂ ਸਾਰੀਆਂ ਰਿਪੌਜ਼ੀਟਰੀਆਂ ਨੂੰ ਸਿੰਕ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ?"</string>
+    <string name="dialog_sync_completed_desc">"ਸਾਰੀਆਂ ਰਿਪੌਜ਼ੀਟਰੀਆਂ ਅੱਪਡੇਟ ਕੀਤੀਆਂ ਗਈਆਂ ਹਨ, ਐਪਸ ਅੱਪਡੇਟ ਕਰਨ ਬਾਅਦ ਐਪ ਨੂੰ ਦੋਬਾਰਾ ਚਲਾਉਣ ਦੀ ਸਿਫਾਰਸ਼ ਕੀਤੀ ਜਾਂਦੀ ਹੈ."</string>
+    <string name="dialog_sync_positive">"ਹਾਂ"</string>
+    <string name="dialog_sync_negative">"ਨਹੀਂ"</string>
+    <string name="dialog_sync_complete_positive">"ਦੋਬਾਰਾ ਚਲਾਓ"</string>
+    <string name="dialog_repo_title">"ਰਿਪੌਜ਼ੀਟਰੀ ਸ਼ਾਮਿਲ ਕਰੋ"</string>
+    <string name="dialog_repo_desc">"ਕੀ ਤੁਸੀਂ ਇਸਨੂੰ ਸ਼ਾਮਿਲ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ?"</string>
+    <string name="menu_downloads">"ਡਾਊਨਲੋਡ ਸੂਚੀ"</string>
+    <string name="download_cancel_all">"ਸਾਰੇ ਰੱਦ ਕਰੋ"</string>
+    <string name="download_canceled">"ਰੱਦ ਕੀਤੀ ਗਈ"</string>
+    <string name="download_clear_completed">"ਪੂਰੀਆਂ ਹੋਈਆਂ ਫਾਈਲਾਂ ਨੂੰ ਮਿਟਾਓ"</string>
+    <string name="download_completed">"ਡਾਊਨਲੋਡ ਮੁਕੰਮਲ"</string>
+
+    <!-- Fuzzy -->
+    <string name="download_failed">"ਡਾਊਨਲੋਡ ਅਸਫਲ"</string>
+    <string name="download_force_clear_all">"ਜਬਰੀ ਸਾਰੇ ਮਿਟਾਓ"</string>
+    <string name="download_none">"ਕੋਈ ਡਾਊਨਲੋਡ ਨਹੀਂ"</string>
+    <string name="download_pause_all">"ਸਾਰੇ ਰੋਕੋ⏸️"</string>
+    <string name="download_paused">"ਰੋਕਿਆ ਗਿਆ"</string>
+    <string name="download_progress">"ਡਾਊਨਲੋਡ ਹੋ ਰਿਹਾ ਹੈ"</string>
+    <string name="download_queued">"ਕਤਾਰਬੱਧ"</string>
+    <string name="download_resume">"ਚਾਲੂ ਕਰੋ"</string>
+    <string name="download_resume_all">"ਸਾਰੇ ਚਾਲੂ ਕਰੋ️"</string>
+    <string name="filter_name_az">"ਨਾਮ A-Z"</string>
+    <string name="filter_name_za">"ਨਾਮ Z-A"</string>
+    <string name="filter_size_min">"ਘੱਟ ਆਕਾਰ"</string>
+    <string name="filter_size_max">"ਵੱਧ ਆਕਾਰ"</string>
+    <string name="filter_date_updated">"ਅੱਪਡੇਟ ਹੋਣ ਦੀ ਮਿਤੀ"</string>
+    <string name="filter_date_added">"ਸ਼ਾਮਿਲ ਹੋਣ ਦੀ ਮਿਤੀ"</string>
+    <string name="installer_status_failure">"ਇੰਸਟਾਲੇਸ਼ਨ ਅਸਫਲ"</string>
+    <string name="installer_status_failure_aborted">"ਇੰਸਟਾਲੇਸ਼ਨ ਰੱਦ ਕੀਤੀ ਗਈ"</string>
+    <string name="installer_status_failure_blocked">"ਇੰਸਟਾਲੇਸ਼ਨ ਬਲਾਕਡ"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_conflict">"ਵਿਵਾਦਪੂਰਨ ਪੈਕੇਜ ਮੌਜੂਦ ਹੈ"</string>
+    <string name="installer_status_failure_incompatible">"ਐਪ ਅਨੁਕੂਲ ਨਹੀਂ"</string>
+    <string name="installer_status_failure_invalid">"ਅਵੈਧ/ਖਰਾਬ APK"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_storage">"ਨਾਕਾਫੀ ਮੈਮੋਰੀ ਸਪੇਸ"</string>
+    <string name="installer_status_success">"ਇੰਸਟਾਲ ਹੋ ਗਿਆ ਹੈ"</string>
+    <string name="installer_status_unknown">"ਅਣਜਾਣ"</string>
+    <string name="installer_status_user_action">"ਯੂਸਰ ਵਲੋਂ ਪੁਸ਼ਟੀ ਦੀ ਉਡੀਕ...."</string>
+    <string name="list_blacklist">"ਬਲੈਕ ਲਿਸਟ ਐਪਸ"</string>
+    <string name="list_blacklist_none">"ਬਲੈਕ ਲਿਸਟ ਖਾਲੀ ਹੈ"</string>
+    <string name="list_empty_fav">"ਕੋਈ ਮਨਪਸੰਦ ਨਹੀਂ"</string>
+    <string name="list_empty_updates">"ਕੋਈ ਅੱਪਡੇਟ ਨਹੀਂ ਉਪਲੱਬਧ"</string>
+    <string name="list_installed">"ਇੰਸਟਾਲਡ"</string>
+    <string name="list_selected">"ਚੁਣੀਆਂ ਐਪਸ"</string>
+    <string name="list_update_all">"ਸਾਰੇ ਅੱਪਡੇਟ ਕਰੋ"</string>
+    <string name="list_update_all_txt">"ਅੱਪਡੇਟ ਉਪਲੱਬਧ"</string>
+    <string name="list_updating">"ਅੱਪਡੇਟ ਜਾਰੀ…"</string>
+    <string name="sync_completed">"ਸਿੰਕ ਮੁਕੰਮਲ"</string>
+    <string name="sync_completed_all">"ਸਾਰੀਆਂ ਰਿਪੌਜ਼ੀਟਰੀਆਂ ਦੀ ਸਿੰਕ ਮੁਕੰਮਲ"</string>
+    <string name="sync_progress">"ਰਿਪੌਜ਼ੀਟਰੀ ਸਿੰਕ ਜਾਰੀ…"</string>
+    <string name="sync_failed">"ਸਿੰਕ ਅਸਫਲ"</string>
+
+    <!-- Fuzzy -->
+    <string name="title_home">"ਔਰੋਰਾ ਡ੍ਰੋਆਇਡ"</string>
+    <string name="title_apps_new">"ਨਵੇਂ ਐਪਸ"</string>
+    <string name="title_categories">"ਸ਼੍ਰੇਣੀਆਂ"</string>
+    <string name="title_latest_updated">"ਤਾਜ਼ਾ ਅੱਪਡੇਟਡ"</string>
+    <string name="title_repo_add">"ਨਵੀਂ ਰਿਪੌਜ਼ੀਟਰੀ ਸ਼ਾਮਿਲ ਕਰੋ"</string>
+    <string name="title_perm">"ਅਗਿਆਵਾਂ"</string>
+    <string name="title_repositories">"ਰਿਪੌਜ਼ੀਟਰੀਆਂ"</string>
+    <string name="title_search">"ਐਪਸ ਤੇ ਗੇਮਸ ਖੋਜੋ"</string>
+    <string name="title_sync_repo">"ਸਿੰਕ ਰਿਪੌਜ਼ੀਟਰੀਆਂ"</string>
+    <string name="title_update_all">"ਸਾਰੇ ਅੱਪਡੇਟ ਕਰੋ"</string>
+    <string name="title_welcome">"ਸਵਾਗਤ ਹੈ"</string>
+    <string name="title_url">"URL"</string>
+    <string name="title_fingerprint">"ਫਿੰਗਰਪ੍ਰਿੰਟ"</string>
+    <string name="title_desc">"ਵੇਰਵਾ"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_dialog_to_apply_restart">"ਇਹ ਸੈਟਿੰਗਾਂ ਐਪ ਦੇ ਦੋਬਾਰਾ ਚੱਲਣ ਤੇ ਲਾਗੂ ਹੋਣਗੀਆਂ"</string>
+    <string name="pref_installations">"ਇੰਸਟਾਲ ਬਾਰੇ"</string>
+    <string name="pref_install_auto_summary">"ਡਾਊਨਲੋਡ ਪੂਰਾ ਹੋਣ ਤੋਂ ਬਾਅਦ ਐਪਸ ਤੁਰੰਤ ਇੰਸਟਾਲ ਕੀਤੇ ਜਾਣਗੇ"</string>
+    <string name="pref_install_auto_title">"ਡਾਊਨਲੋਡ ਤੋਂ ਬਾਅਦ APK ਨੂੰ ਆਟੋ ਇੰਸਟਾਲ ਕਰੋ"</string>
+    <string name="pref_install_delete_summary">"Rooted,ਐਂਡਰਾਇਡ Pie + ਚਲਾ ਰਹੇ ਡਿਵਾਈਸਾਂ 'ਤੇ APK ਆਪਣੇ ਆਪ ਇੰਸਟਾਲ ਹੋਣ ਤੋਂ ਬਾਅਦ ਮਿਟ ਜਾਂਦੇ ਹਨ"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_delete_title">"ਇੰਸਟਾਲ ਤੋਂ ਬਾਅਦ APK ਨੂੰ ਮਿਟਾਓ"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_type_summary">"ਪੈਕੇਜ ਇੰਸਟਾਲ ਕਰਨ ਲਈ ਮੂਲ ਇੰਸਟਾਲਰ ਦੀ ਵਰਤੋਂ ਕਰੋ, ਬੰਡਲਡ APK ਇੰਸਟਾਲ ਨਹੀਂ ਹੋਵੇਗੀ"</string>
+    <string name="pref_install_type_title">"ਮੂਲ ਇੰਸਟਾਲਰ ਲਾਗੂ ਕਰੋ"</string>
+    <string name="pref_install_mode_summary">"APK ਇੰਸਟਾਲ ਕਰਨ ਦੀ ਵਿਧੀ ਚੁਣੋ"</string>
+    <string name="pref_install_mode_title">"ਇੰਸਟਾਲ ਕਰਨ ਦੀ ਵਿਧੀ"</string>
+    <string name="pref_install_mode_native">"ਮੂਲ ਇੰਸਟਾਲਰ"</string>
+    <string name="pref_install_mode_root">"ROOT"</string>
+    <string name="pref_install_mode_services">"ਔਰੋਰਾ ਸੇਵਾਵਾਂ"</string>
+    <string name="pref_install_mode_no_root">"Root ਉਪਲੱਬਧ ਨਹੀਂ ਹੈ, ਪੁਸ਼ਟੀ ਕਰ ਲਵੋ ਕਿ ਫੋਨ Rooted ਹੈ"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_root_warn">"Root ਤਰੀਕੇ ਨਾਲ ਇੰਸਟਾਲ ਕਰਨ ਲਈ APK ਨੂੰ ਐਪ ਡੇਟਾ ਵਿੱਚ ਡਾਊਨਲੋਡ ਕਰਨ ਦੀ ਜ਼ਰੂਰਤ ਹੈ, ਐਂਡਰਾਇਡ Pie ++ ਲਈ ADB shell ਦੁਆਰਾ"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_no_services">"ਔਰੋਰਾ ਸੇਵਾਵਾਂ ਇੰਸਟਾਲ ਨਹੀਂ ਹਨ। ਕਿਰਪਾ ਕਰਕੇ ਸੇਵਾਵਾਂ ਇੰਸਟਾਲ ਕਰੋ"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_offline_services">"ਔਰੋਰਾ ਸੇਵਾਵਾਂ ਜੁੜੀਆਂ ਨਹੀਂ ਹਨ, ਕਿਰਪਾ ਕਰਕੇ ਯਕੀਨੀ ਬਣਾਓ ਕਿ ਉਹ ਚਾਲੂ ਹਨ ਤੇ ਐਪ ਦਾ ਸਹੀ ਸੰਸਕਰਣ ਹੈ"</string>
+    <string name="pref_ui">"ਯੂਸਰ ਇੰਟਰਫੇਸ"</string>
+    <string name="pref_ui_theme_title">"ਥੀਮ"</string>
+    <string name="pref_ui_theme_light">"ਸਫ਼ੈਦ"</string>
+    <string name="pref_ui_theme_dark">"ਗੂੜ੍ਹਾ"</string>
+    <string name="pref_ui_theme_black">"ਕਾਲਾ"</string>
+    <string name="pref_ui_transparent">"ਪਾਰਦਰਸ਼ੀ ਸ਼ੈਲੀ"</string>
+    <string name="pref_ui_transparent_summary">"ਸ਼੍ਰੇਣੀ ਅਤੇ ਲਿੰਕ ਦ੍ਰਿਸ਼ਾਂ ਲਈ ਪਾਰਦਰਸ਼ੀ ਕਾਰਡ ਸ਼ੈਲੀ ਦੀ ਵਰਤੋਂ ਕਰੋ"</string>
+    <string name="pref_downloads">"ਡਾਊਨਲੋਡ ਬਾਰੇ"</string>
+    <string name="pref_downloads_active_summary">"ਚਾਲੂ ਡਾਊਨਲੋਡਸ ਦੀ ਅਧਿਕਤਮ ਗਿਣਤੀ"</string>
+    <string name="pref_downloads_active_title">"ਚੱਲ ਰਹੀਆਂ ਡਾਊਨਲੋਡਸ"</string>
+    <string name="pref_downloads_debug_summary">"ਵਿਸਤ੍ਰਿਤ ਲੌਗ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਡਾਊਨਲੋਡ ਡੀਬਗਿੰਗ ਨੂੰ ਚਾਲੂ ਕਰੋ"</string>
+    <string name="pref_downloads_debug_title">"ਡਾਊਨਲੋਡ ਡੀਬਗਿੰਗ"</string>
+    <string name="pref_downloads_strategy_summary">"ਡਾਊਨਲੋਡ ਕਰਨ ਦੀ ਰਣਨੀਤੀ ਚੁਣੋ। ਸਭ ਤੋਂ ਤੇਜ਼ ਡਾਊਨਲੋਡ ਵਾਸਤੇ ਸਮਾਨਾਂਤਰ ਰਣਨੀਤੀ ਚੁਣੋ"</string>
+    <string name="pref_downloads_strategy_title">"ਡਾਊਨਲੋਡ ਰਣਨੀਤੀ"</string>
+    <string name="pref_downloads_strategy_sequential">"ਕਤਾਰਬੱਧ ਡਾਊਨਲੋਡ"</string>
+    <string name="pref_downloads_strategy_parallel">"ਸਮਾਨਾਂਤਰ ਡਾਊਨਲੋਡ (ਹਿਸਿਆਂ ਚ)"</string>
+    <string name="pref_downloads_path_title">"ਡਾਊਨਲੋਡ ਦਾ ਰਸਤਾ"</string>
+    <string name="pref_downloads_wifi_title">"ਕੇਵਲ WiFi ਵਰਤਦੇ ਹੋਏ ਡਾਊਨਲੋਡ ਕਰੋ"</string>
+    <string name="pref_network">"ਨੈੱਟਵਰਕ"</string>
+    <string name="pref_proxy_enable">"ਪ੍ਰੌਕਸੀ ਨੂੰ ਚਾਲੂ ਕਰੋ"</string>
+    <string name="pref_proxy_host">"ਪ੍ਰੌਕਸੀ HOST"</string>
+    <string name="pref_proxy_port">"ਪ੍ਰੌਕਸੀ PORT"</string>
+    <string name="pref_proxy_type">"ਪ੍ਰੌਕਸੀ ਦੀ ਕਿਸਮ"</string>
+    <string name="pref_updates_title">"ਅੱਪਡੇਟਾਂ"</string>
+    <string name="pref_updates_repo_title">"ਰਿਪੌਜ਼ੀਟਰੀ ਅੱਪਡੇਟਸ"</string>
+    <string name="pref_updates_app_title">"ਐਪ ਅੱਪਡੇਟਸ"</string>
+    <string name="pref_updates_repo_interval">"ਅੱਪਡੇਟ ਦਾ ਅੰਤਰਾਲ"</string>
+    <string name="pref_updates_manual">"ਖੁੱਦ ਕਰੋ"</string>
+    <string name="pref_updates_daily">"1 ਦਿਨ"</string>
+    <string name="pref_updates_2days">"2 ਦਿਨ"</string>
+    <string name="pref_updates_3days">"3 ਦਿਨ"</string>
+    <string name="pref_updates_7days">"7 ਦਿਨ"</string>
+    <string name="pref_services_title">"ਔਰੋਰਾ ਸਰਵਿਸਿਜ਼"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_services_desc">"ਔਰੋਰਾ ਸਰਵਿਸਿਜ਼ ਚਲਾਓ"</string>
+    <string name="pref_services_desc_alt">"ਔਰੋਰਾ ਸਰਵਿਸਿਜ਼ ਅਣਉਪਲਬਧ।  ਸਰਵਿਸ ਰਿਪੌਜ਼ੀਟਰੀ ਤੋ ਵਧੇਰੇ ਜਾਣਕਾਰੀ ਲਈ ਦਬਾਓ"</string>
+    <string name="repo_list">"ਰਿਪੌਜ਼ੀਟਰੀ ਸੂਚੀ"</string>
+    <string name="repo_list_select">"ਸਿੰਕ ਕਰਨ ਲਈ ਰਿਪੌਜ਼ੀਟਰੀ ਚੁਣੋ"</string>
+    <string name="repo_qr_scan">"ਸਕੈਨ QR ਕੋਡ"</string>
+    <string name="repo_id">"ਰਿਪੌਜ਼ੀਟਰੀ ਦੀ ID"</string>
+    <string name="repo_name">"ਰਿਪੌਜ਼ੀਟਰੀ ਦਾ ਨਾਮ"</string>
+    <string name="repo_addr">"ਰਿਪੌਜ਼ੀਟਰੀ ਦਾ ਪਤਾ"</string>
+    <string name="repo_fingerprint">"ਰਿਪੌਜ਼ੀਟਰੀ ਫਿੰਗਰਪ੍ਰਿੰਟ"</string>
+    <string name="sys_log">"ਸਿੰਕ ਲੌਗ"</string>
+    <string name="toast_no_repo_selected">"ਕੋਈ ਰਿਪੌਜ਼ੀਟਰੀ ਨਹੀਂ ਚੁਣੀ ਗਈ"</string>
+    <string name="error_app_not_found">"ਐਪ ਨਹੀਂ ਲੱਭਿਆ"</string>
+    <string name="error_app_not_installed">"ਕੋਈ ਐਪ ਇੰਸਟਾਲ ਨਹੀਂ ਹੋਈ"</string>
+    <string name="error_no_network">"ਨੈਟਵਰਕ ਨਹੀਂ ਹੈ"</string>
+    <string name="error_search_not_found">"ਕੋਈ ਮੇਲ ਖਾਂਦੀ ਐਪ ਨਹੀਂ ਹੈ"</string>
+    <string name="error_unknown">"ਅਣਜਾਣ ਗਲਤੀ ਹੋਈ"</string>
+    <string name="error_no_updates">"ਕੋਈ ਅੱਪਡੇਟ ਨਹੀਂ ਉਪਲੱਬਧ"</string>
+
+    <!-- Fuzzy -->
+    <string name="notification_installation_auto">"ਡਾਊਨਲੋਡ ਮੁਕੰਮਲ, ਇੰਸਟਾਲ ਲਈ ਦਬਾਓ
+"</string>
+    <string name="toast_apk_blacklisted">"ਬਲੈਕ ਲਿਸਟ ਕੀਤੀ ਗਈ"</string>
+    <string name="toast_apk_whitelisted">"ਵਾਈਟ ਲਿਸਟ ਕੀਤੀ ਗਈ"</string>
+    <string name="toast_apk_copy_success">"APK ਕਾਪੀ ਹੋ ਗਈ ਹੈ"</string>
+    <string name="toast_apk_copy_failure">"APK ਕਾਪੀ ਕਰਨ ਵਿੱਚ ਅਸਫਲ"</string>
+    <string name="action_ignore">"ਇਸ ਸੰਸਕਰਣ ਨੂੰ ਛੱਡੋ"</string>
+    <string name="action_save">"ਜਾਰੀ ਰੱਖੋ"</string>
+    <string name="action_show_user_only">"ਸਿਰਫ ਯੂਜ਼ਰ ਐਪਸ ਵਿਖਾਓ"</string>
+    <string name="action_sortBy">"ਸੂਚੀ ਕਤਾਰਬੱਧ ਕਰੋ"</string>
+    <string name="details_apk_suggested">"ਹੋਰ ਸੁਝਾਅ"</string>
+    <string name="dialog_sync_completed_desc_alt">"ਕੋਈ ਅੱਪਡੇਟ ਉਪਲਬੱਧ ਨਹੀਂ"</string>
+    <string name="dialog_repo_list">"ਰਿਪੌਜ਼ੀਟਰੀ ਦੀ ਸੂਚੀ"</string>
+    <string name="menu_repository">"ਰਿਪੌਜ਼ੀਟਰੀ"</string>
+    <string name="menu_setting">"ਸੈਟਿੰਗਾਂ"</string>
+    <string name="menu_about">"ਐਪ ਬਾਰੇ"</string>
+    <string name="download_metadata">"ਮੈਟਾ-ਡਾਟਾ ਪ੍ਰਾਪਤ ਕਰ ਰਹੇ ਹਾਂ"</string>
+    <string name="list_update_all_txt_one">"ਅੱਪਡੇਟ ਉਪਲਬੱਧ"</string>
+    <string name="list_update_selected">"ਚੁਣੇ ਹੋਏ ਅੱਪਡੇਟ ਕਰੋ"</string>
+    <string name="notification_channel_alert">"ਜਲਦ ਸੂਚਨਾਵਾਂ"</string>
+    <string name="notification_channel_general">"ਜਨਰਲ ਸੂਚਨਾਵਾਂ"</string>
+    <string name="sync_service">"ਰਿਪੌਜ਼ੀਟਰੀਆਂ ਤਾਜ਼ਾ ਹੋ ਰਹੀਆਂ ਹਨ...."</string>
+    <string name="sync_init">"ਅੱਪਡੇਟਾਂ ਦੀ ਜਾਂਚ ਜਾਰੀ"</string>
+    <string name="sync_downloading">"ਰਿਪੌਜ਼ੀਟਰੀਆਂ ਡਾਊਨਲੋਡ ਹੋ ਰਹੀਆਂ ਹਨ"</string>
+    <string name="title_installed">"ਮੇਰੇ ਐਪਸ ਤੇ ਗੇਮਸ"</string>
+    <string name="pref_updates_app_experimental">"ਏਕਸਪੇਰੀਮੈਂਟਲ ਅੱਪਡੇਟਾਂ ਚਾਲੂ ਕਰੋ"</string>
+    <string name="pref_updates_app_experimental_desc">"ਜੇਕਰ ਇਸਨੂੰ ਚਾਲੂ ਕਰੋਗੇ ਤਾਂ ਬੀਟਾ/ਅਲਫਾ ਅੱਪਡੇਟਾਂ, ਸਟੇਬਲ ਅੱਪਡੇਟਾਂ ਦੇ ਉੱਪਰ ਇੰਸਟਾਲ ਹੋਣਗੀਆਂ"</string>
+    <string name="details_new_changes">"ਨਵਾਂ ਕੀ ਹੈ"</string>
+    <string name="pref_downloader_internal">"ਐਪਸ ਨੂੰ ਇੰਟਰਨਲ ਮੈਮੋਰੀ ਵਿੱਚ ਡਾਊਨਲੋਡ ਕਰੋ"</string>
+    <string name="pref_downloader_internal_desc">"ਜੇਕਰ ਇਹ ਚਾਲੂ ਹੋਵੇਗਾ ਤਾਂ ਤੁਸੀਂ ਔਰੋਰਾ ਸੇਵਾਵਾਂ ਰਾਹੀਂ ਐਪਸ ਇੰਸਟਾਲ ਨਹੀਂ ਕਰ ਸਕਦੇ"</string>
+    <string name="action_reset">"ਪਹਿਲੀਆਂ ਸੈਟਿੰਗਾਂ ਤੇ ਰੀਸੈੱਟ ਕਰੋ"</string>
+    <string name="action_select_all">"ਸਾਰੇ ਚੁਣੋ"</string>
+    <string name="list_not_installed">"ਇੰਸਟਾਲਡ ਨਹੀਂ ਹੈ"</string>
+    <string name="list_repo_availability">"ਇਸਦੀ ਉਪਲੱਬਧਤਾ ਬਾਰੇ ਜਾਂਚ ਜਾਰੀ…"</string>
+    <string name="list_repo_available">"ਉਪਲੱਬਧ ਹੈ"</string>
+    <string name="list_repo_unavailable">"ਉਪਲਬੱਧ ਨਹੀਂ ਹੈ"</string>
+    <string name="title_repo_add_desc">"ਸਿੰਕ ਕਰਨ ਲਈ ਖੁੱਦ ਨਵੀਂ ਰਿਪੋਜ਼ੀਟਰੀ ਸ਼ਾਮਿਲ ਕਰੋ"</string>
+    <string name="toast_repo_sync_empty">"ਘੱਟ ਤੋਂ ਘੱਟ ਇੱਕ ਰਿਪੋਜ਼ੀਟਰੀ ਸਿੰਕ ਕਰਨ ਵਾਸਤੇ ਚੁਣੋ"</string>
+    <string name="toast_repo_sync_completed">"ਸਾਰੀਆਂ ਰਿਪੋਜ਼ੀਟਰੀਆਂ ਹੁਣ ਅੱਪਡੇਟਡ ਹਨ"</string>
+    <string name="toast_repo_sync_no_updates">"ਕੋਈ ਅੱਪਡੇਟ ਉਪਲਬੱਧ ਨਹੀਂ"</string>
+    <string name="about_libera">"ਲਿਬੇਰਾ-ਪੇ"</string>
+    <string name="about_libera_summary">"ਲਿਬੇਰਾ-ਪੇ ਉੱਪਰ ਸਰਪ੍ਰਸਤ ਬਣੋ"</string>
+    <string name="about_bitcoin_btc">"ਬਿੱਟ-ਕੋਆਇਨ"</string>
+    <string name="about_bitcoin_btc_summary">"ਬਿੱਟ-ਕੋਆਇਨ (BTC) ਜ਼ਰੀਏ ਦਾਨ ਕਰੋ"</string>
+    <string name="about_bitcoin_bch">"ਬਿੱਟ-ਕੋਆਇਨ ਕੈਸ਼"</string>
+    <string name="about_bitcoin_bch_summary">"ਬਿੱਟ-ਕੋਆਇਨ ਕੈਸ਼ (BCH) ਜ਼ਰੀਏ ਦਾਨ ਕਰੋ"</string>
+    <string name="about_bitcoin_eth">"ਐਥੇਰੀਯਮ"</string>
+    <string name="about_bitcoin_eth_summary">"ਐਥੇਰੀਯਮ (ETH) ਜ਼ਰੀਏ ਦਾਨ ਕਰੋ"</string>
+    <string name="about_bhim">"ਭੀਮ - ਯੂਪੀਆਈ"</string>
+    <string name="about_bhim_summary">"ਭੀਮ - ਯੂਪੀਆਈ ਜ਼ਰੀਏ ਦਾਨ ਕਰੋ"</string>
+    <string name="about_paypal">"ਪੇਯਪਲ"</string>
+    <string name="about_paypal_summary">"ਪੇਯਪਲ ਜ਼ਰੀਏ ਦਾਨ ਕਰੋ"</string>
+    <string name="about_gitlab">"GitLab"</string>
+    <string name="about_gitlab_summary">"ਔਰੋਰਾ ਡ੍ਰੋਆਇਡ ਦਾ ਸੋਰਸ ਕੋਡ ਔਰੋਰਾ OSS GitLab ਤੋਂ ਪ੍ਰਾਪਤ ਕਰੋ"</string>
+    <string name="about_telegram">"ਟੈਲੀਗ੍ਰਾਮ"</string>
+    <string name="about_telegram_summary">"ਕੋਈ ਚਰਚਾ ਜਾਂ ਸੁਝਾਅ ਵਾਸਤੇ ਔਰੋਰਾ ਸਹਾਇਤਾ ਗਰੁੱਪ ਨਾਲ ਜੁੜੋ"</string>
+    <string name="about_xda">"ਡਿਵੈਲਪਰ ਵੈਬਸਾਈਟ"</string>
+    <string name="about_xda_summary">"ਕੋਈ ਚਰਚਾ ਜਾਂ ਸੁਝਾਅ ਦੇਣ ਵਾਸਤੇ ਔਰੋਰਾ ਡ੍ਰੋਆਇਡ ਦੀ XDA ਵੈਬਸਾਈਟ ਵੇਖੋ"</string>
+    <string name="action_about">"ਇਸ ਐਪ ਬਾਰੇ ਹੋਰ ਜਾਣੋ"</string>
+</resources>

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_add">"Ekle"</string>
+    <string name="action_ask">"Sor"</string>
+    <string name="action_blacklist">"Kara liste"</string>
+    <string name="action_cancel">"İptal"</string>
+    <string name="action_clear">"Temizle"</string>
+    <string name="action_clear_all">"Hepsini temizle"</string>
+    <string name="action_close">"Kapat"</string>
+    <string name="action_copy">"Bağlantıyı Kopyala"</string>
+    <string name="action_copied">"Bağlantı panoya kopyalandı"</string>
+    <string name="action_download">"İndir"</string>
+    <string name="action_downloads">"İndirilenler"</string>
+    <string name="action_export">"Dışa aktar"</string>
+    <string name="action_finish">"Bitti"</string>
+    <string name="action_favourites">"Sevdiğin Uygulamalar"</string>
+    <string name="action_favourite_add">"Sevilenlere ekle"</string>
+    <string name="action_favourite_remove">"Sevilenlerden kaldır"</string>
+    <string name="action_get_local_apk">"Yerel APK'yı getir"</string>
+    <string name="action_home">"Ev"</string>
+    <string name="action_import">"İçe aktar"</string>
+    <string name="action_info">"Uyuglama Bilgisi"</string>
+    <string name="action_install">"Kur"</string>
+    <string name="action_installing">"Kuruluyor"</string>
+    <string name="action_installed">"Kuruldu"</string>
+    <string name="action_installations">"Kurulumlar"</string>
+    <string name="action_later">"Sonra"</string>
+    <string name="action_more">"Daha"</string>
+    <string name="action_next">"İleri"</string>
+    <string name="action_open">"Aç"</string>
+    <string name="action_pause">"Duraklat"</string>
+    <string name="action_recheck">"Tekrar denetle"</string>
+    <string name="action_remove">"Kaldır"</string>
+    <string name="action_restart">"Yeniden başlat"</string>
+    <string name="action_resume">"Devam et"</string>
+    <string name="action_retry">"Yeniden dene"</string>
+    <string name="action_settings">"Ayarlar"</string>
+    <string name="action_share">"Paylaş"</string>
+    <string name="action_sync">"Eşzamanla"</string>
+    <string name="action_uninstall">"Kaldır"</string>
+    <string name="action_update">"Güncelle"</string>
+    <string name="action_updates">"Güncellemeler"</string>
+    <string name="action_use_mirror">"Yansı URL'si kullan"</string>
+    <string name="action_unsupported">"Uyumsuz Uygulama"</string>
+    <string name="action_whitelist">"Beyaz liste"</string>
+    <string name="details_more">"Daha fazla oku"</string>
+    <string name="details_more_apps_dev">"Geliştiriciden daha fazla uygulama"</string>
+    <string name="details_more_apps_similar">"Benzer kategori uygulamaları"</string>
+    <string name="details_other">"Diğer sürümler"</string>
+    <string name="details_no_description">"Geliştirici tarafından yapılan açıklama yok"</string>
+    <string name="details_no_permissions">"Hiçbir izin kullanılmıyor."</string>
+    <string name="details_permissions">"Uygulama izinleri"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_permissions_desc">"Aurora Mağazası aşağıdaki izinleri kullanır"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_repo_desc">"Eşzamanlamak için F-Droid depolarını seçin"</string>
+    <string name="dialog_sync_title">"Depo Güncellemeleri"</string>
+    <string name="dialog_sync_desc">"Uygulamaları depolardan güncellemek ister misiniz?"</string>
+    <string name="dialog_sync_desc_alt">"Eski veriler algılandı, yeni güncellemeler olabilir, tüm depoları eşzamanlamak ister misiniz?"</string>
+    <string name="dialog_sync_completed_desc">"Tüm depolar güncellendi, güncellemelerden sonra uygulamayı yeniden başlatmanız önerilir."</string>
+    <string name="dialog_sync_positive">"Evet"</string>
+    <string name="dialog_sync_negative">"Hayır"</string>
+    <string name="dialog_sync_complete_positive">"Şimdi yeniden başlat"</string>
+    <string name="dialog_repo_title">"Depo Ekle"</string>
+    <string name="dialog_repo_desc">"Gerçekten eklemek ister misiniz"</string>
+    <string name="menu_downloads">"İndirilenler"</string>
+    <string name="download_cancel_all">"Hepsini iptal et"</string>
+    <string name="download_canceled">"İptal edildi"</string>
+    <string name="download_clear_completed">"Temizleme tamamlandı"</string>
+    <string name="download_completed">"İndirildi"</string>
+
+    <!-- Fuzzy -->
+    <string name="download_failed">"İndirme Başarısız"</string>
+    <string name="download_force_clear_all">"Hepsini zorla temizle"</string>
+    <string name="download_none">"İndirme yok"</string>
+    <string name="download_pause_all">"Hepsini duraklat"</string>
+    <string name="download_paused">"Duraklatıldı"</string>
+    <string name="download_progress">"İndiriliyor"</string>
+    <string name="download_queued">"Sıraya alındı"</string>
+    <string name="download_resume">"Devam et"</string>
+    <string name="download_resume_all">"Hepsine devam et"</string>
+    <string name="filter_name_az">"A'dan Z'ye"</string>
+    <string name="filter_name_za">"Z'den A'ya"</string>
+    <string name="filter_size_min">"En Az Boyut"</string>
+    <string name="filter_size_max">"En Fazla Boyut"</string>
+    <string name="filter_date_updated">"Güncelleme Tarihi"</string>
+    <string name="filter_date_added">"Ekleme Tarihi"</string>
+    <string name="installer_status_failure">"Kurulum başarısız"</string>
+    <string name="installer_status_failure_aborted">"Kurulum iptal edildi"</string>
+    <string name="installer_status_failure_blocked">"Kurulum engellendi"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_conflict">"Çakışan paket var"</string>
+    <string name="installer_status_failure_incompatible">"Uyumsuz uygulama"</string>
+    <string name="installer_status_failure_invalid">"Geçersiz veya bozuk APK"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_storage">"Yetersiz hafıza alanı"</string>
+    <string name="installer_status_success">"Başarıyla kuruldu"</string>
+    <string name="installer_status_unknown">"Bilinmeyen"</string>
+    <string name="installer_status_user_action">"Kullanıcı onayı bekleniyor"</string>
+    <string name="list_blacklist">"Kara listeye alınan uygulamalar"</string>
+    <string name="list_blacklist_none">"Kara listede uygulama yok"</string>
+    <string name="list_empty_fav">"Sevilen yok"</string>
+    <string name="list_empty_updates">"Güncelleme yok"</string>
+    <string name="list_installed">"Kuruldu"</string>
+    <string name="list_selected">"Seçilen uygulamalar"</string>
+    <string name="list_update_all">"Hepsini güncelle"</string>
+    <string name="list_update_all_txt">"güncelleme(ler) mevcut"</string>
+    <string name="list_updating">"Güncelleniyor"</string>
+    <string name="sync_completed">"Eşzamanlandı"</string>
+    <string name="sync_completed_all">"Tüm depolar eşzamanlandı"</string>
+    <string name="sync_progress">"Depolar eşzamanlanıyor"</string>
+    <string name="sync_failed">"Eşzamanlama başarısız"</string>
+
+    <!-- Fuzzy -->
+    <string name="title_home">"Aurora Droid"</string>
+    <string name="title_apps_new">"Yeni Uygulamalar"</string>
+    <string name="title_categories">"Kategoriler"</string>
+    <string name="title_latest_updated">"Son güncellenenler"</string>
+    <string name="title_repo_add">"Yeni depo ekle"</string>
+    <string name="title_perm">"İzinler"</string>
+    <string name="title_repositories">"Depolar"</string>
+    <string name="title_search">"Uygulamaları ve oyunları ara"</string>
+    <string name="title_sync_repo">"Depoları Eşzamanla"</string>
+    <string name="title_update_all">"Tüm Uygulamaları Güncelle"</string>
+    <string name="title_welcome">"Hoşgeldiniz"</string>
+    <string name="title_url">"URL"</string>
+    <string name="title_fingerprint">"Parmak izi"</string>
+    <string name="title_desc">"Açıklama"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_dialog_to_apply_restart">"Uygulamayı yeniden başlattıktan sonra bu ayar uygulanacaktır"</string>
+    <string name="pref_installations">"Kurulumlar"</string>
+    <string name="pref_install_auto_summary">"Uygulamalar indirme tamamlandıktan sonra anında kurulur"</string>
+    <string name="pref_install_auto_title">"İndirme sonrası APK'ları kendiliğinden kur"</string>
+    <string name="pref_install_delete_summary">"Kök yükleme yöntemi ile Android Pie + çalıştıran cihazlarda, APK'lar varsayılan olarak silinir"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_delete_title">"Kurulum sonrası apk'yı sil"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_type_summary">"Paketleri kurmak için yerel yükleyiciyi kullanın, birlikte verilen apk kurulumlarını keser"</string>
+    <string name="pref_install_type_title">"Yerel kurucuyu zorla"</string>
+    <string name="pref_install_mode_summary">"APK kurulum modunu seç"</string>
+    <string name="pref_install_mode_title">"Kurulum yöntemi"</string>
+    <string name="pref_install_mode_native">"Yerel"</string>
+    <string name="pref_install_mode_root">"Kök"</string>
+    <string name="pref_install_mode_services">"Aurora Hizmetleri"</string>
+    <string name="pref_install_mode_no_root">"Kök erişimi mevcut değil, cihazınızın kök erişimli olduğundan emin olun"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_root_warn">"Kök kurulum yöntemi, adb kabuğu, Android Pie + ile kurmak için apk'nin uygulama verilerinde indirilmesini gerektirir"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_no_services">"Aurora Hizmetleri kurulu değil, lütfen önce hizmetleri kurun"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_offline_services">"Aurora Hizmetleri bağlı değil, etkin olduğundan ve uygulamanın doğru sürümüne sahip olduğunuzdan emin olun"</string>
+    <string name="pref_ui">"Kullanıcı Arayüzü"</string>
+    <string name="pref_ui_theme_title">"Tema"</string>
+    <string name="pref_ui_theme_light">"Açık"</string>
+    <string name="pref_ui_theme_dark">"Karanlık"</string>
+    <string name="pref_ui_theme_black">"Siyah"</string>
+    <string name="pref_ui_transparent">"Şeffaf tarz"</string>
+    <string name="pref_ui_transparent_summary">"Kategori ve bağlantı görünümleri için şeffaf kart tarzını kullanın"</string>
+    <string name="pref_downloads">"İndirilenler"</string>
+    <string name="pref_downloads_active_summary">"En fazla etkin indirme sayısı"</string>
+    <string name="pref_downloads_active_title">"Etkin indirme"</string>
+    <string name="pref_downloads_debug_summary">"Ayrıntılı günlükler almak için indirme hata ayıklamasını etkinleştirin"</string>
+    <string name="pref_downloads_debug_title">"Hata ayıklamalı indir"</string>
+    <string name="pref_downloads_strategy_summary">"Varsayılan indirme stratejisini seçin, en hızlı indirme için önerilen Paralel Strateji"</string>
+    <string name="pref_downloads_strategy_title">"İndirme stratejisi"</string>
+    <string name="pref_downloads_strategy_sequential">"Sıralı indirme"</string>
+    <string name="pref_downloads_strategy_parallel">"Paralel indirme (Bölmeler)"</string>
+    <string name="pref_downloads_path_title">"İndirme yolu"</string>
+    <string name="pref_downloads_wifi_title">"Sadece kablosuz ağ kullanarak indir"</string>
+    <string name="pref_network">"Ağlar"</string>
+    <string name="pref_proxy_enable">"Vekili etkinleştir"</string>
+    <string name="pref_proxy_host">"Vekil sunucu"</string>
+    <string name="pref_proxy_port">"Vekil bağlantı noktası"</string>
+    <string name="pref_proxy_type">"Vekil türü"</string>
+    <string name="pref_updates_title">"Güncellemeler"</string>
+    <string name="pref_updates_repo_title">"Depo Güncellemeleri"</string>
+    <string name="pref_updates_app_title">"Uygulama Güncellemeleri"</string>
+    <string name="pref_updates_repo_interval">"Güncelleme aralığı"</string>
+    <string name="pref_updates_manual">"El ile"</string>
+    <string name="pref_updates_daily">"1 gün"</string>
+    <string name="pref_updates_2days">"2 gün"</string>
+    <string name="pref_updates_3days">"3 gün"</string>
+    <string name="pref_updates_7days">"7 gün"</string>
+    <string name="pref_services_title">"Aurora Hizmetleri"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_services_desc">"Aurora hizmetlerini başlat"</string>
+    <string name="pref_services_desc_alt">"Aurora hizmetleri kullanılamıyor. Daha fazla bilgi edinmek üzere servis deposuna gitmek için tıklayın."</string>
+    <string name="repo_list">"Depo listesi"</string>
+    <string name="repo_list_select">"Eşzamanlamak istediğiniz depoları seçin"</string>
+    <string name="repo_qr_scan">"Karekodu tara"</string>
+    <string name="repo_id">"Depo Kimliği"</string>
+    <string name="repo_name">"Depo Adı"</string>
+    <string name="repo_addr">"Depo Adresi"</string>
+    <string name="repo_fingerprint">"Depo Parmak İzi"</string>
+    <string name="sys_log">"Eşzamanlama Günlüğü"</string>
+    <string name="toast_no_repo_selected">"Depo seçilmedi"</string>
+    <string name="error_app_not_found">"Uygulama bulunamadı"</string>
+    <string name="error_app_not_installed">"Kurulu uygulama yok"</string>
+    <string name="error_no_network">"Ağ bağlantısı yok"</string>
+    <string name="error_search_not_found">"Eşleşen uygulama bulunamadı"</string>
+    <string name="error_unknown">"Bilinmeyen hata oluştu"</string>
+    <string name="error_no_updates">"Güncelleme yok"</string>
+
+    <!-- Fuzzy -->
+    <string name="notification_installation_auto">"İndirildi, kurmak için tıklayın"</string>
+    <string name="toast_apk_blacklisted">"Kara listeye alındı"</string>
+    <string name="toast_apk_whitelisted">"Beyaz listeye alındı"</string>
+    <string name="toast_apk_copy_success">"APK başarıyla kopyalandı"</string>
+    <string name="toast_apk_copy_failure">"APK kopyalaması başarısız oldu"</string>
+    <string name="action_ignore">"Bu sürümü yoksay"</string>
+    <string name="action_save">"Kaydet"</string>
+    <string name="action_show_user_only">"Yalnızca kullanıcı uygulamalarını göster"</string>
+    <string name="action_sortBy">"Sırala"</string>
+    <string name="details_apk_suggested">"Önerildi"</string>
+    <string name="dialog_sync_completed_desc_alt">"Yeni güncelleme yok"</string>
+    <string name="dialog_repo_list">"Depo Listesi"</string>
+    <string name="menu_repository">"Depo"</string>
+    <string name="menu_setting">"Ayarlar"</string>
+    <string name="menu_about">"Hakkında"</string>
+    <string name="download_metadata">"Üst veri alınıyor"</string>
+    <string name="list_update_all_txt_one">"güncelleme var"</string>
+    <string name="list_update_selected">"Seçileni güncelle"</string>
+    <string name="notification_channel_alert">"Hızlı bildirim"</string>
+    <string name="notification_channel_general">"Genel bildirim"</string>
+    <string name="sync_service">"Depo Eşitleme hizmeti çalışıyor"</string>
+    <string name="sync_init">"Güncellemeleri denetle"</string>
+    <string name="sync_downloading">"Depolar indiriliyor"</string>
+    <string name="title_installed">"Uygulamalarım ve oyunlarım"</string>
+    <string name="pref_updates_app_experimental">"Deneysel güncellemeleri kabul et"</string>
+    <string name="pref_updates_app_experimental_desc">"Etkinleştirilirse, beta/alfa derlemeler kararlı derlemeleri geçersiz kılar"</string>
+    <string name="details_new_changes">"Yenilikler"</string>
+    <string name="pref_downloader_internal">"Dahili depolama uygulamalarını indir"</string>
+    <string name="pref_downloader_internal_desc">"Etkinleştirilirse Aurora Hizmetleri üzerinden uygulama yükleyemezsiniz"</string>
+    <string name="action_reset">"Varsayılana sıfırla"</string>
+    <string name="action_select_all">"Tümünü seç"</string>
+    <string name="list_not_installed">"Kurulu değil"</string>
+    <string name="list_repo_availability">"Kullanılabilirliği denetleniyor"</string>
+    <string name="list_repo_available">"Kullanılabilir"</string>
+    <string name="list_repo_unavailable">"Kullanım dışı"</string>
+    <string name="title_repo_add_desc">"Eşitlemek için özel bir depo ekleyin"</string>
+    <string name="toast_repo_sync_empty">"Eşitlenecek en az bir depo seçin"</string>
+    <string name="toast_repo_sync_completed">"Tüm depolar güncellendi"</string>
+    <string name="toast_repo_sync_no_updates">"Güncelleme yok"</string>
+    <string name="about_libera">"Libera Pay"</string>
+    <string name="about_libera_summary">"Libera Pay'de patron olun"</string>
+    <string name="about_bitcoin_btc">"Bitcoin"</string>
+    <string name="about_bitcoin_btc_summary">"Bitcoin (BTC) ile bağış yapın"</string>
+    <string name="about_bitcoin_bch">"Bitcoin Nakit"</string>
+    <string name="about_bitcoin_bch_summary">"Bitcoin Nakit (BCH) ile bağış yapın"</string>
+    <string name="about_bitcoin_eth">"Ethereum"</string>
+    <string name="about_bitcoin_eth_summary">"Ethereum (ETH) ile bağış yapın"</string>
+    <string name="about_bhim">"BHIM - UPI"</string>
+    <string name="about_bhim_summary">"UPI ile bağış yapın"</string>
+    <string name="about_paypal">"Paypal"</string>
+    <string name="about_paypal_summary">"PayPal ile bağış yapın"</string>
+    <string name="about_gitlab">"GitLab"</string>
+    <string name="about_gitlab_summary">"GitLab'de Aurora OSS'den Aurora Droid kaynak kodunu alın."</string>
+    <string name="about_telegram">"Telegram"</string>
+    <string name="about_telegram_summary">"Tartışmalar ve öneriler için Aurora Destek grubuna katılın."</string>
+    <string name="about_xda">"Geliştirici Konusu"</string>
+    <string name="about_xda_summary">"Tartışmalar veya öneriler için Aurora Droid XDA konusuna bakın."</string>
+    <string name="action_about">"Hakkında"</string>
+</resources>

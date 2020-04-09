@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_add">"ചേർക്കുക"</string>
+    <string name="action_ask">"ചോദിക്കുക"</string>
+    <string name="action_blacklist">"കരിമ്പട്ടിക"</string>
+    <string name="action_cancel">"റദ്ദാക്കുക"</string>
+    <string name="action_clear">"മായ്ക്കുക"</string>
+    <string name="action_clear_all">"എല്ലാം മായ്ക്കുക"</string>
+    <string name="action_close">"അടയ്ക്കുക"</string>
+    <string name="action_copy">"ലിങ്ക് പകർത്തുക"</string>
+    <string name="action_copied">"ലിങ്ക് ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തി"</string>
+    <string name="action_download">"ഡൗൺലോഡ്"</string>
+    <string name="action_downloads">"ഡൗൺലോഡുകൾ"</string>
+    <string name="action_export">"എക്സ്പോർട്ട്"</string>
+    <string name="action_finish">"പൂർത്തിയാക്കുക"</string>
+    <string name="action_favourites">"പ്രിയപ്പെട്ട അപ്ലിക്കേഷനുകൾ"</string>
+    <string name="action_favourite_add">"പ്രിയങ്കരങ്ങളിൽ ചേര്‍ക്കുക"</string>
+    <string name="action_favourite_remove">"പ്രിയങ്കരങ്ങളിൽ നിന്ന് നീക്കംചെയ്യുക"</string>
+    <string name="action_get_local_apk">"പ്രാദേശിക APK നേടുക"</string>
+    <string name="action_home">"ഹോം"</string>
+    <string name="action_import">"ഇബോർട്ട്"</string>
+    <string name="action_info">"അപ്ലിക്കേഷൻ വിവരം"</string>
+    <string name="action_install">"ഇൻസ്റ്റാൾ ചെയ്യുക"</string>
+    <string name="action_installing">"ഇൻസ്റ്റാൾ ചെയ്യുന്നു"</string>
+    <string name="action_installed">"ഇൻസ്റ്റാൾ ചെയ്‌തു"</string>
+    <string name="action_installations">"ഇൻസ്റ്റാളേഷനുകൾ"</string>
+    <string name="action_later">"പിന്നീട്"</string>
+    <string name="action_more">"കൂടുതൽ"</string>
+    <string name="action_next">"അടുത്തത്"</string>
+    <string name="action_open">"തുറക്കുക"</string>
+    <string name="action_pause">"താൽക്കാലികമായി നിർത്തുക"</string>
+    <string name="action_recheck">"വീണ്ടും പരിശോധിക്കുക"</string>
+    <string name="action_remove">"നീക്കംചെയ്യുക"</string>
+    <string name="action_restart">"വീണ്ടും തുടങ്ങുക"</string>
+    <string name="action_resume">"പ്രവൃത്തി തുടരുക"</string>
+    <string name="action_retry">"വീണ്ടും ശ്രമിക്കുക"</string>
+    <string name="action_settings">"ക്രമീകരണം"</string>
+    <string name="action_share">"പങ്കിടുക"</string>
+    <string name="action_sync">"സമന്വയിപ്പിക്കുക"</string>
+    <string name="action_uninstall">"അൺ‌ഇൻ‌സ്റ്റാൾ‌ ചെയ്യുക"</string>
+    <string name="action_update">"അപ്ഡേറ്റ് ചെയ്യുക"</string>
+    <string name="action_updates">"അപ്‌ഡേറ്റുകൾ"</string>
+    <string name="action_use_mirror">"മിറർ URL ഉപയോഗിക്കുക"</string>
+    <string name="action_unsupported">"പൊരുത്തപ്പെടാത്ത അപ്ലിക്കേഷൻ"</string>
+    <string name="action_whitelist">"വൈറ്റ്‌ലിസ്റ്റ്"</string>
+    <string name="details_more">"കൂടുതൽ വായിക്കുക"</string>
+    <string name="details_more_apps_dev">"ഡവലപ്പറിൽ നിന്നുള്ള കൂടുതൽ അപ്ലിക്കേഷനുകൾ"</string>
+    <string name="details_more_apps_similar">"സമാന അപ്ലിക്കേഷനുകൾ"</string>
+    <string name="details_other">"മറ്റ് പതിപ്പുകൾ"</string>
+    <string name="details_no_description">"ഡവലപ്പർ ഒരു വിവരണവും നൽകിയിട്ടില്ല"</string>
+    <string name="details_no_permissions">"അനുമതികളൊന്നും ഉപയോഗിക്കുന്നില്ല"</string>
+    <string name="details_permissions">"അപ്ലിക്കേഷൻ അനുമതികൾ"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_permissions_desc">"Aurora Store ഇനിപ്പറയുന്ന അനുമതികൾ ഉപയോഗിക്കുന്നു"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_repo_desc">"സമന്വയിപ്പിക്കുന്നതിന് F-Droid റിപ്പോസിറ്ററികൾ തിരഞ്ഞെടുക്കുക"</string>
+    <string name="dialog_sync_title">"റിപ്പോ അപ്‌ഡേറ്റുകൾ"</string>
+    <string name="dialog_sync_desc">"റിപ്പോസിറ്ററികളിൾ നിന്ന് അപ്ലിക്കേഷനുകൾ അപ്‌ഡേറ്റുചെയ്യാൻ നിങ്ങൾ ആഗ്രഹിക്കുന്നുണ്ടോ?"</string>
+    <string name="dialog_sync_desc_alt">"പഴയ ഡാറ്റ കണ്ടെത്തി, പുതിയ അപ്‌ഡേറ്റുകൾ ഉണ്ടാകാം, എല്ലാ റിപ്പോസിറ്ററികളും സമന്വയിപ്പിക്കാൻ നിങ്ങൾ ആഗ്രഹിക്കുന്നുണ്ടോ?"</string>
+    <string name="dialog_sync_completed_desc">"എല്ലാ റിപ്പോസിറ്ററികളും അപ്‌ഡേറ്റുചെയ്‌തു, അപ്‌ഡേറ്റുകൾക്ക് ശേഷം അപ്ലിക്കേഷൻ പുനരാരംഭിക്കാൻ ശുപാർശ ചെയ്യുന്നു."</string>
+    <string name="dialog_sync_positive">"അതെ"</string>
+    <string name="dialog_sync_negative">"ഇല്ല"</string>
+    <string name="dialog_sync_complete_positive">"ഇപ്പോൾ പുനരാരംഭിക്കുക"</string>
+    <string name="dialog_repo_title">"റിപ്പോസിറ്ററി ചേർക്കുക"</string>
+
+    <!-- Example of usage..
+This repo ചേർക്കാൻ നിങ്ങൾ ശരിക്കും ആഗ്രഹിക്കുന്നുണ്ടോ?
+In English...
+Do you really wish to add this repo? -->
+    <string name="dialog_repo_desc">"ചേർക്കാൻ നിങ്ങൾ ശരിക്കും ആഗ്രഹിക്കുന്നുണ്ടോ?"</string>
+    <string name="menu_downloads">"ഡൗൺലോഡുകൾ"</string>
+    <string name="download_cancel_all">"എല്ലാം റദ്ദാക്കുക"</string>
+    <string name="download_canceled">"റദ്ദാക്കി"</string>
+    <string name="download_clear_completed">"പൂർത്തിയായതു മായ്‌ക്കുക"</string>
+    <string name="download_completed">"ഡൗൺലോഡ് ചെയ്തു"</string>
+
+    <!-- Fuzzy -->
+    <string name="download_failed">"ഡൗൺലോഡ് പരാജയപ്പെട്ടു"</string>
+    <string name="download_force_clear_all">"എല്ലാം മായ്‌ക്കുക"</string>
+    <string name="download_none">"ഡൗൺലോഡുകൾ ഒന്നുമില്ല"</string>
+    <string name="download_pause_all">"എല്ലാം താൽക്കാലികമായി നിർത്തുക"</string>
+    <string name="download_paused">"താൽക്കാലികമായി നിർത്തി"</string>
+    <string name="download_progress">"ഡൗൺലോഡ് ചെയ്യുന്നു"</string>
+    <string name="download_queued">"ക്യൂവിലാണ്"</string>
+    <string name="download_resume">"ഡൗൺലോഡ് പുനരാരംഭിക്കുക"</string>
+    <string name="download_resume_all">"എല്ലാ ഡൗൺലോഡുകളും പുനരാരംഭിക്കുക"</string>
+    <string name="filter_name_az">"പേര് A-Z"</string>
+    <string name="filter_name_za">"പേര് Z-A"</string>
+    <string name="filter_size_min">"വലുപ്പം കുറഞ്ഞത്"</string>
+    <string name="filter_size_max">"വലുപ്പം പരമാവധി"</string>
+    <string name="filter_date_updated">"അപ്‌ഡേറ്റുചെയ്‌ത തീയതി"</string>
+    <string name="filter_date_added">"ചേർത്ത തീയതി"</string>
+    <string name="installer_status_failure">"ഇൻസ്റ്റാളേഷൻ പരാജയപ്പെട്ടു"</string>
+    <string name="installer_status_failure_aborted">"ഇൻസ്റ്റാളേഷൻ റദ്ദാക്കി"</string>
+    <string name="installer_status_failure_blocked">"ഇൻസ്റ്റാളേഷൻ തടയപെട്ടു"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_conflict">"വൈരുദ്ധ്യമുള്ള പാക്കേജ് നിലവിലുണ്ട്"</string>
+    <string name="installer_status_failure_incompatible">"പൊരുത്തപ്പെടാത്ത അപ്ലിക്കേഷൻ"</string>
+    <string name="installer_status_failure_invalid">"അസാധുവായ അല്ലെങ്കിൽ കേടായ അപ്ലിക്കേഷൻ"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_storage">"മെമ്മറി അപര്യാപ്‌തമാണ്"</string>
+    <string name="installer_status_success">"വിജയകരമായി ഇൻസ്റ്റാളുചെയ്‌തു"</string>
+    <string name="installer_status_unknown">"അജ്ഞാതം"</string>
+    <string name="installer_status_user_action">"ഉപയോക്തൃ സ്ഥിരീകരണത്തിനായി കാത്തിരിക്കുന്നു"</string>
+    <string name="list_blacklist">"കരിമ്പട്ടികയിൽ പെടുത്തിയ അപ്ലിക്കേഷനുകൾ"</string>
+    <string name="list_blacklist_none">"അപ്ലിക്കേഷനുകളൊന്നും കരിമ്പട്ടികയിൽ പെടുത്തിയിട്ടില്ല"</string>
+    <string name="list_empty_fav">"പ്രിയങ്കരങ്ങളൊന്നുമില്ല"</string>
+    <string name="list_empty_updates">"അപ്‌ഡേറ്റുകളൊന്നും ലഭ്യമല്ല"</string>
+    <string name="list_installed">"ഇൻസ്റ്റാളുചെയ്തു"</string>
+    <string name="list_selected">"അപ്ലിക്കേഷനുകൾ തിരഞ്ഞെടുത്തു"</string>
+    <string name="list_update_all">"എല്ലാം അപ്‌ഡേറ്റുചെയ്യുക"</string>
+    <string name="list_update_all_txt">"അപ്‌ഡേറ്റ് (കൾ) ലഭ്യമാണ്"</string>
+    <string name="list_updating">"അപ്‌ഡേറ്റുചെയ്യുന്നു"</string>
+    <string name="sync_completed">"സമന്വയിപ്പിച്ചു"</string>
+    <string name="sync_completed_all">"എല്ലാ റിപ്പോസിറ്ററികളും സമന്വയിപ്പിച്ചു"</string>
+    <string name="sync_progress">"റിപ്പോസിറ്ററികൾ  സമന്വയിപ്പിക്കുന്നു"</string>
+    <string name="sync_failed">"സമന്വയം പരാജയപ്പെട്ടു"</string>
+
+    <!-- Fuzzy -->
+    <string name="title_home">"അറോറ ഡ്രോയിഡ്"</string>
+    <string name="title_apps_new">"പുതിയ അപ്ലിക്കേഷനുകൾ"</string>
+    <string name="title_categories">"വിഭാഗങ്ങൾ"</string>
+
+    <!-- Fuzzy -->
+    <string name="title_latest_updated">"ഏറ്റവും പുതിയ അപ്‌ഡേറ്റുചെയ്‌ത"</string>
+    <string name="title_repo_add">"പുതിയ റിപ്പോസിറ്ററി ചേർക്കുക"</string>
+    <string name="title_perm">"അനുമതികൾ"</string>
+    <string name="title_repositories">"റിപ്പോസിറ്ററികൾ"</string>
+    <string name="title_search">"അപ്ലിക്കേഷനുകളും ഗെയിമുകളും തിരയുക"</string>
+    <string name="title_sync_repo">"റിപ്പോസിറ്ററികൾ സമന്വയിപ്പിക്കുക"</string>
+    <string name="title_update_all">"എല്ലാ അപ്ലിക്കേഷനുകളും അപ്‌ഡേറ്റുചെയ്യുക"</string>
+    <string name="title_welcome">"സ്വാഗതം"</string>
+    <string name="title_url">"URL"</string>
+    <string name="title_fingerprint">"വിരലടയാളം"</string>
+    <string name="title_desc">"വിവരണം"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_dialog_to_apply_restart">"നിങ്ങൾ അപ്ലിക്കേഷൻ പുനരാരംഭിച്ച ശേഷം ഈ ക്രമീകരണം പ്രയോഗിക്കും"</string>
+    <string name="pref_installations">"ഇൻസ്റ്റാളേഷനുകൾ"</string>
+    <string name="pref_install_auto_summary">"ഡൗൺലോഡ് പൂർത്തിയായതിന് ശേഷം അപ്ലിക്കേഷനുകൾ തൽക്ഷണം ഇൻസ്റ്റാളുചെയ്യുന്നു"</string>
+    <string name="pref_install_auto_title">"ഡൗൺ‌ലോഡിന്
+ശേഷമുള്ള APKs സ്വപ്രേരിതമായി ഇൻസ്റ്റാൾ ചെയ്യുക"</string>
+    <string name="pref_install_delete_summary">"റൂട്ട് ഇൻസ്റ്റാൾ രീതി ഉപയോഗിച്ച് ആൻഡ്രോയ്ഡ് Pie + പ്രവർത്തിക്കുന്ന ഉപകരണങ്ങളിൽ സ്ഥിരസ്ഥിതിയായി APKs ഇല്ലാതാക്കപ്പെടും"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_delete_title">"ഇൻസ്റ്റാളിനു ശേഷമുള്ള APKs ഇല്ലാതാക്കുക"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_type_summary">"പാക്കേജുകൾ‌ ഇൻ‌സ്റ്റാൾ‌ ചെയ്യുന്നതിന് നേറ്റീവ് ഇൻ‌സ്റ്റാളർ‌ ഉപയോഗിക്കുക, ബണ്ടിൽ‌ ചെയ്‌ത APK ഇൻ‌സ്റ്റാളേഷനുകൾ‌ തകർക്കുന്നു"</string>
+    <string name="pref_install_type_title">"നേറ്റീവ് ഇൻസ്റ്റാളർ നടപ്പിലാക്കുക"</string>
+    <string name="pref_install_mode_summary">"APK ഇൻസ്റ്റാളേഷന്റെ രീതി തിരഞ്ഞെടുക്കുക"</string>
+    <string name="pref_install_mode_title">"ഇൻസ്റ്റാളേഷൻ രീതി"</string>
+    <string name="pref_install_mode_native">"നേറ്റീവ്"</string>
+    <string name="pref_install_mode_root">"റൂട്ട്"</string>
+    <string name="pref_install_mode_services">"അറോറ സര്‍വീസസ്"</string>
+    <string name="pref_install_mode_no_root">"റൂട്ട് ആക്സസ് ലഭ്യമല്ല, നിങ്ങളുടെ ഉപകരണം ശരിയായി റൂട്ട് ചെയ്തിട്ടുണ്ടെന്ന് ഉറപ്പാക്കുക"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_root_warn">"ആൻഡ്രോയ്ഡ് Pie മുതൽ റൂട്ട് ഇൻസ്റ്റാൾ രീതിക്ക് adb shell വഴി ഇൻസ്റ്റാൾ  ചെയ്യുന്നതിന്, APK ഫയൽ അപ്ലിക്കേഷൻ ഡാറ്റയിൽ ഡൗൺലോഡുചെയ്യേണ്ടതുണ്ട്"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_no_services">"അറോറ സര്‍വീസസ് ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല, ദയവായി ആദ്യം അറോറ സര്‍വീസസ് ഇൻസ്റ്റാൾ ചെയ്യുക"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_offline_services">"അറോറ സര്‍വീസസ് കണക്റ്റുചെയ്‌തിട്ടില്ല, ദയവായി ഇത് പ്രവർത്തനക്ഷമമാക്കിയിട്ടുണ്ടെന്നും നിങ്ങൾക്ക് അപ്ലിക്കേഷന്റെ ശരിയായ പതിപ്പ് ഉണ്ടെന്നും ഉറപ്പാക്കുക"</string>
+    <string name="pref_ui">"ഉപയോക്തൃ ഇന്റർഫേസ്"</string>
+    <string name="pref_ui_theme_title">"തീം"</string>
+    <string name="pref_ui_theme_light">"ലൈറ്റ്"</string>
+    <string name="pref_ui_theme_dark">"ഇരുണ്ട"</string>
+    <string name="pref_ui_theme_black">"കറുപ്പ്"</string>
+    <string name="pref_ui_transparent">"സുതാര്യമായ ശൈലി"</string>
+    <string name="pref_ui_transparent_summary">"വിഭാഗത്തിനും ലിങ്ക് വ്യൂസിനും സുതാര്യമായ കാർഡ് ശൈലി ഉപയോഗിക്കുക"</string>
+    <string name="pref_downloads">"ഡൗൺലോഡുകൾ"</string>
+    <string name="pref_downloads_active_summary">"സജീവ ഡൗൺലോഡുകളുടെ പരമാവധി എണ്ണം"</string>
+    <string name="pref_downloads_active_title">"സജീവ ഡൗൺലോഡ്"</string>
+    <string name="pref_downloads_debug_summary">"വിശദമായ ലോഗുകൾ ലഭിക്കുന്നതിന് ഡൗൺലോഡ് ഡീബഗ്ഗിംഗ് പ്രാപ്തമാക്കുക"</string>
+    <string name="pref_downloads_debug_title">"ഡൗൺലോഡ് ഡീബഗ്ഗിംഗ് ചെയ്യുക"</string>
+    <string name="pref_downloads_strategy_summary">"സ്ഥിരസ്ഥിതി ഡൗൺ‌ലോഡ് തന്ത്രം തിരഞ്ഞെടുക്കുക, വേഗത്തിലുള്ള ഡൗൺ‌ലോഡിനായി സമാന്തര തന്ത്രം ശുപാർശ ചെയ്യുന്നു"</string>
+    <string name="pref_downloads_strategy_title">"ഡൗൺലോഡ് തന്ത്രം"</string>
+    <string name="pref_downloads_strategy_sequential">"അനുബന്ധ ഡൗൺലോഡ്"</string>
+    <string name="pref_downloads_strategy_parallel">"സമാന്തര ഡൗൺലോഡ് (വിഭജനം)"</string>
+    <string name="pref_downloads_path_title">"ഡൗൺ‌ലോഡ് പാത്ത്"</string>
+    <string name="pref_downloads_wifi_title">"വൈഫൈ ഉപയോഗിച്ച് മാത്രം ഡൗൺലോഡുചെയ്യുക"</string>
+    <string name="pref_network">"നെറ്റ്‌വർക്കുകൾ"</string>
+    <string name="pref_proxy_enable">"പ്രോക്സി പ്രാപ്തമാക്കുക"</string>
+    <string name="pref_proxy_host">"പ്രോക്സി ഹോസ്റ്റ്"</string>
+    <string name="pref_proxy_port">"പ്രോക്സി പോർട്ട്"</string>
+    <string name="pref_proxy_type">"പ്രോക്സി തരം"</string>
+    <string name="pref_updates_title">"അപ്‌ഡേറ്റുകൾ"</string>
+    <string name="pref_updates_repo_title">"റിപ്പോ അപ്‌ഡേറ്റുകൾ"</string>
+    <string name="pref_updates_app_title">"അപ്ലിക്കേഷൻ അപ്‌ഡേറ്റുകൾ"</string>
+    <string name="pref_updates_repo_interval">"അപ്‌ഡേറ്റ് ഇടവേള"</string>
+    <string name="pref_updates_manual">"സ്വമേധയാ"</string>
+    <string name="pref_updates_daily">"1 ദിവസം"</string>
+    <string name="pref_updates_2days">"2 ദിവസം"</string>
+    <string name="pref_updates_3days">"3 ദിവസം"</string>
+    <string name="pref_updates_7days">"7 ദിവസം"</string>
+    <string name="pref_services_title">"അറോറ സര്‍വീസസ്"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_services_desc">"അറോറ സര്‍വീസസ് സമാരംഭിക്കുക"</string>
+    <string name="pref_services_desc_alt">"അറോറ സര്‍വീസസ് ലഭ്യമല്ല. കൂടുതലറിയാൻ സേവന റിപ്പോസിറ്ററിലേക്ക് പോകാൻ ക്ലിക്കുചെയ്യുക."</string>
+    <string name="repo_list">"റിപ്പോസിറ്ററി പട്ടിക"</string>
+    <string name="repo_list_select">"നിങ്ങൾ സമന്വയിപ്പിക്കാൻ ആഗ്രഹിക്കുന്ന റിപ്പോസിറ്ററികൾ തിരഞ്ഞെടുക്കുക"</string>
+    <string name="repo_qr_scan">"QR കോഡ് സ്കാൻ ചെയ്യുക"</string>
+    <string name="repo_id">"റിപ്പോസിറ്ററി ഐഡി"</string>
+    <string name="repo_name">"റിപ്പോസിറ്ററിയുടെ പേര്"</string>
+    <string name="repo_addr">"റിപ്പോസിറ്ററി വിലാസം"</string>
+    <string name="repo_fingerprint">"റിപ്പോസിറ്ററി ഫിംഗർപ്രിന്റ്"</string>
+    <string name="sys_log">"ലോഗ് സമന്വയിപ്പിക്കുക"</string>
+    <string name="toast_no_repo_selected">"ഒരു റിപ്പോസിറ്ററിയും തിരഞ്ഞെടുത്തിട്ടില്ല"</string>
+    <string name="error_app_not_found">"അപ്ലിക്കേഷൻ കണ്ടെത്തിയില്ല"</string>
+    <string name="error_app_not_installed">"അപ്ലിക്കേഷനുകളൊന്നും ഇൻസ്റ്റാളുചെയ്‌തിട്ടില്ല"</string>
+    <string name="error_no_network">"നെറ്റ്‌വർക്ക് കണക്ഷനൊന്നുമില്ല"</string>
+    <string name="error_search_not_found">"പൊരുത്തപ്പെടുന്ന അപ്ലിക്കേഷനുകളൊന്നും കണ്ടെത്തിയില്ല"</string>
+    <string name="error_unknown">"അജ്ഞാത പിശക് സംഭവിച്ചു"</string>
+    <string name="error_no_updates">"അപ്‌ഡേറ്റുകളൊന്നും ലഭ്യമല്ല"</string>
+
+    <!-- Fuzzy -->
+    <string name="notification_installation_auto">"ഡൗൺലോഡ് ചെയ്തു, ഇൻസ്റ്റാൾ ചെയ്യാൻ ക്ലിക്കുചെയ്യുക"</string>
+    <string name="toast_apk_blacklisted">"കരിമ്പട്ടികയിൽ പെടുത്തി"</string>
+    <string name="toast_apk_whitelisted">"വൈറ്റ്‌ലിസ്റ്റ് ചെയ്‌തു"</string>
+    <string name="toast_apk_copy_success">"APK വിജയകരമായി പകർത്തി"</string>
+    <string name="toast_apk_copy_failure">"APK പകർത്തുന്നതിൽ പരാജയപ്പെട്ടു"</string>
+</resources>

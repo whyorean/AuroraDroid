@@ -32,6 +32,12 @@
         app:title="@string/pref_installations" />
 
     <Preference
+        android:fragment="com.aurora.adroid.ui.fragment.preference.LanguageFragment"
+        app:icon="@drawable/ic_language"
+        app:layout="@layout/item_preference"
+        app:title="@string/pref_locale_title" />
+
+    <Preference
         android:fragment="com.aurora.adroid.ui.fragment.preference.NetworkFragment"
         app:icon="@drawable/ic_network"
         app:layout="@layout/item_preference"

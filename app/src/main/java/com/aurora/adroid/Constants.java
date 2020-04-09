@@ -69,6 +69,10 @@ public class Constants {
     public static final String PREFERENCE_REPO_UPDATE_INTERVAL = "PREFERENCE_REPO_UPDATE_INTERVAL";
     public static final String PREFERENCE_MIRROR_CHECKED = "PREFERENCE_MIRROR_CHECKED";
     public static final String PREFERENCE_LAUNCH_SERVICES = "PREFERENCE_LAUNCH_SERVICES";
+    public static final String PREFERENCE_LOCALE_CUSTOM = "PREFERENCE_LOCALE_CUSTOM";
+    public static final String PREFERENCE_LOCALE_LANG = "PREFERENCE_LOCALE_LANG";
+    public static final String PREFERENCE_LOCALE_LIST = "PREFERENCE_LOCALE_LIST";
+    public static final String PREFERENCE_LOCALE_COUNTRY = "PREFERENCE_LOCALE_COUNTRY";
 
     public static final String FRAGMENT_NAME = "FRAGMENT_NAME";
     public static final String FRAGMENT_ABOUT = "FRAGMENT_ABOUT";

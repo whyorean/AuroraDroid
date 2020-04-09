@@ -243,6 +243,10 @@ public class Util {
         return arrayList.contains(repoId);
     }
 
+    public static boolean isCustomLocaleEnabled(Context context) {
+        return getPrefs(context).getBoolean(Constants.PREFERENCE_LOCALE_CUSTOM, false);
+    }
+
     public static List<String> arrayToList(String[] inputArray) {
         List<String> stringList = new ArrayList<>();
         Collections.addAll(stringList, inputArray);

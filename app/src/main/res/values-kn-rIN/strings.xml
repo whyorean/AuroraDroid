@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_add">"ಸೇರಿಸು"</string>
+    <string name="action_ask">"ಕೇಳು"</string>
+    <string name="action_blacklist">"ನಿರ್ಬಂಧಿತ"</string>
+    <string name="action_cancel">"ರದ್ದು"</string>
+    <string name="action_clear">"ಅಳಿಸು"</string>
+    <string name="action_clear_all">"ಏಲ್ಲಾ ಅಳಿಸು"</string>
+    <string name="action_close">"ಮುಚ್ಚು"</string>
+    <string name="action_copy">"ಲಿಂಕ್ ನಕಲಿಸು"</string>
+    <string name="action_copied">"ಲಿಂಕ್ ನಕಲುಫಲಕಕ್ಕೆ ನಕಲಿಸಲಾಗಿದೆ"</string>
+    <string name="action_download">"ಜಾಲದಿಂದಿಳಿಸು"</string>
+    <string name="action_downloads">"ಜಾಲದಿಂದ ಇಳಿದವುಗಳು"</string>
+    <string name="action_export">"ಹೊರ ಕಳಿಸು"</string>
+    <string name="action_finish">"ಮುಕ್ತಾಯ"</string>
+    <string name="action_favourites">"ಅಚ್ಚುಮೆಚ್ಚಿನ ಅನ್ವಯಗಳು"</string>
+    <string name="action_favourite_add">"ಅಚ್ಚುಮೆಚ್ಚಿನವುಗಳಿಗೆ ಸೇರಿಸು"</string>
+    <string name="action_favourite_remove">"ಅಚ್ಚುಮೆಚ್ಚಿನವುಗಳಿಂದ ತೆಗಿ"</string>
+    <string name="action_get_local_apk">"ಸ್ಥಳೀಯ ಅನ್ವಯ ಮೂಟೆ (APK) ಪಡೆ"</string>
+    <string name="action_home">"ಮನೆ"</string>
+    <string name="action_import">"ಒಳ ತರಿಸು"</string>
+    <string name="action_info">"ಅನ್ವಯ ಮಾಹಿತಿ"</string>
+    <string name="action_install">"ಸ್ಥಾಪಿಸು"</string>
+    <string name="action_installing">"ಸ್ಥಾಪಿಸುತ್ತಾ"</string>
+    <string name="action_installed">"ಸ್ಥಪಿಸಿದೆ"</string>
+    <string name="action_installations">"ಸ್ಥಾಪನೆಗಳು"</string>
+    <string name="action_later">"ಆಮೇಲೆ"</string>
+    <string name="action_more">"ಹೆಚ್ಚು"</string>
+    <string name="action_next">"ಮುಂದೆ"</string>
+    <string name="action_open">"ತೆರೆ"</string>
+    <string name="action_pause">"ನಿಲ್ಲಿಸು"</string>
+    <string name="action_recheck">"ಮರುಪರಿಶೀಲಿಸು"</string>
+    <string name="action_remove">"ತೆಗೆದುಹಾಕು"</string>
+    <string name="action_restart">"ಮರುಪ್ರಾರಂಭ"</string>
+    <string name="action_resume">"ಮುಂದುವರಿಸು"</string>
+    <string name="action_retry">"ಮತ್ತೆ ಯತ್ನಿಸು"</string>
+    <string name="action_settings">"ಸಿದ್ಧತೆಗಳು"</string>
+    <string name="action_share">"ಹಂಚು"</string>
+    <string name="action_sync">"ಜೋಡಿಸು"</string>
+    <string name="action_uninstall">"ಅಸ್ಥಾಪಿಸು"</string>
+    <string name="action_update">"ನವೀಕರಿಸು"</string>
+    <string name="action_updates">"ನವೀಕರಣೆಗಳು"</string>
+    <string name="action_use_mirror">"ಕನ್ನಡಿ URL ಬಳಸು"</string>
+    <string name="action_unsupported">"ಹೊಂದಾಣಿಕೆಯಾಗದ ಅನ್ವಯ"</string>
+    <string name="action_whitelist">"ಅನಿರ್ಬಂಧಿತ ಪಟ್ಟಿ"</string>
+    <string name="details_more">"ಮತ್ತಷ್ಟು ಓದಿ"</string>
+    <string name="details_more_apps_dev">"ನಿರ್ಮಾಣಕರ್ತರಿಂದ ಮತ್ತಷ್ಟು ಅನ್ವಯಗಳು"</string>
+    <string name="details_more_apps_similar">"ಹೋಲುವ ವರ್ಗದ ಅನ್ವಯಗಳು"</string>
+    <string name="details_other">"ಇತರ ಆವೃತ್ತಿಗಳು"</string>
+    <string name="details_no_description">"ಯಾವುದೇ ವಿವರಣೆಯನ್ನು ನಿರ್ಮಾಣಕರ್ತರು ಒದಗಿಸಿಲ್ಲ"</string>
+    <string name="details_no_permissions">"ಯಾವುದೇ ಅನುಮತಿಗಳನ್ನು ಬಳಸಲಾಗುವುದಿಲ್ಲ."</string>
+    <string name="details_permissions">"ಅನ್ವಯ ಅನುಮತಿಗಳು"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_permissions_desc">"ಅರೋರ ಸ್ಟೊರ್ ಈ ಕೆಳಗಿನ ಅನುಮತಿಗಳನ್ನು ಬಳಸುತ್ತದೆ"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_repo_desc">"ಬೇಕಾದ ಎಫ್-ಡ್ರಾಯ್ಡ್ ಭಂಡಾರಗಳನ್ನು ಆರಿಸಿ"</string>
+    <string name="dialog_sync_title">"ಭಂಡಾರ ನವೀಕರಣಗಳು"</string>
+    <string name="dialog_sync_desc">"ನೀವು ಭಂಡಾರಗಳಿಂದ ಅನ್ವಯಗಳನ್ನು ನವೀಕರಿಸಲು ಬಯಸುವಿರಾ?"</string>
+    <string name="dialog_sync_desc_alt">"ಹಳೆಯ ಮಾಹಿತಿ ಪತ್ತೆಯಾಗಿದೆ, ಹೊಸ ನವೀಕರಣಗಳು ಇರಬಹುದು, ನೀವು ಎಲ್ಲಾ ಭಂಡಾರಗಳನ್ನು ಜೋಡಿಸಲು ಬಯಸುವಿರಾ?"</string>
+    <string name="dialog_sync_completed_desc">"ಎಲ್ಲಾ ಭಂಡಾರಗಳನ್ನು ನವೀಕರಿಸಲಾಗಿದೆ, ನವೀಕರಣಗಳ ನಂತರ ಅನ್ವಯವನ್ನು ಮರುಪ್ರಾರಂಭಿಸಲು ಸೂಚಿಸಲಾಗುತ್ತದೆ."</string>
+    <string name="dialog_sync_positive">"ಹೌದು"</string>
+    <string name="dialog_sync_negative">"ಇಲ್ಲ"</string>
+    <string name="dialog_sync_complete_positive">"ಈಗ ಮರುಪ್ರಾರಂಭಿಸು"</string>
+    <string name="dialog_repo_title">"ಭಂಡಾರ ಸೇರಿಸು"</string>
+    <string name="dialog_repo_desc">"ನೀವು ನಿಜವಾಗಲೂ ಇದನ್ನು ಸೇರಿಸಲು ಬಯಸುವಿರಾ"</string>
+    <string name="menu_downloads">"ಜಾಲದಿಂದ ಇಳಿದವುಗಳು"</string>
+    <string name="download_cancel_all">"ಎಲ್ಲಾ ರದ್ದಿಸು"</string>
+    <string name="download_canceled">"ರದ್ದಾಯಿತು"</string>
+    <string name="download_clear_completed">"ಆದವುಗಳ ಮರೆಮಾಡು"</string>
+    <string name="download_completed">"ಇಳಿಯಿತು"</string>
+
+    <!-- Fuzzy -->
+    <string name="download_failed">"ಇಳಿಯುವಿಕೆ ವಿಫಲ"</string>
+    <string name="download_force_clear_all">"ಆದವುಗಳ‌ ಬಲವಂತ ಮರೆಮಾಡು"</string>
+    <string name="download_none">"ಇಳಿದವುಗಳಿಲ್ಲ"</string>
+    <string name="download_pause_all">"ಎಲ್ಲಾ ನಿಲ್ಲಿಸು"</string>
+    <string name="download_paused">"ನಿಂತಿದೆ"</string>
+    <string name="download_progress">"ಜಾಲದಿಂದ ಇಳಿಯುತ್ತಿದೇ"</string>
+    <string name="download_queued">"ಸಾಲಲ್ಲಿದೆ"</string>
+    <string name="download_resume">"ಮುಂದುವರಿಸು"</string>
+    <string name="download_resume_all">"ಎಲ್ಲಾ ಮುಂದುವರಿಸು"</string>
+    <string name="filter_name_az">"ಹೆಸರು ಅ-ಕ್ಷ A-Z"</string>
+    <string name="filter_name_za">"ಹೆಸರು ಕ್ಷ-ಅ Z-A"</string>
+    <string name="filter_size_min">"ಚಿಕ್ಕ ಗಾತ್ರ"</string>
+    <string name="filter_size_max">"ದೊಡ್ಡ ಗಾತ್ರ"</string>
+    <string name="filter_date_updated">"ನವೀಕರಣ ದಿನಾಂಕ"</string>
+    <string name="filter_date_added">"ಲಭ್ಯದ ದಿನಾಂಕ"</string>
+    <string name="installer_status_failure">"ಸ್ಥಾಪನೆ ವಿಫಲ"</string>
+    <string name="installer_status_failure_aborted">"ಸ್ಥಾಪನೆ ರದ್ದಾಯಿತು"</string>
+    <string name="installer_status_failure_blocked">"ಸ್ಥಾಪನೆ ನಿರ್ಬಂಧಿಸಲಾಯಿತು"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_conflict">"ಸಂಘರ್ಷವಾಗುವಂಥಹ ಅನ್ವಯ ಸ್ಥಾಪನೆಯಲ್ಲಿದೆ"</string>
+    <string name="installer_status_failure_incompatible">"ಹೊಂದಾಣಿಕೆಯಾಗದ ಅನ್ವಯ"</string>
+    <string name="installer_status_failure_invalid">"ಸರಿಯಿಲ್ಲದ ಅಥವಾ ಕೆಟ್ಟುಹೋದ APK (ಅನ್ವಯ ಮೂಟೆ)"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_storage">"ಸಾಕಷ್ಟು ಮೆಮೊರಿ ಸ್ಥಳವಿಲ್ಲ"</string>
+    <string name="installer_status_success">"ಸ್ಥಾಪನೆ ಸಫಲ"</string>
+    <string name="installer_status_unknown">"ಅಜ್ಞಾತ"</string>
+    <string name="installer_status_user_action">"ಬಳಕೆದಾರರ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ"</string>
+    <string name="list_blacklist">"ನಿರ್ಬಂಧಿತ ಅನ್ವಯಗಳು"</string>
+    <string name="list_blacklist_none">"ಯಾವ ಅನ್ವಯಗಳನ್ನು ನಿರ್ಬಂಧಿಸಿಲ್ಲ"</string>
+    <string name="list_empty_fav">"ಅಚ್ಚುಮೆಚ್ಚಿನವುಗಳಿಲ್ಲ"</string>
+    <string name="list_empty_updates">"ನವೀಕರಣಗಳು ಲಭ್ಯವಿಲ್ಲ"</string>
+    <string name="list_installed">"ಸ್ಥಾಪಿಸಿರುವ"</string>
+    <string name="list_selected">"ಆರಿಸಿರುವ ಅನ್ವಯಗಳು"</string>
+    <string name="list_update_all">"ಎಲ್ಲಾ ನವೀಕರಿಸು"</string>
+    <string name="list_update_all_txt">"ನವೀಕರಣ(ಗಳು) ಲಭ್ಯ"</string>
+    <string name="list_updating">"ನವೀಕರಿಸುತ್ತಾ"</string>
+    <string name="sync_completed">"ಜೋಡಿಸಿತು"</string>
+    <string name="sync_completed_all">"ಎಲ್ಲಾ ಭಂಡಾರಗಳನ್ನು ಜೋಡಿಸಲಾಯಿತು"</string>
+    <string name="sync_progress">"ಭಂಡಾರಗಳ ಜೋಡಿಸುತ್ತಾ"</string>
+    <string name="sync_failed">"ಜೋಡಣೆ ವಿಫಲ"</string>
+
+    <!-- Fuzzy -->
+    <string name="title_home">"ಅರೋರ ಡ್ರಾಯ್ಡ್"</string>
+    <string name="title_apps_new">"ಹೊಸ ಅನ್ವಯಗಳು"</string>
+    <string name="title_categories">"ವರ್ಗಗಳು"</string>
+    <string name="title_latest_updated">"ಇತ್ತೀಚಗೆ ನವೀಕರಿಸಿದ"</string>
+    <string name="title_repo_add">"ಹೊಸ ಭಂಡಾರ ಸೇರಿಸು"</string>
+    <string name="title_perm">"ಅನುಮತಿಗಳು"</string>
+    <string name="title_repositories">"ಭಂಡಾರಗಳು"</string>
+    <string name="title_search">"ಅನ್ವಯ ಹಾಗು ಆಟಗಳನ್ನು ಹುಡುಕಿ"</string>
+    <string name="title_sync_repo">"ಭಂಡಾರಗಳ ಜೋಡಣೆ"</string>
+    <string name="title_update_all">"ಎಲ್ಲಾ ಅನ್ವಯಗಳ ನವೀಕರಿಸು"</string>
+    <string name="title_welcome">"ಸ್ವಾಗತ"</string>
+
+    <!-- Fuzzy -->
+    <string name="title_url">"URL"</string>
+    <string name="title_fingerprint">"ಬೆರಳಚ್ಚು"</string>
+    <string name="title_desc">"ವಿವರಣೆ"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_dialog_to_apply_restart">"ಈ ಬದಲಾವಣೆ ನೀವು ಅನ್ವಯ ಮರುಪ್ರಾರಂಭಿಸಿದಾಗ ಜಾರಿಗೆ ಬರುತ್ತದೆ"</string>
+    <string name="pref_installations">"ಸ್ಥಾಪನೆಗಳು"</string>
+    <string name="pref_install_auto_summary">"ಜಾಲದಿಂದ ಪೂರ್ತಿ ಇಳಿಸಿದ ತಕ್ಷಣವೇ ಅನ್ವಯಗಳನ್ನು ಸ್ಥಾಪಿಸಲಾಗುತ್ತದೆ"</string>
+    <string name="pref_install_auto_title">"ಸ್ವಯಂಚಾಲಿತ ಅನ್ವಯ ಸ್ಥಾಪನೆ"</string>
+    <string name="pref_install_delete_summary">"ಆಂಡ್ರಾಯ್ಡ್ ಪೈ+ ಓಡುತ್ತಿರುವ ರೂಟ್ ಆಗಿರುವ ಸಾಧನಗಳಲ್ಲಿ, ಎ.ಪಿ.ಕೆ ಗಳು ಪೂರ್ವನಿಯೋಜಿತವಾಗಿ ಅಳಿಸಲ್ಪಡುತ್ತವೆ"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_delete_title">"ಸ್ಥಾಪನೆ ನಂತರ ಮೂಟೆ ಅಳಿಸು"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_type_summary">"ಫೋನಿನ ಸ್ಥಾಪಕವನ್ನು ಅನ್ವಯ ಸ್ಥಾಪನೆಗೆ ಬಳಸು~ಎ.ಪಿ.ಕೆ ಕಟ್ಟುಗಳ ಒಟ್ಟಿಗೆ ಸ್ಥಾಪನೆಯನ್ನು ಮುರಿಯುತ್ತದೆ"</string>
+    <string name="pref_install_type_title">"ಫೋನಿನ ಸ್ಥಾಪಕ ಕಡ್ಡಾಯ"</string>
+    <string name="pref_install_mode_summary">"ಎ.ಪಿ.ಕೆ ಸ್ಥಾಪನೆಯ ರೀತಿ ಆರಿಸಿ"</string>
+    <string name="pref_install_mode_title">"ಸ್ಥಾಪನೆ ರೀತಿ"</string>
+    <string name="pref_install_mode_native">"ಫೋನಿನ"</string>
+    <string name="pref_install_mode_root">"ಮೂಲ"</string>
+    <string name="pref_install_mode_services">"ಅರೋರ ಸೇವೆಗಳು"</string>
+    <string name="pref_install_mode_no_root">"ಮೂಲ ಪ್ರವೇಶ ಲಭ್ಯವಿಲ್ಲ, ನಿಮ್ಮ ಸಾಧನವು ಬೇರೂರಿದೆ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_root_warn">"ಎ.ಡಿ.ಬಿ ಚಿಪ್ಪು ಅಥವ ಆಂಡ್ರಾಯ್ಡ್ ಪೈ+ ಮೂಲಕ ಸ್ಥಾಪಿಸಲು ಮೂಲ ಸ್ಥಾಪನೆ ವಿಧಾನ app data ಒಳಗೆ ಎ.ಪಿ.ಕೆ ಇಳಿಸಬೇಕಾಗುತ್ತದೆ"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_no_services">"ಅರೋರ ಸೇವೆಗಳನ್ನು ಸ್ಥಾಪಿಸಿಲ್ಲ, ದಯವಿಟ್ಟು ಮೊದಲು ಸೇವೆಗಳನ್ನು ಸ್ಥಾಪಿಸಿ"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_offline_services">"ಅರೋರಾ ಸೇವೆಗಳನ್ನು ಸೇರಿಸಿಲ್ಲ, ದಯವಿಟ್ಟು ಅದು ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆಯೆ ಮತ್ತು ಅದರ ಸರಿಯಾದ ಆವೃತ್ತಿಯನ್ನು ಹೊಂದಿದ್ದೀರೇಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ"</string>
+    <string name="pref_ui">"ನೋಟ"</string>
+    <string name="pref_ui_theme_title">"ಬಣ್ಣ"</string>
+    <string name="pref_ui_theme_light">"ಬಿಳಿ"</string>
+    <string name="pref_ui_theme_dark">"ಕತ್ತಲೆ"</string>
+    <string name="pref_ui_theme_black">"ಕಪ್ಪು"</string>
+    <string name="pref_ui_transparent">"ಪಾರದರ್ಶಕ ಶೈಲಿ"</string>
+    <string name="pref_ui_transparent_summary">"ವರ್ಗ ಮತ್ತು ಲಿಂಕ್ ವೀಕ್ಷಣೆಗಳಿಗೆ ಪಾರದರ್ಶಕ ಕಾರ್ಡ್ ಶೈಲಿಯನ್ನು ಬಳಸು"</string>
+    <string name="pref_downloads">"ಇಳಿದವುಗಳು"</string>
+    <string name="pref_downloads_active_summary">"ಏಕಕಾಲದಲ್ಲಿ ಕಾರ್ಯನಿರತ ಇಳಿಯುವಿಕೆಗಳ ಗರಿಷ್ಠ ಸಂಖ್ಯೆ"</string>
+    <string name="pref_downloads_active_title">"ಸಕ್ರಿಯ ಇಳಿಯುವಿಕೆ"</string>
+    <string name="pref_downloads_debug_summary">"ವಿವರವಾದ ದಾಖಲೆಗಳಿಗೆ ಇಳಿಯುವಿಕೆಯ ದೋಷ ನಿವಾರಣೆಯನ್ನು ಪ್ರಾರಂಭಿಸಿ"</string>
+    <string name="pref_downloads_debug_title">"ಇಳಿಯುವಿಕೆ ದೋಷನಿವಾರಣೆ"</string>
+    <string name="pref_downloads_strategy_summary">"ನಿಯೋಜಿತ ಇಳಿಯುವಿಕೆ ತಂತ್ರವನ್ನು ಆರಿಸಿ, ವೇಗವಾಗಿ ಜಾಲದಿಂದಿಳಿಸಲು ಸಮಾನಾಂತರ ಕಾರ್ಯತಂತ್ರ ಸೂಚಿ"</string>
+    <string name="pref_downloads_strategy_title">"ಇಳಿಸುವಿಕೆಯ ಕಾರ್ಯತಂತ್ರ"</string>
+    <string name="pref_downloads_strategy_sequential">"ಅನುಕ್ರಮ ಇಳಿಸುವಿಕೆ"</string>
+    <string name="pref_downloads_strategy_parallel">"ಸಮಾನಾಂತರ ಇಳಿಸುವಿಕೆ (ವಿಭಜನೆಗಳು)"</string>
+    <string name="pref_downloads_path_title">"ಇಳಿಸುವಿಕೆ ದಾರಿ"</string>
+    <string name="pref_downloads_wifi_title">"ವೈಫೈ ಮಾತ್ರ ಬಳಸಿ ಇಳಿಸು"</string>
+    <string name="pref_network">"ಜಾಲಗಳು"</string>
+    <string name="pref_proxy_enable">"ಪ್ರಾಕ್ಸಿ ಸಕ್ರಿಯಗೊಳಿಸು"</string>
+    <string name="pref_proxy_host">"ಪ್ರಾಕ್ಸಿ ಹಾಸ್ಟ್"</string>
+    <string name="pref_proxy_port">"ಪ್ರಾಕ್ಸಿ ಪೋರ್ಟ್"</string>
+    <string name="pref_proxy_type">"ಪ್ರಾಕ್ಸಿ ಶೈಲಿ"</string>
+    <string name="pref_updates_title">"ನವೀಕರಣಗಳು"</string>
+    <string name="pref_updates_repo_title">"ಭಂಡಾರ ನವೀಕರಣಗಳು"</string>
+    <string name="pref_updates_app_title">"ಅನ್ವಯ ನವೀಕರಣಗಳು"</string>
+    <string name="pref_updates_repo_interval">"ನವೀಕರಣಗಳ ಅಂತರ"</string>
+    <string name="pref_updates_manual">"ಹಸ್ತಚಾಲಿತ"</string>
+    <string name="pref_updates_daily">"1 ದಿನ"</string>
+    <string name="pref_updates_2days">"2 ದಿನಗಳು"</string>
+    <string name="pref_updates_3days">"3 ದಿನಗಳು"</string>
+    <string name="pref_updates_7days">"7 ದಿನಗಳು"</string>
+    <string name="pref_services_title">"ಅರೋರ ಸೇವೆಗಳು"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_services_desc">"ಅರೋರ ಸೇವೆಗಳನ್ನು ಪ್ರಾರಂಭಿಸು"</string>
+    <string name="pref_services_desc_alt">"ಅರೋರಾ ಸೇವೆಗಳು ಲಭ್ಯವಿಲ್ಲ. ಇನ್ನಷ್ಟು ತಿಳಿಯಲು ಸೇವೆಗಳ ಭಂಡಾರಕ್ಕೆ ಹೋಗಲು ಸ್ಪರ್ಶಿಸಿ."</string>
+    <string name="repo_list">"ಭಂಡಾರ ಪಟ್ಟಿ"</string>
+    <string name="repo_list_select">"ನೀವು ಬಳಸಲು ಬಯಸುವ ಭಂಡಾರಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ"</string>
+    <string name="repo_qr_scan">"QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ"</string>
+    <string name="repo_id">"ಭಂಡಾರ ID"</string>
+    <string name="repo_name">"ಭಂಡಾರ ಹೆಸರು"</string>
+    <string name="repo_addr">"ಭಂಡಾರ ವಿಳಾಸ"</string>
+    <string name="repo_fingerprint">"ಭಂಡಾರ ಬೆರಳಚ್ಚು"</string>
+    <string name="sys_log">"ಜೋಡಣೆ ವರದಿ"</string>
+    <string name="toast_no_repo_selected">"ಭಂಡಾರ ಆರಿಸಿಲ್ಲ"</string>
+    <string name="error_app_not_found">"ಅನ್ವಯ ಕಾಣೆ"</string>
+    <string name="error_app_not_installed">"ಯಾವ ಅನ್ವಯಗಳನ್ನೂ ಸ್ಥಾಪಿಸಿಲ್ಲ"</string>
+    <string name="error_no_network">"ಅಂತರ್ಜಾಲ ಸಂಪರ್ಕ ಇಲ್ಲ"</string>
+    <string name="error_search_not_found">"ಹೋಲುವ ಅನ್ವಯವಿಲ್ಲ"</string>
+    <string name="error_unknown">"ಅಜ್ಞಾತ ದೋಷ ಸಂಭವಿಸಿದೆ"</string>
+    <string name="error_no_updates">"ನವೀಕರಣಗಳು ಲಭ್ಯವಿಲ್ಲ"</string>
+
+    <!-- Fuzzy -->
+    <string name="notification_installation_auto">"ಇಳಿಯಿತು, ಸ್ಥಾಪಿಸಲು ಒತ್ತಿ"</string>
+    <string name="toast_apk_blacklisted">"ನಿರ್ಬಂಧಿತ"</string>
+    <string name="toast_apk_whitelisted">"ಅನಿರ್ಬಂಧಿತ"</string>
+    <string name="toast_apk_copy_success">"ಎ.ಪಿ.ಕೆ ನಕಲಿಸುವಲ್ಲಿ ಸಫಲ"</string>
+    <string name="toast_apk_copy_failure">"ಎ.ಪಿ.ಕೆ ನಕಲಿಸುವಲ್ಲಿ ವಿಫಲ"</string>
+</resources>

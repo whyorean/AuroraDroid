@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_add">"Lisa"</string>
+    <string name="action_ask">"Küsi"</string>
+    <string name="action_blacklist">"Must nimekiri"</string>
+    <string name="action_cancel">"Tühista"</string>
+    <string name="action_clear">"Tühjenda"</string>
+    <string name="action_clear_all">"Tühjenda kõik"</string>
+    <string name="action_close">"Sulge"</string>
+    <string name="action_copy">"Kopeeri link"</string>
+    <string name="action_copied">"Link kopeeritud lõikelauale"</string>
+    <string name="action_download">"Laadi alla"</string>
+    <string name="action_downloads">"Allalaadimised"</string>
+    <string name="action_export">"Ekspordi"</string>
+    <string name="action_finish">"Lõpeta"</string>
+    <string name="action_favourites">"Lemmikrakendused"</string>
+    <string name="action_favourite_add">"Lisa lemmikutesse"</string>
+    <string name="action_favourite_remove">"Eemalda lemmikutest"</string>
+    <string name="action_get_local_apk">"Hangi kohalik APK"</string>
+    <string name="action_home">"Kodu"</string>
+    <string name="action_import">"Impordi"</string>
+    <string name="action_info">"Rakenduse teave"</string>
+    <string name="action_install">"Installi"</string>
+    <string name="action_installing">"Installimine"</string>
+    <string name="action_installed">"Installitud"</string>
+    <string name="action_installations">"Installimised"</string>
+    <string name="action_later">"Hiljem"</string>
+    <string name="action_more">"Rohkem"</string>
+    <string name="action_next">"Edasi"</string>
+    <string name="action_open">"Ava"</string>
+    <string name="action_pause">"Paus"</string>
+    <string name="action_recheck">"Kontrolli uuesti"</string>
+    <string name="action_remove">"Eemalda"</string>
+    <string name="action_restart">"Taaskäivita"</string>
+    <string name="action_resume">"Jätka"</string>
+    <string name="action_retry">"Proovi uuesti"</string>
+    <string name="action_settings">"Seaded"</string>
+    <string name="action_share">"Jaga"</string>
+    <string name="action_sync">"Sünkroniseeri"</string>
+    <string name="action_uninstall">"Desinstalli"</string>
+    <string name="action_update">"Uuenda"</string>
+    <string name="action_updates">"Uuendused"</string>
+    <string name="action_use_mirror">"Kasuta peegel-URLi"</string>
+    <string name="action_unsupported">"Ühildumatu rakendus"</string>
+    <string name="action_whitelist">"Valge nimekiri"</string>
+    <string name="details_more">"Loe lisaks"</string>
+    <string name="details_more_apps_dev">"Rohkem rakendusi arendajalt"</string>
+    <string name="details_more_apps_similar">"Sarnase kategooria rakendused"</string>
+    <string name="details_other">"Teised versioonid"</string>
+    <string name="details_no_description">"Arendaja ei sisestanud kirjeldust"</string>
+    <string name="details_no_permissions">"Lubasid ei kasutata."</string>
+    <string name="details_permissions">"Rakenduste load"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_permissions_desc">"Aurora Store kasutab järgnevaid lubasid"</string>
+
+    <!-- Fuzzy -->
+    <string name="details_repo_desc">"Vali sünkroniseeritavad F-Droidi hoidlad"</string>
+    <string name="dialog_sync_title">"Hoidla uuendused"</string>
+    <string name="dialog_sync_desc">"Kas soovid rakendusi hoidlatest uuendada?"</string>
+    <string name="dialog_sync_desc_alt">"Vanad andmed tuvastatud, saadaval võib olla uuendusi, kas soovid kõik hoidlad sünkroniseerida?"</string>
+    <string name="dialog_sync_completed_desc">"Kõik hoidlad uuendatud, pärast uuendusi on soovitatav on rakendus taaskäivitada."</string>
+    <string name="dialog_sync_positive">"Jah"</string>
+    <string name="dialog_sync_negative">"Ei"</string>
+    <string name="dialog_sync_complete_positive">"Taaskäivita kohe"</string>
+    <string name="dialog_repo_title">"Lisa hoidla"</string>
+    <string name="dialog_repo_desc">"Kas soovid kindlasti lisada"</string>
+    <string name="menu_downloads">"Allalaadimised"</string>
+    <string name="download_cancel_all">"Tühista kõik"</string>
+    <string name="download_canceled">"Tühistatud"</string>
+    <string name="download_clear_completed">"Tühjenda lõpetatud"</string>
+    <string name="download_completed">"Allalaaditud"</string>
+
+    <!-- Fuzzy -->
+    <string name="download_failed">"Allalaadimine ebaõnnestus"</string>
+    <string name="download_force_clear_all">"Sundtühjenda kõik"</string>
+    <string name="download_none">"Allalaadimised puuduvad"</string>
+    <string name="download_pause_all">"Pausi kõik"</string>
+    <string name="download_paused">"Pausil"</string>
+    <string name="download_progress">"Allalaadimine"</string>
+    <string name="download_queued">"Järjekorras"</string>
+    <string name="download_resume">"Jätka"</string>
+    <string name="download_resume_all">"Jätka kõik"</string>
+    <string name="filter_name_az">"Nime järgi A-Z"</string>
+    <string name="filter_name_za">"Nime järgi Z-A"</string>
+    <string name="filter_size_min">"Min. suuruse järgi"</string>
+    <string name="filter_size_max">"Maks. suuruse järgi"</string>
+    <string name="filter_date_updated">"Uuenduskuupäeva järgi"</string>
+    <string name="filter_date_added">"Lisamiskuupäeva järgi"</string>
+    <string name="installer_status_failure">"Installimine ebaõnnestus"</string>
+    <string name="installer_status_failure_aborted">"Installimine tühistatud"</string>
+    <string name="installer_status_failure_blocked">"Installimine blokeeriti"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_conflict">"Konfliktne pakett eksisteerib"</string>
+    <string name="installer_status_failure_incompatible">"Ühildumatu rakendus"</string>
+    <string name="installer_status_failure_invalid">"Sobimatu või korrumpeerunud APK"</string>
+
+    <!-- Fuzzy -->
+    <string name="installer_status_failure_storage">"Ebapiisav mäluruum"</string>
+    <string name="installer_status_success">"Edukalt installitud"</string>
+    <string name="installer_status_unknown">"Teadmata"</string>
+    <string name="installer_status_user_action">"Ootan kasutaja kinnitust"</string>
+    <string name="list_blacklist">"Mustas nimekirjas rakendused"</string>
+    <string name="list_blacklist_none">"Rakendusi pole mustas nimekirjas"</string>
+    <string name="list_empty_fav">"Lemmikud puuduvad"</string>
+    <string name="list_empty_updates">"Uuendusi pole saadaval"</string>
+    <string name="list_installed">"Installitud"</string>
+    <string name="list_selected">"Rakendused valitud"</string>
+    <string name="list_update_all">"Uuenda kõik"</string>
+    <string name="list_update_all_txt">"uuendus(ed) saadaval"</string>
+    <string name="list_updating">"Uuendamine"</string>
+    <string name="sync_completed">"Sünkroniseeritud"</string>
+    <string name="sync_completed_all">"Kõik hoidlad sünkroniseeritud"</string>
+    <string name="sync_progress">"Hoidlate sünkroniseerimine"</string>
+    <string name="sync_failed">"Sünkroniseerimine ebaõnnestus"</string>
+
+    <!-- Fuzzy -->
+    <string name="title_home">"Aurora Droid"</string>
+    <string name="title_apps_new">"Uued rakendused"</string>
+    <string name="title_categories">"Kategooriad"</string>
+    <string name="title_latest_updated">"Viimati uuendatud"</string>
+    <string name="title_repo_add">"Lisa uus hoidla"</string>
+    <string name="title_perm">"Load"</string>
+    <string name="title_repositories">"Hoidlad"</string>
+    <string name="title_search">"Otsi rakendusi ja mänge"</string>
+    <string name="title_sync_repo">"Sünkroniseeri hoidlad"</string>
+    <string name="title_update_all">"Uuenda kõik rakendused"</string>
+    <string name="title_welcome">"Tere tulemast"</string>
+    <string name="title_url">"URL"</string>
+    <string name="title_fingerprint">"Sõrmejälg"</string>
+    <string name="title_desc">"Kirjeldus"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_dialog_to_apply_restart">"See valik rakendatakse peale rakenduse taaskäivitust"</string>
+    <string name="pref_installations">"Installimised"</string>
+    <string name="pref_install_auto_summary">"Rakendused installitakse kohe peale allalaadimise lõppu"</string>
+    <string name="pref_install_auto_title">"Installi APKid automaatselt peale allalaadimist"</string>
+    <string name="pref_install_delete_summary">"Android Pie+ seadmetel juurkasutaja installiga eemaldatakse APKid vaikimisi"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_delete_title">"Kustuta APK peale installi"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_type_summary">"Kasuta sisseehitatud paigaldajat pakettide installimiseks, lõhub bundle-APKide installid"</string>
+    <string name="pref_install_type_title">"Jõusta sisseehitatud paigaldajat"</string>
+    <string name="pref_install_mode_summary">"Vali APKi installimeetod"</string>
+    <string name="pref_install_mode_title">"Installimeetod"</string>
+    <string name="pref_install_mode_native">"Sisseehitatud"</string>
+    <string name="pref_install_mode_root">"Juurkasutaja"</string>
+    <string name="pref_install_mode_services">"Aurora Services"</string>
+    <string name="pref_install_mode_no_root">"Juurkasutaja pole saadaval, veendu et seadmes on juurkasutaja ligipääs"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_root_warn">"Juurkasutaja installimeetod nõuab APKi allalaadimist rakenduste andmetesse, et paigaldada see ADB Shell kaudu, Android Pie+"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_no_services">"Aurora Services pole installitud, palun installi see eelnevalt"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_install_mode_offline_services">"Aurora Services pole ühendatud, palun veendu et see on lubatud ning sul on sellest korrektne versioon"</string>
+    <string name="pref_ui">"Kasutajaliides"</string>
+    <string name="pref_ui_theme_title">"Teema"</string>
+    <string name="pref_ui_theme_light">"Hele"</string>
+    <string name="pref_ui_theme_dark">"Tume"</string>
+    <string name="pref_ui_theme_black">"Must"</string>
+    <string name="pref_ui_transparent">"Läbipaistev stiil"</string>
+    <string name="pref_ui_transparent_summary">"Kasuta läbipaistvat kaardistiili kategooria- ja lingivaadetel"</string>
+    <string name="pref_downloads">"Allalaadimised"</string>
+    <string name="pref_downloads_active_summary">"Maksimaalne arv aktiivseid allalaadimisi"</string>
+    <string name="pref_downloads_active_title">"Aktiivne allalaadimine"</string>
+    <string name="pref_downloads_debug_summary">"Luba allalaadimiste silumine detailsete logide saamiseks"</string>
+    <string name="pref_downloads_debug_title">"Allalaadimise silumine"</string>
+    <string name="pref_downloads_strategy_summary">"Vali vaikimisi allalaadimise strateegia, kiireimaks allalaadimiseks soovitame paralleelstrateegiat"</string>
+    <string name="pref_downloads_strategy_title">"Allalaadimise strateegia"</string>
+    <string name="pref_downloads_strategy_sequential">"Järjestikune allalaadimine"</string>
+    <string name="pref_downloads_strategy_parallel">"Paralleelne allalaadimine (poolitatud)"</string>
+    <string name="pref_downloads_path_title">"Allalaadimistee"</string>
+    <string name="pref_downloads_wifi_title">"Laadi alla ainult üle WiFi"</string>
+    <string name="pref_network">"Võrgud"</string>
+    <string name="pref_proxy_enable">"Luba proksi"</string>
+    <string name="pref_proxy_host">"Proksi host"</string>
+    <string name="pref_proxy_port">"Proksi port"</string>
+    <string name="pref_proxy_type">"Proksi tüüp"</string>
+    <string name="pref_updates_title">"Uuendused"</string>
+    <string name="pref_updates_repo_title">"Hoidlate uuendused"</string>
+    <string name="pref_updates_app_title">"Rakenduste uuendused"</string>
+    <string name="pref_updates_repo_interval">"Uuenduste intervall"</string>
+    <string name="pref_updates_manual">"Käsitsi"</string>
+    <string name="pref_updates_daily">"1 päev"</string>
+    <string name="pref_updates_2days">"2 päeva"</string>
+    <string name="pref_updates_3days">"3 päeva"</string>
+    <string name="pref_updates_7days">"7 päeva"</string>
+    <string name="pref_services_title">"Aurora Services"</string>
+
+    <!-- Fuzzy -->
+    <string name="pref_services_desc">"Käivita Aurora Services"</string>
+    <string name="pref_services_desc_alt">"Aurora Services pole saadaval. Klõpsa, et minna Services hoidlasse ja lugeda rohkem."</string>
+    <string name="repo_list">"Hoidlate nimekiri"</string>
+    <string name="repo_list_select">"Vali sünkroniseeritavad hoidlad"</string>
+    <string name="repo_qr_scan">"Skanneeri QR-kood"</string>
+    <string name="repo_id">"Hoidla ID"</string>
+    <string name="repo_name">"Hoidla nimi"</string>
+    <string name="repo_addr">"Hoidla aadress"</string>
+    <string name="repo_fingerprint">"Hoidla sõrmejälg"</string>
+    <string name="sys_log">"Sünkroniseerimislogi"</string>
+    <string name="toast_no_repo_selected">"Hoidlat pole valitud"</string>
+    <string name="error_app_not_found">"Rakendust ei leitud"</string>
+    <string name="error_app_not_installed">"Rakendusi pole installitud"</string>
+    <string name="error_no_network">"Võrguühendus puudub"</string>
+    <string name="error_search_not_found">"Vastavaid rakendusi ei leitud"</string>
+    <string name="error_unknown">"Esines tundmatu viga"</string>
+    <string name="error_no_updates">"Uuendusi pole saadaval"</string>
+
+    <!-- Fuzzy -->
+    <string name="notification_installation_auto">"Allalaaditud, klõpsa installimiseks"</string>
+    <string name="toast_apk_blacklisted">"Mustas nimekirjas"</string>
+    <string name="toast_apk_whitelisted">"Valges nimekirjas"</string>
+    <string name="toast_apk_copy_success">"APK edukalt kopeeritud"</string>
+    <string name="toast_apk_copy_failure">"APKi kopeerimine ebaõnnestus"</string>
+    <string name="action_ignore">"Ignoreeri seda versiooni"</string>
+    <string name="action_save">"Salvesta"</string>
+    <string name="action_show_user_only">"Kuva ainult kasutaja rakendusi"</string>
+    <string name="action_sortBy">"Sorteeri"</string>
+    <string name="details_apk_suggested">"Soovitatud"</string>
+    <string name="dialog_sync_completed_desc_alt">"Uusi uuendusi pole saadaval"</string>
+    <string name="dialog_repo_list">"Hoidlate nimekiri"</string>
+    <string name="menu_repository">"Hoidla"</string>
+    <string name="menu_setting">"Seaded"</string>
+    <string name="menu_about">"Teave"</string>
+    <string name="download_metadata">"Metaandmete hankimine"</string>
+    <string name="list_update_all_txt_one">"uuendus saadaval"</string>
+    <string name="list_update_selected">"Uuendus valitud"</string>
+    <string name="notification_channel_alert">"Kiirteade"</string>
+    <string name="notification_channel_general">"Üldine teade"</string>
+    <string name="sync_service">"Hoidla sünkimise teenus käimas"</string>
+    <string name="sync_init">"Uuenduste kontrollimine"</string>
+    <string name="sync_downloading">"Hoidlate allalaadimine"</string>
+    <string name="title_installed">"Minu rakendused ja mängud"</string>
+    <string name="pref_updates_app_experimental">"Luba katsetuslikke uuendusi"</string>
+    <string name="pref_updates_app_experimental_desc">"Lubamisel kirjutavad beeta/alfa versioonid stabiilsed üle"</string>
+    <string name="details_new_changes">"Mis on uut"</string>
+    <string name="pref_downloader_internal">"Laadi rakendused sisemällu"</string>
+    <string name="pref_downloader_internal_desc">"Lubamisel ei saa sa rakendusi paigaldada Aurora Services kaudu"</string>
+    <string name="action_reset">"Lähtesta vaikeseadetele"</string>
+    <string name="action_select_all">"Vali kõik"</string>
+    <string name="list_not_installed">"Paigaldamata"</string>
+    <string name="list_repo_availability">"Saadavuse kontrollimine"</string>
+    <string name="list_repo_available">"Saadaval"</string>
+    <string name="list_repo_unavailable">"Pole saadaval"</string>
+    <string name="title_repo_add_desc">"Lisa kohandatud hoidla sünkima"</string>
+    <string name="toast_repo_sync_empty">"Vali vähemalt üks hoidla, mida sünkida"</string>
+    <string name="toast_repo_sync_completed">"Kõik hoidlad uuendatud"</string>
+    <string name="toast_repo_sync_no_updates">"Uuendusi pole saadaval"</string>
+</resources>
