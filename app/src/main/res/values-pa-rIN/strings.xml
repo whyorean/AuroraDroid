@@ -28,11 +28,11 @@
     <string name="action_more">"ਹੋਰ"</string>
     <string name="action_next">"ਅਗਲਾ"</string>
     <string name="action_open">"ਖੋਲੋ"</string>
-    <string name="action_pause">"ਰੋਕੋ"</string>
+    <string name="action_pause">"ਰੋਕੋ ⏸️"</string>
     <string name="action_recheck">"ਜਾਂਚ ਕਰੋ"</string>
     <string name="action_remove">"ਹਟਾਓ"</string>
     <string name="action_restart">"ਦੋਬਾਰਾ ਚਲਾਓ"</string>
-    <string name="action_resume">"ਚਾਲੂ ਕਰੋ"</string>
+    <string name="action_resume">"ਚਾਲੂ ਕਰੋ ▶️"</string>
     <string name="action_retry">"ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ"</string>
     <string name="action_settings">"ਸੈਟਿੰਗਾਂ"</string>
     <string name="action_share">"ਸਾਂਝਾ ਕਰੋ"</string>
@@ -75,12 +75,12 @@
     <string name="download_failed">"ਡਾਊਨਲੋਡ ਅਸਫਲ"</string>
     <string name="download_force_clear_all">"ਜਬਰੀ ਸਾਰੇ ਮਿਟਾਓ"</string>
     <string name="download_none">"ਕੋਈ ਡਾਊਨਲੋਡ ਨਹੀਂ"</string>
-    <string name="download_pause_all">"ਸਾਰੇ ਰੋਕੋ⏸️"</string>
+    <string name="download_pause_all">"ਸਾਰੇ ਰੋਕੋ ⏸️"</string>
     <string name="download_paused">"ਰੋਕਿਆ ਗਿਆ"</string>
     <string name="download_progress">"ਡਾਊਨਲੋਡ ਹੋ ਰਿਹਾ ਹੈ"</string>
     <string name="download_queued">"ਕਤਾਰਬੱਧ"</string>
-    <string name="download_resume">"ਚਾਲੂ ਕਰੋ"</string>
-    <string name="download_resume_all">"ਸਾਰੇ ਚਾਲੂ ਕਰੋ️"</string>
+    <string name="download_resume">"ਚਾਲੂ ਕਰੋ ▶️"</string>
+    <string name="download_resume_all">"ਸਾਰੇ ਚਾਲੂ ਕਰੋ ▶️"</string>
     <string name="filter_name_az">"ਨਾਮ A-Z"</string>
     <string name="filter_name_za">"ਨਾਮ Z-A"</string>
     <string name="filter_size_min">"ਘੱਟ ਆਕਾਰ"</string>
@@ -109,10 +109,10 @@
     <string name="list_selected">"ਚੁਣੀਆਂ ਐਪਸ"</string>
     <string name="list_update_all">"ਸਾਰੇ ਅੱਪਡੇਟ ਕਰੋ"</string>
     <string name="list_update_all_txt">"ਅੱਪਡੇਟ ਉਪਲੱਬਧ"</string>
-    <string name="list_updating">"ਅੱਪਡੇਟ ਜਾਰੀ…"</string>
+    <string name="list_updating">"ਅੱਪਡੇਟ ਜਾਰੀ..."</string>
     <string name="sync_completed">"ਸਿੰਕ ਮੁਕੰਮਲ"</string>
     <string name="sync_completed_all">"ਸਾਰੀਆਂ ਰਿਪੌਜ਼ੀਟਰੀਆਂ ਦੀ ਸਿੰਕ ਮੁਕੰਮਲ"</string>
-    <string name="sync_progress">"ਰਿਪੌਜ਼ੀਟਰੀ ਸਿੰਕ ਜਾਰੀ…"</string>
+    <string name="sync_progress">"ਰਿਪੌਜ਼ੀਟਰੀ ਸਿੰਕ ਜਾਰੀ..."</string>
     <string name="sync_failed">"ਸਿੰਕ ਅਸਫਲ"</string>
 
     <!-- Fuzzy -->
@@ -246,7 +246,7 @@
     <string name="action_reset">"ਪਹਿਲੀਆਂ ਸੈਟਿੰਗਾਂ ਤੇ ਰੀਸੈੱਟ ਕਰੋ"</string>
     <string name="action_select_all">"ਸਾਰੇ ਚੁਣੋ"</string>
     <string name="list_not_installed">"ਇੰਸਟਾਲਡ ਨਹੀਂ ਹੈ"</string>
-    <string name="list_repo_availability">"ਇਸਦੀ ਉਪਲੱਬਧਤਾ ਬਾਰੇ ਜਾਂਚ ਜਾਰੀ…"</string>
+    <string name="list_repo_availability">"ਇਸਦੀ ਉਪਲੱਬਧਤਾ ਬਾਰੇ ਜਾਂਚ ਜਾਰੀ..."</string>
     <string name="list_repo_available">"ਉਪਲੱਬਧ ਹੈ"</string>
     <string name="list_repo_unavailable">"ਉਪਲਬੱਧ ਨਹੀਂ ਹੈ"</string>
     <string name="title_repo_add_desc">"ਸਿੰਕ ਕਰਨ ਲਈ ਖੁੱਦ ਨਵੀਂ ਰਿਪੋਜ਼ੀਟਰੀ ਸ਼ਾਮਿਲ ਕਰੋ"</string>
