@@ -269,36 +269,38 @@ public class UpdatesFragment extends BaseFragment {
                 ? selectedItems
                 : itemAdapter.getAdapterItems())
                 .map(updatesItem -> updatesItem.getPackageName().hashCode())
-                .toList()
-                .doOnSuccess(hashCodes -> {
+                .doOnNext(hashcode -> {
                     final FetchListener fetchListener = new AbstractFetchGroupListener() {
                         @Override
                         public void onAdded(int groupId, @NotNull Download download, @NotNull FetchGroup fetchGroup) {
                             super.onAdded(groupId, download, fetchGroup);
-                            if (hashCodes.contains(groupId)) {
+                            if (hashcode == groupId) {
                                 fetch.cancelGroup(groupId);
+                                fetch.removeListener(this);
                             }
                         }
 
                         @Override
                         public void onProgress(int groupId, @NotNull Download download, long etaInMilliSeconds, long downloadedBytesPerSecond, @NotNull FetchGroup fetchGroup) {
                             super.onProgress(groupId, download, etaInMilliSeconds, downloadedBytesPerSecond, fetchGroup);
-                            if (hashCodes.contains(groupId)) {
+                            if (hashcode == groupId) {
                                 fetch.cancelGroup(groupId);
+                                fetch.removeListener(this);
                             }
                         }
 
                         @Override
                         public void onQueued(int groupId, @NotNull Download download, boolean waitingNetwork, @NotNull FetchGroup fetchGroup) {
                             super.onQueued(groupId, download, waitingNetwork, fetchGroup);
-                            if (hashCodes.contains(groupId)) {
+                            if (hashcode == groupId) {
                                 fetch.cancelGroup(groupId);
+                                fetch.removeListener(this);
                             }
                         }
                     };
-
                     fetch.addListener(fetchListener);
-
+                })
+                .doOnComplete(() -> {
                     //Clear ongoing update list
                     AuroraApplication.setOngoingUpdateList(new ArrayList<>());
                     //Start BulkUpdate cancellation request
