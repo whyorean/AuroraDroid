@@ -134,9 +134,6 @@ public class AppActionDetails extends AbstractDetails {
                 btnPositive.setText(R.string.action_open);
                 btnPositive.setOnClickListener(openAppListener());
             }
-            if (PathUtil.fileExists(context, pkg.getPackageName(), pkg.getVersionCode())) {
-                btnPositive.setOnClickListener(installAppListener());
-            }
         } catch (PackageManager.NameNotFoundException ignored) {
         }
     }
