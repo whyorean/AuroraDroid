@@ -21,8 +21,6 @@ package com.aurora.adroid.task;
 
 import android.content.Context;
 
-import com.aurora.adroid.util.Log;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

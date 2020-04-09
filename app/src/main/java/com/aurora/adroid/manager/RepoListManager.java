@@ -100,7 +100,7 @@ public class RepoListManager {
         }.getType();
         final HashMap<String, Repo> repoHashMap = gson.fromJson(rawList, type);
 
-        if (repoHashMap == null|| repoHashMap.isEmpty())
+        if (repoHashMap == null || repoHashMap.isEmpty())
             return getDefaultRepoMapFromAssets();
         else
             return repoHashMap;

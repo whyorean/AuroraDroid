@@ -35,7 +35,7 @@ public class InstallReceiver extends BroadcastReceiver {
         if ((extras != null)) {
             final String packageName = extras.getString(Constants.INTENT_PACKAGE_NAME, "");
             final String versionCodeString = extras.getString(Constants.STRING_EXTRA, "");
-            Log.e(packageName+"."+versionCodeString);
+            Log.e(packageName + "." + versionCodeString);
             if (!packageName.isEmpty() && !versionCodeString.isEmpty()) {
                 AuroraApplication.getInstaller().install(packageName, Long.parseLong(versionCodeString));
             }

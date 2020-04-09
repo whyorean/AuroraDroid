@@ -69,7 +69,7 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
                 repo.setRepoName(Util.getDomainName(ss[0]));
                 repo.setRepoId(String.valueOf(repo.getRepoName().hashCode()));
 
-                ss[0] = ss[0].replace("fdroidrepos","https");
+                ss[0] = ss[0].replace("fdroidrepos", "https");
                 ss[1] = ss[1].replace("fingerprint=", "");
                 ss[1] = ss[1].replace("FINGERPRINT=", "");
 

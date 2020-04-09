@@ -30,13 +30,11 @@ import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.task.LiveUpdate;
-import com.aurora.adroid.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class BulkUpdateService extends Service {

@@ -285,10 +285,7 @@ public class PackageUtil {
                 return true;
             else if (isBeta(packageInfo.versionName) && (isBeta(pkg.getVersionName()) || isStable(pkg.getVersionName())))
                 return true;
-            else if (isStable(packageInfo.versionName) && isStable(pkg.getVersionName()))
-                return true;
-            else
-                return false;
+            else return isStable(packageInfo.versionName) && isStable(pkg.getVersionName());
         }
         return false;
     }
