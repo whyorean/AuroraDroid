@@ -24,13 +24,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/layout_action"
+            android:id="@+id/layout_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="@dimen/min_height">
@@ -64,48 +64,35 @@
                 android:text="@string/list_update_all" />
         </RelativeLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
+        <com.aurora.adroid.ui.view.ViewFlipper2
+            android:id="@+id/viewFlipper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:paddingBottom="@dimen/margin_bottom"
-            android:scrollbars="vertical"
-            android:splitMotionEvents="false"
-            tools:listitem="@layout/item_installed" />
-    </LinearLayout>
+            android:layout_below="@id/layout_top">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <com.aurora.adroid.ui.view.placeholder.ProgressView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:progressText="@string/action_loading" />
 
-        <RelativeLayout
-            android:id="@+id/empty_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:attr/colorBackground"
-            android:visibility="gone">
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/img_empty"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:layout_above="@id/txt_empty"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/margin_small"
-                android:src="@drawable/ic_apps"
-                app:tint="?colorAccent" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical"
+                    tools:listitem="@layout/item_updates" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_empty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/list_empty_updates"
-                android:textAppearance="@style/TextAppearance.Aurora.Line1" />
-        </RelativeLayout>
-
-        <include layout="@layout/include_placeholder_progress" />
+            <com.aurora.adroid.ui.view.placeholder.EmptyView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:emptyImage="@drawable/ic_updates"
+                app:emptyText="@string/list_empty_updates" />
+        </com.aurora.adroid.ui.view.ViewFlipper2>
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

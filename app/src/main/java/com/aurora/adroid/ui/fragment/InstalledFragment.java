@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,15 +32,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
-import com.aurora.adroid.RecyclerDataObserver;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.items.InstalledItem;
 import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.ui.sheet.AppMenuSheet;
+import com.aurora.adroid.ui.view.ViewFlipper2;
 import com.aurora.adroid.util.PrefUtil;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.util.diff.InstalledDiffCallback;
@@ -58,18 +58,16 @@ import butterknife.ButterKnife;
 
 public class InstalledFragment extends BaseFragment {
 
+    @BindView(R.id.viewFlipper)
+    ViewFlipper2 viewFlipper;
+    @BindView(R.id.swipe_layout)
+    SwipeRefreshLayout swipeLayout;
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
     @BindView(R.id.switch_system)
     SwitchMaterial switchSystem;
 
-    @BindView(R.id.empty_layout)
-    RelativeLayout emptyLayout;
-    @BindView(R.id.progress_layout)
-    RelativeLayout progressLayout;
-
     private InstalledAppsViewModel model;
-    private RecyclerDataObserver dataObserver;
     private FastAdapter<InstalledItem> fastAdapter;
     private ItemAdapter<InstalledItem> itemAdapter;
 
@@ -95,6 +93,7 @@ public class InstalledFragment extends BaseFragment {
         model = new ViewModelProvider(this).get(InstalledAppsViewModel.class);
         model.getData().observe(getViewLifecycleOwner(), installedItems -> {
             dispatchAppsToAdapter(installedItems);
+            swipeLayout.setRefreshing(false);
         });
 
         AuroraApplication
@@ -108,6 +107,8 @@ public class InstalledFragment extends BaseFragment {
                             break;
                     }
                 }).subscribe();
+
+        swipeLayout.setOnRefreshListener(() -> model.fetchInstalledApps(switchSystem.isChecked()));
     }
 
     private void removeItemByPackageName(String packageName) {
@@ -125,13 +126,25 @@ public class InstalledFragment extends BaseFragment {
         if (adapterPosition >= 0 && itemAdapter != null) {
             itemAdapter.remove(adapterPosition);
         }
+        updatePageData();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (dataObserver != null && !itemAdapter.getAdapterItems().isEmpty()) {
-            dataObserver.hideProgress();
+    }
+
+    @Override
+    public void onPause() {
+        swipeLayout.setRefreshing(false);
+        super.onPause();
+    }
+
+    private void updatePageData() {
+        if (itemAdapter != null && itemAdapter.getAdapterItems().size() > 0) {
+            viewFlipper.switchState(ViewFlipper2.DATA);
+        } else {
+            viewFlipper.switchState(ViewFlipper2.EMPTY);
         }
     }
 
@@ -140,9 +153,7 @@ public class InstalledFragment extends BaseFragment {
         final InstalledDiffCallback diffCallback = new InstalledDiffCallback();
         final DiffUtil.DiffResult diffResult = fastAdapterDiffUtil.calculateDiff(itemAdapter, installedItems, diffCallback);
         fastAdapterDiffUtil.set(itemAdapter, diffResult);
-
-        if (dataObserver != null)
-            dataObserver.checkIfEmpty();
+        updatePageData();
     }
 
     private void setupRecycler() {
@@ -171,9 +182,6 @@ public class InstalledFragment extends BaseFragment {
             menuSheet.show(getChildFragmentManager(), AppMenuSheet.TAG);
             return true;
         });
-
-        dataObserver = new RecyclerDataObserver(recyclerView, emptyLayout, progressLayout);
-        fastAdapter.registerAdapterDataObserver(dataObserver);
 
         recyclerView.setAdapter(fastAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));

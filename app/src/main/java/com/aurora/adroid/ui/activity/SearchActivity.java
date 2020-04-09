@@ -27,7 +27,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -37,11 +36,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
-import com.aurora.adroid.RecyclerDataObserver;
 import com.aurora.adroid.Sort;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.items.GenericItem;
 import com.aurora.adroid.ui.sheet.AppMenuSheet;
+import com.aurora.adroid.ui.view.ViewFlipper2;
 import com.aurora.adroid.util.TextUtil;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.viewmodel.SearchAppsViewModel;
@@ -63,6 +62,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SearchActivity extends BaseActivity implements ItemFilterListener<GenericItem> {
 
+    @BindView(R.id.viewFlipper)
+    ViewFlipper2 viewFlipper;
     @BindView(R.id.coordinator)
     CoordinatorLayout coordinatorLayout;
     @BindView(R.id.txt_input_search)
@@ -84,13 +85,7 @@ public class SearchActivity extends BaseActivity implements ItemFilterListener<G
     @BindView(R.id.action2)
     ImageView action2;
 
-    @BindView(R.id.empty_layout)
-    RelativeLayout emptyLayout;
-    @BindView(R.id.progress_layout)
-    RelativeLayout progressLayout;
-
     private SearchAppsViewModel model;
-    private RecyclerDataObserver dataObserver;
     private FastAdapter<GenericItem> fastAdapter;
     private ItemAdapter<GenericItem> itemAdapter;
     private boolean isDataLoaded = false;
@@ -119,9 +114,6 @@ public class SearchActivity extends BaseActivity implements ItemFilterListener<G
     @Override
     protected void onResume() {
         super.onResume();
-        if (dataObserver != null && !itemAdapter.getItemList().isEmpty()) {
-            dataObserver.hideProgress();
-        }
         txtInputSearch.requestFocus();
     }
 
@@ -214,11 +206,8 @@ public class SearchActivity extends BaseActivity implements ItemFilterListener<G
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess(genericItems -> {
                     itemAdapter.add(genericItems);
-
-                    if (dataObserver != null)
-                        dataObserver.checkIfEmpty();
-
                     isDataLoaded = true;
+                    updatePageData();
                 })
                 .subscribe();
     }
@@ -280,11 +269,16 @@ public class SearchActivity extends BaseActivity implements ItemFilterListener<G
 
         itemAdapter.getItemFilter().setItemFilterListener(this);
 
-        dataObserver = new RecyclerDataObserver(recyclerView, emptyLayout, progressLayout);
-        fastAdapter.registerAdapterDataObserver(dataObserver);
-
         recyclerView.setAdapter(fastAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+    }
+
+    private void updatePageData() {
+        if (itemAdapter != null && itemAdapter.getAdapterItems().size() > 0) {
+            viewFlipper.switchState(ViewFlipper2.DATA);
+        } else {
+            viewFlipper.switchState(ViewFlipper2.EMPTY);
+        }
     }
 
     @Override
@@ -293,7 +287,6 @@ public class SearchActivity extends BaseActivity implements ItemFilterListener<G
 
     @Override
     public void itemsFiltered(@Nullable CharSequence charSequence, @Nullable List<? extends GenericItem> list) {
-        if (dataObserver != null)
-            dataObserver.checkIfEmpty();
+        updatePageData();
     }
 }

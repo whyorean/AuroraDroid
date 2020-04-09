@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,16 +34,17 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
-import com.aurora.adroid.RecyclerDataObserver;
 import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.items.UpdatesItem;
 import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.ui.sheet.AppMenuSheet;
+import com.aurora.adroid.ui.view.ViewFlipper2;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.util.diff.UpdatesDiffCallback;
@@ -74,23 +74,21 @@ import io.reactivex.Observable;
 
 public class UpdatesFragment extends BaseFragment {
 
+    @BindView(R.id.viewFlipper)
+    ViewFlipper2 viewFlipper;
+    @BindView(R.id.swipe_layout)
+    SwipeRefreshLayout swipeLayout;
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
     @BindView(R.id.txt_update_all)
     AppCompatTextView txtUpdateAll;
     @BindView(R.id.btn_action)
     MaterialButton btnAction;
-    @BindView(R.id.empty_layout)
-    RelativeLayout emptyLayout;
-    @BindView(R.id.progress_layout)
-    RelativeLayout progressLayout;
 
     private Fetch fetch;
     private Set<UpdatesItem> selectedItems = new HashSet<>();
 
     private UpdatesViewModel model;
-    private RecyclerDataObserver dataObserver;
-
     private FastAdapter<UpdatesItem> fastAdapter;
     private ItemAdapter<UpdatesItem> itemAdapter;
     private SelectExtension<UpdatesItem> selectExtension;
@@ -113,6 +111,7 @@ public class UpdatesFragment extends BaseFragment {
         model = new ViewModelProvider(this).get(UpdatesViewModel.class);
         model.getAppsLiveData().observe(getViewLifecycleOwner(), updatesItems -> {
             dispatchAppsToAdapter(updatesItems);
+            swipeLayout.setRefreshing(false);
         });
 
         AuroraApplication
@@ -138,14 +137,19 @@ public class UpdatesFragment extends BaseFragment {
                             break;
                     }
                 }).subscribe();
+
+        swipeLayout.setOnRefreshListener(() -> model.fetchUpdatableApps());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (dataObserver != null && !itemAdapter.getAdapterItems().isEmpty()) {
-            dataObserver.hideProgress();
-        }
+    }
+
+    @Override
+    public void onPause() {
+        swipeLayout.setRefreshing(false);
+        super.onPause();
     }
 
     private void removeItemByPackageName(String packageName) {
@@ -180,8 +184,12 @@ public class UpdatesFragment extends BaseFragment {
         updateText();
         updateButtons();
         updateButtonActions();
-        if (dataObserver != null)
-            dataObserver.checkIfEmpty();
+
+        if (itemAdapter != null && itemAdapter.getAdapterItems().size() > 0) {
+            viewFlipper.switchState(ViewFlipper2.DATA);
+        } else {
+            viewFlipper.switchState(ViewFlipper2.EMPTY);
+        }
     }
 
     private void dispatchAppsToAdapter(List<UpdatesItem> updatesItems) {
@@ -221,9 +229,6 @@ public class UpdatesFragment extends BaseFragment {
 
         fastAdapter.addExtension(selectExtension);
         fastAdapter.addEventHook(new UpdatesItem.CheckBoxClickEvent());
-
-        dataObserver = new RecyclerDataObserver(recyclerView, emptyLayout, progressLayout);
-        fastAdapter.registerAdapterDataObserver(dataObserver);
 
         selectExtension.setMultiSelect(true);
         selectExtension.setSelectionListener((item, selected) -> {

@@ -37,13 +37,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
-import com.aurora.adroid.RecyclerDataObserver;
 import com.aurora.adroid.manager.FavouritesManager;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.items.FavouriteItem;
 import com.aurora.adroid.task.LiveUpdate;
 import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.ui.fragment.BaseFragment;
+import com.aurora.adroid.ui.view.ViewFlipper2;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.PathUtil;
@@ -87,10 +87,11 @@ public class FavouriteFragment extends BaseFragment {
     RelativeLayout emptyLayout;
     @BindView(R.id.progress_layout)
     RelativeLayout progressLayout;
+    @BindView(R.id.viewFlipper)
+    ViewFlipper2 viewFlipper;
 
     private Set<App> selectedAppSet = new HashSet<>();
     private FavouriteAppsModel model;
-    private RecyclerDataObserver dataObserver;
     private FavouritesManager favouritesManager;
 
     private FastItemAdapter<FavouriteItem> fastItemAdapter;
@@ -126,9 +127,6 @@ public class FavouriteFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (dataObserver != null && !fastItemAdapter.getAdapterItems().isEmpty()) {
-            dataObserver.hideProgress();
-        }
     }
 
     private View.OnClickListener bulkInstallListener() {
@@ -187,8 +185,11 @@ public class FavouriteFragment extends BaseFragment {
         updateButtons();
         updateActions();
 
-        if (dataObserver != null)
-            dataObserver.checkIfEmpty();
+        if (fastItemAdapter != null && fastItemAdapter.getAdapterItems().size() > 0) {
+            viewFlipper.switchState(ViewFlipper2.DATA);
+        } else {
+            viewFlipper.switchState(ViewFlipper2.EMPTY);
+        }
     }
 
     private void updateText() {
@@ -233,9 +234,6 @@ public class FavouriteFragment extends BaseFragment {
 
         fastItemAdapter.addExtension(selectExtension);
         fastItemAdapter.addEventHook(new FavouriteItem.CheckBoxClickEvent());
-
-        dataObserver = new RecyclerDataObserver(recyclerView, emptyLayout, progressLayout);
-        fastItemAdapter.registerAdapterDataObserver(dataObserver);
 
         selectExtension.setMultiSelect(true);
         selectExtension.setSelectionListener((item, selected) -> {

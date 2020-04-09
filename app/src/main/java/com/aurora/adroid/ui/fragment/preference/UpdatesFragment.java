@@ -54,8 +54,8 @@ public class UpdatesFragment extends PreferenceFragmentCompat implements SharedP
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedPreferences mPrefs = Util.getPrefs(context);
-        mPrefs.registerOnSharedPreferenceChangeListener(this);
+        SharedPreferences sharedPreferences = Util.getPrefs(context);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 
         ListPreference updatesIntervalList = findPreference(Constants.PREFERENCE_UPDATES_INTERVAL);
         assert updatesIntervalList != null;

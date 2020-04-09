@@ -28,7 +28,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -37,11 +36,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
-import com.aurora.adroid.RecyclerDataObserver;
 import com.aurora.adroid.Sort;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.items.GenericItem;
 import com.aurora.adroid.ui.sheet.AppMenuSheet;
+import com.aurora.adroid.ui.view.ViewFlipper2;
 import com.aurora.adroid.util.TextUtil;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.viewmodel.ClusterAppsViewModel;
@@ -62,6 +61,8 @@ import io.reactivex.Observable;
 
 public class GenericAppActivity extends BaseActivity implements ItemFilterListener<GenericItem> {
 
+    @BindView(R.id.viewFlipper)
+    ViewFlipper2 viewFlipper;
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
     @BindView(R.id.chip_group)
@@ -85,15 +86,9 @@ public class GenericAppActivity extends BaseActivity implements ItemFilterListen
     @BindView(R.id.action2)
     ImageView action2;
 
-    @BindView(R.id.empty_layout)
-    RelativeLayout emptyLayout;
-    @BindView(R.id.progress_layout)
-    RelativeLayout progressLayout;
-
     private InputMethodManager inputMethodManager;
 
     private ClusterAppsViewModel model;
-    private RecyclerDataObserver dataObserver;
     private FastAdapter<GenericItem> fastAdapter;
     private ItemAdapter<GenericItem> itemAdapter;
     private boolean isDataLoaded = false;
@@ -144,9 +139,6 @@ public class GenericAppActivity extends BaseActivity implements ItemFilterListen
     @Override
     protected void onResume() {
         super.onResume();
-        if (dataObserver != null && !itemAdapter.getItemList().isEmpty()) {
-            dataObserver.hideProgress();
-        }
         txtInputSearch.requestFocus();
     }
 
@@ -212,11 +204,8 @@ public class GenericAppActivity extends BaseActivity implements ItemFilterListen
                 .toList()
                 .doOnSuccess(genericItems -> {
                     itemAdapter.add(genericItems);
-
-                    if (dataObserver != null)
-                        dataObserver.checkIfEmpty();
-
                     isDataLoaded = true;
+                    updatePageData();
                 })
                 .subscribe();
     }
@@ -277,9 +266,6 @@ public class GenericAppActivity extends BaseActivity implements ItemFilterListen
 
         itemAdapter.getItemFilter().setItemFilterListener(this);
 
-        dataObserver = new RecyclerDataObserver(recyclerView, emptyLayout, progressLayout);
-        fastAdapter.registerAdapterDataObserver(dataObserver);
-
         recyclerView.setAdapter(fastAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
     }
@@ -308,13 +294,20 @@ public class GenericAppActivity extends BaseActivity implements ItemFilterListen
         });
     }
 
+    private void updatePageData() {
+        if (itemAdapter != null && itemAdapter.getAdapterItems().size() > 0) {
+            viewFlipper.switchState(ViewFlipper2.DATA);
+        } else {
+            viewFlipper.switchState(ViewFlipper2.EMPTY);
+        }
+    }
+
     @Override
     public void onReset() {
     }
 
     @Override
     public void itemsFiltered(@Nullable CharSequence charSequence, @Nullable List<? extends GenericItem> list) {
-        if (dataObserver != null)
-            dataObserver.checkIfEmpty();
+        updatePageData();
     }
 }

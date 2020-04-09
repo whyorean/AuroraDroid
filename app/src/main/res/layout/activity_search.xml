@@ -19,7 +19,6 @@
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -37,39 +36,34 @@
             android:paddingStart="@dimen/margin_normal"
             android:paddingTop="@dimen/margin_small"
             android:paddingEnd="@dimen/margin_xsmall"
-            android:paddingBottom="@dimen/margin_xsmall"
+            android:paddingBottom="@dimen/margin_small"
             android:text="@string/action_sortBy"
             android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
 
         <include layout="@layout/include_filters" />
 
-        <RelativeLayout
+        <com.aurora.adroid.ui.view.ViewFlipper2
+            android:id="@+id/viewFlipper"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <com.aurora.adroid.ui.view.placeholder.ProgressView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:progressText="@string/action_loading" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
-                app:fastScrollEnabled="true"
-                app:fastScrollHorizontalThumbDrawable="@drawable/fast_scroll_thumb"
-                app:fastScrollHorizontalTrackDrawable="@drawable/fast_scroll_track"
-                app:fastScrollVerticalThumbDrawable="@drawable/fast_scroll_thumb"
-                app:fastScrollVerticalTrackDrawable="@drawable/fast_scroll_track"
-                tools:itemCount="4"
-                tools:listitem="@layout/item_installed" />
+                android:scrollbars="vertical" />
 
-            <RelativeLayout
-                android:id="@+id/placeholder"
+            <com.aurora.adroid.ui.view.placeholder.EmptyView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <include layout="@layout/include_placeholder_empty" />
-
-                <include layout="@layout/include_placeholder_progress" />
-            </RelativeLayout>
-        </RelativeLayout>
+                android:layout_height="match_parent"
+                app:emptyImage="@drawable/ic_round_search"
+                app:emptyText="@string/error_search_not_found" />
+        </com.aurora.adroid.ui.view.ViewFlipper2>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
