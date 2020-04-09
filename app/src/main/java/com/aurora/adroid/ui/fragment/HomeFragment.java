@@ -41,8 +41,8 @@ import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.manager.RepoSyncManager;
 import com.aurora.adroid.model.items.IndexItem;
+import com.aurora.adroid.model.items.cluster.GenericClusterItem;
 import com.aurora.adroid.model.items.cluster.NewClusterItem;
-import com.aurora.adroid.model.items.cluster.UpdatesClusterItem;
 import com.aurora.adroid.service.SyncService;
 import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.ui.activity.GenericAppActivity;
@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
     ImageButton btnMoreUpdated;
 
     private FastItemAdapter<NewClusterItem> fastItemAdapterNew;
-    private FastItemAdapter<UpdatesClusterItem> fastItemAdapterUpdates;
+    private FastItemAdapter<GenericClusterItem> fastItemAdapterUpdates;
     private FastItemAdapter<IndexItem> fastItemAdapterIndices;
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -115,7 +115,7 @@ public class HomeFragment extends Fragment {
         clusterModel.getUpdatedAppsLiveData().observe(getViewLifecycleOwner(), apps -> {
             disposable.add(Observable.fromIterable(apps)
                     .subscribeOn(Schedulers.io())
-                    .map(UpdatesClusterItem::new)
+                    .map(GenericClusterItem::new)
                     .toList()
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(clusterItems -> {

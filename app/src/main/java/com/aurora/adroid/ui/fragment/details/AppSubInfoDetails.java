@@ -18,6 +18,7 @@
 
 package com.aurora.adroid.ui.fragment.details;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
@@ -27,10 +28,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
-import com.aurora.adroid.section.ClusterAppSection;
+import com.aurora.adroid.model.items.cluster.GenericClusterItem;
 import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.ui.sheet.MoreInfoSheet;
 import com.aurora.adroid.util.PackageUtil;
@@ -38,6 +40,7 @@ import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.viewmodel.ClusterAppsViewModel;
 import com.google.android.material.chip.Chip;
+import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -46,10 +49,9 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
+import io.reactivex.Observable;
 
 public class AppSubInfoDetails extends AbstractDetails {
-
 
     @BindView(R.id.txt_updated)
     Chip chipUpdated;
@@ -117,18 +119,42 @@ public class AppSubInfoDetails extends AbstractDetails {
     }
 
     private void setupAuthorRecycler(List<App> appList) {
-        SectionedRecyclerViewAdapter adapter = new SectionedRecyclerViewAdapter();
-        ClusterAppSection section = new ClusterAppSection(context, appList);
-        adapter.addSection(section);
+        FastItemAdapter<GenericClusterItem> fastItemAdapter = new FastItemAdapter<>();
+        fastItemAdapter.setOnClickListener((view, iAdapter, item, position) -> {
+            Intent intent = new Intent(context, DetailsActivity.class);
+            intent.putExtra(Constants.INTENT_PACKAGE_NAME, app.getPackageName());
+            intent.putExtra(Constants.STRING_REPO, app.getRepoName());
+            context.startActivity(intent);
+            return false;
+        });
+
         recyclerDeveloper.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
-        recyclerDeveloper.setAdapter(adapter);
+        recyclerDeveloper.setAdapter(fastItemAdapter);
+
+        Observable.fromIterable(appList)
+                .map(GenericClusterItem::new)
+                .toList()
+                .doOnSuccess(fastItemAdapter::add)
+                .subscribe();
     }
 
     private void setupSimilarRecycler(List<App> appList) {
-        SectionedRecyclerViewAdapter adapter = new SectionedRecyclerViewAdapter();
-        ClusterAppSection section = new ClusterAppSection(context, appList);
-        adapter.addSection(section);
+        FastItemAdapter<GenericClusterItem> fastItemAdapter = new FastItemAdapter<>();
+        fastItemAdapter.setOnClickListener((view, iAdapter, item, position) -> {
+            Intent intent = new Intent(context, DetailsActivity.class);
+            intent.putExtra(Constants.INTENT_PACKAGE_NAME, app.getPackageName());
+            intent.putExtra(Constants.STRING_REPO, app.getRepoName());
+            context.startActivity(intent);
+            return false;
+        });
+
         recyclerSimilar.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
-        recyclerSimilar.setAdapter(adapter);
+        recyclerSimilar.setAdapter(fastItemAdapter);
+
+        Observable.fromIterable(appList)
+                .map(GenericClusterItem::new)
+                .toList()
+                .doOnSuccess(fastItemAdapter::add)
+                .subscribe();
     }
 }

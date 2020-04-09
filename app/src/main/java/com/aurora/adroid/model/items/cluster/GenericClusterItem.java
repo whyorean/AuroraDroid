@@ -20,9 +20,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class UpdatesClusterItem extends BaseClusterItem {
+public class GenericClusterItem extends BaseClusterItem {
 
-    public UpdatesClusterItem(App app) {
+    public GenericClusterItem(App app) {
         super(app);
     }
 
@@ -31,7 +31,6 @@ public class UpdatesClusterItem extends BaseClusterItem {
     public ViewHolder getViewHolder(@NotNull View view) {
         return new ViewHolder(view);
     }
-
 
     public static class ViewHolder extends BaseViewHolder {
 

@@ -33,7 +33,6 @@ public class NewClusterItem extends BaseClusterItem {
         return new ViewHolder(view);
     }
 
-
     public static class ViewHolder extends BaseViewHolder {
 
         @BindView(R.id.img)
