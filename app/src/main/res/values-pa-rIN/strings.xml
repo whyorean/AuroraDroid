@@ -22,17 +22,17 @@
     <string name="action_info">"ਐਪ ਬਾਰੇ"</string>
     <string name="action_install">"ਇੰਸਟਾਲ ਕਰੋ"</string>
     <string name="action_installing">"ਇੰਸਟਾਲ ਹੋ ਰਿਹਾ ਹੈ"</string>
-    <string name="action_installed">"ਇੰਸਟਾਲ ਮੁਕੰਮਲ"</string>
+    <string name="action_installed">"ਇੰਸਟਾਲਡ ਐਪਸ"</string>
     <string name="action_installations">"ਇੰਸਟਾਲੇਸ਼ਨਾਂ"</string>
     <string name="action_later">"ਬਾਅਦ ਵਿੱਚ"</string>
     <string name="action_more">"ਹੋਰ"</string>
     <string name="action_next">"ਅਗਲਾ"</string>
     <string name="action_open">"ਖੋਲੋ"</string>
-    <string name="action_pause">"ਰੋਕੋ ⏸️"</string>
+    <string name="action_pause">"ਰੋਕੋ"</string>
     <string name="action_recheck">"ਜਾਂਚ ਕਰੋ"</string>
     <string name="action_remove">"ਹਟਾਓ"</string>
     <string name="action_restart">"ਦੋਬਾਰਾ ਚਲਾਓ"</string>
-    <string name="action_resume">"ਚਾਲੂ ਕਰੋ ▶️"</string>
+    <string name="action_resume">"ਚਾਲੂ ਕਰੋ"</string>
     <string name="action_retry">"ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ"</string>
     <string name="action_settings">"ਸੈਟਿੰਗਾਂ"</string>
     <string name="action_share">"ਸਾਂਝਾ ਕਰੋ"</string>
@@ -55,7 +55,7 @@
     <string name="details_permissions_desc">"ਔਰੋਰਾ ਡ੍ਰੋਆਇਡ ਹੇਂਠ ਲਿੱਖੇ ਅਧਿਕਾਰਾਂ ਦੀ ਵਰਤੋਂ ਕਰਦਾ ਹੈ"</string>
 
     <!-- Fuzzy -->
-    <string name="details_repo_desc">"ਸਿੰਕ ਕਰਨ ਵਾਸਤੇ F-Droid ਰਿਪੌਜ਼ੀਟਰੀਆਂ ਚੁਣੋ"</string>
+    <string name="details_repo_desc">"ਸਿੰਕ ਕਰਨ ਵਾਸਤੇ ਐਫ-ਡ੍ਰੋਆਇਡ ਰਿਪੌਜ਼ੀਟਰੀਆਂ ਚੁਣੋ"</string>
     <string name="dialog_sync_title">"ਰਿਪੌਜ਼ੀਟਰੀ ਅੱਪਡੇਟਾਂ"</string>
     <string name="dialog_sync_desc">"ਕੀ ਤੁਸੀਂ ਰਿਪੌਜ਼ੀਟਰੀਆਂ ਤੋਂ ਐਪਸ ਨੂੰ ਅਪਡੇਟ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ?"</string>
     <string name="dialog_sync_desc_alt">"ਡਾਟਾ ਪੁਰਾਣਾ ਹੈ, ਨਵੇਂ ਅੱਪਡੇਟ ਮਿਲ ਸਕਦੇ ਹਨ, ਕੀ ਤੁਸੀਂ ਸਾਰੀਆਂ ਰਿਪੌਜ਼ੀਟਰੀਆਂ ਨੂੰ ਸਿੰਕ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ?"</string>
@@ -75,12 +75,12 @@
     <string name="download_failed">"ਡਾਊਨਲੋਡ ਅਸਫਲ"</string>
     <string name="download_force_clear_all">"ਜਬਰੀ ਸਾਰੇ ਮਿਟਾਓ"</string>
     <string name="download_none">"ਕੋਈ ਡਾਊਨਲੋਡ ਨਹੀਂ"</string>
-    <string name="download_pause_all">"ਸਾਰੇ ਰੋਕੋ ⏸️"</string>
+    <string name="download_pause_all">"ਸਾਰੇ ਰੋਕੋ"</string>
     <string name="download_paused">"ਰੋਕਿਆ ਗਿਆ"</string>
     <string name="download_progress">"ਡਾਊਨਲੋਡ ਹੋ ਰਿਹਾ ਹੈ"</string>
     <string name="download_queued">"ਕਤਾਰਬੱਧ"</string>
-    <string name="download_resume">"ਚਾਲੂ ਕਰੋ ▶️"</string>
-    <string name="download_resume_all">"ਸਾਰੇ ਚਾਲੂ ਕਰੋ ▶️"</string>
+    <string name="download_resume">"ਚਾਲੂ ਕਰੋ"</string>
+    <string name="download_resume_all">"ਸਾਰੇ ਚਾਲੂ ਕਰੋ"</string>
     <string name="filter_name_az">"ਨਾਮ A-Z"</string>
     <string name="filter_name_za">"ਨਾਮ Z-A"</string>
     <string name="filter_size_min">"ਘੱਟ ਆਕਾਰ"</string>
@@ -106,7 +106,7 @@
     <string name="list_empty_fav">"ਕੋਈ ਮਨਪਸੰਦ ਨਹੀਂ"</string>
     <string name="list_empty_updates">"ਕੋਈ ਅੱਪਡੇਟ ਨਹੀਂ ਉਪਲੱਬਧ"</string>
     <string name="list_installed">"ਇੰਸਟਾਲਡ"</string>
-    <string name="list_selected">"ਚੁਣੀਆਂ ਐਪਸ"</string>
+    <string name="list_selected">"ਚੁਣੇ ਗਏ ਐਪਸ"</string>
     <string name="list_update_all">"ਸਾਰੇ ਅੱਪਡੇਟ ਕਰੋ"</string>
     <string name="list_update_all_txt">"ਅੱਪਡੇਟ ਉਪਲੱਬਧ"</string>
     <string name="list_updating">"ਅੱਪਡੇਟ ਜਾਰੀ..."</string>
@@ -198,7 +198,7 @@
     <string name="pref_services_desc_alt">"ਔਰੋਰਾ ਸਰਵਿਸਿਜ਼ ਅਣਉਪਲਬਧ।  ਸਰਵਿਸ ਰਿਪੌਜ਼ੀਟਰੀ ਤੋ ਵਧੇਰੇ ਜਾਣਕਾਰੀ ਲਈ ਦਬਾਓ"</string>
     <string name="repo_list">"ਰਿਪੌਜ਼ੀਟਰੀ ਸੂਚੀ"</string>
     <string name="repo_list_select">"ਸਿੰਕ ਕਰਨ ਲਈ ਰਿਪੌਜ਼ੀਟਰੀ ਚੁਣੋ"</string>
-    <string name="repo_qr_scan">"ਸਕੈਨ QR ਕੋਡ"</string>
+    <string name="repo_qr_scan">"QR ਕੋਡ ਸਕੈਨ ਕਰੋ"</string>
     <string name="repo_id">"ਰਿਪੌਜ਼ੀਟਰੀ ਦੀ ID"</string>
     <string name="repo_name">"ਰਿਪੌਜ਼ੀਟਰੀ ਦਾ ਨਾਮ"</string>
     <string name="repo_addr">"ਰਿਪੌਜ਼ੀਟਰੀ ਦਾ ਪਤਾ"</string>
@@ -226,10 +226,10 @@
     <string name="details_apk_suggested">"ਹੋਰ ਸੁਝਾਅ"</string>
     <string name="dialog_sync_completed_desc_alt">"ਕੋਈ ਅੱਪਡੇਟ ਉਪਲਬੱਧ ਨਹੀਂ"</string>
     <string name="dialog_repo_list">"ਰਿਪੌਜ਼ੀਟਰੀ ਦੀ ਸੂਚੀ"</string>
-    <string name="menu_repository">"ਰਿਪੌਜ਼ੀਟਰੀ"</string>
+    <string name="menu_repository">"ਰਿਪੌਜ਼ੀਟਰੀਆਂ"</string>
     <string name="menu_setting">"ਸੈਟਿੰਗਾਂ"</string>
-    <string name="menu_about">"ਐਪ ਬਾਰੇ"</string>
-    <string name="download_metadata">"ਮੈਟਾ-ਡਾਟਾ ਪ੍ਰਾਪਤ ਕਰ ਰਹੇ ਹਾਂ"</string>
+    <string name="menu_about">"ਇਸ ਐਪ ਬਾਰੇ ਹੋਰ ਜਾਣੋ"</string>
+    <string name="download_metadata">"ਮੈਟਾ-ਡਾਟਾ ਪ੍ਰਾਪਤ ਹੋ ਰਿਹਾ ਹੈ"</string>
     <string name="list_update_all_txt_one">"ਅੱਪਡੇਟ ਉਪਲਬੱਧ"</string>
     <string name="list_update_selected">"ਚੁਣੇ ਹੋਏ ਅੱਪਡੇਟ ਕਰੋ"</string>
     <string name="notification_channel_alert">"ਜਲਦ ਸੂਚਨਾਵਾਂ"</string>
@@ -253,8 +253,8 @@
     <string name="toast_repo_sync_empty">"ਘੱਟ ਤੋਂ ਘੱਟ ਇੱਕ ਰਿਪੋਜ਼ੀਟਰੀ ਸਿੰਕ ਕਰਨ ਵਾਸਤੇ ਚੁਣੋ"</string>
     <string name="toast_repo_sync_completed">"ਸਾਰੀਆਂ ਰਿਪੋਜ਼ੀਟਰੀਆਂ ਹੁਣ ਅੱਪਡੇਟਡ ਹਨ"</string>
     <string name="toast_repo_sync_no_updates">"ਕੋਈ ਅੱਪਡੇਟ ਉਪਲਬੱਧ ਨਹੀਂ"</string>
-    <string name="about_libera">"ਲਿਬੇਰਾ-ਪੇ"</string>
-    <string name="about_libera_summary">"ਲਿਬੇਰਾ-ਪੇ ਉੱਪਰ ਸਰਪ੍ਰਸਤ ਬਣੋ"</string>
+    <string name="about_libera">"ਲਾਇਬੇਰਾ-ਪੇ"</string>
+    <string name="about_libera_summary">"ਲਾਇਬੇਰਾ-ਪੇ ਉੱਪਰ ਸਰਪ੍ਰਸਤ ਬਣੋ"</string>
     <string name="about_bitcoin_btc">"ਬਿੱਟ-ਕੋਆਇਨ"</string>
     <string name="about_bitcoin_btc_summary">"ਬਿੱਟ-ਕੋਆਇਨ (BTC) ਜ਼ਰੀਏ ਦਾਨ ਕਰੋ"</string>
     <string name="about_bitcoin_bch">"ਬਿੱਟ-ਕੋਆਇਨ ਕੈਸ਼"</string>
@@ -272,4 +272,10 @@
     <string name="about_xda">"ਡਿਵੈਲਪਰ ਵੈਬਸਾਈਟ"</string>
     <string name="about_xda_summary">"ਕੋਈ ਚਰਚਾ ਜਾਂ ਸੁਝਾਅ ਦੇਣ ਵਾਸਤੇ ਔਰੋਰਾ ਡ੍ਰੋਆਇਡ ਦੀ XDA ਵੈਬਸਾਈਟ ਵੇਖੋ"</string>
     <string name="action_about">"ਇਸ ਐਪ ਬਾਰੇ ਹੋਰ ਜਾਣੋ"</string>
+    <string name="action_loading">"ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ"</string>
+    <string name="pref_default">"ਮੂਲ ਸੈਟਿੰਗਾਂ"</string>
+    <string name="pref_locale_title">"ਭਾਸ਼ਾ"</string>
+    <string name="pref_locale_custom_title">"ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ"</string>
+    <string name="pref_locale_custom_summary">"ਚੁਣੀ ਹੋਈ ਭਾਸ਼ਾ ਲਾਗੂ ਕਰੋ"</string>
+    <string name="pref_locale_list_title">"ਆਪਣਾ ਖੇਤਰ ਚੁਣੋ"</string>
 </resources>
