@@ -26,8 +26,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/margin_bottom">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/layout_action"
@@ -59,7 +58,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_normal"
                 android:maxLines="1"
                 android:text="@string/list_update_all" />
         </RelativeLayout>
