@@ -1,43 +1,33 @@
-<img src="https://i.imgur.com/kSApIjL.png" height="256" alt="Aurora Logo"><br/><img src="https://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL v3 Logo">
+<img src="https://i.imgur.com/kSApIjL.png" height="128" alt="Aurora Logo"><br/><img src="https://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL v3 Logo">
 
-# AuroraDroid: An FDroid Client
+# AuroraDroid: A F-Droid Client
 
-*Aurora Droid* is an unofficial, FOSS client to FDroid and FDroid-compatible repositories with an elegant design. Not only does Aurora Store download, update, and search for apps like the Official FDroid client, it also empowers the user with new features.
-
-AuroraDroid, while being a new project, also shares some code with the official FDroid client.
+*Aurora Droid* is an unofficial, FOSS client for F-Droid. 
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"
      height="80">](https://f-droid.org/packages/com.aurora.adroid/)
 
+
 # Features
 
-* Free/Libre software
-  -- Has GPLv3 licence
+1. Free/Libre software - Has GPLv3 License
+2. Beautiful design - Based on latest material design guidlines
+3. Download manager - Full fledged dedicated download manager 
+4. Repo Manager - Easy management of various F-Droid repositories
 
-* Beautiful design
-  -- Built upon latest Material Design guidelines
-
-* Download manager
-  -- To manage multiple downloads along with pause, resume and retry functionalities.
-
-* Inbuilt repo list
-  -- You can add your own repos, but most known repositories are already included and you just need to enable them on startup. No more wasting finger power!
-
-* Transparent downloads
-  -- You are free to download any (even unsupported) versions of an application and they are marked clearly with their architectures and minimum SDKs, unlike the official clients.
 
 # Screenshots
 
-<img src="https://gitlab.com/AuroraOSS/AuroraDroid/raw/master/fastlane/metadata/android/en-US/phoneScreenshots/ss001.png" height="400"><img src="https://gitlab.com/AuroraOSS/AuroraDroid/raw/master/fastlane/metadata/android/en-US/phoneScreenshots/ss002.png" height="400">
-<img src="https://gitlab.com/AuroraOSS/AuroraDroid/raw/master/fastlane/metadata/android/en-US/phoneScreenshots/ss003.png" height="400"><img src="https://gitlab.com/AuroraOSS/AuroraDroid/raw/master/fastlane/metadata/android/en-US/phoneScreenshots/ss004.png" height="400">
-<img src="https://gitlab.com/AuroraOSS/AuroraDroid/raw/master/fastlane/metadata/android/en-US/phoneScreenshots/ss005.png" height="400"><img src="https://gitlab.com/AuroraOSS/AuroraDroid/raw/master/fastlane/metadata/android/en-US/phoneScreenshots/ss006.png" height="400">
+<img src="https://gitlab.com/AuroraOSS/AuroraDroid/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/ss001.png" height="400"><img src="https://gitlab.com/AuroraOSS/AuroraDroid/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/ss002.png" height="400">
+<img src="https://gitlab.com/AuroraOSS/AuroraDroid/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/ss003.png" height="400"><img src="https://gitlab.com/AuroraOSS/AuroraDroid/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/ss004.png" height="400">
+<img src="https://gitlab.com/AuroraOSS/AuroraDroid/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/ss005.png" height="400"><img src="https://gitlab.com/AuroraOSS/AuroraDroid/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/ss006.png" height="400">
 
 # Frequently Asked Questions
 
-* What is the difference between AuroraDroid and the official FDroid client?
+* What is the difference between Aurora Droid and the official FDroid client?
 
-  It isn't a buggy mess. Of course, alongwith the download manager, transparent downloads and MD2 design.
+  Essentially both serve same purpose, but Aurora Droid has its own flavour to the UI
 
 * Why does this even need the camera permissions?
 
@@ -70,6 +60,19 @@ AuroraDroid, while being a new project, also shares some code with the official 
 
   AuroraDroid is still in a development phase right now; Only infrequent, stable builds will be uploaded there. F-Droid's review & build process is also quite lengthy. <br/>
   You can always grab the latest tests builds either from the [Telegram Group](https://t.me/AuroraDroid) or from [AuroraOSS](http://auroraoss.com/Nightly/)
+  
+# Support Developement
+
+<img src="https://img.shields.io/static/v1?label=Bitcoin&message=bc1qu7cy9fepjj309y4r2x3rymve7mw4ff39c8cpe0&color=Orange">
+
+<img src="https://img.shields.io/static/v1?label=Bitcoin Cash&message=qpqus3qdlz8guf476vwz0fjl8s34fseukcmrl6eknl&color=Success">
+
+<img src="https://img.shields.io/static/v1?label=Ethereum&message=0x6977446933EC8b5964D921f7377950992337B1C6&color=Blue">
+
+<img src="https://img.shields.io/static/v1?label=BHIM UPI&message=whyorean@dbs&color=BlueViolet">
+
+* Paypal - [Link](https://paypal.me/AuroraDev)
+* LiberaPay - [Link](https://liberapay.com/on/gitlab/whyorean/)
   
 # Links
 * AndroidFileHost - [Downloads](https://androidfilehost.com/?w=files&flid=294487)
