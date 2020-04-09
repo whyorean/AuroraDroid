@@ -1,0 +1,2 @@
+• Added root/services install method
+• Bug fixes and improvements

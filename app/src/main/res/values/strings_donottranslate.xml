@@ -18,9 +18,9 @@
   -->
 
 <resources>
-    <string name="app_name_long">Aurora Droid - App store</string>
-    <string name="app_desc">Aurora Droid aka A-Droid, is FOSS client for F-Droid repositories</string>
-    <string name="app_changelog">Aurora Droid aka A-Droid, is FOSS client for F-Droid repositories.
+    <string name="app_name_long" translatable="false">Aurora Droid - App store</string>
+    <string name="app_desc" translatable="false">Aurora Droid, a FOSS client for F-Droid</string>
+    <string name="app_changelog" translatable="false">Aurora Droid, a FOSS client for F-Droid.
         \n
         \n
         \n Changelog : v1.0.4

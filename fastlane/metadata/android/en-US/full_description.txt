@@ -1,0 +1,7 @@
+Aurora Droid is an unofficial, FOSS client for F-Droid. 
+
+Features :
+1. Free/Libre software - Has GPLv3 License
+2. Beautiful design - Based on latest material design guidlines
+3. Download manager - Full fledged dedicated download manager 
+4. Repo Manager - Easy management of various F-Droid repositories

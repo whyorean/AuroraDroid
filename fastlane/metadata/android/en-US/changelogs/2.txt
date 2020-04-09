@@ -1,0 +1,5 @@
+• Added download manager
+• Added blacklist and favourite list
+• Added root install method
+• Improved search results
+• Bug fixes and improvements
