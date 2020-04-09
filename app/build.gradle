@@ -31,7 +31,7 @@ android {
         versionCode 4
         versionName "1.0.4"
 
-        resConfigs "ar-rSA", "de-rDE", "et-rEE", "fr-rFR", "hi-rIN", "kn-rIN", "ml-rIN", "pa-rIN", "pl-rPL", "pt-rBR", "ro-rRO", "ru-rRU", "sc-rIT", "tr-rTR"
+        resConfigs "ar-rSA", "de-rDE", "et-rEE", "fr-rFR", "hi-rIN", "kn-rIN", "ml-rIN", "pa-rIN", "pl-rPL", "pt-rPT", "ro-rRO", "ru-rRU", "sc-rIT", "tr-rTR"
 
         vectorDrawables.useSupportLibrary = true
 
