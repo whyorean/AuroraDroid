@@ -271,4 +271,10 @@
     <string name="about_xda">"Geliştirici Konusu"</string>
     <string name="about_xda_summary">"Tartışmalar veya öneriler için Aurora Droid XDA konusuna bakın."</string>
     <string name="action_about">"Hakkında"</string>
+    <string name="action_loading">"Yükleniyor"</string>
+    <string name="pref_default">"Varsayılan"</string>
+    <string name="pref_locale_title">"Dil"</string>
+    <string name="pref_locale_custom_title">"Özel dil"</string>
+    <string name="pref_locale_custom_summary">"Özel uygulama dilini zorunlu kıl"</string>
+    <string name="pref_locale_list_title">"Yereli seç"</string>
 </resources>
