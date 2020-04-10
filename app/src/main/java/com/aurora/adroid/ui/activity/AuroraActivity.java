@@ -128,7 +128,7 @@ public class AuroraActivity extends BaseActivity {
                     final String[] stringArray = repoDataString.split("\\?");
                     final Repo repo = new Repo();
                     repo.setRepoName(Util.getDomainName(stringArray[0]));
-                    repo.setRepoId(String.valueOf(repo.getRepoName().hashCode()));
+                    repo.setRepoId(String.valueOf(System.currentTimeMillis()));
                     repo.setRepoUrl(stringArray[0]);
                     stringArray[1] = stringArray[1].replace("fingerprint=", "");
                     stringArray[1] = stringArray[1].replace("FINGERPRINT=", "");

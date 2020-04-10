@@ -72,23 +72,6 @@
                 android:layout_marginStart="@dimen/margin_normal"
                 android:layout_marginEnd="@dimen/margin_normal"
                 android:layout_marginBottom="@dimen/margin_normal"
-                android:hint="@string/repo_id">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/repo_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="text"
-                    android:singleLine="true" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_normal"
-                android:layout_marginEnd="@dimen/margin_normal"
-                android:layout_marginBottom="@dimen/margin_normal"
                 android:hint="@string/repo_name">
 
                 <com.google.android.material.textfield.TextInputEditText

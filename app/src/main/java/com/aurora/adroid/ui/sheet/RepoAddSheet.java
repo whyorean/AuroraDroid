@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -45,8 +46,6 @@ public class RepoAddSheet extends BaseBottomSheet {
 
     public static final String TAG = "REPO_ADD_SHEET";
 
-    @BindView(R.id.repo_id)
-    TextInputEditText inpRepoId;
     @BindView(R.id.repo_name)
     TextInputEditText inpRepoName;
     @BindView(R.id.repo_url)
@@ -88,15 +87,10 @@ public class RepoAddSheet extends BaseBottomSheet {
     }
 
     private void saveRepoToCustomList() {
-        String repoId = StringUtils.EMPTY;
+        String repoId = String.valueOf(System.currentTimeMillis());
         String repoName = StringUtils.EMPTY;
         String repoUrl = StringUtils.EMPTY;
         String repoFingerPrint = StringUtils.EMPTY;
-
-        if (inpRepoId.getText() == null || inpRepoId.getText().toString().isEmpty())
-            inpRepoId.setError("Required");
-        else
-            repoId = Util.emptyIfNull(inpRepoId.getText().toString());
 
         if (inpRepoName.getText() == null || inpRepoName.getText().toString().isEmpty())
             inpRepoName.setError("Required");
@@ -126,7 +120,7 @@ public class RepoAddSheet extends BaseBottomSheet {
                 if (success)
                     dismissAllowingStateLoss();
                 else
-                    inpRepoId.setError("Repo with same id exists");
+                    Toast.makeText(requireContext(), "Failed to add repository", Toast.LENGTH_SHORT).show();
             }
         }
     }
