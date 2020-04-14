@@ -198,7 +198,7 @@ public class PermissionFragment extends IntroBaseFragment {
     }
 
     private void checkPermissions() {
-        ActivityCompat.requestPermissions(getActivity(),
+        ActivityCompat.requestPermissions(requireActivity(),
                 new String[]{
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
