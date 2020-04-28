@@ -19,17 +19,27 @@
 
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory android:title="@string/pref_updates_repo_title" />
+    <PreferenceCategory
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
+        android:title="@string/pref_updates_repo_title" />
     <ListPreference
         android:defaultValue="0"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         android:entries="@array/pref_repo_updates_interval"
         android:entryValues="@array/pref_repo_updates_interval_values"
         android:key="PREFERENCE_UPDATES_INTERVAL"
         android:title="@string/pref_updates_repo_interval"
         app:useSimpleSummaryProvider="true" />
-    <PreferenceCategory android:title="@string/pref_updates_app_title" />
+    <PreferenceCategory
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
+        android:title="@string/pref_updates_app_title" />
     <SwitchPreference
         android:defaultValue="false"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         android:key="PREFERENCE_UPDATES_EXPERIMENTAL"
         android:summary="@string/pref_updates_app_experimental_desc"
         android:title="@string/pref_updates_app_experimental"

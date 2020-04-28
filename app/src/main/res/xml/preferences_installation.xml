@@ -20,18 +20,24 @@
 <androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
     <SwitchPreferenceCompat
         app:defaultValue="true"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         app:key="PREFERENCE_INSTALLATION_AUTO"
         app:summary="@string/pref_install_auto_summary"
         app:title="@string/pref_install_auto_title" />
 
     <SwitchPreferenceCompat
         app:defaultValue="true"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         app:key="PREFERENCE_INSTALLATION_DELETE"
         app:summary="@string/pref_install_delete_summary"
         app:title="@string/pref_install_delete_title" />
 
     <SwitchPreferenceCompat
         app:defaultValue="false"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         app:disableDependentsState="true"
         app:key="PREFERENCE_INSTALLATION_TYPE"
         app:summary="@string/pref_install_type_summary"
@@ -39,6 +45,8 @@
 
     <ListPreference
         app:defaultValue="0"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         app:dependency="PREFERENCE_INSTALLATION_TYPE"
         app:entries="@array/pref_installation_method"
         app:entryValues="@array/pref_installation_method_values"
@@ -48,6 +56,8 @@
 
     <Preference
         app:key="PREFERENCE_LAUNCH_SERVICES"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         app:summary="@string/pref_services_desc"
         app:title="@string/pref_services_title" />
 </androidx.preference.PreferenceScreen>

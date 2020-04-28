@@ -22,12 +22,16 @@
 
     <SwitchPreferenceCompat
         app:defaultValue="false"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         app:key="PREFERENCE_LOCALE_CUSTOM"
         app:summary="@string/pref_locale_custom_summary"
         app:title="@string/pref_locale_custom_title" />
 
     <ListPreference
         app:defaultValue=""
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         app:dependency="PREFERENCE_LOCALE_CUSTOM"
         app:entries="@array/pref_locale_names"
         app:entryValues="@array/pref_locale_values"

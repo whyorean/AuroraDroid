@@ -21,6 +21,8 @@
 
     <ListPreference
         app:defaultValue="light"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         app:entries="@array/pref_themes"
         app:entryValues="@array/pref_themes_values"
         app:key="PREFERENCE_UI_THEME"
@@ -29,6 +31,8 @@
 
     <SwitchPreferenceCompat
         app:defaultValue="true"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         app:key="PREFERENCE_UI_TRANSPARENT"
         app:summary="@string/pref_ui_transparent_summary"
         app:title="@string/pref_ui_transparent" />
