@@ -77,7 +77,7 @@ public class CheckRepoUpdatesTask extends ContextWrapper {
             if (repoId.isEmpty() || repoName.isEmpty() || repoUrl.isEmpty())
                 continue;
 
-            AuroraApplication.rxNotify(new LogEvent("Checking update for " + repoName));
+            AuroraApplication.rxNotify(new LogEvent("Checking " + repoName + " for updates"));
 
             final RepoHeader repoHeader = getRepoHeader(extras.getString(Constants.DOWNLOAD_REPO_ID, StringUtils.EMPTY));
             final okhttp3.Request okhttpRequest = new okhttp3.Request.Builder().url(request.getUrl()).head().build();

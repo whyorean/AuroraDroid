@@ -113,7 +113,7 @@
     <string name="dialog_repo_desc">Do you really wish to add</string>
 
     <string name="menu_downloads">Downloads</string>
-    <string name="menu_repository">Repository</string>
+    <string name="menu_repository">Repositories</string>
     <string name="menu_setting">"Settings"</string>
     <string name="menu_about">"About"</string>
     <string name="download_cancel_all">Cancel all</string>
@@ -180,7 +180,7 @@
     <string name="title_home">Aurora Droid</string>
     <string name="title_apps_new">New Apps</string>
     <string name="title_categories">Categories</string>
-    <string name="title_latest_updated">Latest updated</string>
+    <string name="title_latest_updated">Latest updates</string>
     <string name="title_repo_add">Add new repository</string>
     <string name="title_repo_add_desc">Add a custom repository to sync</string>
     <string name="title_perm">Permissions</string>
