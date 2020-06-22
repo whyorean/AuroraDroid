@@ -21,10 +21,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <SwitchPreferenceCompat
         android:key="PREFERENCE_ENABLE_PROXY"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         android:title="@string/pref_proxy_enable"
         app:defaultValue="false" />
     <ListPreference
         android:defaultValue="HTTP"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         android:dependency="PREFERENCE_ENABLE_PROXY"
         android:entries="@array/proxyTypeValues"
         android:entryValues="@array/proxyTypeValues"
@@ -33,12 +37,16 @@
         app:useSimpleSummaryProvider="true" />
     <EditTextPreference
         android:defaultValue="127.0.0.1"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         android:dependency="PREFERENCE_ENABLE_PROXY"
         android:key="PREFERENCE_PROXY_HOST"
         android:title="@string/pref_proxy_host"
         app:useSimpleSummaryProvider="true" />
     <EditTextPreference
         android:defaultValue="8118"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
         android:dependency="PREFERENCE_ENABLE_PROXY"
         android:inputType="number"
         android:key="PREFERENCE_PROXY_PORT"
