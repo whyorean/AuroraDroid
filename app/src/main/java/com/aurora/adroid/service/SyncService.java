@@ -38,7 +38,7 @@ import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.event.LogEvent;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.manager.RepoSyncManager;
-import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.task.CheckRepoUpdatesTask;
 import com.aurora.adroid.task.ExtractRepoTask;
 import com.aurora.adroid.task.JsonParserTask;
@@ -193,14 +193,14 @@ public class SyncService extends Service {
                     .flatMap(file -> Observable.fromCallable(() -> new JsonParserTask(this, file).parse()))//Add RawJSON to database
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnNext(repoBundle -> {
-                        final Repo repo = repoBundle.getRepo();
+                        final StaticRepo staticRepo = repoBundle.getStaticRepo();
                         if (repoBundle.isSynced()) {
-                            AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_completed)));
-                            repoSyncManager.addToSyncMap(repo);
+                            AuroraApplication.rxNotify(new LogEvent(staticRepo.getRepoName() + " - " + getString(R.string.sync_completed)));
+                            repoSyncManager.addToSyncMap(staticRepo);
                         } else {
-                            AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.sync_failed)));
+                            AuroraApplication.rxNotify(new LogEvent(staticRepo.getRepoName() + " - " + getString(R.string.sync_failed)));
                         }
-                        PathUtil.deleteRepoFiles(this, repo.getRepoId());
+                        PathUtil.deleteRepoFiles(this, staticRepo.getRepoId());
                     })
                     .doOnComplete(this::notifyCompleted)
                     .doOnError(throwable -> {
@@ -224,17 +224,17 @@ public class SyncService extends Service {
             @Override
             public void onCompleted(@NotNull Download download) {
                 super.onCompleted(download);
-                final Repo repo = repoListManager.getRepoById(download.getTag());
+                final StaticRepo staticRepo = repoListManager.getRepoById(download.getTag());
                 Log.i("Downloaded : %s", download.getUrl());
-                AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_completed)));
+                AuroraApplication.rxNotify(new LogEvent(staticRepo.getRepoName() + " - " + getString(R.string.download_completed)));
             }
 
             @Override
             public void onError(@NotNull Download download, @NotNull Error error, @Nullable Throwable throwable) {
                 super.onError(download, error, throwable);
-                final Repo repo = repoListManager.getRepoById(download.getTag());
+                final StaticRepo staticRepo = repoListManager.getRepoById(download.getTag());
                 Log.e("Download Failed : %s", download.getUrl());
-                AuroraApplication.rxNotify(new LogEvent(repo.getRepoName() + " - " + getString(R.string.download_failed)));
+                AuroraApplication.rxNotify(new LogEvent(staticRepo.getRepoName() + " - " + getString(R.string.download_failed)));
             }
 
             @Override

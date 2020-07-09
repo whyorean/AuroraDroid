@@ -1,4 +1,3 @@
-
 /*
  * Aurora Droid
  * Copyright (C) 2019-20, Rahul Kumar Patel <whyorean@gmail.com>
@@ -18,23 +17,33 @@
  *
  */
 
-package com.aurora.adroid.model.locales;
+package com.aurora.adroid.model;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 
-public class Da {
+@Data
+public class StaticRepo implements Comparable<StaticRepo> {
+    private String repoId;
+    private String repoName;
+    private String repoUrl;
+    private String[] repoMirrors;
+    private String repoFingerprint;
+    private String repoDescription;
 
-    @SerializedName("summary")
-    @Expose
-    private String summary;
-
-    public String getSummary() {
-        return summary;
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof StaticRepo))
+            return false;
+        return repoId.equalsIgnoreCase(((StaticRepo) obj).getRepoId());
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    @Override
+    public int hashCode() {
+        return repoId.hashCode();
     }
 
+    @Override
+    public int compareTo(StaticRepo staticRepo) {
+        return getRepoId().compareToIgnoreCase(staticRepo.getRepoId());
+    }
 }

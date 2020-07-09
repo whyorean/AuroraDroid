@@ -23,26 +23,35 @@ import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.TypeConverters;
 
-import com.aurora.adroid.util.PackageUtil;
+import com.aurora.adroid.database.DatabaseConverter;
+import com.aurora.adroid.model.v2.AppPackage;
+import com.aurora.adroid.model.v2.Localization;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import lombok.Data;
 
 @Data
+
 @Entity(tableName = "app", primaryKeys = {"repoId", "packageName"})
+@TypeConverters(DatabaseConverter.class)
 public class App {
     @NotNull
-    private String repoId = "01";
-    private String repoName;
+    private String repoId = StringUtils.EMPTY;
+    @NonNull
+    private String packageName = StringUtils.EMPTY;
+
     private Long added;
     private String authorName = "unknown";
     private String authorEmail = "unknown";
@@ -55,39 +64,34 @@ public class App {
     private Long lastUpdated;
     private String license;
     private String name;
-    @NonNull
-    private String packageName = "unknown";
     private String sourceCode;
     private long suggestedVersionCode;
     private String suggestedVersionName;
     private String summary;
+    private String repoName;
     private String repoUrl = "https://f-droid.org/repo";
     private String webSite;
+    private Package pkg;
 
-    @Embedded
-    private Localized localized;
+    @SerializedName("localized")
+    @Expose
+    private HashMap<String, Localization> localizationMap;
+    private List<String> antiFeatures;
+
     @Ignore
     private transient boolean installed;
     @Ignore
     private transient boolean systemApp;
     @Ignore
-    private transient String screenShots = null;
-    @Ignore
     private transient Drawable iconDrawable;
-    @Ignore
-    private transient Package appPackage = new Package();
     @Ignore
     private transient List<Package> packageList = new ArrayList<>();
     @Ignore
     private transient PackageInfo packageInfo;
+    @Ignore
+    private transient AppPackage appPackage;
 
     public App() {
-    }
-
-    public void setPackageList(List<Package> packageList, String RSA256, boolean verifySigner) {
-        Collections.sort(packageList, (package1, package2) -> package2.getVersionCode().compareTo(package1.getVersionCode()));
-        this.setAppPackage(PackageUtil.getOptimumPackage(packageList, RSA256, verifySigner));
-        this.packageList = packageList;
     }
 
     @Override

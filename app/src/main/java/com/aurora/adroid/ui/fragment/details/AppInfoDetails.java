@@ -21,30 +21,17 @@ package com.aurora.adroid.ui.fragment.details;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.core.graphics.ColorUtils;
-import androidx.palette.graphics.Palette;
 
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.ui.activity.DetailsActivity;
-import com.aurora.adroid.util.ColorUtil;
 import com.aurora.adroid.util.DatabaseUtil;
+import com.aurora.adroid.util.LocalizationUtil;
 import com.aurora.adroid.util.PackageUtil;
-import com.aurora.adroid.util.TextUtil;
-import com.aurora.adroid.util.ThemeUtil;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.google.android.material.button.MaterialButton;
 
 import org.apache.commons.lang3.StringUtils;
@@ -83,42 +70,27 @@ public class AppInfoDetails extends AbstractDetails {
                     .asBitmap()
                     .load(DatabaseUtil.getImageUrl(app))
                     .transition(new BitmapTransitionOptions().crossFade())
-                    .listener(new RequestListener<Bitmap>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                            getPalette(resource);
-                            return false;
-                        }
-                    })
                     .into(imgIcon);
 
         txtName.setText(app.getName());
         setText(txtPackageName, app.getPackageName());
         setText(txtDevName, app.getAuthorName());
 
-        String summary;
-        if (app.getLocalized() != null
-                && app.getLocalized().getEnUS() != null
-                && app.getLocalized().getEnUS().getSummary() != null) {
-            summary = TextUtil.emptyIfNull(app.getLocalized().getEnUS().getSummary());
-        } else
-            summary = TextUtil.emptyIfNull(app.getSummary());
+        String summary = LocalizationUtil.getLocalizedSummary(context, app);
 
         if (!summary.isEmpty()) {
             setText(txtSummary, StringUtils.capitalize(summary.trim()));
         }
 
-        if (PackageUtil.isInstalled(context, app.getPackageName()))
-            drawVersion();
-        else
-            txtVersion.setText(StringUtils.joinWith(".",
-                    app.getAppPackage().getVersionName(),
-                    app.getAppPackage().getVersionCode()));
+        if (app.getPkg() != null) {
+            if (PackageUtil.isInstalled(context, app.getPackageName()))
+                drawVersion();
+            else {
+                txtVersion.setText(StringUtils.joinWith(".",
+                        app.getPkg().getVersionName(),
+                        app.getPkg().getVersionCode()));
+            }
+        }
     }
 
     private void drawVersion() {
@@ -128,10 +100,10 @@ public class AppInfoDetails extends AbstractDetails {
                     info.versionName,
                     info.versionCode);
             final String updateVersion = StringUtils.joinWith(".",
-                    app.getAppPackage().getVersionName(),
-                    app.getAppPackage().getVersionCode());
+                    app.getPkg().getVersionName(),
+                    app.getPkg().getVersionCode());
 
-            if (app.getAppPackage().getVersionCode() > info.versionCode)
+            if (app.getPkg().getVersionCode() > info.versionCode)
                 txtVersion.setText(new StringBuilder()
                         .append(currentVersion)
                         .append(" >> ")
@@ -140,47 +112,6 @@ public class AppInfoDetails extends AbstractDetails {
                 txtVersion.setText(currentVersion);
         } catch (PackageManager.NameNotFoundException e) {
             // We've checked for that already
-        }
-    }
-
-    private void getPalette(Bitmap bitmap) {
-        Palette.from(bitmap).generate(palette -> {
-            if (palette != null)
-                paintEmAll(palette);
-        });
-    }
-
-    private void paintEmAll(Palette palette) {
-        Palette.Swatch swatch = palette.getDarkVibrantSwatch();
-        int colorPrimary = Color.GRAY;
-        int colorPrimaryText = Color.BLACK;
-
-        //Make sure we get a fallback swatch if DarkVibrantSwatch is not available
-        if (swatch == null)
-            swatch = palette.getVibrantSwatch();
-
-        //Make sure we get another fallback swatch if VibrantSwatch is not available
-        if (swatch == null)
-            swatch = palette.getDominantSwatch();
-
-        if (swatch != null) {
-            colorPrimary = swatch.getRgb();
-            colorPrimaryText = ColorUtil.manipulateColor(colorPrimary, 0.3f);
-        }
-
-        if (ColorUtil.isColorLight(colorPrimary))
-            btnPositive.setTextColor(Color.BLACK);
-        else
-            btnPositive.setTextColor(Color.WHITE);
-
-        btnPositive.setBackgroundColor(colorPrimary);
-        btnPositive.setStrokeColor(ColorStateList.valueOf(colorPrimary));
-
-        if (ThemeUtil.isLightTheme(context)) {
-            btnNegative.setTextColor(colorPrimaryText);
-            txtDevName.setTextColor(colorPrimaryText);
-            txtSummary.setTextColor(colorPrimaryText);
-            txtSummary.setBackgroundTintList(ColorStateList.valueOf(ColorUtils.setAlphaComponent(colorPrimary, 60)));
         }
     }
 }

@@ -22,7 +22,7 @@ package com.aurora.adroid.manager;
 import android.content.Context;
 
 import com.aurora.adroid.Constants;
-import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PrefUtil;
 import com.google.gson.Gson;
@@ -38,7 +38,7 @@ import java.util.List;
 
 public class RepoListManager {
 
-    private final HashMap<String, Repo> repoHashMap = new HashMap<>();
+    private final HashMap<String, StaticRepo> repoHashMap = new HashMap<>();
 
     private Context context;
     private Gson gson;
@@ -49,34 +49,34 @@ public class RepoListManager {
         this.repoHashMap.putAll(getDefaultRepoMap());
     }
 
-    public List<Repo> getAllRepoList() {
+    public List<StaticRepo> getAllRepoList() {
         return new ArrayList<>(repoHashMap.values());
     }
 
-    public boolean addToRepoMap(Repo repo) {
+    public boolean addToRepoMap(StaticRepo staticRepo) {
         synchronized (repoHashMap) {
-            if (repoHashMap.containsKey(repo.getRepoId())) {
+            if (repoHashMap.containsKey(staticRepo.getRepoId())) {
                 return false;
             } else {
-                repoHashMap.put(repo.getRepoId(), repo);
+                repoHashMap.put(staticRepo.getRepoId(), staticRepo);
                 saveRepoMap();
                 return true;
             }
         }
     }
 
-    public Repo getRepoById(String repoId) {
+    public StaticRepo getRepoById(String repoId) {
         synchronized (repoHashMap) {
             if (repoHashMap.containsKey(repoId))
                 return repoHashMap.get(repoId);
             else
-                return new Repo();
+                return new StaticRepo();
         }
     }
 
-    public void removeFromRepoMap(Repo repo) {
+    public void removeFromRepoMap(StaticRepo staticRepo) {
         synchronized (repoHashMap) {
-            repoHashMap.remove(repo.getRepoId());
+            repoHashMap.remove(staticRepo.getRepoId());
             saveRepoMap();
         }
     }
@@ -94,11 +94,11 @@ public class RepoListManager {
         }
     }
 
-    private HashMap<String, Repo> getDefaultRepoMap() {
+    private HashMap<String, StaticRepo> getDefaultRepoMap() {
         final String rawList = PrefUtil.getString(context, Constants.PREFERENCE_DEFAULT_REPO_MAP);
-        final Type type = new TypeToken<HashMap<String, Repo>>() {
+        final Type type = new TypeToken<HashMap<String, StaticRepo>>() {
         }.getType();
-        final HashMap<String, Repo> repoHashMap = gson.fromJson(rawList, type);
+        final HashMap<String, StaticRepo> repoHashMap = gson.fromJson(rawList, type);
 
         if (repoHashMap == null || repoHashMap.isEmpty())
             return getDefaultRepoMapFromAssets();
@@ -106,8 +106,8 @@ public class RepoListManager {
             return repoHashMap;
     }
 
-    private HashMap<String, Repo> getDefaultRepoMapFromAssets() {
-        final HashMap<String, Repo> repoHashMap = new HashMap<>();
+    private HashMap<String, StaticRepo> getDefaultRepoMapFromAssets() {
+        final HashMap<String, StaticRepo> repoHashMap = new HashMap<>();
         try {
             final InputStream inputStream = context.getAssets().open("repo.json");
             final byte[] bytes = new byte[inputStream.available()];
@@ -116,12 +116,12 @@ public class RepoListManager {
             inputStream.close();
 
             final String rawJSON = new String(bytes, StandardCharsets.UTF_8);
-            final Type listType = new TypeToken<List<Repo>>() {
+            final Type listType = new TypeToken<List<StaticRepo>>() {
             }.getType();
-            final List<Repo> repoList = gson.fromJson(rawJSON, listType);
+            final List<StaticRepo> staticRepoList = gson.fromJson(rawJSON, listType);
 
-            for (Repo repo : repoList)
-                repoHashMap.put(repo.getRepoId(), repo);
+            for (StaticRepo staticRepo : staticRepoList)
+                repoHashMap.put(staticRepo.getRepoId(), staticRepo);
         } catch (IOException e) {
             Log.e(e.getMessage());
         }

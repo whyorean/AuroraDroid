@@ -24,12 +24,8 @@ import android.content.Context;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class DatabaseUtil {
@@ -70,27 +66,11 @@ public class DatabaseUtil {
         return app.getRepoUrl() + Constants.IMG_URL_PREFIX + app.getIcon();
     }
 
-    public static List<String> getScreenshotURLs(App app) {
-        List<String> screenshotFiles = new Gson().fromJson(app.getScreenShots(),
-                new TypeToken<List<String>>() {
-                }.getType());
-        List<String> screenshotUrls = new ArrayList<>();
-        if (screenshotFiles != null) {
-            for (String fileName : screenshotFiles)
-                screenshotUrls.add(app.getRepoUrl()
-                        + "/"
-                        + app.getPackageName()
-                        + "/en-US/phoneScreenshots/"
-                        + fileName);
-        }
-        return screenshotUrls;
-    }
-
     public static String getDownloadURl(App app) {
-        return app.getRepoUrl() + "/" + app.getAppPackage().getApkName();
+        return app.getRepoUrl() + "/" + app.getPkg().getApkName();
     }
 
-    public static String getDownloadURl(Package pkg) {
-        return pkg.getRepoUrl() + "/" + pkg.getApkName();
+    public static String getDownloadURl(App app, Package pkg) {
+        return app.getRepoUrl() + "/" + pkg.getApkName();
     }
 }

@@ -20,6 +20,7 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="256dp"
@@ -39,13 +40,85 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_small">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_more"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autoLink="web|email"
-            android:padding="@dimen/margin_small"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textIsSelectable="true" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_small">
+
+            <RelativeLayout
+                android:id="@+id/layout_changes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/generic_padded_bg">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_xsmall"
+                    android:text="@string/details_new_changes"
+                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_changelog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_new"
+                    android:autoLink="web|email"
+                    android:textAppearance="@style/TextAppearance.Aurora.Line2"
+                    android:textIsSelectable="true"
+                    tools:text="@string/details_no_changes" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@drawable/generic_padded_bg">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_anti"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_xsmall"
+                    android:text="@string/details_anti_features"
+                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_anti_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_anti"
+                    android:autoLink="web|email"
+                    tools:text="@string/details_no_anti_features"
+                    android:textAppearance="@style/TextAppearance.Aurora.Line2"
+                    android:textIsSelectable="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@drawable/generic_padded_bg">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_xsmall"
+                    android:text="@string/action_more"
+                    android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_more"
+                    android:autoLink="web|email"
+                    android:textAppearance="@style/TextAppearance.Aurora.Line2"
+                    android:textIsSelectable="true" />
+            </RelativeLayout>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

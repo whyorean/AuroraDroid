@@ -19,7 +19,6 @@
 
 package com.aurora.adroid.ui.sheet;
 
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionGroupInfo;
 import android.content.pm.PermissionInfo;
@@ -36,7 +35,6 @@ import androidx.annotation.Nullable;
 import com.aurora.adroid.PermissionGroup;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,7 +56,6 @@ public class PermissionBottomSheet extends BaseBottomSheet {
     @BindView(R.id.permissions_none)
     TextView permissions_none;
 
-    private Context context;
     private App app;
     private PackageManager packageManager;
 
@@ -66,17 +63,11 @@ public class PermissionBottomSheet extends BaseBottomSheet {
         this.app = app;
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
-
     @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.sheet_permissions, container, false);
-        packageManager = context.getPackageManager();
+        packageManager = requireContext().getPackageManager();
         return view;
     }
 
@@ -89,12 +80,12 @@ public class PermissionBottomSheet extends BaseBottomSheet {
 
     private void addPermissionWidgets() {
         Map<String, PermissionGroup> permissionGroupWidgets = new HashMap<>();
-        if (app.getAppPackage().getUsesPermission() == null || app.getAppPackage().getUsesPermission().isEmpty()) {
+        if (app.getPkg().getUsesPermission() == null || app.getPkg().getUsesPermission().isEmpty()) {
             permissions_none.setVisibility(permissionGroupWidgets.isEmpty() ? View.VISIBLE : View.GONE);
             return;
         }
-        Log.e("Loila");
-        for (List<String> permissionList : app.getAppPackage().getUsesPermission())
+
+        for (List<String> permissionList : app.getPkg().getUsesPermission()) {
             for (String permissionName : permissionList) {
                 PermissionInfo permissionInfo = getPermissionInfo(permissionName);
                 if (null == permissionInfo) {
@@ -116,6 +107,7 @@ public class PermissionBottomSheet extends BaseBottomSheet {
                     widget.addPermission(permissionInfo);
                 }
             }
+        }
 
         container.removeAllViews();
         List<String> permissionGroupLabels = new ArrayList<>(permissionGroupWidgets.keySet());

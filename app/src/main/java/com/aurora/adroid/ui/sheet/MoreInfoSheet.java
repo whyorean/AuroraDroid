@@ -20,9 +20,6 @@
 package com.aurora.adroid.ui.sheet;
 
 import android.os.Bundle;
-import android.text.Html;
-import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,17 +27,25 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.text.HtmlCompat;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.util.LocalizationUtil;
+
+import org.apache.commons.lang3.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MoreInfoSheet extends BaseBottomSheet {
 
-    @BindView(R.id.txt_more)
-    TextView txtMore;
+    @BindView(R.id.txt_changelog)
+    TextView txtChangelog;
+    @BindView(R.id.txt_description)
+    TextView txtDescription;
+    @BindView(R.id.txt_anti_desc)
+    TextView txtAntiFeatures;
 
     private App app;
 
@@ -66,12 +71,18 @@ public class MoreInfoSheet extends BaseBottomSheet {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (TextUtils.isEmpty(app.getDescription())) {
-            txtMore.setText(getString(R.string.details_no_description));
-            txtMore.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            txtMore.setGravity(Gravity.CENTER_HORIZONTAL);
+        String description = LocalizationUtil.getLocalizedDescription(requireContext(), app);
+        description = description.replace("\n", "<br>");
+        txtDescription.setText(HtmlCompat.fromHtml(description, HtmlCompat.FROM_HTML_OPTION_USE_CSS_COLORS));
+        txtChangelog.setText(LocalizationUtil.getLocalizedChangelog(requireContext(), app));
+        txtAntiFeatures.setText(getAntiFeatures(app));
+    }
+
+    private String getAntiFeatures(App app) {
+        if (app.getAntiFeatures() != null && !app.getAntiFeatures().isEmpty()) {
+            return StringUtils.join(app.getAntiFeatures(), "\n");
         } else {
-            txtMore.setText(Html.fromHtml(app.getDescription()).toString());
+            return requireContext().getString(R.string.details_no_anti_features);
         }
     }
 }

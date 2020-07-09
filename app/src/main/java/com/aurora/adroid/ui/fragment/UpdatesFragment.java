@@ -108,7 +108,7 @@ public class UpdatesFragment extends BaseFragment {
         fetch = DownloadManager.getFetchInstance(requireContext());
         setupRecycler();
 
-        model = new ViewModelProvider(this).get(UpdatesViewModel.class);
+        model = new ViewModelProvider(requireActivity()).get(UpdatesViewModel.class);
         model.getAppsLiveData().observe(getViewLifecycleOwner(), updatesItems -> {
             dispatchAppsToAdapter(updatesItems);
             swipeLayout.setRefreshing(false);

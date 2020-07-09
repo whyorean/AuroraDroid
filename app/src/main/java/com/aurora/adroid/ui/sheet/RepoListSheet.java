@@ -34,8 +34,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aurora.adroid.R;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.manager.RepoSyncManager;
-import com.aurora.adroid.model.Repo;
-import com.aurora.adroid.model.items.RepoItem;
+import com.aurora.adroid.model.StaticRepo;
+import com.aurora.adroid.model.items.StaticRepoItem;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.ImageUtil;
 import com.aurora.adroid.util.Log;
@@ -65,8 +65,8 @@ public class RepoListSheet extends BaseBottomSheet implements ItemTouchCallback,
     @BindView(R.id.checkbox_select)
     CheckBox checkBox;
 
-    private FastItemAdapter<RepoItem> fastItemAdapter;
-    private SelectExtension<RepoItem> selectExtension;
+    private FastItemAdapter<StaticRepoItem> fastItemAdapter;
+    private SelectExtension<StaticRepoItem> selectExtension;
 
     private RepoListManager repoListManager;
     private RepoSyncManager repoSyncManager;
@@ -99,8 +99,8 @@ public class RepoListSheet extends BaseBottomSheet implements ItemTouchCallback,
     public void saveSelectedRepo() {
         disposable.add(Observable.fromIterable(fastItemAdapter.getAdapterItems())
                 .subscribeOn(Schedulers.io())
-                .filter(RepoItem::isChecked)
-                .map(RepoItem::getRepo)
+                .filter(StaticRepoItem::isChecked)
+                .map(StaticRepoItem::getStaticRepo)
                 .toList()
                 .subscribe(repoList -> {
                     repoSyncManager.updateRepoMap(repoList);
@@ -122,22 +122,22 @@ public class RepoListSheet extends BaseBottomSheet implements ItemTouchCallback,
     }
 
     public void selectAll() {
-        for (RepoItem repoItem : fastItemAdapter.getAdapterItems()) {
-            repoItem.setSelected(true);
-            repoItem.setChecked(true);
+        for (StaticRepoItem staticRepoItem : fastItemAdapter.getAdapterItems()) {
+            staticRepoItem.setSelected(true);
+            staticRepoItem.setChecked(true);
             fastItemAdapter.notifyAdapterDataSetChanged();
         }
     }
 
     public void deSelectAll() {
-        for (RepoItem repoItem : fastItemAdapter.getAdapterItems()) {
-            repoItem.setSelected(false);
-            repoItem.setChecked(false);
+        for (StaticRepoItem staticRepoItem : fastItemAdapter.getAdapterItems()) {
+            staticRepoItem.setSelected(false);
+            staticRepoItem.setChecked(false);
             fastItemAdapter.notifyAdapterDataSetChanged();
         }
     }
 
-    private List<Repo> fetchData() {
+    private List<StaticRepo> fetchData() {
         return repoListManager.getAllRepoList();
     }
 
@@ -148,11 +148,11 @@ public class RepoListSheet extends BaseBottomSheet implements ItemTouchCallback,
         selectExtension.setMultiSelect(true);
         selectExtension.setSelectWithItemUpdate(false);
 
-        fastItemAdapter.setOnClickListener((view, repoItemIAdapter, repoItem, integer) -> false);
-        fastItemAdapter.setOnPreClickListener((view, repoItemIAdapter, repoItem, integer) -> true);
+        fastItemAdapter.setOnClickListener((view, repoItemIAdapter, staticRepoItem, integer) -> false);
+        fastItemAdapter.setOnPreClickListener((view, repoItemIAdapter, staticRepoItem, integer) -> true);
 
         fastItemAdapter.addExtension(selectExtension);
-        fastItemAdapter.addEventHook(new RepoItem.CheckBoxClickEvent());
+        fastItemAdapter.addEventHook(new StaticRepoItem.CheckBoxClickEvent());
 
         recyclerView.setAdapter(fastItemAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -166,10 +166,10 @@ public class RepoListSheet extends BaseBottomSheet implements ItemTouchCallback,
         final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        final List<Repo> repoList = fetchData();
-        Collections.sort(repoList, (o1, o2) -> o1.getRepoName().compareToIgnoreCase(o2.getRepoName()));
-        disposable.add(Observable.fromIterable(repoList)
-                .map(repo -> new RepoItem(repo, repoSyncManager.isAdded(repo)))
+        final List<StaticRepo> staticRepoList = fetchData();
+        Collections.sort(staticRepoList, (o1, o2) -> o1.getRepoName().compareToIgnoreCase(o2.getRepoName()));
+        disposable.add(Observable.fromIterable(staticRepoList)
+                .map(repo -> new StaticRepoItem(repo, repoSyncManager.isAdded(repo)))
                 .toList()
                 .subscribe(repoItems -> fastItemAdapter.add(repoItems), throwable -> Log.e(throwable.getMessage())));
     }
@@ -194,7 +194,7 @@ public class RepoListSheet extends BaseBottomSheet implements ItemTouchCallback,
 
     @Override
     public void itemSwiped(int position, int direction) {
-        repoListManager.removeFromRepoMap(fastItemAdapter.getAdapterItem(position).getRepo());
+        repoListManager.removeFromRepoMap(fastItemAdapter.getAdapterItem(position).getStaticRepo());
         fastItemAdapter.remove(position);
         fastItemAdapter.notifyAdapterItemChanged(position);
     }

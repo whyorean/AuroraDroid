@@ -27,28 +27,28 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.aurora.adroid.model.Index;
+import com.aurora.adroid.model.v2.Repo;
 
 import java.util.List;
 
 @Dao
-public interface IndexDao {
+public interface RepoDao {
 
-    @Query("SELECT * FROM `index`")
-    LiveData<List<Index>> getAllIndexes();
+    @Query("SELECT * FROM `repo`")
+    LiveData<List<Repo>> getAllIndexes();
 
-    @Query("SELECT * FROM `index` WHERE repoId = :repoId LIMIT 1")
-    Index getRepoByRepoId(String repoId);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Index> indexList);
+    @Query("SELECT * FROM `repo` WHERE repoId = :repoId LIMIT 1")
+    Repo getRepoByRepoId(String repoId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Index index);
+    void insertAll(List<Repo> indexList);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Repo repo);
 
     @Delete
-    void delete(Index index);
+    void delete(Repo repo);
 
     @Update
-    void update(Index index);
+    void update(Repo repo);
 }

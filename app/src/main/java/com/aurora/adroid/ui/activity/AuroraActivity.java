@@ -47,7 +47,7 @@ import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.database.AppDatabase;
 import com.aurora.adroid.manager.RepoListManager;
-import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.service.SyncService;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.TextUtil;
@@ -126,25 +126,25 @@ public class AuroraActivity extends BaseActivity {
             if (repoDataString.contains("fingerprint") || repoDataString.contains("FINGERPRINT")) {
                 try {
                     final String[] stringArray = repoDataString.split("\\?");
-                    final Repo repo = new Repo();
-                    repo.setRepoName(Util.getDomainName(stringArray[0]));
-                    repo.setRepoId(String.valueOf(System.currentTimeMillis()));
-                    repo.setRepoUrl(stringArray[0]);
+                    final StaticRepo staticRepo = new StaticRepo();
+                    staticRepo.setRepoName(Util.getDomainName(stringArray[0]));
+                    staticRepo.setRepoId(String.valueOf(System.currentTimeMillis()));
+                    staticRepo.setRepoUrl(stringArray[0]);
                     stringArray[1] = stringArray[1].replace("fingerprint=", "");
                     stringArray[1] = stringArray[1].replace("FINGERPRINT=", "");
-                    repo.setRepoFingerprint(stringArray[1]);
-                    showAddRepoDialog(repo);
+                    staticRepo.setRepoFingerprint(stringArray[1]);
+                    showAddRepoDialog(staticRepo);
                 } catch (Exception ignored) {
                 }
             } else if (intent.getData() != null
                     && intent.getData().getLastPathSegment() != null) {
                 if (intent.getData().getLastPathSegment().equalsIgnoreCase("repo")) {
                     try {
-                        final Repo repo = new Repo();
-                        repo.setRepoName(intent.getData().getPath());
-                        repo.setRepoId(String.valueOf(repo.getRepoName().hashCode()));
-                        repo.setRepoUrl(intent.getDataString());
-                        showAddRepoDialog(repo);
+                        final StaticRepo staticRepo = new StaticRepo();
+                        staticRepo.setRepoName(intent.getData().getPath());
+                        staticRepo.setRepoId(String.valueOf(staticRepo.getRepoName().hashCode()));
+                        staticRepo.setRepoUrl(intent.getDataString());
+                        showAddRepoDialog(staticRepo);
                     } catch (Exception ignored) {
                     }
                 }
@@ -311,16 +311,16 @@ public class AuroraActivity extends BaseActivity {
         builder.show();
     }
 
-    protected void showAddRepoDialog(Repo repo) {
+    protected void showAddRepoDialog(StaticRepo staticRepo) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(getString(R.string.dialog_repo_title))
                 .setMessage(new StringBuilder()
                         .append(getString(R.string.dialog_repo_desc))
                         .append(" ")
-                        .append(repo.getRepoName())
+                        .append(staticRepo.getRepoName())
                         .append(" ?"))
                 .setPositiveButton(getString(R.string.action_add), (dialog, which) -> {
-                    new RepoListManager(this).addToRepoMap(repo);
+                    new RepoListManager(this).addToRepoMap(staticRepo);
                 })
                 .setNegativeButton(getString(R.string.action_cancel), (dialog, which) -> {
                     dialog.dismiss();

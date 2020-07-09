@@ -41,6 +41,7 @@ import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.items.GenericItem;
 import com.aurora.adroid.ui.sheet.AppMenuSheet;
 import com.aurora.adroid.ui.view.ViewFlipper2;
+import com.aurora.adroid.util.LocalizationUtil;
 import com.aurora.adroid.util.TextUtil;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.viewmodel.SearchAppsViewModel;
@@ -180,11 +181,11 @@ public class SearchActivity extends BaseActivity implements ItemFilterListener<G
                 break;
             case SIZE_MIN:
                 Collections.sort(itemAdapter.getAdapterItems(), (App1, App2) ->
-                        App1.getApp().getAppPackage().getSize().compareTo(App2.getApp().getAppPackage().getSize()));
+                        App1.getApp().getPkg().getSize().compareTo(App2.getApp().getPkg().getSize()));
                 break;
             case SIZE_MAX:
                 Collections.sort(itemAdapter.getAdapterItems(), (App1, App2) ->
-                        App2.getApp().getAppPackage().getSize().compareTo(App1.getApp().getAppPackage().getSize()));
+                        App2.getApp().getPkg().getSize().compareTo(App1.getApp().getPkg().getSize()));
                 break;
             case DATE_UPDATED:
                 Collections.sort(itemAdapter.getAdapterItems(), (App1, App2) ->
@@ -251,13 +252,7 @@ public class SearchActivity extends BaseActivity implements ItemFilterListener<G
                 return true;
             }
 
-            String summary;
-            if (app.getLocalized() != null
-                    && app.getLocalized().getEnUS() != null
-                    && app.getLocalized().getEnUS().getSummary() != null) {
-                summary = TextUtil.emptyIfNull(app.getLocalized().getEnUS().getSummary());
-            } else
-                summary = TextUtil.emptyIfNull(app.getSummary());
+            String summary = LocalizationUtil.getLocalizedSummary(this, app);
 
             if (!summary.isEmpty()) {
                 summary = TextUtil.cleanUpString(summary);

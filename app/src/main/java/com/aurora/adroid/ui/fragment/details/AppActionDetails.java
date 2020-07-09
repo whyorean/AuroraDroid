@@ -111,7 +111,7 @@ public class AppActionDetails extends AbstractDetails {
 
         fetch.getFetchGroup(hashCode, fetchGroup -> {
             if (fetchGroup.getGroupDownloadProgress() == 100) {
-                if (!isInstalled && PathUtil.fileExists(context, app.getPackageName(), app.getAppPackage().getVersionCode()))
+                if (!isInstalled && PathUtil.fileExists(context, app.getPackageName(), app.getPkg().getVersionCode()))
                     btnPositive.setOnClickListener(installAppListener());
             } else if (fetchGroup.getDownloadingDownloads().size() > 0 || fetchGroup.getQueuedDownloads().size() > 0) {
                 switchViews(true);
@@ -126,7 +126,7 @@ public class AppActionDetails extends AbstractDetails {
     private void runOrUpdate() {
         try {
             final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(app.getPackageName(), 0);
-            final Package pkg = app.getAppPackage();
+            final Package pkg = app.getPkg();
             final String RSA256 = CertUtil.getSHA256(activity, app.getPackageName());
 
             if (PackageUtil.isCompatibleVersion(context, pkg, packageInfo) && RSA256.equals(pkg.getSigner())) {
@@ -183,8 +183,8 @@ public class AppActionDetails extends AbstractDetails {
     }
 
     private View.OnClickListener downloadAppListener() {
-        boolean supportedPackage = PackageUtil.isBestFitSupportedPackage(app.getAppPackage())
-                || PackageUtil.isSupportedPackage(app.getAppPackage());
+        boolean supportedPackage = PackageUtil.isBestFitSupportedPackage(app.getPkg())
+                || PackageUtil.isSupportedPackage(app.getPkg());
         if (!supportedPackage) {
             btnPositive.setText(R.string.action_unsupported);
             btnPositive.setEnabled(false);

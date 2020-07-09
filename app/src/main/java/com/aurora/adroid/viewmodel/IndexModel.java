@@ -26,7 +26,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.aurora.adroid.database.IndexRepository;
-import com.aurora.adroid.model.Index;
+import com.aurora.adroid.model.v2.Repo;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class IndexModel extends AndroidViewModel {
         indexRepository = new IndexRepository(application);
     }
 
-    public LiveData<List<Index>> getAllIndicesLive() {
+    public LiveData<List<Repo>> getAllIndicesLive() {
         return indexRepository.getAllIndices();
     }
 }

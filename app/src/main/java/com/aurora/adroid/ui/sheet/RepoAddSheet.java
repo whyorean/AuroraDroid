@@ -31,7 +31,7 @@ import androidx.annotation.Nullable;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.manager.RepoListManager;
-import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.ui.activity.QRActivity;
 import com.aurora.adroid.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
@@ -110,13 +110,13 @@ public class RepoAddSheet extends BaseBottomSheet {
             if (!Util.verifyUrl(repoUrl))
                 inpRepoUrl.setError("Invalid URL");
             else {
-                final Repo repo = new Repo();
-                repo.setRepoId(repoId);
-                repo.setRepoName(Util.emptyIfNull(repoName));
-                repo.setRepoUrl(repoUrl);
-                repo.setRepoFingerprint(repoFingerPrint);
+                final StaticRepo staticRepo = new StaticRepo();
+                staticRepo.setRepoId(repoId);
+                staticRepo.setRepoName(Util.emptyIfNull(repoName));
+                staticRepo.setRepoUrl(repoUrl);
+                staticRepo.setRepoFingerprint(repoFingerPrint);
 
-                boolean success = repoListManager.addToRepoMap(repo);
+                boolean success = repoListManager.addToRepoMap(staticRepo);
                 if (success)
                     dismissAllowingStateLoss();
                 else

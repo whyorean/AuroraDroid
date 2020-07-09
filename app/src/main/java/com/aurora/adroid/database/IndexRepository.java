@@ -23,20 +23,20 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.aurora.adroid.model.Index;
+import com.aurora.adroid.model.v2.Repo;
 
 import java.util.List;
 
 public class IndexRepository {
 
-    private IndexDao indexDao;
+    private RepoDao repoDao;
 
     public IndexRepository(Application application) {
         AppDatabase appDatabase = AppDatabase.getDatabase(application);
-        indexDao = appDatabase.indexDao();
+        repoDao = appDatabase.repoDao();
     }
 
-    public LiveData<List<Index>> getAllIndices() {
-        return indexDao.getAllIndexes();
+    public LiveData<List<Repo>> getAllIndices() {
+        return repoDao.getAllIndexes();
     }
 }

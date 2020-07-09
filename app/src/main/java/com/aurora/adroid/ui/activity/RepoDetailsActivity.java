@@ -39,7 +39,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.util.Util;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -55,7 +55,7 @@ import butterknife.ButterKnife;
 
 public class RepoDetailsActivity extends AppCompatActivity {
 
-    public static Repo repo;
+    public static StaticRepo staticRepo;
     @BindView(R.id.img_qr)
     ImageView imgQR;
     @BindView(R.id.txt_name)
@@ -85,26 +85,26 @@ public class RepoDetailsActivity extends AppCompatActivity {
         setupActionbar();
 
         mirrorCheckedList = Util.getMirrorCheckedList(this);
-        hasMirror = repo.getRepoMirrors() != null && repo.getRepoMirrors().length >= 1;
-        txtName.setText(repo.getRepoName());
-        txtUrl.setText(repo.getRepoUrl());
+        hasMirror = staticRepo.getRepoMirrors() != null && staticRepo.getRepoMirrors().length >= 1;
+        txtName.setText(staticRepo.getRepoName());
+        txtUrl.setText(staticRepo.getRepoUrl());
         if (hasMirror)
-            txtMirrorUrl.setText(repo.getRepoMirrors()[0]);
-        txtFingerPrint.setText(repo.getRepoFingerprint());
-        txtDescription.setText(repo.getRepoDescription());
+            txtMirrorUrl.setText(staticRepo.getRepoMirrors()[0]);
+        txtFingerPrint.setText(staticRepo.getRepoFingerprint());
+        txtDescription.setText(staticRepo.getRepoDescription());
 
         if (!hasMirror)
             mirrorSwitch.setVisibility(View.GONE);
 
-        if (mirrorCheckedList.contains(repo.getRepoId()))
+        if (mirrorCheckedList.contains(staticRepo.getRepoId()))
             mirrorSwitch.setChecked(true);
 
         mirrorSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (mirrorSwitch.isChecked()) {
-                mirrorCheckedList.add(repo.getRepoId());
+                mirrorCheckedList.add(staticRepo.getRepoId());
                 Util.putMirrorCheckedList(this, mirrorCheckedList);
             } else {
-                mirrorCheckedList.remove(repo.getRepoId());
+                mirrorCheckedList.remove(staticRepo.getRepoId());
                 Util.putMirrorCheckedList(this, mirrorCheckedList);
             }
         });
@@ -136,12 +136,12 @@ public class RepoDetailsActivity extends AppCompatActivity {
                 onBackPressed();
                 break;
             case R.id.action_share:
-                String fingerprint = repo.getRepoFingerprint();
+                String fingerprint = staticRepo.getRepoFingerprint();
                 fingerprint = StringUtils.deleteWhitespace(fingerprint);
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_SUBJECT, repo.getRepoName());
-                i.putExtra(Intent.EXTRA_TEXT, repo.getRepoUrl()
+                i.putExtra(Intent.EXTRA_SUBJECT, staticRepo.getRepoName());
+                i.putExtra(Intent.EXTRA_TEXT, staticRepo.getRepoUrl()
                         + (!TextUtils.isEmpty(fingerprint) ? "/?fingerprint=" + fingerprint : ""));
                 startActivity(Intent.createChooser(i, getString(R.string.action_share)));
                 break;
@@ -153,9 +153,9 @@ public class RepoDetailsActivity extends AppCompatActivity {
         QRCodeWriter writer = new QRCodeWriter();
         try {
             StringBuilder content = new StringBuilder()
-                    .append(repo.getRepoUrl())
+                    .append(staticRepo.getRepoUrl())
                     .append("/?fingerprint=")
-                    .append(StringUtils.deleteWhitespace(repo.getRepoFingerprint()));
+                    .append(StringUtils.deleteWhitespace(staticRepo.getRepoFingerprint()));
             BitMatrix bitMatrix = writer.encode(content.toString(), BarcodeFormat.QR_CODE, 512, 512);
             int width = bitMatrix.getWidth();
             int height = bitMatrix.getHeight();

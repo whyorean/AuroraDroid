@@ -38,6 +38,7 @@ import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.event.EventType;
+import com.aurora.adroid.manager.BlacklistManager;
 import com.aurora.adroid.manager.FavouritesManager;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.ui.fragment.details.AppActionDetails;
@@ -73,6 +74,7 @@ public class DetailsActivity extends BaseActivity {
 
     private AppActionDetails appActionDetails;
     private AppPackages appPackages;
+    private BlacklistManager blacklistManager;
     private FavouritesManager favouritesManager;
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -94,6 +96,8 @@ public class DetailsActivity extends BaseActivity {
         setupActionBar();
 
         favouritesManager = new FavouritesManager(this);
+        blacklistManager = new BlacklistManager(this);
+
         model = new ViewModelProvider(this).get(DetailAppViewModel.class);
         model.getLiveApp().observe(this, app -> {
             draw(app);
@@ -175,6 +179,7 @@ public class DetailsActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem menuItem) {
+
         switch (menuItem.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
@@ -197,6 +202,15 @@ public class DetailsActivity extends BaseActivity {
                 final Intent intent = new Intent(this, DownloadsActivity.class);
                 startActivity(intent, ViewUtil.getEmptyActivityBundle(this));
                 return true;
+            case R.id.action_blacklist:
+                if (blacklistManager.isBlacklisted(app.getPackageName())) {
+                    blacklistManager.removeFromBlacklist(app.getPackageName());
+                    menuItem.setTitle(getString(R.string.action_blacklist));
+                } else {
+                    blacklistManager.addToBlacklist(app.getPackageName());
+                    menuItem.setTitle(getString(R.string.action_whitelist));
+                }
+                return true;
         }
         return super.onOptionsItemSelected(menuItem);
     }
@@ -204,6 +218,8 @@ public class DetailsActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.details_main, menu);
+        final MenuItem blackListMenu = menu.findItem(R.id.action_blacklist);
+        blackListMenu.setTitle(blacklistManager.isBlacklisted(app.getPackageName()) ? R.string.action_whitelist : R.string.action_blacklist);
         return true;
     }
 

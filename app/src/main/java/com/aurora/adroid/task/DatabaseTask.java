@@ -24,8 +24,8 @@ import android.content.ContextWrapper;
 
 import com.aurora.adroid.database.AppDao;
 import com.aurora.adroid.database.AppDatabase;
-import com.aurora.adroid.database.PackageDao;
-import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.database.AppPackageDao;
+import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.util.Log;
 
 public class DatabaseTask extends ContextWrapper {
@@ -48,13 +48,13 @@ public class DatabaseTask extends ContextWrapper {
         }
     }
 
-    public boolean clearRepo(Repo repo) {
+    public boolean clearRepo(StaticRepo staticRepo) {
         try {
             final AppDatabase appDatabase = AppDatabase.getDatabase(context);
             final AppDao appDao = appDatabase.appDao();
-            final PackageDao packageDao = appDatabase.packageDao();
-            appDao.clearRepo(repo.getRepoId());
-            packageDao.clearRepo(repo.getRepoName());
+            final AppPackageDao packageDao = appDatabase.appPackageDao();
+            appDao.clearRepo(staticRepo.getRepoId());
+            packageDao.clear(staticRepo.getRepoId());
             return true;
         } catch (Exception e) {
             Log.e(e.getMessage());

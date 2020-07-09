@@ -41,13 +41,12 @@ import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.manager.RepoSyncManager;
-import com.aurora.adroid.model.items.IndexItem;
+import com.aurora.adroid.model.items.RepoItem;
 import com.aurora.adroid.model.items.cluster.GenericClusterItem;
 import com.aurora.adroid.model.items.cluster.NewClusterItem;
 import com.aurora.adroid.service.SyncService;
 import com.aurora.adroid.ui.activity.DetailsActivity;
 import com.aurora.adroid.ui.activity.GenericAppActivity;
-import com.aurora.adroid.ui.sheet.RepoDetailsSheet;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.ViewUtil;
@@ -80,7 +79,7 @@ public class HomeFragment extends Fragment {
 
     private FastItemAdapter<NewClusterItem> fastItemAdapterNew;
     private FastItemAdapter<GenericClusterItem> fastItemAdapterUpdates;
-    private FastItemAdapter<IndexItem> fastItemAdapterIndices;
+    private FastItemAdapter<RepoItem> fastItemAdapterIndices;
     private CompositeDisposable disposable = new CompositeDisposable();
 
     @Nullable
@@ -100,7 +99,7 @@ public class HomeFragment extends Fragment {
         setupUpdatedApps();
         setupRepository();
 
-        final ClusterAppsViewModel clusterModel = new ViewModelProvider(this).get(ClusterAppsViewModel.class);
+        ClusterAppsViewModel clusterModel = new ViewModelProvider(requireActivity()).get(ClusterAppsViewModel.class);
         clusterModel.getNewAppsLiveData().observe(getViewLifecycleOwner(), apps -> {
             disposable.add(Observable.fromIterable(apps)
                     .subscribeOn(Schedulers.io())
@@ -108,8 +107,7 @@ public class HomeFragment extends Fragment {
                     .toList()
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(clusterItems -> {
-                        fastItemAdapterNew.clear();
-                        fastItemAdapterNew.add(clusterItems);
+                        fastItemAdapterNew.set(clusterItems);
                     }, throwable -> Log.e(throwable.getMessage())));
         });
 
@@ -120,17 +118,16 @@ public class HomeFragment extends Fragment {
                     .toList()
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(clusterItems -> {
-                        fastItemAdapterUpdates.clear();
-                        fastItemAdapterUpdates.add(clusterItems);
+                        fastItemAdapterUpdates.set(clusterItems);
                     }, throwable -> Log.e(throwable.getMessage())));
         });
 
-        final IndexModel indexModel = new ViewModelProvider(this).get(IndexModel.class);
+        IndexModel indexModel = new ViewModelProvider(requireActivity()).get(IndexModel.class);
         indexModel.getAllIndicesLive().observe(getViewLifecycleOwner(), indices -> {
             final RepoSyncManager repoSyncManager = new RepoSyncManager(requireContext());
             disposable.add(Observable.fromIterable(indices)
                     .filter(index -> repoSyncManager.isSynced(index.getRepoId()))
-                    .map(IndexItem::new)
+                    .map(RepoItem::new)
                     .toList()
                     .subscribe(indexItems -> {
                         fastItemAdapterIndices.clear();
@@ -152,7 +149,7 @@ public class HomeFragment extends Fragment {
                             swipeLayout.setRefreshing(false);
                             break;
                         case SYNC_NO_UPDATES:
-                            ContextUtil.toastLong(requireContext(), getString(R.string.toast_repo_sync_empty));
+                            ContextUtil.toastLong(requireContext(), getString(R.string.toast_repo_sync_no_updates));
                             swipeLayout.setRefreshing(false);
                             break;
                     }
@@ -214,9 +211,9 @@ public class HomeFragment extends Fragment {
             return false;
         });
         fastItemAdapterIndices.setOnLongClickListener((view, adapter, item, position) -> {
-            RepoDetailsSheet.index = item.getIndex();
+           /* RepoDetailsSheet.index = item.getIndex();
             RepoDetailsSheet repoDetailsSheet = new RepoDetailsSheet();
-            repoDetailsSheet.show(requireActivity().getSupportFragmentManager(), "REPO_DETAILS_SHEET");
+            repoDetailsSheet.show(requireActivity().getSupportFragmentManager(), "REPO_DETAILS_SHEET");*/
             return true;
         });
         recyclerViewIndices.setAdapter(fastItemAdapterIndices);

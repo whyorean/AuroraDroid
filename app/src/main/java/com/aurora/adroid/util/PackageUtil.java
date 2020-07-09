@@ -27,59 +27,25 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import androidx.annotation.NonNull;
-
 import com.aurora.adroid.ArchType;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class PackageUtil {
 
     private static final String ACTION_PACKAGE_REPLACED_NON_SYSTEM = "ACTION_PACKAGE_REPLACED_NON_SYSTEM";
     private static final String ACTION_PACKAGE_INSTALLATION_FAILED = "ACTION_PACKAGE_INSTALLATION_FAILED";
     private static final String ACTION_UNINSTALL_PACKAGE_FAILED = "ACTION_UNINSTALL_PACKAGE_FAILED";
+
     private static final List<String> archList = new ArrayList<>();
-    private static final String PSEUDO_PACKAGE_MAP = "PSEUDO_PACKAGE_MAP";
-    private static final String PSEUDO_URL_MAP = "PSEUDO_URL_MAP";
 
     static {
         archList.add("arm64-v8a");
         archList.add("armeabi-v7a");
         archList.add("x86");
-    }
-
-    public static String getAppDisplayName(Context context, String packageName) {
-        Map<String, String> pseudoMap = getPseudoPackageMap(context);
-        return TextUtil.emptyIfNull(pseudoMap.get(packageName));
-    }
-
-    public static String getIconURL(Context context, String packageName) {
-        Map<String, String> pseudoMap = getPseudoURLMap(context);
-        return TextUtil.emptyIfNull(pseudoMap.get(packageName));
-    }
-
-    private static Map<String, String> getPseudoPackageMap(Context context) {
-        return PrefUtil.getMap(context, PSEUDO_PACKAGE_MAP);
-    }
-
-    private static Map<String, String> getPseudoURLMap(Context context) {
-        return PrefUtil.getMap(context, PSEUDO_URL_MAP);
-    }
-
-    public static void addToPseudoPackageMap(Context context, String packageName, String displayName) {
-        Map<String, String> pseudoMap = getPseudoPackageMap(context);
-        pseudoMap.put(packageName, displayName);
-        PrefUtil.saveMap(context, pseudoMap, PSEUDO_PACKAGE_MAP);
-    }
-
-    public static void addToPseudoURLMap(Context context, String packageName, String iconURL) {
-        Map<String, String> pseudoMap = getPseudoURLMap(context);
-        pseudoMap.put(packageName, iconURL);
-        PrefUtil.saveMap(context, pseudoMap, PSEUDO_URL_MAP);
     }
 
     public static boolean isInstalledVersion(Context context, Package pkg) {
@@ -98,15 +64,6 @@ public class PackageUtil {
         try {
             context.getPackageManager().getPackageInfo(packageName, 0);
             return true;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
-    }
-
-    public static boolean isSystemApp(PackageManager packageManager, String packageName) {
-        try {
-            PackageInfo packageInfo = packageManager.getPackageInfo(packageName, 0);
-            return (packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
@@ -139,19 +96,11 @@ public class PackageUtil {
         }
     }
 
-    @NonNull
-    public static String getDisplayName(Context context, String packageName) {
-        try {
-            PackageManager packageManager = context.getPackageManager();
-            ApplicationInfo appInfo = packageManager.getApplicationInfo(packageName, 0);
-            return packageManager.getApplicationLabel(appInfo).toString();
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
     public static boolean isArchSpecificPackage(Package pkg) {
-        return !pkg.getNativecode().isEmpty() && !pkg.getNativecode().containsAll(archList);
+        if (pkg.getNativecode() == null)
+            return false;
+        else
+            return !pkg.getNativecode().isEmpty() && !pkg.getNativecode().containsAll(archList);
     }
 
 
@@ -212,8 +161,10 @@ public class PackageUtil {
     }
 
     public static boolean isBestFitSupportedPackage(Package pkg) {
+
         if (!isSdkCompatible(pkg))
             return false;
+
         if (!isArchSpecificPackage(pkg))
             return true;
 
@@ -224,8 +175,10 @@ public class PackageUtil {
     }
 
     public static boolean isSupportedPackage(Package pkg) {
+
         if (!isSdkCompatible(pkg))
             return false;
+
         if (!isArchSpecificPackage(pkg))
             return true;
 
@@ -238,23 +191,34 @@ public class PackageUtil {
 
     public static Package getOptimumPackage(List<Package> packageList, String signer, boolean verifySigner) {
 
-        for (Package pkg : packageList) {
-            if (verifySigner) {
-                if (pkg.getSigner().equals(signer) && isBestFitSupportedPackage(pkg))
-                    return pkg;
-            } else {
-                if (isBestFitSupportedPackage(pkg))
-                    return pkg;
+        final List<Package> packages = new ArrayList<>();
+
+        //Filter packages that do not match signer
+        if (verifySigner) {
+            for (Package pkg : packageList) {
+                if (pkg.getSigner().equals(signer)) {
+                    packages.add(pkg);
+                }
             }
+        } else {
+            packages.addAll(packageList);
         }
 
-        for (Package pkg : packageList) {
+        if (packages.isEmpty())
+            return null;
+
+        for (Package pkg : packages) {
+            if (isBestFitSupportedPackage(pkg))
+                return pkg;
+        }
+
+        for (Package pkg : packages) {
             if (isSupportedPackage(pkg))
                 return pkg;
         }
 
-        for (Package pkg : packageList) {
-            if (pkg.getNativecode().isEmpty())
+        for (Package pkg : packages) {
+            if (pkg.getNativecode() == null || pkg.getNativecode().isEmpty())
                 return pkg;
 
             final ArchType pkgArch = getArchFromNativeCode(pkg.getNativecode().get(0));
@@ -262,7 +226,8 @@ public class PackageUtil {
             if (pkgArch == systemArch)
                 return pkg;
         }
-        return packageList.get(0);
+
+        return packages.get(0);
     }
 
     public static boolean isBeta(String versionName) {

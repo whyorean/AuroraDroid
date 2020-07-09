@@ -17,42 +17,53 @@
  *
  */
 
-package com.aurora.adroid.model;
+package com.aurora.adroid.model.v2;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
-import org.jetbrains.annotations.NotNull;
+import com.aurora.adroid.database.DatabaseConverter;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class Index implements Comparable<Index> {
+@Entity(tableName = "repo")
+@TypeConverters(DatabaseConverter.class)
+public class Repo {
+    @SerializedName("timestamp")
+    @Expose
+    private Long timestamp;
+    @SerializedName("version")
+    @Expose
+    private Integer version;
+    @SerializedName("maxage")
+    @Expose
+    private Integer maxage;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("icon")
+    @Expose
+    private String icon;
+    @SerializedName("address")
+    @Expose
+    private String address;
+    @SerializedName("description")
+    @Expose
+    private String description;
+    @SerializedName("mirrors")
+    @Expose
+    private List<String> mirrors;
+
     @PrimaryKey
     @NonNull
-    private String repoId = "00";
-    private Long timestamp;
-    private int version;
-    private String name;
-    private String icon;
-    private String address;
-    private String description;
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Index))
-            return false;
-        return repoId.equalsIgnoreCase(((Index) obj).getRepoId());
-    }
-
-    @Override
-    public int hashCode() {
-        return repoId.hashCode();
-    }
-
-    @Override
-    public int compareTo(@NotNull Index repo) {
-        return getRepoId().compareToIgnoreCase(repo.getRepoId());
-    }
+    private String repoId = StringUtils.EMPTY;
 }

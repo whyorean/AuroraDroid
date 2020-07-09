@@ -1,4 +1,3 @@
-
 /*
  * Aurora Droid
  * Copyright (C) 2019-20, Rahul Kumar Patel <whyorean@gmail.com>
@@ -18,23 +17,27 @@
  *
  */
 
-package com.aurora.adroid.model.locales;
+package com.aurora.adroid.model.v2;
 
+import com.aurora.adroid.model.App;
+import com.aurora.adroid.model.Package;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ZhCN {
+import java.util.HashMap;
+import java.util.List;
 
-    @SerializedName("summary")
+import lombok.Data;
+
+@Data
+public class Index {
+    @SerializedName("repo")
     @Expose
-    private String summary;
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
+    public Repo repo;
+    @SerializedName("apps")
+    @Expose
+    public List<App> apps = null;
+    @SerializedName("packages")
+    @Expose
+    public HashMap<String, List<Package>> packages;
 }

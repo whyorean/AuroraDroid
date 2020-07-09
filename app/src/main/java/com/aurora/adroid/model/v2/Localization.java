@@ -18,23 +18,33 @@
  *
  */
 
-package com.aurora.adroid.model.locales;
+package com.aurora.adroid.model.v2;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Sl {
+import java.util.List;
 
+import lombok.Data;
+
+@Data
+public class Localization {
+    @SerializedName("featureGraphic")
+    @Expose
+    private String featureGraphic;
+    @SerializedName("icon")
+    @Expose
+    private String icon;
+    @SerializedName("phoneScreenshots")
+    @Expose
+    private List<String> phoneScreenshots;
     @SerializedName("summary")
     @Expose
     private String summary;
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
+    @SerializedName("whatsNew")
+    @Expose
+    private String changelog;
+    @SerializedName("description")
+    @Expose
+    private String description;
 }

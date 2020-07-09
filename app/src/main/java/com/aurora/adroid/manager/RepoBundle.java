@@ -19,23 +19,23 @@
 
 package com.aurora.adroid.manager;
 
-import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.model.StaticRepo;
 
 public class RepoBundle {
 
     private boolean synced;
-    private Repo repo;
+    private StaticRepo staticRepo;
 
-    public RepoBundle(boolean status, Repo repo) {
+    public RepoBundle(boolean status, StaticRepo staticRepo) {
         this.synced = status;
-        this.repo = repo;
+        this.staticRepo = staticRepo;
     }
 
     public boolean isSynced() {
         return synced;
     }
 
-    public Repo getRepo() {
-        return repo;
+    public StaticRepo getStaticRepo() {
+        return staticRepo;
     }
 }

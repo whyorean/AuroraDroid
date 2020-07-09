@@ -87,7 +87,7 @@ public class Installer implements AppInstallerAbstract.InstallationStatusListene
         installationQueue.remove(app);
 
         if (Util.isNativeInstallerEnforced(context))
-            install(app.getPackageName(), app.getAppPackage().getVersionCode());
+            install(app.getPackageName(), app.getPkg().getVersionCode());
         else
             installSplit(app);
     }

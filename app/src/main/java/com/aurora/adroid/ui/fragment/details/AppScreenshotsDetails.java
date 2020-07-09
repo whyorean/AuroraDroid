@@ -28,7 +28,9 @@ import com.aurora.adroid.R;
 import com.aurora.adroid.adapter.SmallScreenshotsAdapter;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.ui.activity.DetailsActivity;
-import com.aurora.adroid.util.DatabaseUtil;
+import com.aurora.adroid.util.LocalizationUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -43,9 +45,10 @@ public class AppScreenshotsDetails extends AbstractDetails {
 
     @Override
     public void draw() {
-        if (app.getScreenShots() != null) {
+        List<String> screenshotUrlList = LocalizationUtil.getScreenShots(app);
+        if (!screenshotUrlList.isEmpty()) {
             recyclerView.setVisibility(View.VISIBLE);
-            recyclerView.setAdapter(new SmallScreenshotsAdapter(DatabaseUtil.getScreenshotURLs(app), context));
+            recyclerView.setAdapter(new SmallScreenshotsAdapter(LocalizationUtil.getScreenShots(app), context));
             recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
         }
     }

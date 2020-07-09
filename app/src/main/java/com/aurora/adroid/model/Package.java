@@ -19,32 +19,29 @@
 
 package com.aurora.adroid.model;
 
-import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data
-@Entity(tableName = "package")
 public class Package {
-
     @PrimaryKey
     @NotNull
-    private String apkName = "unknown";
-    private String repoName;
-    private String repoUrl;
+    private String apkName = StringUtils.EMPTY;
     private Long added;
     private String hash;
     private String hashType;
     private String minSdkVersion;
-    private List<String> nativecode = new ArrayList<>();
+    private List<String> nativecode;
     private String packageName;
     private String sig;
     private String signer;
@@ -52,10 +49,8 @@ public class Package {
     private String srcname;
     private String targetSdkVersion;
     @SerializedName("uses-permission")
-    private List<List<String>> usesPermission = null;
-    private Long versionCode = 0L;
-    private String versionName = "null";
-
-    public Package() {
-    }
+    private List<List<String>> usesPermission;
+    private Long versionCode;
+    private String versionName;
+    private List<String> antiFeatures;
 }

@@ -30,7 +30,7 @@ import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.DatabaseUtil;
-import com.aurora.adroid.util.TextUtil;
+import com.aurora.adroid.util.LocalizationUtil;
 import com.aurora.adroid.util.Util;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
@@ -99,17 +99,8 @@ public class GenericItem extends AbstractItem<GenericItem.ViewHolder> {
                     app.getRepoName(),
                     app.getAuthorName()));
 
-            String summary;
-            if (app.getLocalized() != null
-                    && app.getLocalized().getEnUS() != null
-                    && app.getLocalized().getEnUS().getSummary() != null) {
-                summary = TextUtil.emptyIfNull(app.getLocalized().getEnUS().getSummary());
-            } else
-                summary = TextUtil.emptyIfNull(app.getSummary());
-
-            summary = StringUtils.capitalize(summary);
-
-            line3.setText(summary);
+            final String summary = LocalizationUtil.getLocalizedSummary(context, app);
+            line3.setText(StringUtils.capitalize(summary));
 
             if (app.getIcon() == null)
                 img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_placeholder));

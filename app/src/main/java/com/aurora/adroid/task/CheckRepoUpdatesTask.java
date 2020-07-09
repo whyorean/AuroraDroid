@@ -27,8 +27,8 @@ import com.aurora.adroid.Constants;
 import com.aurora.adroid.download.RequestBuilder;
 import com.aurora.adroid.event.LogEvent;
 import com.aurora.adroid.manager.RepoSyncManager;
-import com.aurora.adroid.model.Repo;
 import com.aurora.adroid.model.RepoHeader;
+import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.Util;
 import com.tonyodev.fetch2.Request;
@@ -57,14 +57,14 @@ public class CheckRepoUpdatesTask extends ContextWrapper {
     public List<Request> getRepoRequestList() {
 
         final RepoSyncManager repoSyncManager = new RepoSyncManager(this);
-        final List<Repo> repoList = repoSyncManager.getRepoList();
+        final List<StaticRepo> staticRepoList = repoSyncManager.getRepoList();
 
-        if (repoList.isEmpty()) {
+        if (staticRepoList.isEmpty()) {
             repoSyncManager.addDefault();
-            repoList.addAll(repoSyncManager.getRepoList());
+            staticRepoList.addAll(repoSyncManager.getRepoList());
         }
 
-        final List<Request> requestList = RequestBuilder.buildRequest(this, repoList);
+        final List<Request> requestList = RequestBuilder.buildRequest(this, staticRepoList);
         final List<Request> filteredList = new ArrayList<>();
 
         final OkHttpClient client = new OkHttpClient();
@@ -80,7 +80,11 @@ public class CheckRepoUpdatesTask extends ContextWrapper {
             AuroraApplication.rxNotify(new LogEvent("Checking " + repoName + " for updates"));
 
             final RepoHeader repoHeader = getRepoHeader(extras.getString(Constants.DOWNLOAD_REPO_ID, StringUtils.EMPTY));
-            final okhttp3.Request okhttpRequest = new okhttp3.Request.Builder().url(request.getUrl()).head().build();
+
+            final okhttp3.Request okhttpRequest = new okhttp3.Request.Builder()
+                    .url(request.getUrl())
+                    .head()
+                    .build();
 
             try (Response response = client.newCall(okhttpRequest).execute()) {
                 final String header = response.header("Last-Modified");

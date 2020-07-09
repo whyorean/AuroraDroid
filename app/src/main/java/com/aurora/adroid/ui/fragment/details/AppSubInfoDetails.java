@@ -87,7 +87,7 @@ public class AppSubInfoDetails extends AbstractDetails {
     public void draw() {
         final ClusterAppsViewModel clusterAppsViewModel = new ViewModelProvider(activity).get(ClusterAppsViewModel.class);
         final DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-        final Package pkg = app.getAppPackage();
+        final Package pkg = app.getPkg();
 
         chipUpdated.setText(dateFormat.format(new Date(app.getLastUpdated())));
         chipLicense.setText(TextUtils.isEmpty(app.getLicense()) ? "unknown" : app.getLicense());

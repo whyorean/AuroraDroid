@@ -40,11 +40,11 @@ public class ClusterAppsViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<App>> getNewAppsLiveData() {
-        return appRepository.getAllNewApps(System.currentTimeMillis(), 3);
+        return appRepository.getAllNewApps(System.currentTimeMillis(), 14);
     }
 
     public LiveData<List<App>> getUpdatedAppsLiveData() {
-        return appRepository.getAllUpdatedApps(System.currentTimeMillis(), 3);
+        return appRepository.getAllUpdatedApps(System.currentTimeMillis(), 14);
     }
 
     public LiveData<List<App>> getCategoryAppsLiveData(String category) {

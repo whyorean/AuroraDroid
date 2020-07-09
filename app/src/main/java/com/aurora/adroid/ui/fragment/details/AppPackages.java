@@ -73,7 +73,7 @@ public class AppPackages extends AbstractDetails {
             }
         });
 
-        disposable.add(Observable.fromIterable(app.getPackageList())
+        disposable.add(Observable.fromIterable(app.getAppPackage().getPackageList())
                 .map(pkg -> new PackageItem(pkg, app))
                 .toList()
                 .subscribe(packageItems -> {

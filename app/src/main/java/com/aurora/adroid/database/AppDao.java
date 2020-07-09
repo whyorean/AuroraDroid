@@ -38,6 +38,9 @@ public interface AppDao {
     @Query("SELECT * FROM app")
     LiveData<List<App>> getAllApps();
 
+    @Query("SELECT packageName FROM app")
+    List<String> getAllPackages();
+
     @Query("SELECT DISTINCT * FROM app WHERE packageName IN (:packageName)")
     LiveData<List<App>> getAppsByPackageName(List<String> packageName);
 
@@ -62,11 +65,11 @@ public interface AppDao {
     @Query("SELECT * FROM app WHERE (authorName = :authorName) or (authorName LIKE :authorName) LIMIT 20")
     LiveData<List<App>> getAppsByAuthorName(String authorName);
 
-    @Query("SELECT * FROM app WHERE (:refTime - lastUpdated <= :weekCount * 604800000) and (lastUpdated - added > 100000) ORDER BY lastUpdated DESC")
-    LiveData<List<App>> getLatestUpdatedApps(Long refTime, int weekCount);
+    @Query("SELECT * FROM app WHERE (:refTime - lastUpdated <= :diff) and (lastUpdated - added > :buffer) ORDER BY lastUpdated DESC")
+    LiveData<List<App>> getLatestUpdatedApps(Long refTime, Long diff, Long buffer);
 
-    @Query("SELECT * FROM app WHERE :refTime - added <= :weekCount * 604800000 ORDER BY added DESC")
-    LiveData<List<App>> getLatestAddedApps(Long refTime, int weekCount);
+    @Query("SELECT * FROM app WHERE :refTime - added <= :diff ORDER BY added DESC")
+    LiveData<List<App>> getLatestAddedApps(Long refTime, Long diff);
 
     @Query("SELECT * FROM app WHERE (name LIKE :query) OR (summary LIKE :query) LIMIT 30")
     LiveData<List<App>> searchApps(String query);
@@ -80,14 +83,12 @@ public interface AppDao {
     @Query("SELECT * FROM app WHERE repoId LIKE :repoId")
     LiveData<List<App>> searchAppsByRepository(String repoId);
 
-    @Query("SELECT `en-US-phoneScreenshots` FROM app WHERE packageName =:packageName")
-    LiveData<String> getLivePhoneScreenshots(String packageName);
-
-    @Query("SELECT `en-US-phoneScreenshots` FROM app WHERE packageName =:packageName")
-    String getPhoneScreenshots(String packageName);
-
     @Query("DELETE FROM app WHERE repoId =:repoID")
     void clearRepo(String repoID);
+
+
+    @Query("SELECT EXISTS(SELECT * FROM app WHERE packageName =:packageName)")
+    boolean isAvailable(String packageName);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<App> appList);

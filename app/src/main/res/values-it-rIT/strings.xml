@@ -52,7 +52,7 @@
     <string name="details_permissions">"Permessi app"</string>
     <string name="details_permissions_desc">"Aurora Droid richiede i seguenti permessi"</string>
     <string name="details_repo_desc">"Seleziona i repository da sincronizzare"</string>
-    <string name="dialog_sync_title">"Aggiornamenti dei repo"</string>
+    <string name="dialog_sync_title">"Aggiornamenti dei staticRepo"</string>
     <string name="dialog_sync_desc">"Vuoi aggiornare le app dai repositories?"</string>
     <string name="dialog_sync_desc_alt">"Rilevati dati vecchi, possono esserci nuovi aggiornamenti. Vuoi sincronizzare i repositories?"</string>
     <string name="dialog_sync_completed_desc">"Tutti i repositories sono stati sincronizzati, è consigliabile riavviare l'app dopo gli aggiornamenti."</string>

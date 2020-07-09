@@ -34,7 +34,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import com.aurora.adroid.R;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.Index;
-import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.util.Util;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -69,7 +69,7 @@ public class RepoDetailsSheet extends BaseBottomSheet {
 
     private ArrayList<String> mirrorCheckedList = new ArrayList<>();
     private RepoListManager repoListManager;
-    private Repo repo;
+    private StaticRepo staticRepo;
 
     @Nullable
     @Override
@@ -83,30 +83,30 @@ public class RepoDetailsSheet extends BaseBottomSheet {
     protected void onContentViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mirrorCheckedList = Util.getMirrorCheckedList(requireContext());
         repoListManager = new RepoListManager(requireContext());
-        repo = repoListManager.getRepoById(index.getRepoId());
+        staticRepo = repoListManager.getRepoById(index.getRepoId());
 
-        boolean hasMirror = repo.getRepoMirrors() != null && repo.getRepoMirrors().length >= 1;
+        boolean hasMirror = staticRepo.getRepoMirrors() != null && staticRepo.getRepoMirrors().length >= 1;
 
-        txtName.setText(repo.getRepoName());
-        txtUrl.setText(repo.getRepoUrl());
+        txtName.setText(staticRepo.getRepoName());
+        txtUrl.setText(staticRepo.getRepoUrl());
 
         if (hasMirror) {
-            txtMirrorUrl.setText(repo.getRepoMirrors()[0]);
-            mirrorSwitch.setChecked(mirrorCheckedList.contains(repo.getRepoId()));
+            txtMirrorUrl.setText(staticRepo.getRepoMirrors()[0]);
+            mirrorSwitch.setChecked(mirrorCheckedList.contains(staticRepo.getRepoId()));
             mirrorSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (mirrorSwitch.isChecked()) {
-                    mirrorCheckedList.add(repo.getRepoId());
+                    mirrorCheckedList.add(staticRepo.getRepoId());
                     Util.putMirrorCheckedList(requireContext(), mirrorCheckedList);
                 } else {
-                    mirrorCheckedList.remove(repo.getRepoId());
+                    mirrorCheckedList.remove(staticRepo.getRepoId());
                     Util.putMirrorCheckedList(requireContext(), mirrorCheckedList);
                 }
             });
         } else
             mirrorSwitch.setVisibility(View.GONE);
 
-        txtFingerPrint.setText(repo.getRepoFingerprint());
-        txtDescription.setText(repo.getRepoDescription());
+        txtFingerPrint.setText(staticRepo.getRepoFingerprint());
+        txtDescription.setText(staticRepo.getRepoDescription());
 
         generateQR();
     }
@@ -114,7 +114,7 @@ public class RepoDetailsSheet extends BaseBottomSheet {
     private void generateQR() {
         QRCodeWriter writer = new QRCodeWriter();
         try {
-            String content = repo.getRepoUrl() + "/?fingerprint=" + StringUtils.deleteWhitespace(repo.getRepoFingerprint());
+            String content = staticRepo.getRepoUrl() + "/?fingerprint=" + StringUtils.deleteWhitespace(staticRepo.getRepoFingerprint());
             final BitMatrix bitMatrix = writer.encode(content, BarcodeFormat.QR_CODE, 512, 512);
             final int width = bitMatrix.getWidth();
             final int height = bitMatrix.getHeight();

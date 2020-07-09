@@ -27,7 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.aurora.adroid.manager.RepoListManager;
-import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.Util;
 import com.google.zxing.Result;
@@ -65,17 +65,17 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
         if (rawResult.getText().contains("fingerprint") || rawResult.getText().contains("FINGERPRINT")) {
             try {
                 String[] ss = rawResult.getText().split("\\?");
-                Repo repo = new Repo();
-                repo.setRepoName(Util.getDomainName(ss[0]));
-                repo.setRepoId(String.valueOf(repo.getRepoName().hashCode()));
+                StaticRepo staticRepo = new StaticRepo();
+                staticRepo.setRepoName(Util.getDomainName(ss[0]));
+                staticRepo.setRepoId(String.valueOf(staticRepo.getRepoName().hashCode()));
 
                 ss[0] = ss[0].replace("fdroidrepos", "https");
                 ss[1] = ss[1].replace("fingerprint=", "");
                 ss[1] = ss[1].replace("FINGERPRINT=", "");
 
-                repo.setRepoUrl(ss[0]);
-                repo.setRepoFingerprint(ss[1]);
-                new RepoListManager(this).addToRepoMap(repo);
+                staticRepo.setRepoUrl(ss[0]);
+                staticRepo.setRepoFingerprint(ss[1]);
+                new RepoListManager(this).addToRepoMap(staticRepo);
                 Toast.makeText(this, "Repo Added Successfully", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(this, "Failed to add repo", Toast.LENGTH_SHORT).show();

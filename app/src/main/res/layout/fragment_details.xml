@@ -99,6 +99,8 @@
             android:paddingStart="@dimen/margin_small"
             android:paddingEnd="@dimen/margin_small"
             android:visibility="gone"
+            tools:itemCount="4"
+            tools:visibility="visible"
             tools:listitem="@layout/item_screenshots_small" />
 
         <!-- Packages -->

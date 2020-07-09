@@ -26,11 +26,12 @@ import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.aurora.adroid.database.AppPackageRepository;
 import com.aurora.adroid.database.AppRepository;
-import com.aurora.adroid.database.PackageRepository;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 import com.aurora.adroid.model.items.UpdatesItem;
+import com.aurora.adroid.model.v2.AppPackage;
 import com.aurora.adroid.util.CertUtil;
 import com.aurora.adroid.util.PackageUtil;
 
@@ -44,14 +45,14 @@ import io.reactivex.schedulers.Schedulers;
 public class UpdatesViewModel extends BaseViewModel {
 
     private AppRepository appRepository;
-    private PackageRepository packageRepository;
+    private AppPackageRepository appPackageRepository;
     private MutableLiveData<List<UpdatesItem>> data = new MutableLiveData<>();
     private PackageManager packageManager;
 
     public UpdatesViewModel(@NonNull Application application) {
         super(application);
         this.appRepository = new AppRepository(application);
-        this.packageRepository = new PackageRepository(application);
+        this.appPackageRepository = new AppPackageRepository(application);
         this.packageManager = application.getPackageManager();
         fetchUpdatableApps();
     }
@@ -61,44 +62,46 @@ public class UpdatesViewModel extends BaseViewModel {
     }
 
     public void fetchUpdatableApps() {
-        disposable.add(Observable.fromCallable(() -> getInstalledPackages())
+        disposable.add(Observable.fromCallable(this::getInstalledPackages)
                 .subscribeOn(Schedulers.io())
-                .map(packages -> {
-                    final List<App> appList = new ArrayList<>();
+                .map(packageNames -> {
+                    final List<UpdatesItem> updatesItemList = new ArrayList<>();
+                    for (String packageName : packageNames) {
+                        //Process only those apps which are available.
+                        if (appRepository.isAvailable(packageName)) {
+                            final List<App> appList = appRepository.getAppsByPackageName(packageName);
+                            for (App app : appList) {
 
-                    for (String packageName : packages) {
-                        final List<App> repoAppList = appRepository.getAppsByPackageName(packageName);
-                        for (App app : repoAppList) {
-                            //Get all packages associated with this app, in specific repo.
-                            final List<Package> pkgList = packageRepository.getAllPackages(packageName, app.getRepoName());
-                            //Get installed app signer
-                            final String RSA256 = CertUtil.getSHA256(getApplication(), app.getPackageName());
+                                //Get app-package associated with this app, in specific repo.
+                                final AppPackage appPackage = appPackageRepository.getAppPackage(packageName, app.getRepoId());
 
-                            if (!pkgList.isEmpty()) {
-                                //Find best matching app package for the app
-                                app.setPackageList(pkgList, RSA256, true);
-                            }
+                                //Get all packages in the app-package
+                                final List<Package> packageList = appPackage.getPackageList();
 
-                            final Package pkg = app.getAppPackage();
-                            final PackageInfo packageInfo = PackageUtil.getPackageInfo(packageManager, app.getPackageName());
+                                //Get installed app signer
+                                final String RSA256 = CertUtil.getSHA256(getApplication(), app.getPackageName());
 
-                            if (pkg != null && packageInfo != null) {
-                                if (pkg.getVersionCode() > packageInfo.versionCode
-                                        && (PackageUtil.isCompatibleVersion(getApplication(), pkg, packageInfo))
-                                        && RSA256.equals(pkg.getSigner())) {
-                                    app.setAppPackage(pkg);
-                                    appList.add(app);
+                                Package pkg = null;
+
+                                if (packageList != null && !packageList.isEmpty()) {
+                                    //Find best matching app package for the app
+                                    pkg = PackageUtil.getOptimumPackage(packageList, RSA256, true);
+                                }
+
+                                if (pkg != null) {
+                                    final PackageInfo packageInfo = PackageUtil.getPackageInfo(packageManager, app.getPackageName());
+                                    if (packageInfo != null) {
+                                        if (PackageUtil.isCompatibleVersion(getApplication(), pkg, packageInfo)) {
+                                            app.setPkg(pkg);
+                                            updatesItemList.add(new UpdatesItem(app));
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                    return appList;
+                    return updatesItemList;
                 })
-                .map(this::sortList)
-                .flatMap(apps -> Observable
-                        .fromIterable(apps)
-                        .map(UpdatesItem::new))
-                .toList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(updatesItems -> data.setValue(updatesItems), Throwable::printStackTrace));
     }

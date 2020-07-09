@@ -21,19 +21,18 @@ package com.aurora.adroid.task;
 
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.database.sqlite.SQLiteException;
 
 import com.aurora.adroid.database.AppDao;
 import com.aurora.adroid.database.AppDatabase;
-import com.aurora.adroid.database.IndexDao;
-import com.aurora.adroid.database.PackageDao;
+import com.aurora.adroid.database.AppPackageDao;
+import com.aurora.adroid.database.RepoDao;
 import com.aurora.adroid.manager.RepoBundle;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.model.Index;
 import com.aurora.adroid.model.Package;
-import com.aurora.adroid.model.Repo;
-import com.aurora.adroid.util.Log;
+import com.aurora.adroid.model.StaticRepo;
+import com.aurora.adroid.model.v2.AppPackage;
+import com.aurora.adroid.model.v2.Index;
 import com.aurora.adroid.util.PathUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,16 +40,12 @@ import com.google.gson.GsonBuilder;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.aurora.adroid.Constants.JSON;
@@ -73,62 +68,54 @@ public class JsonParserTask extends ContextWrapper {
         boolean status = false;
         final AppDatabase appDatabase = AppDatabase.getDatabase(this);
         final AppDao appDao = appDatabase.appDao();
-        final PackageDao packageDao = appDatabase.packageDao();
-        final IndexDao indexDao = appDatabase.indexDao();
+        final AppPackageDao packageDao = appDatabase.appPackageDao();
+        final RepoDao repoDao = appDatabase.repoDao();
 
-        final Repo repo = repoListManager.getRepoById(FilenameUtils.getBaseName(file.getName()));
+        final StaticRepo staticRepo = repoListManager.getRepoById(FilenameUtils.getBaseName(file.getName()));
 
-        final File jsonFile = new File(repoDir + repo.getRepoId() + JSON);
+        final File jsonFile = new File(repoDir + staticRepo.getRepoId() + JSON);
         final Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
 
         try {
             final String jsonString = IOUtils.toString(FileUtils.openInputStream(jsonFile), StandardCharsets.UTF_8);
-            final JSONObject jsonObject = new JSONObject(jsonString);
 
-            final JSONArray jsonArrayApp = jsonObject.getJSONArray("apps");
-            final JSONObject jsonObjectIndex = jsonObject.getJSONObject("repo");
-            final JSONObject jsonArrayPackage = jsonObject.getJSONObject("packages");
 
-            final Index indexRepo = gson.fromJson(jsonObjectIndex.toString(), Index.class);
-            indexRepo.setRepoId(repo.getRepoId());
-            indexDao.insert(indexRepo);
+            final Index index = gson.fromJson(jsonString, Index.class);
+            final HashMap<String, List<Package>> packageHashMap = index.getPackages();
 
             final List<App> appList = new ArrayList<>();
-            final List<Package> packageList = new ArrayList<>();
+            final List<AppPackage> appPackageList = new ArrayList<>();
 
-            for (int i = 0; i < jsonArrayApp.length(); i++) {
-                final JSONObject appObj = jsonArrayApp.getJSONObject(i);
-                final App app = gson.fromJson(appObj.toString(), App.class);
-                app.setRepoId(repo.getRepoId());
-                app.setRepoName(repo.getRepoName());
-                app.setRepoUrl(repo.getRepoUrl());
+            for (App app : index.getApps()) {
+                app.setRepoId(staticRepo.getRepoId());
+                app.setRepoName(staticRepo.getRepoName());
+                app.setRepoUrl(staticRepo.getRepoUrl());
+                app.setPackageList(packageHashMap.get(app.getPackageName()));
+                List<Package> packageList = packageHashMap.get(app.getPackageName());
+
+                //Create app package
+                AppPackage appPackage = AppPackage
+                        .builder()
+                        .repoId(staticRepo.getRepoId())
+                        .packageName(app.getPackageName())
+                        .packageList(packageList)
+                        .build();
+
                 appList.add(app);
-
-                final JSONArray jsonArray = jsonArrayPackage.getJSONArray(app.getPackageName());
-                for (int j = 0; j < jsonArray.length(); j++) {
-                    final JSONObject packageObj = jsonArray.getJSONObject(j);
-                    final Package pkg = gson.fromJson(packageObj.toString(), Package.class);
-                    pkg.setRepoName(repo.getRepoName());
-                    pkg.setRepoUrl(repo.getRepoUrl());
-                    packageList.add(pkg);
-                }
+                appPackageList.add(appPackage);
             }
 
             appDatabase.getQueryExecutor().execute(() -> {
                 appDao.insertAll(appList);
-                packageDao.insertAll(packageList);
+                packageDao.insertAll(appPackageList);
             });
 
+            index.repo.setRepoId(staticRepo.getRepoId());
+            repoDao.insert(index.repo);
             status = true;
-        } catch (JSONException e) {
-            Log.e("Error processing JSON : %s", jsonFile.getName());
-        } catch (FileNotFoundException e) {
-            Log.e("File not found : %s", jsonFile.getName());
-        } catch (IOException | SQLiteException e) {
-            Log.e(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new RepoBundle(status, repo);
+        return new RepoBundle(status, staticRepo);
     }
 }

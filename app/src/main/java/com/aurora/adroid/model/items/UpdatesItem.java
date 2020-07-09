@@ -32,7 +32,9 @@ import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.DatabaseUtil;
+import com.aurora.adroid.util.LocalizationUtil;
 import com.aurora.adroid.util.Util;
+import com.aurora.adroid.util.ViewUtil;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
@@ -58,8 +60,6 @@ public class UpdatesItem extends AbstractItem<UpdatesItem.ViewHolder> {
     @Getter
     @Setter
     private String packageName;
-
-    private boolean checked;
 
     public UpdatesItem(App app) {
         this.app = app;
@@ -114,8 +114,9 @@ public class UpdatesItem extends AbstractItem<UpdatesItem.ViewHolder> {
             final App app = item.getApp();
 
             line1.setText(app.getName());
-            line2.setText(StringUtils.joinWith(".", app.getAppPackage().getVersionName(), app.getAppPackage().getVersionCode()));
-            line3.setText(StringUtils.joinWith("•", Util.humanReadableByteValue(app.getAppPackage().getSize(), true)));
+            line2.setText(StringUtils.joinWith(".", app.getPkg().getVersionName(), app.getPkg().getVersionCode()));
+            line3.setText(StringUtils.joinWith("•", Util.humanReadableByteValue(app.getPkg().getSize(), true)));
+            txtChanges.setText(LocalizationUtil.getLocalizedChangelog(context, app));
 
             if (app.getIcon() == null)
                 img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_placeholder));
@@ -128,18 +129,17 @@ public class UpdatesItem extends AbstractItem<UpdatesItem.ViewHolder> {
                         .into(img);
 
             imgExpand.setOnClickListener(v -> {
-               /* boolean isVisible = layoutChanges.getVisibility() == View.VISIBLE;
+                boolean isVisible = layoutChanges.getVisibility() == View.VISIBLE;
                 if (isVisible) {
                     ViewUtil.collapse(layoutChanges);
                     ViewUtil.rotateView(imgExpand, true);
                 } else {
                     ViewUtil.rotateView(imgExpand, false);
                     ViewUtil.expand(layoutChanges);
-                }*/
+                }
             });
-            imgExpand.setVisibility(View.INVISIBLE);
 
-            checkBox.setChecked(item.checked);
+            checkBox.setChecked(item.isSelected());
         }
 
         @Override
@@ -149,6 +149,7 @@ public class UpdatesItem extends AbstractItem<UpdatesItem.ViewHolder> {
             line3.setText(null);
             line3.setText(null);
             img.setImageDrawable(null);
+            layoutChanges.setVisibility(View.GONE);
         }
     }
 
@@ -165,7 +166,6 @@ public class UpdatesItem extends AbstractItem<UpdatesItem.ViewHolder> {
             SelectExtension<UpdatesItem> selectExtension = fastAdapter.getExtension(SelectExtension.class);
             if (selectExtension != null) {
                 selectExtension.toggleSelection(position);
-                item.checked = !item.checked;
             }
         }
     }

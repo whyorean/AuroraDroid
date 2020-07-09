@@ -1,4 +1,3 @@
-
 /*
  * Aurora Droid
  * Copyright (C) 2019-20, Rahul Kumar Patel <whyorean@gmail.com>
@@ -18,23 +17,31 @@
  *
  */
 
-package com.aurora.adroid.model.locales;
+package com.aurora.adroid.model.v2;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import androidx.room.Entity;
 
-public class Sv {
+import com.aurora.adroid.model.Package;
 
-    @SerializedName("summary")
-    @Expose
-    private String summary;
+import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
-    public String getSummary() {
-        return summary;
-    }
+import java.util.List;
 
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(tableName = "app_package", primaryKeys = {"repoId", "packageName"})
+public class AppPackage {
+    @NotNull
+    private String repoId = StringUtils.EMPTY;
+    @NotNull
+    private String packageName = StringUtils.EMPTY;
+    private List<Package> packageList;
 }

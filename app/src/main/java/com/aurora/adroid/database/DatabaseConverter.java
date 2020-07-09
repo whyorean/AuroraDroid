@@ -21,9 +21,13 @@ package com.aurora.adroid.database;
 
 import androidx.room.TypeConverter;
 
+import com.aurora.adroid.model.Package;
+import com.aurora.adroid.model.v2.AppPackage;
+import com.aurora.adroid.model.v2.Localization;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class DatabaseConverter {
@@ -48,5 +52,47 @@ public class DatabaseConverter {
     @TypeConverter
     public static String saveNestedList(List<List<String>> listOfString) {
         return new Gson().toJson(listOfString);
+    }
+
+    @TypeConverter
+    public static List<Package> stringToPackageList(String listOfString) {
+        return new Gson().fromJson(listOfString, new TypeToken<List<Package>>() {
+        }.getType());
+    }
+
+    @TypeConverter
+    public static String packageListToString(List<Package> packageList) {
+        return new Gson().toJson(packageList);
+    }
+
+    @TypeConverter
+    public static Package stringToPackage(String listOfString) {
+        return new Gson().fromJson(listOfString, Package.class);
+    }
+
+    @TypeConverter
+    public static String packageToString(Package appPackage) {
+        return new Gson().toJson(appPackage);
+    }
+
+    @TypeConverter
+    public static AppPackage stringToAppPackage(String listOfString) {
+        return new Gson().fromJson(listOfString, AppPackage.class);
+    }
+
+    @TypeConverter
+    public static String appPackageToString(AppPackage appPackage) {
+        return new Gson().toJson(appPackage);
+    }
+
+    @TypeConverter
+    public static HashMap<String, Localization> stringToLocalizationHashMap(String listOfString) {
+        return new Gson().fromJson(listOfString, new TypeToken<HashMap<String, Localization>>() {
+        }.getType());
+    }
+
+    @TypeConverter
+    public static String localizationMapToString(HashMap<String, Localization> localizationHashMap) {
+        return new Gson().toJson(localizationHashMap);
     }
 }

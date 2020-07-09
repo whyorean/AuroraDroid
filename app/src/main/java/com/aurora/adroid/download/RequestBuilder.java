@@ -24,7 +24,7 @@ import android.content.Context;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
-import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.model.RepoRequest;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.PathUtil;
@@ -45,7 +45,7 @@ public class RequestBuilder {
 
     public static Request buildRequest(Context context, App app) {
         final Request request = new Request(DatabaseUtil.getDownloadURl(app),
-                PathUtil.getApkPath(context, app.getPackageName(), app.getAppPackage().getVersionCode()));
+                PathUtil.getApkPath(context, app.getPackageName(), app.getPkg().getVersionCode()));
         addAppExtras(request, app, null);
         request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
         request.setGroupId(app.getPackageName().hashCode());
@@ -53,8 +53,8 @@ public class RequestBuilder {
         return request;
     }
 
-    public static Request buildRequest(Context context, Package pkg, App app) {
-        final Request request = new Request(DatabaseUtil.getDownloadURl(pkg),
+    public static Request buildRequest(Context context, App app, Package pkg) {
+        final Request request = new Request(DatabaseUtil.getDownloadURl(app, pkg),
                 PathUtil.getApkPath(context, pkg.getPackageName(), pkg.getVersionCode()));
         addAppExtras(request, app, pkg);
         request.setEnqueueAction(EnqueueAction.REPLACE_EXISTING);
@@ -63,18 +63,18 @@ public class RequestBuilder {
         return request;
     }
 
-    public static List<Request> buildRequest(Context context, List<Repo> repoList) {
+    public static List<Request> buildRequest(Context context, List<StaticRepo> staticRepoList) {
         final List<Request> requestList = new ArrayList<>();
-        for (Repo repo : repoList) {
+        for (StaticRepo staticRepo : staticRepoList) {
 
-            String repoUrl = repo.getRepoUrl();
+            String repoUrl = staticRepo.getRepoUrl();
 
-            if (Util.isMirrorChecked(context, repo.getRepoId()) && repo.getRepoMirrors() != null)
-                repoUrl = repo.getRepoMirrors()[0];
+            if (Util.isMirrorChecked(context, staticRepo.getRepoId()) && staticRepo.getRepoMirrors() != null)
+                repoUrl = staticRepo.getRepoMirrors()[0];
 
             final RepoRequest request = new RepoRequest(repoUrl + "/" + SIGNED_FILE_NAME,
-                    PathUtil.getRepoDirectory(context) + repo.getRepoId() + "." + Constants.JAR);
-            addRepoExtras(request, repo);
+                    PathUtil.getRepoDirectory(context) + staticRepo.getRepoId() + "." + Constants.JAR);
+            addRepoExtras(request, staticRepo);
 
             if (Util.isDownloadWifiOnly(context))
                 request.setNetworkType(NetworkType.WIFI_ONLY);
@@ -90,29 +90,29 @@ public class RequestBuilder {
         final Map<String, String> stringMap = new HashMap<>();
         stringMap.put(Constants.DOWNLOAD_PACKAGE_NAME, app.getPackageName());
         stringMap.put(Constants.DOWNLOAD_DISPLAY_NAME, app.getName());
-        stringMap.put(Constants.DOWNLOAD_VERSION_NAME, app.getAppPackage().getVersionName());
+        stringMap.put(Constants.DOWNLOAD_VERSION_NAME, app.getPkg().getVersionName());
         stringMap.put(Constants.DOWNLOAD_VERSION_CODE, String.valueOf(pkg == null
-                ? app.getAppPackage().getVersionCode()
+                ? app.getPkg().getVersionCode()
                 : pkg.getVersionCode()));
         stringMap.put(Constants.DOWNLOAD_ICON_URL, DatabaseUtil.getImageUrl(app));
         stringMap.put(Constants.DOWNLOAD_APK_NAME, pkg == null
-                ? app.getAppPackage().getApkName()
+                ? app.getPkg().getApkName()
                 : pkg.getApkName());
 
         final Extras extras = new Extras(stringMap);
         request.setExtras(extras);
     }
 
-    private static void addRepoExtras(Request request, Repo repo) {
+    private static void addRepoExtras(Request request, StaticRepo staticRepo) {
         final Map<String, String> stringMap = new HashMap<>();
-        stringMap.put(Constants.DOWNLOAD_REPO_ID, repo.getRepoId());
-        stringMap.put(Constants.DOWNLOAD_REPO_NAME, repo.getRepoName());
-        stringMap.put(Constants.DOWNLOAD_REPO_FINGERPRINT, repo.getRepoFingerprint());
-        stringMap.put(Constants.DOWNLOAD_REPO_URL, repo.getRepoUrl());
+        stringMap.put(Constants.DOWNLOAD_REPO_ID, staticRepo.getRepoId());
+        stringMap.put(Constants.DOWNLOAD_REPO_NAME, staticRepo.getRepoName());
+        stringMap.put(Constants.DOWNLOAD_REPO_FINGERPRINT, staticRepo.getRepoFingerprint());
+        stringMap.put(Constants.DOWNLOAD_REPO_URL, staticRepo.getRepoUrl());
 
         final Extras extras = new Extras(stringMap);
         request.setExtras(extras);
-        request.setTag(repo.getRepoId());
+        request.setTag(staticRepo.getRepoId());
         request.setGroupId(1337);
     }
 }

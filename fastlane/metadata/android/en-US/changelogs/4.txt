@@ -1,4 +1,4 @@
 • Added new repositories Bitwarden, LibRetro
-• Improve repo sync.
+• Improve staticRepo sync.
 • Fixed download issue on Android 10
 • Bug fixes and improvements

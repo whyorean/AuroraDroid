@@ -74,7 +74,7 @@ public class InstalledAppsViewModel extends BaseViewModel implements SharedPrefe
                         .map(InstalledItem::new))
                 .toList()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(installedItems -> data.setValue(installedItems), throwable -> throwable.printStackTrace()));
+                .subscribe(installedItems -> data.setValue(installedItems), Throwable::printStackTrace));
     }
 
     private List<App> filterList(List<App> appList, boolean userOnly) {
@@ -84,12 +84,8 @@ public class InstalledAppsViewModel extends BaseViewModel implements SharedPrefe
             if (userOnly && app.isSystemApp()) //Filter system apps
                 continue;
 
-            final App repoApp = appRepository.getAppByPackageName(app.getPackageName());
-
-            if (repoApp == null) //Filter non-existing apps in current synced repos
-                continue;
-
-            filteredList.add(app);
+            if (appRepository.isAvailable(app.getPackageName()))
+                filteredList.add(app);
         }
         return filteredList;
     }

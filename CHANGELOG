@@ -7,7 +7,7 @@ Changelog : v1.0.5
 Changelog : v1.0.4
 
 * Added new repositories Bitwarden, LibRetro
-* Improved repo sync.
+* Improved staticRepo sync.
 * Fixed download issue on Android 10
 * Bug fixes and improvements
 

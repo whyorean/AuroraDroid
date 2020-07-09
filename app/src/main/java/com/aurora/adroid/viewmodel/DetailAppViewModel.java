@@ -25,15 +25,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.aurora.adroid.database.AppPackageRepository;
 import com.aurora.adroid.database.AppRepository;
-import com.aurora.adroid.database.PackageRepository;
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.model.Package;
-import com.aurora.adroid.util.CertUtil;
+import com.aurora.adroid.model.v2.AppPackage;
+import com.aurora.adroid.util.PackageUtil;
 
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -43,14 +41,14 @@ import io.reactivex.schedulers.Schedulers;
 public class DetailAppViewModel extends AndroidViewModel {
 
     private AppRepository appRepository;
-    private PackageRepository packageRepository;
+    private AppPackageRepository appPackageRepository;
     private MutableLiveData<App> liveApp = new MutableLiveData<>();
     private CompositeDisposable disposable = new CompositeDisposable();
 
     public DetailAppViewModel(@NonNull Application application) {
         super(application);
         appRepository = new AppRepository(application);
-        packageRepository = new PackageRepository(application);
+        appPackageRepository = new AppPackageRepository(application);
     }
 
     public MutableLiveData<App> getLiveApp() {
@@ -62,26 +60,14 @@ public class DetailAppViewModel extends AndroidViewModel {
                 ? appRepository.getAppByPackageName(packageName)
                 : appRepository.getAppByPackageNameAndRepo(packageName, repoName))
                 .map(app -> {
-
-                    final List<Package> pkgList = StringUtils.isEmpty(repoName)
-                            ? packageRepository.getAllPackages(packageName)
-                            : packageRepository.getAllPackages(packageName, repoName);
-
-                    if (!pkgList.isEmpty()) {
-                        final String RSA256 = CertUtil.getSHA256(getApplication(), app.getPackageName());
-                        app.setPackageList(pkgList, RSA256, true);
-                    }
-
-                    return app;
-                })
-                .map(app -> {
-                    final String screenshots = appRepository.getScreenShots(packageName);
-                    app.setScreenShots(screenshots);
+                    final AppPackage appPackage = appPackageRepository.getAppPackage(app.getPackageName(), app.getRepoId());
+                    app.setAppPackage(appPackage);
+                    app.setPkg(PackageUtil.getOptimumPackage(appPackage.getPackageList(),"",false));
                     return app;
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(app -> liveApp.setValue(app), throwable -> throwable.printStackTrace()));
+                .subscribe(app -> liveApp.setValue(app), Throwable::printStackTrace));
     }
 
     @Override

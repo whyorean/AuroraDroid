@@ -29,15 +29,16 @@
 
     <item
         android:id="@+id/action_share"
-        android:icon="@drawable/ic_share"
-        android:orderInCategory="0"
         android:title="@string/action_share"
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_blacklist"
+        android:title="@string/action_blacklist"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_downloads"
-        android:icon="@drawable/ic_download"
-        android:orderInCategory="1"
         android:title="@string/action_downloads"
         app:showAsAction="never" />
 </menu>

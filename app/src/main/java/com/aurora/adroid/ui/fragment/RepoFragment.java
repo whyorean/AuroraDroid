@@ -125,6 +125,7 @@ public class RepoFragment extends Fragment {
         final FragmentManager fragmentManager = getChildFragmentManager();
         if (fragmentManager.findFragmentByTag(RepoAddSheet.TAG) == null) {
             final RepoAddSheet sheet = new RepoAddSheet();
+            sheet.setCancelable(false);
             sheet.show(fragmentManager, RepoAddSheet.TAG);
         }
     }

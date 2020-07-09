@@ -23,36 +23,32 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.aurora.adroid.model.Package;
+import com.aurora.adroid.model.v2.AppPackage;
 
 import java.util.List;
 
-public class PackageRepository {
+public class AppPackageRepository {
 
-    private PackageDao packageDao;
+    private AppPackageDao appPackageDao;
 
-    public PackageRepository(Application application) {
+    public AppPackageRepository(Application application) {
         AppDatabase appDatabase = AppDatabase.getDatabase(application);
-        packageDao = appDatabase.packageDao();
+        appPackageDao = appDatabase.appPackageDao();
     }
 
-    public LiveData<List<Package>> getAllPackagesLive(String packageName) {
-        return packageDao.getLivePackageListByPackageName(packageName);
+    public LiveData<List<AppPackage>> getAllPackagesLive(String packageName) {
+        return appPackageDao.getLivePackageList(packageName);
     }
 
-    public List<Package> getAllPackages(String packageName) {
-        return packageDao.getPackageListByPackageName(packageName);
+    public List<AppPackage> getAllPackages(String packageName) {
+        return appPackageDao.getAppPackageList(packageName);
     }
 
-    public List<Package> getAllPackages(String packageName, String repoName) {
-        return packageDao.getPackageListByPackageNameAndRepo(packageName, repoName);
+    public LiveData<AppPackage> getLiveAppPackage(String packageName, String repoId) {
+        return appPackageDao.getLiveAppPackageList(packageName, repoId);
     }
 
-    public LiveData<Package> getLivePackage(String packageName) {
-        return packageDao.getLivePackageByPackageName(packageName);
-    }
-
-    public Package getAppPackage(String packageName) {
-        return packageDao.getPackageByPackageName(packageName);
+    public AppPackage getAppPackage(String packageName, String repoId) {
+        return appPackageDao.getAppPackageList(packageName, repoId);
     }
 }

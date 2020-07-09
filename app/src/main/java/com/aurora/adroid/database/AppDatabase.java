@@ -29,15 +29,15 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.aurora.adroid.model.App;
-import com.aurora.adroid.model.Index;
-import com.aurora.adroid.model.Package;
+import com.aurora.adroid.model.v2.AppPackage;
+import com.aurora.adroid.model.v2.Repo;
 import com.aurora.adroid.util.Log;
 
-@Database(entities = {App.class, Package.class, Index.class}, version = 5, exportSchema = false)
+@Database(entities = {App.class, AppPackage.class, Repo.class}, version = 3, exportSchema = false)
 @TypeConverters(DatabaseConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
-    private static final String DATABASE_NAME = "AuroraDroid_5";
+    private static final String DATABASE_NAME = "AuroraDroid_2";
     private static AppDatabase instance;
 
     public static synchronized AppDatabase getDatabase(Context context) {
@@ -80,7 +80,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract AppDao appDao();
 
-    public abstract PackageDao packageDao();
+    public abstract AppPackageDao appPackageDao();
 
-    public abstract IndexDao indexDao();
+    public abstract RepoDao repoDao();
 }

@@ -22,7 +22,7 @@ package com.aurora.adroid.manager;
 import android.content.Context;
 
 import com.aurora.adroid.Constants;
-import com.aurora.adroid.model.Repo;
+import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.model.RepoHeader;
 import com.aurora.adroid.task.DatabaseTask;
 import com.aurora.adroid.util.Log;
@@ -40,8 +40,8 @@ import java.util.List;
 
 public class RepoSyncManager {
 
-    private final HashMap<String, Repo> repoHashMap = new HashMap<>();
-    private final HashMap<String, Repo> syncHashMap = new HashMap<>();
+    private final HashMap<String, StaticRepo> repoHashMap = new HashMap<>();
+    private final HashMap<String, StaticRepo> syncHashMap = new HashMap<>();
     private final HashMap<String, RepoHeader> headerHashMap = new HashMap<>();
 
     private Context context;
@@ -55,28 +55,28 @@ public class RepoSyncManager {
         this.headerHashMap.putAll(getHeaderHashMap());
     }
 
-    public void addToRepoMap(Repo repo) {
+    public void addToRepoMap(StaticRepo staticRepo) {
         synchronized (repoHashMap) {
-            if (!repoHashMap.containsKey(repo.getRepoId())) {
-                repoHashMap.put(repo.getRepoId(), repo);
+            if (!repoHashMap.containsKey(staticRepo.getRepoId())) {
+                repoHashMap.put(staticRepo.getRepoId(), staticRepo);
             }
         }
     }
 
     public void addDefault() {
         synchronized (repoHashMap) {
-            final Repo repo = getDefaultFromAssets();
-            if (repo != null && !repoHashMap.containsKey(repo.getRepoId())) {
-                repoHashMap.put(repo.getRepoId(), repo);
+            final StaticRepo staticRepo = getDefaultFromAssets();
+            if (staticRepo != null && !repoHashMap.containsKey(staticRepo.getRepoId())) {
+                repoHashMap.put(staticRepo.getRepoId(), staticRepo);
                 saveRepoMap();
             }
         }
     }
 
-    public void addToSyncMap(Repo repo) {
+    public void addToSyncMap(StaticRepo staticRepo) {
         synchronized (syncHashMap) {
-            if (!syncHashMap.containsKey(repo.getRepoId())) {
-                syncHashMap.put(repo.getRepoId(), repo);
+            if (!syncHashMap.containsKey(staticRepo.getRepoId())) {
+                syncHashMap.put(staticRepo.getRepoId(), staticRepo);
             }
             saveSyncMap();
         }
@@ -91,22 +91,22 @@ public class RepoSyncManager {
         }
     }
 
-    public void addAllToRepoMap(List<Repo> repoList) {
+    public void addAllToRepoMap(List<StaticRepo> staticRepoList) {
         synchronized (repoHashMap) {
-            for (Repo repo : repoList) {
-                addToRepoMap(repo);
+            for (StaticRepo staticRepo : staticRepoList) {
+                addToRepoMap(staticRepo);
             }
             saveRepoMap();
         }
     }
 
-    public List<Repo> getRepoList() {
+    public List<StaticRepo> getRepoList() {
         synchronized (repoHashMap) {
             return new ArrayList<>(repoHashMap.values());
         }
     }
 
-    public List<Repo> getSyncList() {
+    public List<StaticRepo> getSyncList() {
         synchronized (syncHashMap) {
             return new ArrayList<>(syncHashMap.values());
         }
@@ -118,34 +118,34 @@ public class RepoSyncManager {
         }
     }
 
-    public void updateRepoMap(List<Repo> repoList) {
+    public void updateRepoMap(List<StaticRepo> staticRepoList) {
         synchronized (repoHashMap) {
             clear();
-            addAllToRepoMap(repoList);
+            addAllToRepoMap(staticRepoList);
         }
     }
 
-    public void updateSyncMap(List<Repo> repoList) {
+    public void updateSyncMap(List<StaticRepo> staticRepoList) {
         synchronized (syncHashMap) {
-            final List<Repo> syncedList = getSyncList();
+            final List<StaticRepo> syncedList = getSyncList();
             final DatabaseTask databaseTask = new DatabaseTask(context);
-            for (Repo repo : syncedList) {
-                if (!repoList.contains(repo)) {
-                    syncHashMap.remove(repo.getRepoId());
-                    databaseTask.clearRepo(repo);
+            for (StaticRepo staticRepo : syncedList) {
+                if (!staticRepoList.contains(staticRepo)) {
+                    syncHashMap.remove(staticRepo.getRepoId());
+                    databaseTask.clearRepo(staticRepo);
                 }
             }
             saveSyncMap();
         }
     }
 
-    public void updateHeaderMap(List<Repo> repoList) {
+    public void updateHeaderMap(List<StaticRepo> staticRepoList) {
         synchronized (headerHashMap) {
             final List<String> repoIdList = new ArrayList<>();
             final List<RepoHeader> syncedList = getHeaderList();
 
-            for (Repo repo : repoList)
-                repoIdList.add(repo.getRepoId());
+            for (StaticRepo staticRepo : staticRepoList)
+                repoIdList.add(staticRepo.getRepoId());
 
             for (RepoHeader repoHeader : syncedList) {
                 if (!repoIdList.contains(repoHeader.getRepoId())) {
@@ -156,21 +156,21 @@ public class RepoSyncManager {
         }
     }
 
-    public void removeFromRepoMap(Repo repo) {
+    public void removeFromRepoMap(StaticRepo staticRepo) {
         synchronized (repoHashMap) {
-            repoHashMap.remove(repo.getRepoId());
+            repoHashMap.remove(staticRepo.getRepoId());
         }
     }
 
-    public void removeFromSyncMap(Repo repo) {
+    public void removeFromSyncMap(StaticRepo staticRepo) {
         synchronized (syncHashMap) {
-            syncHashMap.remove(repo.getRepoId());
+            syncHashMap.remove(staticRepo.getRepoId());
         }
     }
 
-    public boolean isAdded(Repo repo) {
+    public boolean isAdded(StaticRepo staticRepo) {
         synchronized (repoHashMap) {
-            return repoHashMap.containsKey(repo.getRepoId());
+            return repoHashMap.containsKey(staticRepo.getRepoId());
         }
     }
 
@@ -205,11 +205,11 @@ public class RepoSyncManager {
         }
     }
 
-    private HashMap<String, Repo> getRepoHashMap() {
+    private HashMap<String, StaticRepo> getRepoHashMap() {
         final String rawList = PrefUtil.getString(context, Constants.PREFERENCE_REPO_MAP);
-        final Type type = new TypeToken<HashMap<String, Repo>>() {
+        final Type type = new TypeToken<HashMap<String, StaticRepo>>() {
         }.getType();
-        final HashMap<String, Repo> repoList = gson.fromJson(rawList, type);
+        final HashMap<String, StaticRepo> repoList = gson.fromJson(rawList, type);
 
         if (repoList == null)
             return new HashMap<>();
@@ -217,11 +217,11 @@ public class RepoSyncManager {
             return repoList;
     }
 
-    private HashMap<String, Repo> getSyncedHashMap() {
+    private HashMap<String, StaticRepo> getSyncedHashMap() {
         final String rawList = PrefUtil.getString(context, Constants.PREFERENCE_SYNC_MAP);
-        final Type type = new TypeToken<HashMap<String, Repo>>() {
+        final Type type = new TypeToken<HashMap<String, StaticRepo>>() {
         }.getType();
-        final HashMap<String, Repo> repoList = gson.fromJson(rawList, type);
+        final HashMap<String, StaticRepo> repoList = gson.fromJson(rawList, type);
 
         if (repoList == null)
             return new HashMap<>();
@@ -241,7 +241,7 @@ public class RepoSyncManager {
             return repoHeaderList;
     }
 
-    private Repo getDefaultFromAssets() {
+    private StaticRepo getDefaultFromAssets() {
         try {
             final InputStream inputStream = context.getAssets().open("default.json");
             final byte[] bytes = new byte[inputStream.available()];
@@ -250,7 +250,7 @@ public class RepoSyncManager {
             inputStream.close();
 
             final String rawJSON = new String(bytes, StandardCharsets.UTF_8);
-            return gson.fromJson(rawJSON, Repo.class);
+            return gson.fromJson(rawJSON, StaticRepo.class);
         } catch (IOException e) {
             Log.e(e.getMessage());
             return null;

@@ -221,7 +221,7 @@
     <string name="list_repo_available">"Tersedia"</string>
     <string name="list_repo_unavailable">"Tidak tersedia"</string>
     <string name="title_repo_add_desc">"Tambahkan repositori kostum untuk disinkronkan"</string>
-    <string name="toast_repo_sync_empty">"Pilih setidaknya satu repo untuk disinkronkan"</string>
+    <string name="toast_repo_sync_empty">"Pilih setidaknya satu staticRepo untuk disinkronkan"</string>
     <string name="toast_repo_sync_completed">"Semua repositori diperbarui"</string>
     <string name="toast_repo_sync_no_updates">"Tidak ada pembaruan yang tersedia"</string>
     <string name="about_libera">"Libera Pay"</string>

@@ -117,7 +117,7 @@ public class PackageItem extends AbstractItem<PackageItem.ViewHolder> {
 
             line1.setText(StringUtils.joinWith(".", pkg.getVersionName(), pkg.getVersionCode()));
             line2.setText(StringUtils.joinWith(" \u2022 ", isArchDependent ? pkg.getNativecode().get(0)
-                    : "Universal", pkg.getRepoName(), Util.humanReadableByteValue(pkg.getSize(), true)));
+                    : "Universal", app.getRepoName(), Util.humanReadableByteValue(pkg.getSize(), true)));
             line3.setText(Util.getDateFromMilli(pkg.getAdded()));
 
             if (isSuggested(pkg, app))
@@ -130,7 +130,7 @@ public class PackageItem extends AbstractItem<PackageItem.ViewHolder> {
         }
 
         private void initDownload(Package pkg, App app) {
-            final Request request = RequestBuilder.buildRequest(context, pkg, app);
+            final Request request = RequestBuilder.buildRequest(context, app, pkg);
             final List<Request> requestList = new ArrayList<>();
             requestList.add(request);
 

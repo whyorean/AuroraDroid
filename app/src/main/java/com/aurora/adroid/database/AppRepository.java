@@ -22,11 +22,11 @@ package com.aurora.adroid.database;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.aurora.adroid.model.App;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AppRepository {
 
@@ -41,12 +41,12 @@ public class AppRepository {
         return appDao.getAllApps();
     }
 
-    public LiveData<List<App>> getAllUpdatedApps(Long refTime, int weekCount) {
-        return appDao.getLatestUpdatedApps(refTime, weekCount);
+    public LiveData<List<App>> getAllUpdatedApps(Long refTime, int days) {
+        return appDao.getLatestUpdatedApps(refTime, TimeUnit.DAYS.toMillis(days), TimeUnit.DAYS.toMillis(7));
     }
 
-    public LiveData<List<App>> getAllNewApps(Long refTime, int weekCount) {
-        return appDao.getLatestAddedApps(refTime, weekCount);
+    public LiveData<List<App>> getAllNewApps(Long refTime, int days) {
+        return appDao.getLatestAddedApps(refTime, TimeUnit.DAYS.toMillis(days));
     }
 
     public LiveData<List<App>> getAllAppsByCategory(String category) {
@@ -70,10 +70,6 @@ public class AppRepository {
         return appDao.getAppByPackageNameAndRepo(packageName, repoName);
     }
 
-    public List<App> searchApps(SimpleSQLiteQuery sqLiteQuery) {
-        return appDao.searchApps(sqLiteQuery);
-    }
-
     public LiveData<List<App>> getAllAppsByRepositoryId(String repoId) {
         return appDao.searchAppsByRepository("%" + repoId + "%");
     }
@@ -82,7 +78,11 @@ public class AppRepository {
         return appDao.getAppsByAuthorName(authorName);
     }
 
-    public String getScreenShots(String packageName) {
-        return appDao.getPhoneScreenshots(packageName);
+    public List<String> getAllPackages() {
+        return appDao.getAllPackages();
+    }
+
+    public boolean isAvailable(String packageName) {
+        return appDao.isAvailable(packageName);
     }
 }
