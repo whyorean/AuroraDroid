@@ -25,6 +25,8 @@ import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.v2.Localization;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -106,24 +108,56 @@ public abstract class LocalizationUtil {
     }
 
     public static List<String> getScreenShots(App app) {
-        HashMap<String, Localization> localizationHashMap = app.getLocalizationMap();
-        List<String> screenshotUrls = new ArrayList<>();
+        final HashMap<String, Localization> localizationHashMap = app.getLocalizationMap();
+        final List<String> screenshotUrls = new ArrayList<>();
 
         if (localizationHashMap != null) {
             Localization enforcedLocalization = getEnforcedLocalization(localizationHashMap);
 
+            /*
+             * This hierarchy can further be improved
+             * TODO: Select Screenshots based on device type & size
+             */
+
             if (enforcedLocalization != null && enforcedLocalization.getPhoneScreenshots() != null) {
-                List<String> screenshotFiles = enforcedLocalization.getPhoneScreenshots();
+                final List<String> screenshotFiles = enforcedLocalization.getPhoneScreenshots();
                 if (screenshotFiles != null) {
-                    for (String fileName : screenshotFiles)
-                        screenshotUrls.add(app.getRepoUrl()
-                                + "/"
-                                + app.getPackageName()
-                                + "/en-US/phoneScreenshots/"
-                                + fileName);
+                    screenshotUrls.addAll(listToURLList(screenshotFiles, "phoneScreenshots", app));
+                }
+            }
+
+            if (enforcedLocalization != null && screenshotUrls.isEmpty() && enforcedLocalization.getSevenInchScreenshots() != null) {
+                final List<String> screenshotFiles = enforcedLocalization.getSevenInchScreenshots();
+                if (screenshotFiles != null) {
+                    screenshotUrls.addAll(listToURLList(screenshotFiles, "sevenInchScreenshots", app));
+                }
+            }
+
+            if (enforcedLocalization != null && screenshotUrls.isEmpty() && enforcedLocalization.getTenInchScreenshots() != null) {
+                final List<String> screenshotFiles = enforcedLocalization.getSevenInchScreenshots();
+                if (screenshotFiles != null) {
+                    screenshotUrls.addAll(listToURLList(screenshotFiles, "tenInchScreenshots", app));
+                }
+            }
+
+            if (enforcedLocalization != null && screenshotUrls.isEmpty() && enforcedLocalization.getWearScreenshots() != null) {
+                final List<String> screenshotFiles = enforcedLocalization.getSevenInchScreenshots();
+                if (screenshotFiles != null) {
+                    screenshotUrls.addAll(listToURLList(screenshotFiles, "wearScreenshots", app));
                 }
             }
         }
         return screenshotUrls;
+    }
+
+    private static List<String> listToURLList(List<String> stringList, String prefix, App app) {
+        final List<String> urlList = new ArrayList<>();
+        for (String fileName : stringList)
+            urlList.add(StringUtils.joinWith("/", app.getRepoUrl(),
+                    app.getPackageName(),
+                    "en-US",
+                    prefix,
+                    fileName));
+        return urlList;
     }
 }

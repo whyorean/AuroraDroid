@@ -24,6 +24,7 @@ import android.content.ContextWrapper;
 
 import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
+import com.aurora.adroid.R;
 import com.aurora.adroid.download.RequestBuilder;
 import com.aurora.adroid.event.LogEvent;
 import com.aurora.adroid.manager.RepoSyncManager;
@@ -39,6 +40,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import javax.net.ssl.SSLHandshakeException;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
@@ -107,9 +110,16 @@ public class CheckRepoUpdatesTask extends ContextWrapper {
                 }
                 repoSyncManager.addToHeaderMap(repoHeader);
             } catch (Exception e) {
-                AuroraApplication.rxNotify(new LogEvent("Unable to reach " + repoName));
-                e.printStackTrace();
-                Log.e("Unable to reach %s", request.getUrl());
+                if (e instanceof SSLHandshakeException)
+                    AuroraApplication.rxNotify(new LogEvent(StringUtils.joinWith(StringUtils.SPACE, e.getMessage(), "for", repoName)));
+                else
+                    AuroraApplication.rxNotify(new LogEvent(StringUtils.joinWith(StringUtils.SPACE,
+                            context.getString(R.string.repo_unable_to_reach),
+                            repoName)));
+
+                Log.e(StringUtils.joinWith(StringUtils.SPACE,
+                        context.getString(R.string.repo_unable_to_reach),
+                        request.getUrl()));
             }
         }
         return filteredList;

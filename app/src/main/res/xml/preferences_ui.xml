@@ -20,12 +20,12 @@
 <androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListPreference
-        app:defaultValue="light"
+        app:defaultValue="0"
         app:singleLineTitle="false"
         app:iconSpaceReserved="false"
         app:entries="@array/pref_themes"
         app:entryValues="@array/pref_themes_values"
-        app:key="PREFERENCE_UI_THEME"
+        app:key="PREFERENCE_UI_THEME_2"
         app:title="@string/pref_ui_theme_title"
         app:useSimpleSummaryProvider="true" />
 

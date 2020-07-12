@@ -30,7 +30,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.util.ThemeUtil;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -48,10 +47,7 @@ public class BaseBottomSheet extends BottomSheetDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(),
-                ThemeUtil.isLightTheme(requireContext())
-                        ? R.style.Aurora_BottomSheetDialog_Light
-                        : R.style.Aurora_BottomSheetDialog);
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.Aurora_BottomSheetDialog);
 
         View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.sheet_base, null);
         bottomSheetDialog.setContentView(dialogView);

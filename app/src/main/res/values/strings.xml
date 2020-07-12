@@ -54,6 +54,7 @@
     <string name="action_favourites">Favourite apps</string>
     <string name="action_favourite_add">Add to favourites</string>
     <string name="action_favourite_remove">Remove from favourites</string>
+    <string name="action_grant">Grant</string>
     <string name="action_get_local_apk">Get local APK</string>
     <string name="action_ignore">"Ignore this version"</string>
     <string name="action_home">Home</string>
@@ -71,7 +72,7 @@
     <string name="action_pause">Pause</string>
     <string name="action_recheck">Recheck</string>
     <string name="action_remove">Remove</string>
-    <string name="action_reset">Reset to default</string>
+    <string name="action_reset">Reset</string>
     <string name="action_restart">Restart</string>
     <string name="action_resume">Resume</string>
     <string name="action_retry">Retry</string>
@@ -270,6 +271,7 @@
     <string name="repo_name">Repository Name</string>
     <string name="repo_addr">Repository Address</string>
     <string name="repo_fingerprint">Repository Fingerprint</string>
+    <string name="repo_unable_to_reach">Unable to reach</string>
     <string name="sys_log">Sync Log</string>
 
     <string name="toast_no_repo_selected">No repository selected</string>

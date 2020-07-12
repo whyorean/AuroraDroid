@@ -24,44 +24,19 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/margin_large">
 
-    <RelativeLayout
-        android:id="@+id/layout_top"
+    <com.aurora.adroid.ui.view.HeaderLayout
+        android:id="@+id/header_updated_apps"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/margin_normal"
-            android:layout_toStartOf="@id/btn_more_updated"
-            android:drawableStart="@drawable/ic_update_filled"
-            android:drawablePadding="@dimen/margin_small"
-            android:text="@string/title_latest_updated"
-            android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
-            app:drawableTint="?colorAccent" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_more_updated"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="?selectableItemBackgroundBorderless"
-            android:maxLines="1"
-            android:padding="@dimen/margin_small"
-            android:src="@drawable/ic_arrow"
-            android:text="@string/action_more"
-            android:textAllCaps="false"
-            android:tint="?android:colorForeground" />
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        app:iconAction="@drawable/ic_arrow"
+        app:iconHeader="@drawable/ic_update_filled"
+        app:txtHeader="@string/title_latest_updated" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_latest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layout_top"
+        android:layout_below="@id/header_updated_apps"
         android:clipToPadding="false"
         android:orientation="horizontal"
         android:paddingStart="@dimen/margin_small"

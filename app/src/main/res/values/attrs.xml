@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Aurora Droid
   ~ Copyright (C) 2019-20, Rahul Kumar Patel <whyorean@gmail.com>
   ~
@@ -20,11 +19,25 @@
 
 <resources>
     <declare-styleable name="ProgressView">
-        <attr name="progressText" format="reference"/>
+        <attr name="progressText" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="EmptyView">
-        <attr name="emptyImage" format="reference"/>
-        <attr name="emptyText" format="reference"/>
+        <attr name="emptyImage" format="reference" />
+        <attr name="emptyText" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="MultiTextLayout">
+        <attr name="txtPrimary" format="string" />
+        <attr name="txtSecondary" format="string" />
+        <attr name="txtColorPrimary" format="color" />
+        <attr name="txtColorSecondary" format="color" />
+        <attr name="colorDivider" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="HeaderLayout">
+        <attr name="txtHeader" format="string" />
+        <attr name="iconHeader" format="reference" />
+        <attr name="iconAction" format="reference" />
     </declare-styleable>
 </resources>

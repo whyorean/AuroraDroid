@@ -129,6 +129,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_title"
-            android:textAppearance="@style/TextAppearance.Aurora.Body" />
+            android:textAppearance="@style/TextAppearance.Aurora.Line3" />
     </RelativeLayout>
 </LinearLayout>

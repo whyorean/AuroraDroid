@@ -42,7 +42,7 @@ import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.task.CheckRepoUpdatesTask;
 import com.aurora.adroid.task.ExtractRepoTask;
 import com.aurora.adroid.task.JsonParserTask;
-import com.aurora.adroid.ui.activity.AuroraActivity;
+import com.aurora.adroid.ui.main.AuroraActivity;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PathUtil;

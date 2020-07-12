@@ -32,6 +32,7 @@ import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.Util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -59,8 +60,6 @@ public class NewClusterItem extends BaseClusterItem {
         AppCompatTextView line1;
         @BindView(R.id.line2)
         AppCompatTextView line2;
-        @BindView(R.id.line3)
-        AppCompatTextView line3;
 
         public ViewHolder(@NonNull View view) {
             super(view);
@@ -73,8 +72,9 @@ public class NewClusterItem extends BaseClusterItem {
             final App app = item.getApp();
 
             line1.setText(app.getName());
-            line2.setText(app.getRepoName());
-            line3.setText(Util.getDateFromMilli(app.getAdded()));
+            line2.setText(StringUtils.joinWith(" \u2022 ",
+                    app.getRepoName(),
+                    Util.getDateFromMilli(app.getAdded())));
 
             if (app.getIcon() == null)
                 img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_placeholder));
@@ -91,7 +91,6 @@ public class NewClusterItem extends BaseClusterItem {
         public void unbindView(@NotNull BaseClusterItem item) {
             line1.setText(null);
             line2.setText(null);
-            line3.setText(null);
             img.setImageDrawable(null);
         }
     }

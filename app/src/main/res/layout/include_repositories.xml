@@ -24,24 +24,18 @@
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/margin_large">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/title"
+    <com.aurora.adroid.ui.view.HeaderLayout
+        android:id="@+id/header_repositories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_normal"
-        android:drawableStart="@drawable/ic_repo_filled"
-        android:drawablePadding="@dimen/margin_small"
-        android:paddingTop="@dimen/padding_xsmall"
-        android:paddingBottom="@dimen/padding_xsmall"
-        android:text="@string/title_repositories"
-        android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
-        app:drawableTint="?colorAccent" />
+        app:iconHeader="@drawable/ic_repo_filled"
+        app:txtHeader="@string/title_repositories" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_repo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
+        android:layout_below="@id/header_repositories"
         android:clipToPadding="false"
         android:orientation="horizontal"
         android:paddingStart="@dimen/margin_small"

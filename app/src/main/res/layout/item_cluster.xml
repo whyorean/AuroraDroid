@@ -41,12 +41,13 @@
         android:ellipsize="end"
         android:maxWidth="@dimen/icon_size_large"
         android:maxLines="1"
-        android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.Aurora.Line2"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.Aurora.Line1"
         tools:text="Aurora Store" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/line2"
+        style="@style/AuroraTextStyle.Line3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/line1"
@@ -55,21 +56,6 @@
         android:ellipsize="end"
         android:maxWidth="@dimen/icon_size_large"
         android:maxLines="1"
-        android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.Aurora.Line3"
-        tools:text="6 MB" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/line3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/line2"
-        android:layout_alignStart="@id/img"
-        android:layout_alignEnd="@id/img"
-        android:ellipsize="end"
-        android:maxWidth="@dimen/icon_size_large"
-        android:maxLines="1"
-        android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.Aurora.Line3"
+        android:textAlignment="center"
         tools:text="6 MB" />
 </RelativeLayout>

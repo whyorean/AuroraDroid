@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 
+import com.aurora.adroid.database.AppDatabase;
 import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.event.RxBus;
@@ -36,6 +37,7 @@ import com.aurora.adroid.installer.Uninstaller;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.Util;
+import com.aurora.adroid.util.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -111,6 +113,8 @@ public class AuroraApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        setupTheme();
+
         rxBus = new RxBus();
         installer = new Installer(this);
         uninstaller = new Uninstaller(this);
@@ -141,12 +145,17 @@ public class AuroraApplication extends Application {
         });
     }
 
+    private void setupTheme() {
+        ViewUtil.switchTheme(getApplicationContext());
+    }
+
     @Override
     public void onTerminate() {
         super.onTerminate();
         try {
             unregisterReceiver(packageUninstallReceiver);
             unregisterReceiver(installer.getPackageInstaller().getBroadcastReceiver());
+            AppDatabase.destroyInstance();
         } catch (Exception ignored) {
         }
     }

@@ -40,6 +40,7 @@ import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mikepenz.fastadapter.listeners.ClickEventHook;
 import com.mikepenz.fastadapter.select.SelectExtension;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -62,11 +63,10 @@ import static com.aurora.adroid.Constants.SIGNED_FILE_NAME;
 public class StaticRepoItem extends AbstractItem<StaticRepoItem.RepoItemHolder> {
 
     private StaticRepo staticRepo;
-    private boolean checked;
 
     public StaticRepoItem(StaticRepo staticRepo, boolean checked) {
         this.staticRepo = staticRepo;
-        this.checked = checked;
+        setSelected(checked);
     }
 
     @NotNull
@@ -86,8 +86,6 @@ public class StaticRepoItem extends AbstractItem<StaticRepoItem.RepoItemHolder> 
     }
 
     public static class RepoItemHolder extends FastAdapter.ViewHolder<StaticRepoItem> {
-        @BindView(R.id.img)
-        ImageView imgRepo;
         @BindView(R.id.line1)
         TextView line1;
         @BindView(R.id.line2)
@@ -124,11 +122,15 @@ public class StaticRepoItem extends AbstractItem<StaticRepoItem.RepoItemHolder> 
         public void bindView(@NotNull StaticRepoItem item, @NotNull List<?> list) {
             final StaticRepo staticRepo = item.getStaticRepo();
             line1.setText(staticRepo.getRepoName());
-            line2.setText(staticRepo.getRepoUrl());
 
-            checkBox.setChecked(item.checked);
+            if (StringUtils.isNotEmpty(staticRepo.getRepoDescription()))
+                line2.setText(staticRepo.getRepoDescription());
+            else
+                line2.setText(R.string.details_no_description);
 
-            if (checkBox.isChecked()) {
+            checkBox.setChecked(item.isSelected());
+
+            if (item.isSelected()) {
                 line3.setText(context.getString(R.string.list_repo_availability));
                 line3.setTextColor(ViewUtil.getStyledAttribute(context, android.R.attr.textColorSecondary));
                 disposable.add(Observable.fromCallable(() -> new NetworkTask(context)
@@ -145,6 +147,8 @@ public class StaticRepoItem extends AbstractItem<StaticRepoItem.RepoItemHolder> 
                                     : context.getResources().getColor(R.color.colorRed));
                             line3.setVisibility(View.VISIBLE);
                         }, throwable -> {
+                            line3.setText(throwable.getMessage());
+                            line3.setTextColor(context.getResources().getColor(R.color.colorRed));
                             Log.e(throwable.getMessage());
                         }));
             } else {
@@ -194,7 +198,6 @@ public class StaticRepoItem extends AbstractItem<StaticRepoItem.RepoItemHolder> 
         public void unbindView(@NotNull StaticRepoItem item) {
             line1.setText(null);
             line2.setText(null);
-            line3.setText(null);
             ViewUtil.collapse(layoutExtra);
         }
     }
@@ -212,7 +215,6 @@ public class StaticRepoItem extends AbstractItem<StaticRepoItem.RepoItemHolder> 
             SelectExtension<StaticRepoItem> selectExtension = fastAdapter.getExtension(SelectExtension.class);
             if (selectExtension != null) {
                 selectExtension.toggleSelection(position);
-                item.checked = !item.checked;
             }
         }
     }

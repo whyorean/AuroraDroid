@@ -53,7 +53,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AppMenuSheet extends BaseBottomSheet {
 
-    public static final String TAG = "APP_MENU_SHEET";
+    public static final String TAG = AppMenuSheet.class.getName();
 
     @BindView(R.id.navigation_view)
     NavigationView navigationView;

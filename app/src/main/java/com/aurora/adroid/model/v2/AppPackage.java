@@ -34,7 +34,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(tableName = "app_package", primaryKeys = {"repoId", "packageName"})

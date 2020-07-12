@@ -49,6 +49,6 @@
         android:layout_marginTop="@dimen/margin_xsmall"
         android:text="Permission"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.Aurora.Body"
+        android:textAppearance="@style/TextAppearance.Aurora.Line3"
         android:textStyle="bold" />
 </RelativeLayout>

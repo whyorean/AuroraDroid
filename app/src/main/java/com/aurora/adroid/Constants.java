@@ -33,6 +33,9 @@ public class Constants {
     public static final String JAR = "jar";
     public static final String JSON = ".json";
 
+    public static final String EXTRA_CIRCULAR_REVEAL_X = "EXTRA_CIRCULAR_REVEAL_X";
+    public static final String EXTRA_CIRCULAR_REVEAL_Y = "EXTRA_CIRCULAR_REVEAL_Y";
+
     public static final String NOTIFICATION_CHANNEL_ALERT = "NOTIFICATION_CHANNEL_ALERT";
     public static final String NOTIFICATION_CHANNEL_GENERAL = "NOTIFICATION_CHANNEL_GENERAL";
 
@@ -54,7 +57,7 @@ public class Constants {
     public static final String PREFERENCE_NOTIFICATION_TOGGLE = "PREFERENCE_NOTIFICATION_TOGGLE";
     public static final String PREFERENCE_UPDATES_INTERVAL = "PREFERENCE_UPDATES_INTERVAL";
     public static final String PREFERENCE_UPDATES_EXPERIMENTAL = "PREFERENCE_UPDATES_EXPERIMENTAL";
-    public static final String PREFERENCE_UI_THEME = "PREFERENCE_UI_THEME";
+    public static final String PREFERENCE_UI_THEME_2 = "PREFERENCE_UI_THEME_2";
     public static final String PREFERENCE_UI_TRANSPARENT = "PREFERENCE_UI_TRANSPARENT";
     public static final String PREFERENCE_DOWNLOAD_DIRECTORY = "PREFERENCE_DOWNLOAD_DIRECTORY";
     public static final String PREFERENCE_DOWNLOAD_INTERNAL = "PREFERENCE_DOWNLOAD_INTERNAL";

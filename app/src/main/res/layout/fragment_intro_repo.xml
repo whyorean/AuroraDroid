@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Aurora Droid
+  ~ Copyright (C) 2019-20, Rahul Kumar Patel <whyorean@gmail.com>
+  ~
+  ~ Aurora Droid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Aurora Droid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:paddingBottom="@dimen/margin_bottom">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img"
+                android:layout_width="@dimen/icon_size_action"
+                android:layout_height="@dimen/icon_size_action"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_xlarge"
+                app:srcCompat="@drawable/ic_undraw_synchronize" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/line1"
+                style="@style/AuroraTextStyle.Title.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_large"
+                android:paddingStart="@dimen/padding_normal"
+                android:paddingEnd="@dimen/padding_normal"
+                android:text="@string/title_repositories"
+                android:textAlignment="center"
+                android:textColor="?colorAccent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/line2"
+                style="@style/AuroraTextStyle.Subtitle.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/line1"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/margin_small"
+                android:maxLines="1"
+                android:paddingStart="@dimen/padding_normal"
+                android:paddingEnd="@dimen/padding_normal"
+                android:text="@string/repo_list_select"
+                android:textAlignment="center" />
+
+            <LinearLayout
+                android:id="@+id/layout_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/line2"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/layout_repo_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:background="@drawable/generic_padded_bg"
+                    android:minHeight="56dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/img_repo"
+                        android:layout_width="@dimen/icon_size_category"
+                        android:layout_height="@dimen/icon_size_category"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:src="@drawable/ic_repo"
+                        app:tint="?colorAccent" />
+
+                    <TextView
+                        android:id="@+id/txt_repo_list"
+                        style="@style/AuroraTextStyle.Subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_toEndOf="@id/img_repo"
+                        android:text="@string/repo_list" />
+
+                    <TextView
+                        android:id="@+id/txt_repo_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txt_repo_list"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_toEndOf="@id/img_repo"
+                        android:text="@string/repo_list_select"
+                        android:textAlignment="viewStart"
+                        android:textAppearance="@style/TextAppearance.Aurora.Line2" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_repo_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:background="@drawable/generic_padded_bg"
+                    android:minHeight="56dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/img_repo_add"
+                        android:layout_width="@dimen/icon_size_category"
+                        android:layout_height="@dimen/icon_size_category"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:src="@drawable/ic_add"
+                        app:tint="?colorAccent" />
+
+                    <TextView
+                        android:id="@+id/txt_repo_add"
+                        style="@style/AuroraTextStyle.Subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_toEndOf="@id/img_repo_add"
+                        android:text="@string/title_repo_add" />
+
+                    <TextView
+                        android:id="@+id/txt_repo_add_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txt_repo_add"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_toEndOf="@id/img_repo_add"
+                        android:text="@string/title_repo_add_desc"
+                        android:textAlignment="viewStart"
+                        android:textAppearance="@style/TextAppearance.Aurora.Line2" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtLog"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/layout_top"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:background="@drawable/generic_padded_bg"
+                android:gravity="bottom"
+                android:text="@string/sys_log"
+                android:textAppearance="@style/TextAppearance.Aurora.Line3" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_sync"
+        style="@style/Aurora.Button.Primary"
+        android:layout_width="@dimen/intro_btn_width"
+        android:layout_height="@dimen/intro_btn_height"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:text="@string/action_sync" />
+</RelativeLayout>

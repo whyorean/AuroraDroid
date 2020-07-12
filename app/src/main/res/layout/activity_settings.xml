@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Aurora Droid
   ~ Copyright (C) 2019-20, Rahul Kumar Patel <whyorean@gmail.com>
   ~
@@ -22,11 +22,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar_main" />
-
-    <FrameLayout
-        android:id="@+id/settings"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="match_parent">
+
+        <include layout="@layout/actionbar_main" />
+
+        <fragment
+            android:id="@+id/nav_host_preference"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/app_bar"
+            app:navGraph="@navigation/nav_graph_preference" />
+    </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

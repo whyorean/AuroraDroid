@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin_normal"
+        tools:ignore="HardcodedText">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img"
+            android:layout_width="@dimen/icon_size_action"
+            android:layout_height="@dimen/icon_size_action"
+            android:layout_above="@id/title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_xlarge"
+            app:srcCompat="@drawable/ic_undraw_unicorn" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title"
+            style="@style/AuroraTextStyle.Title.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="Aurora"
+            android:textAlignment="center"
+            android:textColor="?colorAccent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/subtitle"
+            style="@style/TextAppearance.Aurora.SubTitle.Alt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/title"
+            android:layout_alignEnd="@id/title"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:text="Open Source Software"
+            android:textAlignment="center" />
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

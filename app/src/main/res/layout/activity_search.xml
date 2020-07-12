@@ -21,9 +21,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:transitionName="transitionFloaty">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -38,14 +39,14 @@
             android:paddingEnd="@dimen/margin_xsmall"
             android:paddingBottom="@dimen/margin_small"
             android:text="@string/action_sortBy"
-            android:textAppearance="@style/TextAppearance.Aurora.SubTitle" />
-
-        <include layout="@layout/include_filters" />
+            android:textAppearance="@style/TextAppearance.Aurora.SubTitle"
+            android:visibility="gone" />
 
         <com.aurora.adroid.ui.view.ViewFlipper2
             android:id="@+id/viewFlipper"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/searchbar_layout">
 
             <com.aurora.adroid.ui.view.placeholder.ProgressView
                 android:layout_width="match_parent"
@@ -56,7 +57,9 @@
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical" />
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingBottom="@dimen/margin_bottom" />
 
             <com.aurora.adroid.ui.view.placeholder.EmptyView
                 android:layout_width="match_parent"
@@ -64,7 +67,21 @@
                 app:emptyImage="@drawable/ic_round_search"
                 app:emptyText="@string/error_search_not_found" />
         </com.aurora.adroid.ui.view.ViewFlipper2>
-    </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/sort_layout"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_alignParentBottom="true"
+            android:background="?android:colorBackground"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:translationZ="2dp">
+
+            <include layout="@layout/include_filters" />
+        </RelativeLayout>
+
+    </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_ime"
@@ -72,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/margin_normal"
-        android:layout_marginBottom="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_bottom"
         app:backgroundTint="@color/colorAccent"
         app:icon="@drawable/ic_keyboard"
         app:iconTint="@color/colorWhite" />

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Aurora Droid
+  ~ Copyright (C) 2019-20, Rahul Kumar Patel <whyorean@gmail.com>
+  ~
+  ~ Aurora Droid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Aurora Droid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/preferenceSetting">
+
+    <fragment
+        android:id="@+id/preferenceSetting"
+        android:name="com.aurora.adroid.ui.setting.SettingsFragment">
+
+        <action
+            android:id="@+id/action_preferenceSetting_to_preferenceDownload"
+            app:destination="@id/preferenceDownload" />
+        <action
+            android:id="@+id/action_preferenceSetting_to_preferenceInstallation"
+            app:destination="@id/preferenceInstallation" />
+        <action
+            android:id="@+id/action_preferenceSetting_to_preferenceLanguage"
+            app:destination="@id/preferenceLanguage" />
+        <action
+            android:id="@+id/action_preferenceSetting_to_preferenceNetworks"
+            app:destination="@id/preferenceNetworks" />
+        <action
+            android:id="@+id/action_preferenceSetting_to_preferenceUpdates"
+            app:destination="@id/preferenceUpdates" />
+        <action
+            android:id="@+id/action_preferenceSetting_to_preferenceUI"
+            app:destination="@id/preferenceUI" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/preferenceDownload"
+        android:name="com.aurora.adroid.ui.setting.DownloaderFragment" />
+
+    <fragment
+        android:id="@+id/preferenceInstallation"
+        android:name="com.aurora.adroid.ui.setting.InstallationFragment" />
+
+    <fragment
+        android:id="@+id/preferenceLanguage"
+        android:name="com.aurora.adroid.ui.setting.LanguageFragment" />
+
+    <fragment
+        android:id="@+id/preferenceNetworks"
+        android:name="com.aurora.adroid.ui.setting.NetworkFragment" />
+
+    <fragment
+        android:id="@+id/preferenceUI"
+        android:name="com.aurora.adroid.ui.setting.UIFragment" />
+
+    <fragment
+        android:id="@+id/preferenceUpdates"
+        android:name="com.aurora.adroid.ui.setting.UpdatesFragment" />
+</navigation>

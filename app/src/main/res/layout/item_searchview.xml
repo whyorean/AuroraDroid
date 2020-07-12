@@ -58,7 +58,7 @@
         android:hint="@string/title_search"
         android:singleLine="true"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.Aurora.SearchBar" />
+        android:textAppearance="@style/TextAppearance.Aurora.SubTitle.Alt" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/action2"

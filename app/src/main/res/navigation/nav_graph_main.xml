@@ -21,23 +21,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_main"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/welcomeFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.aurora.adroid.ui.fragment.HomeFragment"
+        android:id="@+id/welcomeFragment"
+        android:name="com.aurora.adroid.ui.main.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/updatesFragment"
-        android:name="com.aurora.adroid.ui.fragment.UpdatesFragment"
+        android:id="@+id/permissionFragment"
+        android:name="com.aurora.adroid.ui.main.UpdatesFragment"
         android:label="@string/action_updates"
         tools:layout="@layout/fragment_updates" />
 
     <fragment
-        android:id="@+id/categoryFragment"
-        android:name="com.aurora.adroid.ui.fragment.CategoriesFragment"
+        android:id="@+id/repoFragment"
+        android:name="com.aurora.adroid.ui.main.CategoriesFragment"
         android:label="@string/title_categories"
         tools:layout="@layout/fragment_categories" />
 </navigation>

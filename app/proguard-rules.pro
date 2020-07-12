@@ -54,7 +54,7 @@
 -keepclasseswithmembernames class * { @butterknife.* <methods>; }
 -keepclasseswithmembernames class * { @butterknife.* <fields>; }
 
--keep public class com.aurora.adroid.ui.fragment.preference.*
+-keep public class com.aurora.adroid.ui.generic.fragment.preference.*
 
 -keepclassmembers enum * { *; }
 -keepclassmembers class com.aurora.adroid.** {

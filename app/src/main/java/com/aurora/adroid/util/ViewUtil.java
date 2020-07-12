@@ -21,22 +21,34 @@ package com.aurora.adroid.util;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.view.animation.Transformation;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.graphics.ColorUtils;
 import androidx.core.view.ViewCompat;
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
+
+import com.aurora.adroid.Constants;
+import com.aurora.adroid.R;
 
 public class ViewUtil {
 
@@ -59,20 +71,36 @@ public class ViewUtil {
         return styledColor;
     }
 
-    public static void hideBottomNav(View view, boolean withAnimation) {
-        ViewCompat.animate(view)
-                .translationY(view.getHeight())
-                .setInterpolator(new LinearOutSlowInInterpolator())
-                .setDuration(withAnimation ? ANIMATION_DURATION_SHORT : 0)
-                .start();
+    public static void setLightStatusBar(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int flags = activity.getWindow().getDecorView().getSystemUiVisibility();
+            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            flags |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+            activity.getWindow().getDecorView().setSystemUiVisibility(flags);
+        } else {
+            activity.getWindow().setStatusBarColor(ColorUtils.setAlphaComponent(Color.BLACK, 120));
+        }
     }
 
-    public static void showBottomNav(View view, boolean withAnimation) {
-        ViewCompat.animate(view)
-                .translationY(0)
-                .setInterpolator(new LinearOutSlowInInterpolator())
-                .setDuration(withAnimation ? ANIMATION_DURATION_SHORT : 0)
-                .start();
+
+    public static void switchTheme(Context context) {
+        String theme = PrefUtil.getString(context, Constants.PREFERENCE_UI_THEME_2);
+        switch (theme) {
+            case "0":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            case "1":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case "2":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+            case "3":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+                break;
+            default:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_UNSPECIFIED);
+        }
     }
 
     public static void showWithAnimation(View view) {

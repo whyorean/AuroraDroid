@@ -27,14 +27,11 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_negative"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/Aurora.Button.Secondary"
         android:layout_width="0dp"
         android:layout_height="@dimen/height_button"
         android:layout_margin="@dimen/margin_small"
-        android:paddingStart="@dimen/margin_large"
-        android:paddingEnd="@dimen/margin_large"
         android:text="@string/action_uninstall"
-        android:textAppearance="@style/TextAppearance.Aurora.Button"
         android:textColor="@color/colorRed"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,14 +42,11 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_positive"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        style="@style/Aurora.Button.Primary"
         android:layout_width="0dp"
         android:layout_height="@dimen/height_button"
         android:layout_margin="@dimen/margin_small"
-        android:paddingStart="@dimen/margin_large"
-        android:paddingEnd="@dimen/margin_large"
         android:text="@string/action_download"
-        android:textAppearance="@style/TextAppearance.Aurora.Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btn_negative"

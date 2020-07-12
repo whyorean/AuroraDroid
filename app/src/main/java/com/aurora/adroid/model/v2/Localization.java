@@ -38,6 +38,18 @@ public class Localization {
     @SerializedName("phoneScreenshots")
     @Expose
     private List<String> phoneScreenshots;
+    @SerializedName("sevenInchScreenshots")
+    @Expose
+    private List<String> sevenInchScreenshots;
+    @SerializedName("tenInchScreenshots")
+    @Expose
+    private List<String> tenInchScreenshots;
+    @SerializedName("tvScreenshots")
+    @Expose
+    private List<String> tvScreenshots;
+    @SerializedName("wearScreenshots")
+    @Expose
+    private List<String> wearScreenshots;
     @SerializedName("summary")
     @Expose
     private String summary;

@@ -20,7 +20,17 @@
 <resources>
 
     <!--Button Style-->
+    <style name="Aurora.Button.Primary" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:textAppearance">@style/TextAppearance.Aurora.Button</item>
+        <item name="android:textAppearanceButton">@style/TextAppearance.Aurora.Button</item>
+        <item name="cornerRadius">@dimen/corner_radius</item>
+    </style>
 
+    <style name="Aurora.Button.Secondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textAppearance">@style/TextAppearance.Aurora.Button</item>
+        <item name="android:textAppearanceButton">@style/TextAppearance.Aurora.Button</item>
+        <item name="cornerRadius">@dimen/corner_radius</item>
+    </style>
 
     <!-- Toolbar & AppBar -->
     <style name="AppTheme.PopupTheme" parent="ThemeOverlay.MaterialComponents.Light" />
@@ -40,7 +50,7 @@
         <item name="chipEndPadding">@dimen/margin_xxsmall</item>
         <item name="chipStartPadding">@dimen/margin_xxsmall</item>
         <item name="chipStrokeWidth">1dp</item>
-        <item name="chipStrokeColor">?android:attr/strokeColor</item>
+        <item name="chipStrokeColor">?android:strokeColor</item>
         <item name="android:textAppearance">@style/TextAppearance.Aurora.Chip</item>
     </style>
 
@@ -57,8 +67,6 @@
         <item name="android:textAppearance">@style/TextAppearance.Aurora.Chip</item>
     </style>
 
-    <style name="Widget.Aurora.FilterChip" parent="Widget.Aurora.Chip.Review" />
-
     <style name="ViewStyle.Aurora.Chip" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipBackgroundColor">@android:color/transparent</item>
         <item name="chipStrokeColor">@color/chip_stroke_selector</item>
@@ -70,23 +78,12 @@
         <item name="android:textAppearance">@style/TextAppearance.Aurora.Chip</item>
     </style>
 
-    <!-- Bottom Navigation -->
-    <style name="Widget.Aurora.BottomNavigation" parent="@style/Widget.MaterialComponents.BottomNavigationView">
-        <item name="itemIconTint">@color/color_selector</item>
-        <item name="itemTextColor">@color/color_selector</item>
-        <item name="labelVisibilityMode">labeled</item>
-    </style>
-
     <style name="Aurora.BottomSheetDialogStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:padding">8dp</item>
     </style>
 
     <style name="Aurora.BottomSheetDialog" parent="Theme.Design.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/Aurora.BottomSheetDialogStyle</item>
-    </style>
-
-    <style name="Aurora.BottomSheetDialog.Light" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Aurora.BottomSheetDialogStyle</item>
     </style>
 </resources>

@@ -20,19 +20,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/homeFragment"
+        android:id="@+id/welcomeFragment"
         android:icon="@drawable/ic_home"
         android:orderInCategory="0"
         android:title="@string/action_home" />
 
     <item
-        android:id="@+id/updatesFragment"
+        android:id="@+id/permissionFragment"
         android:icon="@drawable/ic_updates"
         android:orderInCategory="1"
         android:title="@string/action_updates" />
 
     <item
-        android:id="@+id/categoryFragment"
+        android:id="@+id/repoFragment"
         android:icon="@drawable/ic_categories"
         android:orderInCategory="3"
         android:title="@string/title_categories" />

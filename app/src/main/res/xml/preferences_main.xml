@@ -20,38 +20,38 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
-        android:fragment="com.aurora.adroid.ui.fragment.preference.DownloaderFragment"
         app:icon="@drawable/ic_downloads"
+        android:key="PREFERENCE_DOWNLOAD_ENTRY"
         app:layout="@layout/item_preference"
         app:title="@string/pref_downloads" />
 
     <Preference
-        android:fragment="com.aurora.adroid.ui.fragment.preference.InstallationFragment"
         app:icon="@drawable/ic_installation"
+        android:key="PREFERENCE_INSTALLATION_ENTRY"
         app:layout="@layout/item_preference"
         app:title="@string/pref_installations" />
 
     <Preference
-        android:fragment="com.aurora.adroid.ui.fragment.preference.LanguageFragment"
         app:icon="@drawable/ic_language"
+        android:key="PREFERENCE_LANGUAGE_ENTRY"
         app:layout="@layout/item_preference"
         app:title="@string/pref_locale_title" />
 
     <Preference
-        android:fragment="com.aurora.adroid.ui.fragment.preference.NetworkFragment"
         app:icon="@drawable/ic_network"
+        android:key="PREFERENCE_NETWORK_ENTRY"
         app:layout="@layout/item_preference"
         app:title="@string/pref_network" />
 
     <Preference
-        android:fragment="com.aurora.adroid.ui.fragment.preference.UIFragment"
+        android:key="PREFERENCE_UI_ENTRY"
         app:icon="@drawable/ic_ui"
         app:layout="@layout/item_preference"
         app:title="@string/pref_ui" />
 
     <Preference
-        android:fragment="com.aurora.adroid.ui.fragment.preference.UpdatesFragment"
         app:icon="@drawable/ic_update"
+        android:key="PREFERENCE_UPDATE_ENTRY"
         app:layout="@layout/item_preference"
         app:title="@string/pref_updates_title" />
 </androidx.preference.PreferenceScreen>

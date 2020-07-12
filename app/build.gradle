@@ -18,6 +18,7 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion 29
@@ -105,7 +106,7 @@ dependencies {
 
     //AndroidX
     implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta7'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.preference:preference:1.1.1'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
@@ -119,6 +120,8 @@ dependencies {
     implementation "com.mikepenz:fastadapter-extensions-scroll:${versions.fastAdapter}"
     implementation "com.mikepenz:fastadapter-extensions-ui:${versions.fastAdapter}"
     implementation "com.mikepenz:fastadapter-extensions-utils:${versions.fastAdapter}"
+
+    implementation 'me.zhanghai.android.fastscroll:library:1.1.4'
 
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:3.1.0'
 

@@ -29,8 +29,8 @@
     <size
         android:width="32dp"
         android:height="32dp" />
-    <corners android:radius="5dp" />
+    <corners android:radius="8dp" />
     <stroke
         android:width="1dp"
-        android:color="?android:attr/strokeColor" />
+        android:color="@color/colorScrim" />
 </shape>

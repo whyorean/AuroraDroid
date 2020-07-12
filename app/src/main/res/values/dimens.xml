@@ -39,13 +39,17 @@
     <dimen name="icon_size_medium">56dp</dimen>
     <dimen name="icon_size">64dp</dimen>
     <dimen name="icon_size_large">96dp</dimen>
+    <dimen name="icon_size_action">164dp</dimen>
     <dimen name="icon_size_qr">172dp</dimen>
 
     <dimen name="card_width">132dp</dimen>
     <dimen name="min_height">56dp</dimen>
+    <dimen name="header_height">176dp</dimen>
 
     <dimen name="intro_btn_height">56dp</dimen>
+    <dimen name="intro_btn_width">240dp</dimen>
 
+    <dimen name="corner_radius">28dp</dimen>
     <dimen name="height_searchview">52dp</dimen>
     <dimen name="height_button">52dp</dimen>
 </resources>

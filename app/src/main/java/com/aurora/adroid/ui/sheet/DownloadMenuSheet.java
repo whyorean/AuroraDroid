@@ -40,7 +40,7 @@ import butterknife.ButterKnife;
 
 public class DownloadMenuSheet extends BaseBottomSheet {
 
-    public static final String TAG = "DOWNLOAD_MENU_SHEET";
+    public static final String TAG = DownloadMenuSheet.class.getName();
 
     public static final String DOWNLOAD_ID = "DOWNLOAD_ID";
     public static final String DOWNLOAD_STATUS = "DOWNLOAD_STATUS";

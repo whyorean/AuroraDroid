@@ -19,6 +19,7 @@
 
 package com.aurora.adroid.ui.sheet;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -31,9 +32,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.manager.RepoListManager;
-import com.aurora.adroid.model.Index;
 import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.util.Util;
 import com.google.zxing.BarcodeFormat;
@@ -47,10 +48,11 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class RepoDetailsSheet extends BaseBottomSheet {
 
-    public static Index index;
+    public static final String TAG = "REPO_DETAIL_SHEET";
 
     @BindView(R.id.img_qr)
     ImageView imgQR;
@@ -83,8 +85,23 @@ public class RepoDetailsSheet extends BaseBottomSheet {
     protected void onContentViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mirrorCheckedList = Util.getMirrorCheckedList(requireContext());
         repoListManager = new RepoListManager(requireContext());
-        staticRepo = repoListManager.getRepoById(index.getRepoId());
 
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            String repoId = bundle.getString(Constants.STRING_EXTRA, "1");
+            staticRepo = repoListManager.getRepoById(repoId);
+            populate(staticRepo);
+        } else {
+            dismissAllowingStateLoss();
+        }
+    }
+
+    @OnClick(R.id.btn_share)
+    public void shareIt() {
+        generateShareIntent();
+    }
+
+    private void populate(StaticRepo staticRepo) {
         boolean hasMirror = staticRepo.getRepoMirrors() != null && staticRepo.getRepoMirrors().length >= 1;
 
         txtName.setText(staticRepo.getRepoName());
@@ -96,11 +113,10 @@ public class RepoDetailsSheet extends BaseBottomSheet {
             mirrorSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (mirrorSwitch.isChecked()) {
                     mirrorCheckedList.add(staticRepo.getRepoId());
-                    Util.putMirrorCheckedList(requireContext(), mirrorCheckedList);
                 } else {
                     mirrorCheckedList.remove(staticRepo.getRepoId());
-                    Util.putMirrorCheckedList(requireContext(), mirrorCheckedList);
                 }
+                Util.putMirrorCheckedList(requireContext(), mirrorCheckedList);
             });
         } else
             mirrorSwitch.setVisibility(View.GONE);
@@ -128,5 +144,16 @@ public class RepoDetailsSheet extends BaseBottomSheet {
         } catch (WriterException e) {
             e.printStackTrace();
         }
+    }
+
+    private void generateShareIntent() {
+        String fingerprint = staticRepo.getRepoFingerprint();
+        fingerprint = StringUtils.deleteWhitespace(fingerprint);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, staticRepo.getRepoName());
+        intent.putExtra(Intent.EXTRA_TEXT, staticRepo.getRepoUrl()
+                + (StringUtils.isNotEmpty(fingerprint) ? "/?fingerprint=" + fingerprint : ""));
+        startActivity(Intent.createChooser(intent, getString(R.string.action_share)));
     }
 }

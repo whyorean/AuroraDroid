@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Aurora Droid
+  ~ Copyright (C) 2020, Rahul Kumar Patel <whyorean@gmail.com>
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/generic_padded_bg"
+    android:padding="@dimen/padding_normal">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/line1"
+        style="@style/AuroraTextStyle.Subtitle"
+        android:maxLines="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/btn_grant"
+        android:text="External Storage Access" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/line2"
+        style="@style/AuroraTextStyle.Subtitle.Secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line1"
+        android:layout_alignStart="@id/line1"
+        android:layout_alignEnd="@id/line1"
+        android:maxLines="1"
+        android:text="WRITE_EXTERNAL_STORAGE" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_grant"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:text="@string/action_grant" />
+</RelativeLayout>

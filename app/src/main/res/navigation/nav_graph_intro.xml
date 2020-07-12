@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Aurora Droid
+  ~ Copyright (C) 2019-20, Rahul Kumar Patel <whyorean@gmail.com>
+  ~
+  ~ Aurora Droid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Aurora Droid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_intro"
+    app:startDestination="@id/welcomeFragment">
+
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.aurora.adroid.ui.intro.WelcomeFragment"
+        tools:layout="@layout/fragment_intro_welcome">
+        <action
+            android:id="@+id/action_welcome_to_permission"
+            app:destination="@id/permissionFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/permissionFragment"
+        android:name="com.aurora.adroid.ui.intro.PermissionFragment"
+        tools:layout="@layout/fragment_intro_permission">
+        <action
+            android:id="@+id/action_permission_to_repo"
+            app:destination="@id/repoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/repoFragment"
+        android:name="com.aurora.adroid.ui.intro.RepoFragment"
+        tools:layout="@layout/fragment_intro_repo">
+        <action
+            android:id="@+id/action_repo_to_repoList"
+            app:destination="@id/repoListFragment" />
+        <action
+            android:id="@+id/action_repo_to_repoAdd"
+            app:destination="@id/repoAddFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/repoListFragment"
+        android:name="com.aurora.adroid.ui.intro.RepoListFragment"
+        tools:layout="@layout/fragment_repo_list" />
+
+    <fragment
+        android:id="@+id/repoAddFragment"
+        android:name="com.aurora.adroid.ui.intro.RepoAddFragment"
+        tools:layout="@layout/fragment_repo_add" />
+</navigation>

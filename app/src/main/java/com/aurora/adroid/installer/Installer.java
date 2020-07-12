@@ -38,7 +38,7 @@ import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.notification.QuickNotification;
-import com.aurora.adroid.ui.activity.DetailsActivity;
+import com.aurora.adroid.ui.details.DetailsActivity;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.PathUtil;
 import com.aurora.adroid.util.PrefUtil;

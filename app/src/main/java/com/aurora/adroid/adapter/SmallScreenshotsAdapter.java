@@ -33,7 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
-import com.aurora.adroid.ui.activity.FullscreenImageActivity;
+import com.aurora.adroid.ui.generic.activity.FullscreenImageActivity;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;

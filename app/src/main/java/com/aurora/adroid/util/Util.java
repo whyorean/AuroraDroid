@@ -41,7 +41,7 @@ import com.aurora.adroid.R;
 import com.aurora.adroid.service.BulkUpdateService;
 import com.aurora.adroid.service.NotificationService;
 import com.aurora.adroid.service.SyncService;
-import com.aurora.adroid.ui.activity.AuroraActivity;
+import com.aurora.adroid.ui.main.AuroraActivity;
 import com.tonyodev.fetch2.Status;
 import com.tonyodev.fetch2core.Downloader;
 
@@ -86,13 +86,15 @@ public class Util {
     }
 
     public static void restartApp(Context context) {
-        Intent mStartActivity = new Intent(context, AuroraActivity.class);
-        int mPendingIntentId = 1337;
-        PendingIntent mPendingIntent = PendingIntent.getActivity(context, mPendingIntentId, mStartActivity,
-                PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager mgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-        System.exit(0);
+        Intent intent = new Intent(context, AuroraActivity.class);
+        int intentId = 1337;
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, intentId, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager!=null) {
+            alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 100, pendingIntent);
+            System.exit(0);
+        }
     }
 
     public static int getColorAttribute(Context context, int styleID) {

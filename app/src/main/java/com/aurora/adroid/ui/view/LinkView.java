@@ -32,7 +32,6 @@ import androidx.annotation.ColorRes;
 import androidx.core.graphics.ColorUtils;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.util.ThemeUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -111,13 +110,11 @@ public class LinkView extends RelativeLayout {
     }
 
     public void build() {
-        boolean isTransparent = ThemeUtil.isTransparentStyle(getContext());
         int color = getColor();
         txtLinkTitle.setText(getLinkText());
         imgLink.setImageDrawable(getContext().getDrawable(getLinkImageId()));
         layoutLink.setOnClickListener(getOnClickListener());
-        imgLink.setColorFilter(isTransparent ? color : Color.WHITE);
-        layoutLink.setBackgroundTintList(ColorStateList.valueOf(
-                ColorUtils.setAlphaComponent(color, isTransparent ? 60 : 255)));
+        imgLink.setColorFilter(Color.WHITE);
+        layoutLink.setBackgroundTintList(ColorStateList.valueOf(ColorUtils.setAlphaComponent(color,  255)));
     }
 }
