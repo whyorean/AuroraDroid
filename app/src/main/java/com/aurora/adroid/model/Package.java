@@ -19,6 +19,7 @@
 
 package com.aurora.adroid.model;
 
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
@@ -53,4 +54,9 @@ public class Package {
     private Long versionCode;
     private String versionName;
     private List<String> antiFeatures;
+
+    @Ignore
+    private transient boolean isCompatible;
+    @Ignore
+    private transient List<String> incompatibleReasons;
 }

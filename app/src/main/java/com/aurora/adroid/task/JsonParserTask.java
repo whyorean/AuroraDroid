@@ -90,7 +90,6 @@ public class JsonParserTask extends ContextWrapper {
                 app.setRepoId(staticRepo.getRepoId());
                 app.setRepoName(staticRepo.getRepoName());
                 app.setRepoUrl(staticRepo.getRepoUrl());
-                app.setPackageList(packageHashMap.get(app.getPackageName()));
                 List<Package> packageList = packageHashMap.get(app.getPackageName());
 
                 //Create app package

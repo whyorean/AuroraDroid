@@ -20,28 +20,36 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
-        app:singleLineTitle="false"
+        android:title="@string/pref_updates_repo_title"
         app:iconSpaceReserved="false"
-        android:title="@string/pref_updates_repo_title" />
+        app:singleLineTitle="false" />
     <ListPreference
         android:defaultValue="0"
-        app:singleLineTitle="false"
-        app:iconSpaceReserved="false"
         android:entries="@array/pref_repo_updates_interval"
         android:entryValues="@array/pref_repo_updates_interval_values"
         android:key="PREFERENCE_UPDATES_INTERVAL"
         android:title="@string/pref_updates_repo_interval"
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="false"
         app:useSimpleSummaryProvider="true" />
     <PreferenceCategory
-        app:singleLineTitle="false"
+        android:title="@string/pref_updates_app_title"
         app:iconSpaceReserved="false"
-        android:title="@string/pref_updates_app_title" />
+        app:singleLineTitle="false" />
     <SwitchPreference
         android:defaultValue="false"
-        app:singleLineTitle="false"
+        android:key="PREFERENCE_UPDATES_SUGGESTED"
+        android:summary="@string/pref_updates_app_suggested_desc"
+        android:title="@string/pref_updates_app_suggested"
         app:iconSpaceReserved="false"
+        app:singleLineTitle="false"
+        app:useSimpleSummaryProvider="true" />
+    <SwitchPreference
+        android:defaultValue="false"
         android:key="PREFERENCE_UPDATES_EXPERIMENTAL"
         android:summary="@string/pref_updates_app_experimental_desc"
         android:title="@string/pref_updates_app_experimental"
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="false"
         app:useSimpleSummaryProvider="true" />
 </androidx.preference.PreferenceScreen>

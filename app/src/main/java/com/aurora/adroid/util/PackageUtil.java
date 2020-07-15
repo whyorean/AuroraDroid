@@ -27,7 +27,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import com.aurora.adroid.ArchType;
+import androidx.annotation.Nullable;
+
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
 
@@ -111,87 +112,27 @@ public class PackageUtil {
             return pkg.getNativecode().get(0);
     }
 
-    private static ArchType getArchFromNativeCode(String nativeCode) {
-        switch (nativeCode) {
-            case "arm64-v8a":
-            case "arm64":
-                return ArchType.ARM64;
-            case "armeabi-v7a":
-            case "armeabi":
-                return ArchType.ARM;
-            case "x86-64":
-                return ArchType.x86_64;
-            case "x86":
-                return ArchType.x86;
-            default:
-                return ArchType.UNIVERSAL;
-        }
-    }
+    public static boolean compatibleApi(@Nullable List<String> nativecode) {
+        final String[] supportedAbis = Build.SUPPORTED_ABIS;
 
-    private static ArchType getSystemArch() {
-        switch (Build.SUPPORTED_ABIS[0]) {
-            case "arm64-v8a":
-                return ArchType.ARM64;
-            case "armeabi-v7a":
-                return ArchType.ARM;
-            case "x86-64":
-                return ArchType.x86_64;
-            case "x86":
-                return ArchType.x86;
-            default:
-                return ArchType.ARM;
-        }
-    }
-
-    private static ArchType getAltSystemArch() {
-        switch (Build.SUPPORTED_ABIS[0]) {
-            case "arm64-v8a":
-            case "armeabi-v7a":
-                return ArchType.ARM;
-            case "x86-64":
-            case "x86":
-                return ArchType.x86;
-            default:
-                return ArchType.ARM;
-        }
-    }
-
-    private static boolean isSdkCompatible(Package pkg) {
-        return Build.VERSION.SDK_INT >= Util.parseInt(pkg.getMinSdkVersion(), 21);
-    }
-
-    public static boolean isBestFitSupportedPackage(Package pkg) {
-
-        if (!isSdkCompatible(pkg))
-            return false;
-
-        if (!isArchSpecificPackage(pkg))
+        if (nativecode == null) {
             return true;
+        }
 
-        final List<String> nativeCodeList = pkg.getNativecode();
-        final ArchType pkgArch = getArchFromNativeCode(nativeCodeList.get(0));
-        final ArchType systemArch = getSystemArch();
-        return pkgArch == systemArch;
+        for (final String cpuAbi : supportedAbis) {
+            for (String code : nativecode) {
+                if (code.equals(cpuAbi)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
-    public static boolean isSupportedPackage(Package pkg) {
-
-        if (!isSdkCompatible(pkg))
-            return false;
-
-        if (!isArchSpecificPackage(pkg))
-            return true;
-
-        final List<String> nativeCodeList = pkg.getNativecode();
-        final ArchType pkgArch = getArchFromNativeCode(nativeCodeList.get(0));
-        final ArchType systemArch = getSystemArch();
-        final ArchType systemArch2 = getAltSystemArch();
-        return pkgArch == systemArch || pkgArch == systemArch2;
-    }
-
-    public static Package getOptimumPackage(List<Package> packageList, String signer, boolean verifySigner) {
+    public static List<Package> markCompatiblePackages(List<Package> packageList, String signer, boolean verifySigner) {
 
         final List<Package> packages = new ArrayList<>();
+        final List<Package> compatiblePackages = new ArrayList<>();
 
         //Filter packages that do not match signer
         if (verifySigner) {
@@ -208,26 +149,11 @@ public class PackageUtil {
             return null;
 
         for (Package pkg : packages) {
-            if (isBestFitSupportedPackage(pkg))
-                return pkg;
+            pkg.setCompatible(compatibleApi(pkg.getNativecode()));
+            compatiblePackages.add(pkg);
         }
 
-        for (Package pkg : packages) {
-            if (isSupportedPackage(pkg))
-                return pkg;
-        }
-
-        for (Package pkg : packages) {
-            if (pkg.getNativecode() == null || pkg.getNativecode().isEmpty())
-                return pkg;
-
-            final ArchType pkgArch = getArchFromNativeCode(pkg.getNativecode().get(0));
-            final ArchType systemArch = getAltSystemArch();
-            if (pkgArch == systemArch)
-                return pkg;
-        }
-
-        return packages.get(0);
+        return compatiblePackages;
     }
 
     public static boolean isBeta(String versionName) {
@@ -242,7 +168,7 @@ public class PackageUtil {
         return !isBeta(versionName) && !isAlpha(versionName);
     }
 
-    public static boolean isCompatibleVersion(Context context, Package pkg, PackageInfo packageInfo) {
+    public static boolean isUpdatableVersion(Context context, Package pkg, PackageInfo packageInfo) {
         if (pkg.getVersionCode() > packageInfo.versionCode) {
             if (Util.isExperimentalUpdatesEnabled(context))
                 return true;
@@ -254,6 +180,11 @@ public class PackageUtil {
         }
         return false;
     }
+
+    public static boolean isSuggestedUpdatableVersion(PackageInfo packageInfo, App app, Package pkg) {
+        return  (pkg.isCompatible() && packageInfo.versionCode <= app.getSuggestedVersionCode() && app.getSuggestedVersionCode() == pkg.getVersionCode());
+    }
+
 
     public static IntentFilter getFilter() {
         IntentFilter filter = new IntentFilter();

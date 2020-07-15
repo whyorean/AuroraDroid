@@ -85,8 +85,6 @@ public class App {
     @Ignore
     private transient Drawable iconDrawable;
     @Ignore
-    private transient List<Package> packageList = new ArrayList<>();
-    @Ignore
     private transient PackageInfo packageInfo;
     @Ignore
     private transient AppPackage appPackage;

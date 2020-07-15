@@ -22,6 +22,7 @@ package com.aurora.adroid.ui.details;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -40,16 +41,21 @@ import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.manager.BlacklistManager;
 import com.aurora.adroid.manager.FavouritesManager;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.model.Package;
 import com.aurora.adroid.ui.generic.activity.BaseActivity;
 import com.aurora.adroid.ui.generic.activity.DownloadsActivity;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
+import com.aurora.adroid.util.PackageUtil;
+import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.viewmodel.DetailAppViewModel;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,7 +87,7 @@ public class DetailsActivity extends BaseActivity {
             if (intent.getData() == null || !TextUtils.equals(packageName, intent.getData().getSchemeSpecificPart())) {
                 return;
             }
-            ContextUtil.runOnUiThread(() -> drawButtons());
+            ContextUtil.runOnUiThread(() -> drawButtons(app));
         }
     };
 
@@ -110,7 +116,7 @@ public class DetailsActivity extends BaseActivity {
                         switch (eventType) {
                             case SUB_DOWNLOAD_INITIATED:
                                 if (event.getStringExtra().equals(app.getPackageName())) {
-                                    drawButtons();
+                                    drawButtons(app);
                                     ContextUtil.runOnUiThread(() -> notifyAction(getString(R.string.download_progress)));
                                 }
                                 break;
@@ -131,7 +137,7 @@ public class DetailsActivity extends BaseActivity {
                         switch (event.getType()) {
                             case INSTALLED:
                             case UNINSTALLED:
-                                drawButtons();
+                                drawButtons(app);
                                 break;
                         }
                     }
@@ -236,15 +242,37 @@ public class DetailsActivity extends BaseActivity {
     }
 
     private void draw(App app) {
+        if (app.isInstalled()) {
+            final List<Package> compatiblePackages = app.getAppPackage().getPackageList();
+            final boolean allowSuggestedOnly = Util.isSuggestedUpdatesEnabled(this);
+            try {
+                final PackageInfo packageInfo = getPackageManager().getPackageInfo(app.getPackageName(), 0);
+                for (Package pkg : compatiblePackages) {
+                    if (pkg.isCompatible()) {
+                        if (allowSuggestedOnly) {
+                            if (PackageUtil.isSuggestedUpdatableVersion(packageInfo, app, pkg)) {
+                                app.setPkg(pkg);
+                            }
+                        } else {
+                            app.setPkg(pkg);
+                            break;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                Log.e(e.getMessage());
+            }
+        }
+
         this.app = app;
-        drawButtons();
+        drawButtons(app);
         new AppInfoDetails(this, app).draw();
         new AppSubInfoDetails(this, app).draw();
         new AppLinkDetails(this, app).draw();
         new AppScreenshotsDetails(this, app).draw();
     }
 
-    public void drawButtons() {
+    public void drawButtons(App app) {
         appActionDetails = new AppActionDetails(this, app);
         appPackages = new AppPackages(this, app);
         appActionDetails.draw();

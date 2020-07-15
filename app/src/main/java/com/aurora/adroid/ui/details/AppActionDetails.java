@@ -40,6 +40,7 @@ import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.download.RequestBuilder;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
+import com.aurora.adroid.model.items.UpdatesItem;
 import com.aurora.adroid.util.CertUtil;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
@@ -128,7 +129,7 @@ public class AppActionDetails extends AbstractDetails {
             final Package pkg = app.getPkg();
             final String RSA256 = CertUtil.getSHA256(activity, app.getPackageName());
 
-            if (PackageUtil.isCompatibleVersion(context, pkg, packageInfo) && RSA256.equals(pkg.getSigner())) {
+            if (PackageUtil.isUpdatableVersion(context, pkg, packageInfo) && RSA256.equals(pkg.getSigner())) {
                 btnPositive.setText(R.string.action_update);
             } else {
                 btnPositive.setText(R.string.action_open);
@@ -182,8 +183,8 @@ public class AppActionDetails extends AbstractDetails {
     }
 
     private View.OnClickListener downloadAppListener() {
-        boolean supportedPackage = PackageUtil.isBestFitSupportedPackage(app.getPkg())
-                || PackageUtil.isSupportedPackage(app.getPkg());
+        boolean supportedPackage = PackageUtil.compatibleApi(app.getPkg().getNativecode());
+
         if (!supportedPackage) {
             btnPositive.setText(R.string.action_unsupported);
             btnPositive.setEnabled(false);

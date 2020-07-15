@@ -34,6 +34,7 @@ import com.aurora.adroid.model.items.UpdatesItem;
 import com.aurora.adroid.model.v2.AppPackage;
 import com.aurora.adroid.util.CertUtil;
 import com.aurora.adroid.util.PackageUtil;
+import com.aurora.adroid.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,31 +70,43 @@ public class UpdatesViewModel extends BaseViewModel {
                     for (String packageName : packageNames) {
                         //Process only those apps which are available.
                         if (appRepository.isAvailable(packageName)) {
-                            final List<App> appList = appRepository.getAppsByPackageName(packageName);
+                            List<App> appList = appRepository.getAppsByPackageName(packageName);
                             for (App app : appList) {
 
                                 //Get app-package associated with this app, in specific repo.
-                                final AppPackage appPackage = appPackageRepository.getAppPackage(packageName, app.getRepoId());
+                                AppPackage appPackage = appPackageRepository.getAppPackage(packageName, app.getRepoId());
 
                                 //Get all packages in the app-package
-                                final List<Package> packageList = appPackage.getPackageList();
+                                List<Package> packageList = appPackage.getPackageList();
 
                                 //Get installed app signer
-                                final String RSA256 = CertUtil.getSHA256(getApplication(), app.getPackageName());
+                                String RSA256 = CertUtil.getSHA256(getApplication(), app.getPackageName());
 
-                                Package pkg = null;
+                                List<Package> compatiblePackages = new ArrayList<>();
 
                                 if (packageList != null && !packageList.isEmpty()) {
                                     //Find best matching app package for the app
-                                    pkg = PackageUtil.getOptimumPackage(packageList, RSA256, true);
+                                    compatiblePackages = PackageUtil.markCompatiblePackages(packageList, RSA256, true);
                                 }
 
-                                if (pkg != null) {
+                                if (compatiblePackages != null) {
                                     final PackageInfo packageInfo = PackageUtil.getPackageInfo(packageManager, app.getPackageName());
-                                    if (packageInfo != null) {
-                                        if (PackageUtil.isCompatibleVersion(getApplication(), pkg, packageInfo)) {
-                                            app.setPkg(pkg);
-                                            updatesItemList.add(new UpdatesItem(app));
+                                    final boolean allowSuggestedOnly = Util.isSuggestedUpdatesEnabled(getApplication());
+
+                                    for (Package pkg : compatiblePackages) {
+                                        if (packageInfo != null) {
+                                            if (pkg.isCompatible() && PackageUtil.isUpdatableVersion(getApplication(), pkg, packageInfo)) {
+                                                if (allowSuggestedOnly) {
+                                                    if (PackageUtil.isSuggestedUpdatableVersion(packageInfo, app, pkg)) {
+                                                        app.setPkg(pkg);
+                                                        updatesItemList.add(new UpdatesItem(app));
+                                                    }
+                                                } else {
+                                                    app.setPkg(pkg);
+                                                    updatesItemList.add(new UpdatesItem(app));
+                                                    break;
+                                                }
+                                            }
                                         }
                                     }
                                 }

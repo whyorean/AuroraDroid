@@ -20,6 +20,7 @@
 package com.aurora.adroid.viewmodel;
 
 import android.app.Application;
+import android.content.pm.PackageInfo;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -28,10 +29,13 @@ import androidx.lifecycle.MutableLiveData;
 import com.aurora.adroid.database.AppPackageRepository;
 import com.aurora.adroid.database.AppRepository;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.model.Package;
 import com.aurora.adroid.model.v2.AppPackage;
 import com.aurora.adroid.util.PackageUtil;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -61,13 +65,34 @@ public class DetailAppViewModel extends AndroidViewModel {
                 : appRepository.getAppByPackageNameAndRepo(packageName, repoName))
                 .map(app -> {
                     final AppPackage appPackage = appPackageRepository.getAppPackage(app.getPackageName(), app.getRepoId());
+                    final List<Package> packageList = PackageUtil.markCompatiblePackages(appPackage.getPackageList(), "", false);
+
+                    appPackage.setPackageList(packageList);
+                    app.setInstalled(PackageUtil.isInstalled(getApplication(),app.getPackageName()));
                     app.setAppPackage(appPackage);
-                    app.setPkg(PackageUtil.getOptimumPackage(appPackage.getPackageList(),"",false));
+                    app.setPkg(appPackage.getPackageList().get(0)); /*Fallback Package*/
+
+                    if (PackageUtil.isInstalled(getApplication(), app.getPackageName())) {
+                        PackageInfo packageInfo = PackageUtil.getPackageInfo(getApplication().getPackageManager(), app.getPackageName());
+                        if (packageInfo != null) {
+                            app.setPkg(getUpdatablePackage(packageInfo, packageList));
+                        }
+                    }
+
                     return app;
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(app -> liveApp.setValue(app), Throwable::printStackTrace));
+    }
+
+    private Package getUpdatablePackage(PackageInfo packageInfo, List<Package> packageList) {
+        for (Package pkg : packageList) {
+            if (pkg.isCompatible() && PackageUtil.isUpdatableVersion(getApplication(), pkg, packageInfo)) {
+                return pkg;
+            }
+        }
+        return packageList.get(0);
     }
 
     @Override
