@@ -228,7 +228,7 @@ public class Util {
     }
 
     public static boolean isSuggestedUpdatesEnabled(Context context) {
-        return getPrefs(context).getBoolean(Constants.PREFERENCE_UPDATES_SUGGESTED, false);
+        return getPrefs(context).getBoolean(Constants.PREFERENCE_UPDATES_SUGGESTED, true);
     }
 
     public static boolean isRootInstallEnabled(Context context) {

@@ -37,7 +37,7 @@
         app:iconSpaceReserved="false"
         app:singleLineTitle="false" />
     <SwitchPreference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="PREFERENCE_UPDATES_SUGGESTED"
         android:summary="@string/pref_updates_app_suggested_desc"
         android:title="@string/pref_updates_app_suggested"
