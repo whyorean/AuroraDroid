@@ -34,6 +34,8 @@ import androidx.appcompat.widget.SwitchCompat;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
+import com.aurora.adroid.database.AppDatabase;
+import com.aurora.adroid.database.RepoDao;
 import com.aurora.adroid.manager.RepoListManager;
 import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.util.Util;
@@ -49,6 +51,10 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class RepoDetailsSheet extends BaseBottomSheet {
 
@@ -72,6 +78,8 @@ public class RepoDetailsSheet extends BaseBottomSheet {
     private ArrayList<String> mirrorCheckedList = new ArrayList<>();
     private RepoListManager repoListManager;
     private StaticRepo staticRepo;
+
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     @Nullable
     @Override
@@ -122,9 +130,26 @@ public class RepoDetailsSheet extends BaseBottomSheet {
             mirrorSwitch.setVisibility(View.GONE);
 
         txtFingerPrint.setText(staticRepo.getRepoFingerprint());
-        txtDescription.setText(staticRepo.getRepoDescription());
+
+        if (StringUtils.isNotEmpty(staticRepo.getRepoDescription()))
+            txtDescription.setText(staticRepo.getRepoDescription());
+        else
+            fetchRepoFromDatabase();
 
         generateQR();
+    }
+
+    private void fetchRepoFromDatabase() {
+        AppDatabase appDatabase = AppDatabase.getDatabase(requireContext());
+        RepoDao repoDao = appDatabase.repoDao();
+        disposable.add(Observable.fromCallable(() -> repoDao.getRepoByRepoId(staticRepo.getRepoId()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(repo -> {
+                    if (repo != null) {
+                        txtDescription.setText(repo.getDescription());
+                    }
+                }));
     }
 
     private void generateQR() {
