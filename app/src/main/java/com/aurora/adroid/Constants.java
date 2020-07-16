@@ -23,7 +23,7 @@ public class Constants {
     public static final String SHARED_PREFERENCES_KEY = "com.aurora.adroid";
     public static final String SERVICE_PACKAGE = "com.aurora.services";
     public static final String TAG = "A-Droid";
-    public static final String IMG_URL_PREFIX = "/icons-640/";
+    public static final String IMG_URL_PREFIX = "/icons-320/";
     public static final String SIGNED_FILE_NAME = "index-v1.jar";
     public static final String DATA_FILE_NAME = "index-v1.json";
     public static final String REPO_AVAILABLE = "REPO_AVAILABLE";
