@@ -40,7 +40,10 @@ public abstract class LocalizationUtil {
     }
 
     private static Localization getEnforcedLocalization(HashMap<String, Localization> localizationHashMap) {
-        return localizationHashMap.get("en-US");
+        Localization localization = localizationHashMap.get("en-US");
+        if (localization == null)
+            localization = localizationHashMap.get("en");
+        return localization;
     }
 
     public static String getLocalizedSummary(Context context, App app) {
@@ -108,11 +111,23 @@ public abstract class LocalizationUtil {
     }
 
     public static List<String> getScreenShots(App app) {
+        final Locale locale = Locale.getDefault();
         final HashMap<String, Localization> localizationHashMap = app.getLocalizationMap();
         final List<String> screenshotUrls = new ArrayList<>();
 
         if (localizationHashMap != null) {
-            Localization enforcedLocalization = getEnforcedLocalization(localizationHashMap);
+            String countryCode = locale.getLanguage();
+            Localization enforcedLocalization = localizationHashMap.get(countryCode);
+
+            if (enforcedLocalization == null || enforcedLocalization.getPhoneScreenshots() == null) {
+                countryCode = "en-US";
+                enforcedLocalization = localizationHashMap.get(countryCode);
+            }
+
+            if (enforcedLocalization == null || enforcedLocalization.getPhoneScreenshots() == null) {
+                countryCode = "en";
+                enforcedLocalization = localizationHashMap.get(countryCode);
+            }
 
             /*
              * This hierarchy can further be improved
@@ -122,40 +137,40 @@ public abstract class LocalizationUtil {
             if (enforcedLocalization != null && enforcedLocalization.getPhoneScreenshots() != null) {
                 final List<String> screenshotFiles = enforcedLocalization.getPhoneScreenshots();
                 if (screenshotFiles != null) {
-                    screenshotUrls.addAll(listToURLList(screenshotFiles, "phoneScreenshots", app));
+                    screenshotUrls.addAll(listToURLList(screenshotFiles, countryCode, "phoneScreenshots", app));
                 }
             }
 
             if (enforcedLocalization != null && screenshotUrls.isEmpty() && enforcedLocalization.getSevenInchScreenshots() != null) {
                 final List<String> screenshotFiles = enforcedLocalization.getSevenInchScreenshots();
                 if (screenshotFiles != null) {
-                    screenshotUrls.addAll(listToURLList(screenshotFiles, "sevenInchScreenshots", app));
+                    screenshotUrls.addAll(listToURLList(screenshotFiles, countryCode, "sevenInchScreenshots", app));
                 }
             }
 
             if (enforcedLocalization != null && screenshotUrls.isEmpty() && enforcedLocalization.getTenInchScreenshots() != null) {
                 final List<String> screenshotFiles = enforcedLocalization.getSevenInchScreenshots();
                 if (screenshotFiles != null) {
-                    screenshotUrls.addAll(listToURLList(screenshotFiles, "tenInchScreenshots", app));
+                    screenshotUrls.addAll(listToURLList(screenshotFiles, countryCode, "tenInchScreenshots", app));
                 }
             }
 
             if (enforcedLocalization != null && screenshotUrls.isEmpty() && enforcedLocalization.getWearScreenshots() != null) {
                 final List<String> screenshotFiles = enforcedLocalization.getSevenInchScreenshots();
                 if (screenshotFiles != null) {
-                    screenshotUrls.addAll(listToURLList(screenshotFiles, "wearScreenshots", app));
+                    screenshotUrls.addAll(listToURLList(screenshotFiles, countryCode, "wearScreenshots", app));
                 }
             }
         }
         return screenshotUrls;
     }
 
-    private static List<String> listToURLList(List<String> stringList, String prefix, App app) {
+    private static List<String> listToURLList(List<String> stringList, String locale, String prefix, App app) {
         final List<String> urlList = new ArrayList<>();
         for (String fileName : stringList)
             urlList.add(StringUtils.joinWith("/", app.getRepoUrl(),
                     app.getPackageName(),
-                    "en-US",
+                    locale,
                     prefix,
                     fileName));
         return urlList;
