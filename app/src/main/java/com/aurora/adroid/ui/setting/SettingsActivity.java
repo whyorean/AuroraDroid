@@ -26,10 +26,12 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.ui.generic.activity.BaseActivity;
 import com.aurora.adroid.ui.view.MultiTextLayout;
 import com.aurora.adroid.util.Util;
+import com.aurora.adroid.util.ViewUtil;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import butterknife.BindView;
@@ -89,7 +91,11 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
+        switch (key) {
+            case Constants.PREFERENCE_UI_THEME_2:
+                ViewUtil.switchTheme(this);
+                break;
+        }
     }
 
     private void askRestart() {

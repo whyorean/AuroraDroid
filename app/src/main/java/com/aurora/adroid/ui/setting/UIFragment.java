@@ -50,9 +50,6 @@ public class UIFragment extends PreferenceFragmentCompat implements SharedPrefer
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         switch (key) {
-            case Constants.PREFERENCE_UI_THEME_2:
-                ViewUtil.switchTheme(requireActivity());
-                break;
             case Constants.PREFERENCE_UI_TRANSPARENT:
                 SettingsActivity.shouldRestart = true;
                 break;

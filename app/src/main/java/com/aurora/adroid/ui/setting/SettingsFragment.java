@@ -21,6 +21,8 @@ package com.aurora.adroid.ui.setting;
 
 import android.os.Bundle;
 
+import androidx.annotation.IdRes;
+import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.Preference;
@@ -30,53 +32,64 @@ import com.aurora.adroid.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
+    private NavController navController;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        navController = NavHostFragment.findNavController(this);
+    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences_main, rootKey);
 
-        NavController navController = NavHostFragment.findNavController(this);
-
         Preference preferenceDownload = getPreferenceScreen().findPreference("PREFERENCE_DOWNLOAD_ENTRY");
         if (preferenceDownload != null)
             preferenceDownload.setOnPreferenceClickListener(p -> {
-                navController.navigate(R.id.action_preferenceSetting_to_preferenceDownload);
+                navigate(R.id.action_preferenceSetting_to_preferenceDownload);
                 return false;
             });
 
         Preference preferenceInstallation = getPreferenceScreen().findPreference("PREFERENCE_INSTALLATION_ENTRY");
         if (preferenceInstallation != null)
             preferenceInstallation.setOnPreferenceClickListener(p -> {
-                navController.navigate(R.id.action_preferenceSetting_to_preferenceInstallation);
+                navigate(R.id.action_preferenceSetting_to_preferenceInstallation);
                 return false;
             });
 
         Preference preferenceLanguage = getPreferenceScreen().findPreference("PREFERENCE_LANGUAGE_ENTRY");
         if (preferenceLanguage != null)
             preferenceLanguage.setOnPreferenceClickListener(p -> {
-                navController.navigate(R.id.action_preferenceSetting_to_preferenceLanguage);
+                navigate(R.id.action_preferenceSetting_to_preferenceLanguage);
                 return false;
             });
 
         Preference preferenceNetwork = getPreferenceScreen().findPreference("PREFERENCE_NETWORK_ENTRY");
         if (preferenceNetwork != null)
             preferenceNetwork.setOnPreferenceClickListener(p -> {
-                navController.navigate(R.id.action_preferenceSetting_to_preferenceNetworks);
+                navigate(R.id.action_preferenceSetting_to_preferenceNetworks);
                 return false;
             });
 
         Preference preferenceUI = getPreferenceScreen().findPreference("PREFERENCE_UI_ENTRY");
         if (preferenceUI != null)
             preferenceUI.setOnPreferenceClickListener(p -> {
-                navController.navigate(R.id.action_preferenceSetting_to_preferenceUI);
+                navigate(R.id.action_preferenceSetting_to_preferenceUI);
                 return false;
             });
 
         Preference preferenceUpdate = getPreferenceScreen().findPreference("PREFERENCE_UPDATE_ENTRY");
         if (preferenceUpdate != null)
             preferenceUpdate.setOnPreferenceClickListener(p -> {
-                navController.navigate(R.id.action_preferenceSetting_to_preferenceUpdates);
+                navigate(R.id.action_preferenceSetting_to_preferenceUpdates);
                 return false;
             });
+    }
+
+    private void navigate(@IdRes int actionId) {
+        if (navController != null) {
+            navController.navigate(actionId);
+        }
     }
 }
