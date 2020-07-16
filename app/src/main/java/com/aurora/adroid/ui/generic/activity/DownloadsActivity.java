@@ -26,7 +26,6 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,10 +41,8 @@ import com.aurora.adroid.ui.view.ViewFlipper2;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
-import com.aurora.adroid.util.diff.DownloadDiffCallback;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
-import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil;
 import com.tonyodev.fetch2.AbstractFetchListener;
 import com.tonyodev.fetch2.Download;
 import com.tonyodev.fetch2.Error;
@@ -230,12 +227,8 @@ public class DownloadsActivity extends BaseActivity {
     }
 
     private void dispatchAppsToAdapter(List<DownloadItem> downloadItems) {
-        final FastAdapterDiffUtil fastAdapterDiffUtil = FastAdapterDiffUtil.INSTANCE;
-        final DownloadDiffCallback diffCallback = new DownloadDiffCallback();
-        final DiffUtil.DiffResult diffResult = fastAdapterDiffUtil.calculateDiff(itemAdapter, downloadItems, diffCallback);
-        fastAdapterDiffUtil.set(itemAdapter, diffResult);
-
-        if (itemAdapter != null && itemAdapter.getAdapterItems().size() > 0) {
+        itemAdapter.set(downloadItems);
+        if (itemAdapter.getAdapterItems().size() > 0) {
             viewFlipper.switchState(ViewFlipper2.DATA);
         } else {
             viewFlipper.switchState(ViewFlipper2.EMPTY);

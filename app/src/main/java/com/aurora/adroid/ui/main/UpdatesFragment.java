@@ -31,7 +31,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -48,12 +47,10 @@ import com.aurora.adroid.ui.sheet.AppMenuSheet;
 import com.aurora.adroid.ui.view.ViewFlipper2;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
-import com.aurora.adroid.util.diff.UpdatesDiffCallback;
 import com.aurora.adroid.viewmodel.UpdatesViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
-import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil;
 import com.mikepenz.fastadapter.select.SelectExtension;
 import com.tonyodev.fetch2.AbstractFetchGroupListener;
 import com.tonyodev.fetch2.Download;
@@ -194,10 +191,7 @@ public class UpdatesFragment extends BaseFragment {
     }
 
     private void dispatchAppsToAdapter(List<UpdatesItem> updatesItems) {
-        final FastAdapterDiffUtil fastAdapterDiffUtil = FastAdapterDiffUtil.INSTANCE;
-        final UpdatesDiffCallback diffCallback = new UpdatesDiffCallback();
-        final DiffUtil.DiffResult diffResult = fastAdapterDiffUtil.calculateDiff(itemAdapter, updatesItems, diffCallback);
-        fastAdapterDiffUtil.set(itemAdapter, diffResult);
+        itemAdapter.set(updatesItems);
         updatePageData();
     }
 

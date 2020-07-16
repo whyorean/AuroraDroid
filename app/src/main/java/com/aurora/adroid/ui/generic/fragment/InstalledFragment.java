@@ -29,7 +29,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -44,12 +43,10 @@ import com.aurora.adroid.ui.sheet.AppMenuSheet;
 import com.aurora.adroid.ui.view.ViewFlipper2;
 import com.aurora.adroid.util.PrefUtil;
 import com.aurora.adroid.util.ViewUtil;
-import com.aurora.adroid.util.diff.InstalledDiffCallback;
 import com.aurora.adroid.viewmodel.InstalledAppsViewModel;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
-import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil;
 
 import java.util.List;
 
@@ -150,10 +147,7 @@ public class InstalledFragment extends BaseFragment {
     }
 
     private void dispatchAppsToAdapter(List<InstalledItem> installedItems) {
-        final FastAdapterDiffUtil fastAdapterDiffUtil = FastAdapterDiffUtil.INSTANCE;
-        final InstalledDiffCallback diffCallback = new InstalledDiffCallback();
-        final DiffUtil.DiffResult diffResult = fastAdapterDiffUtil.calculateDiff(itemAdapter, installedItems, diffCallback);
-        fastAdapterDiffUtil.set(itemAdapter, diffResult);
+        itemAdapter.set(installedItems);
         updatePageData();
     }
 
