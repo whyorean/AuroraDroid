@@ -32,6 +32,8 @@
     <string name="string_aurora_droid" translatable="false">Aurora Droid</string>
     <string name="string_aurora_desc" translatable="false">F-Droid client by Aurora OSS</string>
 
+    <string name="default_dir" translatable="false">/sdcard</string>
+
     <string name="app_changelog" translatable="false">
         \n Changelog : v1.0.5
         \n • UI Overhaul

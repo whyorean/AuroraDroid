@@ -29,12 +29,11 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/circle_bg">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:contentDescription="@string/contentDescription"
             android:scaleX="1.2"
             android:scaleY="1.2"
             android:src="@drawable/ic_permission_link" />

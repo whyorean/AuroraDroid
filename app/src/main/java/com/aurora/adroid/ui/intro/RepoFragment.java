@@ -139,7 +139,7 @@ public class RepoFragment extends Fragment {
 
     private void blockSync() {
         btnSync.setEnabled(false);
-        btnSync.setText(getString(R.string.sync_progress));
+        btnSync.setText(getString(R.string.action_syncing));
     }
 
     private void syncCompleted() {
