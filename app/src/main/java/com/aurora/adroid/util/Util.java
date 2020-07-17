@@ -35,6 +35,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
@@ -65,8 +66,7 @@ import java.util.Locale;
 public class Util {
 
     public static SharedPreferences getPrefs(Context context) {
-        return context.getSharedPreferences(
-                Constants.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public static long parseLong(String intAsString, long defaultValue) {
@@ -91,7 +91,7 @@ public class Util {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, intentId, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager!=null) {
+        if (alarmManager != null) {
             alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 100, pendingIntent);
             System.exit(0);
         }
@@ -296,6 +296,13 @@ public class Util {
 
     public static int getActiveDownloadCount(Context context) {
         return getPrefs(context).getInt(Constants.PREFERENCE_DOWNLOAD_ACTIVE, 3);
+    }
+
+    public static String getInstallationProfile(Context context) {
+        if (!Util.isRootInstallEnabled(context))
+            return "0";
+        else
+            return getPrefs(context).getString(Constants.PREFERENCE_INSTALLATION_PROFILE, "0");
     }
 
     public static boolean isFetchDebugEnabled(Context context) {

@@ -20,22 +20,26 @@
 package com.aurora.adroid.event;
 
 public enum EventType {
+    /*Sync Events*/
     SYNC_EMPTY,
     SYNC_COMPLETED,
     SYNC_NO_UPDATES,
     SYNC_FAILED,
     SYNC_PROGRESS,
-    LOG,
+    /*Download Events*/
     DOWNLOAD_INITIATED,
     SUB_DOWNLOAD_INITIATED,
     DOWNLOAD_COMPLETED,
     DOWNLOAD_CANCELLED,
     DOWNLOAD_FAILED,
-    NET_CONNECTED,
-    NET_DISCONNECTED,
+    /*List Events*/
     BLACKLIST,
     WHITELIST,
+    /*Package Manger Events*/
     INSTALLED,
     UNINSTALLED,
-    BULK_UPDATE_NOTIFY
+    /*Misc*/
+    LOG,
+    BULK_UPDATE_NOTIFY,
+    NO_ROOT
 }

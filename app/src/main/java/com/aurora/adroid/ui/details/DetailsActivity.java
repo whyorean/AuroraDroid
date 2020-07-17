@@ -19,8 +19,6 @@
 
 package com.aurora.adroid.ui.details;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.net.Uri;
@@ -81,16 +79,6 @@ public class DetailsActivity extends BaseActivity {
     private FavouritesManager favouritesManager;
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    private BroadcastReceiver globalInstallReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getData() == null || !TextUtils.equals(packageName, intent.getData().getSchemeSpecificPart())) {
-                return;
-            }
-            ContextUtil.runOnUiThread(() -> drawButtons(app));
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +101,7 @@ public class DetailsActivity extends BaseActivity {
                 .subscribe(event -> {
                     if (event != null) {
                         final EventType eventType = event.getType();
+
                         switch (eventType) {
                             case SUB_DOWNLOAD_INITIATED:
                                 if (event.getStringExtra().equals(app.getPackageName())) {
@@ -137,7 +126,9 @@ public class DetailsActivity extends BaseActivity {
                         switch (event.getType()) {
                             case INSTALLED:
                             case UNINSTALLED:
-                                drawButtons(app);
+                            case NO_ROOT:
+                                if (event.getStringExtra().equals(app.getPackageName()))
+                                    drawButtons(app);
                                 break;
                         }
                     }
@@ -171,7 +162,6 @@ public class DetailsActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         try {
-            unregisterReceiver(globalInstallReceiver);
             appActionDetails = null;
             appPackages = null;
             disposable.clear();
@@ -304,7 +294,9 @@ public class DetailsActivity extends BaseActivity {
         final Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT, app.getName());
-        intent.putExtra(Intent.EXTRA_TEXT, Constants.APP_SHARE_URL + app.getPackageName());
+        intent.putExtra(Intent.EXTRA_TEXT, StringUtils.joinWith("/",
+                app.getRepoUrl(),
+                app.getPackageName()));
         startActivity(Intent.createChooser(intent, getString(R.string.action_share)));
     }
 }

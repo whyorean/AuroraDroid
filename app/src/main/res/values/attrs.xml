@@ -40,4 +40,21 @@
         <attr name="iconHeader" format="reference" />
         <attr name="iconAction" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="FilePickerPreference">
+        <attr name="selectionMode" format="enum">
+            <enum name="single" value="0" />
+            <enum name="multi" value="1" />
+        </attr>
+        <attr name="selectionType" format="enum">
+            <enum name="file" value="0" />
+            <enum name="directory" value="1" />
+            <enum name="both" value="2" />
+        </attr>
+        <attr name="rootDir" format="string" />
+        <attr name="fallbackDir" format="string" />
+        <attr name="offsetDir" format="string" />
+        <attr name="extensions" format="string" />
+        <attr name="txtTitle" format="string" />
+    </declare-styleable>
 </resources>

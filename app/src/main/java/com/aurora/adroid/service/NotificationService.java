@@ -269,7 +269,7 @@ public class NotificationService extends Service {
                             progressBigText.bigText(getString(R.string.notification_installation_auto));
                             builder.addAction(R.drawable.ic_installation,
                                     getString(R.string.action_install),
-                                    getInstallIntent(downloadBundle.getPackageName(), downloadBundle.getVersionCode()));
+                                    getInstallIntent(downloadBundle.getPackageName(), download));
                         }
                         builder.setStyle(progressBigText);
                     }
@@ -337,10 +337,10 @@ public class NotificationService extends Service {
         return PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    private PendingIntent getInstallIntent(String packageName, String versionCode) {
+    private PendingIntent getInstallIntent(String packageName, Download download) {
         final Intent intent = new Intent(this, InstallReceiver.class);
         intent.putExtra(Constants.INTENT_PACKAGE_NAME, packageName);
-        intent.putExtra(Constants.STRING_EXTRA, versionCode);
+        intent.putExtra(Constants.STRING_EXTRA, download.getFile());
         return PendingIntent.getBroadcast(this, packageName.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 

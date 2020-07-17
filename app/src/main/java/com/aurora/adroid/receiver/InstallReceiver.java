@@ -24,9 +24,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
-import com.aurora.adroid.util.Log;
+import com.aurora.adroid.installer.AppInstaller;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class InstallReceiver extends BroadcastReceiver {
     @Override
@@ -34,10 +35,11 @@ public class InstallReceiver extends BroadcastReceiver {
         Bundle extras = intent.getExtras();
         if ((extras != null)) {
             final String packageName = extras.getString(Constants.INTENT_PACKAGE_NAME, "");
-            final String versionCodeString = extras.getString(Constants.STRING_EXTRA, "");
-            Log.e(packageName + "." + versionCodeString);
-            if (!packageName.isEmpty() && !versionCodeString.isEmpty()) {
-                AuroraApplication.getInstaller().install(packageName, Long.parseLong(versionCodeString));
+            final String fileUri = extras.getString(Constants.STRING_EXTRA, "");
+            if (StringUtils.isNotEmpty(packageName) && StringUtils.isNotEmpty(fileUri)) {
+                AppInstaller.getInstance(context)
+                        .getDefaultInstaller()
+                        .installApk(packageName, fileUri);
             }
         }
     }

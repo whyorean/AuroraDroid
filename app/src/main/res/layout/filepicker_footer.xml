@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_gravity="center_horizontal"
+    android:orientation="horizontal">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_cancel"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/height_button"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:text="@string/cancel_button_label"
+        android:textColor="@color/colorRed" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_select"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/height_button"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:text="@string/choose_button_label" />
+</LinearLayout>

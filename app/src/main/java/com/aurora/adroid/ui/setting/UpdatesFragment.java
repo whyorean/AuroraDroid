@@ -19,7 +19,6 @@
 
 package com.aurora.adroid.ui.setting;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -37,24 +36,17 @@ import com.aurora.adroid.util.Util;
 
 public class UpdatesFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private Context context;
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        getPreferenceManager().setSharedPreferencesName(Constants.SHARED_PREFERENCES_KEY);
         setPreferencesFromResource(R.xml.preferences_updates, rootKey);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedPreferences sharedPreferences = Util.getPrefs(context);
+        sharedPreferences = Util.getPrefs(requireContext());
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 
         ListPreference updatesIntervalList = findPreference(Constants.PREFERENCE_UPDATES_INTERVAL);
@@ -62,15 +54,23 @@ public class UpdatesFragment extends PreferenceFragmentCompat implements SharedP
         updatesIntervalList.setOnPreferenceChangeListener((preference, newValue) -> {
             String value = newValue.toString();
             int interval = Util.parseInt(value, 0);
-            PrefUtil.putString(context, Constants.PREFERENCE_UPDATES_INTERVAL, value);
-            UpdatesReceiver.setUpdatesInterval(context, interval);
+            PrefUtil.putString(requireContext(), Constants.PREFERENCE_UPDATES_INTERVAL, value);
+            UpdatesReceiver.setUpdatesInterval(requireContext(), interval);
             return true;
         });
-
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        try {
+            sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        } catch (Exception ignored) {
+        }
+        super.onDestroy();
     }
 }

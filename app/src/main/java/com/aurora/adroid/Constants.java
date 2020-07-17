@@ -20,21 +20,18 @@
 package com.aurora.adroid;
 
 public class Constants {
-    public static final String SHARED_PREFERENCES_KEY = "com.aurora.adroid";
+    public static final String TAG = "Aurora Droid";
+
     public static final String SERVICE_PACKAGE = "com.aurora.services";
-    public static final String TAG = "A-Droid";
     public static final String IMG_URL_PREFIX = "/icons-320/";
     public static final String SIGNED_FILE_NAME = "index-v1.jar";
     public static final String DATA_FILE_NAME = "index-v1.json";
     public static final String REPO_AVAILABLE = "REPO_AVAILABLE";
     public static final String DATABASE_AVAILABLE = "DATABASE_AVAILABLE";
     public static final String DATABASE_DATE = "DATABASE_DATE";
-    public static final String APP_SHARE_URL = "https://f-droid.org/app/";
+
     public static final String JAR = "jar";
     public static final String JSON = ".json";
-
-    public static final String EXTRA_CIRCULAR_REVEAL_X = "EXTRA_CIRCULAR_REVEAL_X";
-    public static final String EXTRA_CIRCULAR_REVEAL_Y = "EXTRA_CIRCULAR_REVEAL_Y";
 
     public static final String NOTIFICATION_CHANNEL_ALERT = "NOTIFICATION_CHANNEL_ALERT";
     public static final String NOTIFICATION_CHANNEL_GENERAL = "NOTIFICATION_CHANNEL_GENERAL";
@@ -54,6 +51,7 @@ public class Constants {
     public static final String PREFERENCE_INSTALLATION_TYPE = "PREFERENCE_INSTALLATION_TYPE";
     public static final String PREFERENCE_INSTALLATION_METHOD = "PREFERENCE_INSTALLATION_METHOD";
     public static final String PREFERENCE_INSTALLATION_DELETE = "PREFERENCE_INSTALLATION_DELETE";
+    public static final String PREFERENCE_INSTALLATION_PROFILE = "PREFERENCE_INSTALLATION_PROFILE";
     public static final String PREFERENCE_NOTIFICATION_TOGGLE = "PREFERENCE_NOTIFICATION_TOGGLE";
     public static final String PREFERENCE_UPDATES_INTERVAL = "PREFERENCE_UPDATES_INTERVAL";
     public static final String PREFERENCE_UPDATES_SUGGESTED = "PREFERENCE_UPDATES_SUGGESTED";
@@ -102,5 +100,4 @@ public class Constants {
     public static final String DOWNLOAD_REPO_NAME = "DOWNLOAD_REPO_NAME";
     public static final String DOWNLOAD_REPO_URL = "DOWNLOAD_REPO_URL";
     public static final String DOWNLOAD_REPO_FINGERPRINT = "DOWNLOAD_REPO_FINGERPRINT";
-
 }

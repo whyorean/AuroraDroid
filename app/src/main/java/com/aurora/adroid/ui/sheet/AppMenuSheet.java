@@ -36,7 +36,7 @@ import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.event.Event;
 import com.aurora.adroid.event.EventType;
-import com.aurora.adroid.installer.Uninstaller;
+import com.aurora.adroid.installer.AppInstaller;
 import com.aurora.adroid.manager.BlacklistManager;
 import com.aurora.adroid.manager.FavouritesManager;
 import com.aurora.adroid.model.App;
@@ -159,7 +159,9 @@ public class AppMenuSheet extends BaseBottomSheet {
                             .subscribe();
                     break;
                 case R.id.action_uninstall:
-                    new Uninstaller(requireContext()).uninstall(app);
+                    AppInstaller.getInstance(requireContext())
+                            .getDefaultInstaller()
+                            .uninstall(app.getPackageName());
                     break;
                 case R.id.action_info:
                     try {

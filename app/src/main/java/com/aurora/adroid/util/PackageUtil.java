@@ -189,15 +189,9 @@ public class PackageUtil {
     public static IntentFilter getFilter() {
         IntentFilter filter = new IntentFilter();
         filter.addDataScheme("package");
-        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
-        filter.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
         filter.addAction(Intent.ACTION_PACKAGE_INSTALL);
-        filter.addAction(Intent.ACTION_UNINSTALL_PACKAGE);
         filter.addAction(Intent.ACTION_PACKAGE_ADDED);
-        filter.addAction(Intent.ACTION_PACKAGE_REPLACED);
-        filter.addAction(ACTION_PACKAGE_REPLACED_NON_SYSTEM);
-        filter.addAction(ACTION_PACKAGE_INSTALLATION_FAILED);
-        filter.addAction(ACTION_UNINSTALL_PACKAGE_FAILED);
+        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         return filter;
     }
 }

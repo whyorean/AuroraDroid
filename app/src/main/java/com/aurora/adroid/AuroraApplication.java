@@ -19,25 +19,21 @@
 
 package com.aurora.adroid;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.AsyncTask;
 
 import com.aurora.adroid.database.AppDatabase;
 import com.aurora.adroid.event.Event;
-import com.aurora.adroid.event.EventType;
 import com.aurora.adroid.event.RxBus;
-import com.aurora.adroid.installer.Installer;
-import com.aurora.adroid.installer.InstallerService;
-import com.aurora.adroid.installer.Uninstaller;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.receiver.PackageManagerReceiver;
 import com.aurora.adroid.util.Log;
+import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
+import com.topjohnwu.superuser.Shell;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -47,25 +43,12 @@ import io.reactivex.plugins.RxJavaPlugins;
 
 public class AuroraApplication extends Application {
 
-    @SuppressLint("StaticFieldLeak")
-    public static Installer installer;
-    @SuppressLint("StaticFieldLeak")
-    public static Uninstaller uninstaller;
-
     private static RxBus rxBus = null;
-    private static boolean bulkUpdateAlive = false;
     private static List<App> ongoingUpdateList = new ArrayList<>();
+    private static boolean isRooted = false;
+    private static boolean bulkUpdateAlive = false;
 
-    private BroadcastReceiver packageUninstallReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getData() != null) {
-                final String packageName = intent.getData().getSchemeSpecificPart();
-                if (packageName != null)
-                    rxNotify(new Event(EventType.UNINSTALLED, packageName));
-            }
-        }
-    };
+    private PackageManagerReceiver packageManagerReceiver;
 
     public static RxBus getRxBus() {
         return rxBus;
@@ -73,14 +56,6 @@ public class AuroraApplication extends Application {
 
     public static void rxNotify(Event event) {
         rxBus.getBus().accept(event);
-    }
-
-    public static Uninstaller getUninstaller() {
-        return uninstaller;
-    }
-
-    public static Installer getInstaller() {
-        return installer;
     }
 
     public static boolean isBulkUpdateAlive() {
@@ -116,25 +91,33 @@ public class AuroraApplication extends Application {
         setupTheme();
 
         rxBus = new RxBus();
-        installer = new Installer(this);
-        uninstaller = new Uninstaller(this);
+
+        if (Util.isRootInstallEnabled(getApplicationContext())) {
+            Shell.getShell(shell -> {
+                if (shell.isRoot()) {
+                    Log.i("Root Available");
+                    isRooted = true;
+                } else {
+                    Log.e("Root Unavailable");
+                    isRooted = false;
+                }
+            });
+        }
+
+        packageManagerReceiver = new PackageManagerReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                super.onReceive(context, intent);
+            }
+        };
+
+        registerReceiver(packageManagerReceiver, PackageUtil.getFilter());
 
         //Clear all old installation sessions.
         AsyncTask.execute(() -> Util.clearOldInstallationSessions(this));
 
         //Check & start notification service
         Util.startNotificationService(this);
-
-        //Register global install/uninstall broadcast receiver.
-        final IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addDataScheme("package");
-        intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
-        intentFilter.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
-        intentFilter.addAction(Intent.ACTION_UNINSTALL_PACKAGE);
-        registerReceiver(packageUninstallReceiver, intentFilter);
-
-        registerReceiver(installer.getPackageInstaller().getBroadcastReceiver(),
-                new IntentFilter(InstallerService.ACTION_INSTALLATION_STATUS_NOTIFICATION));
 
         //Global RX-Error handler, just simply logs, I make sure all errors are handled at origin.
         RxJavaPlugins.setErrorHandler(throwable -> {
@@ -153,8 +136,7 @@ public class AuroraApplication extends Application {
     public void onTerminate() {
         super.onTerminate();
         try {
-            unregisterReceiver(packageUninstallReceiver);
-            unregisterReceiver(installer.getPackageInstaller().getBroadcastReceiver());
+            unregisterReceiver(packageManagerReceiver);
             AppDatabase.destroyInstance();
         } catch (Exception ignored) {
         }

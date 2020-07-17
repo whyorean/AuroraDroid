@@ -77,8 +77,10 @@ public class DownloadsActivity extends BaseActivity {
 
     private FastAdapter<DownloadItem> fastAdapter;
     private ItemAdapter<DownloadItem> itemAdapter;
+
     private Fetch fetch;
     private CompositeDisposable disposable = new CompositeDisposable();
+
     private final FetchListener fetchListener = new AbstractFetchListener() {
         @Override
         public void onAdded(@NotNull Download download) {
@@ -212,17 +214,16 @@ public class DownloadsActivity extends BaseActivity {
     }
 
     private void updateDownloadsList() {
+        swipeLayout.setRefreshing(false);
         fetch.getDownloads(downloads -> {
             final List<Download> downloadList = new ArrayList<>(downloads);
             Collections.sort(downloadList, (first, second) -> Long.compare(first.getCreated(), second.getCreated()));
-
             disposable.add(Observable.fromIterable(downloadList)
                     .subscribeOn(Schedulers.io())
                     .map(DownloadItem::new)
                     .toList()
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::dispatchAppsToAdapter,
-                            throwable -> Log.e(throwable.getMessage())));
+                    .subscribe(this::dispatchAppsToAdapter, throwable -> Log.e(throwable.getMessage())));
         });
     }
 

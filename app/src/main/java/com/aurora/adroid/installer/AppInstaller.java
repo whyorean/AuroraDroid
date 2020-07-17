@@ -19,66 +19,39 @@
 
 package com.aurora.adroid.installer;
 
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageInstaller;
 
-import com.aurora.adroid.util.Log;
+import com.aurora.adroid.Constants;
+import com.aurora.adroid.util.PrefUtil;
 
-import org.apache.commons.io.IOUtils;
+public abstract class AppInstaller {
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.List;
-
-public class AppInstaller extends AppInstallerAbstract {
-
-    private static AppInstaller instance;
-
-    public AppInstaller(Context context) {
-        super(context);
-        instance = this;
-    }
+    private static volatile AppInstaller INSTANCE;
 
     public static AppInstaller getInstance(Context context) {
-        if (instance == null) {
+        if (INSTANCE == null) {
             synchronized (AppInstaller.class) {
-                if (instance == null)
-                    instance = new AppInstaller(context);
+                if (INSTANCE == null) {
+                    INSTANCE = new AppInstaller() {
+                        @Override
+                        public InstallerBase getDefaultInstaller() {
+                            String prefValue = PrefUtil.getString(context, Constants.PREFERENCE_INSTALLATION_METHOD);
+                            switch (prefValue) {
+                                case "1":
+                                    return new RootInstaller(context);
+                                case "2":
+                                    return new ServiceInstaller(context);
+                                default:
+                                    return new NativeInstaller(context);
+                            }
+
+                        }
+                    };
+                }
             }
         }
-        return instance;
+        return INSTANCE;
     }
 
-    @Override
-    protected void installApkFiles(String packageName, List<File> apkFiles) {
-        final PackageInstaller packageInstaller = getContext().getPackageManager().getPackageInstaller();
-        try {
-            final PackageInstaller.SessionParams sessionParams = new PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL);
-            final int sessionID = packageInstaller.createSession(sessionParams);
-            final PackageInstaller.Session session = packageInstaller.openSession(sessionID);
-            for (File apkFile : apkFiles) {
-                final InputStream inputStream = new FileInputStream(apkFile);
-                final OutputStream outputStream = session.openWrite(apkFile.getName(), 0, apkFile.length());
-                IOUtils.copy(inputStream, outputStream);
-                session.fsync(outputStream);
-                inputStream.close();
-                outputStream.close();
-            }
-            final Intent callbackIntent = new Intent(getContext(), InstallerService.class);
-            final PendingIntent pendingIntent = PendingIntent.getService(
-                    getContext(),
-                    sessionID,
-                    callbackIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-            session.commit(pendingIntent.getIntentSender());
-            session.close();
-        } catch (Exception e) {
-            Log.e(e.getMessage());
-            dispatchSessionUpdate(PackageInstaller.STATUS_FAILURE, packageName);
-        }
-    }
+    public abstract InstallerBase getDefaultInstaller();
 }

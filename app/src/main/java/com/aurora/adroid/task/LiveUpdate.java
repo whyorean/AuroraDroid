@@ -21,9 +21,9 @@ package com.aurora.adroid.task;
 
 import android.content.Context;
 
-import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.download.RequestBuilder;
+import com.aurora.adroid.installer.AppInstaller;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.Log;
 import com.aurora.adroid.util.Util;
@@ -71,7 +71,9 @@ public class LiveUpdate {
                 if (groupId == hashCode && fetchGroup.getGroupDownloadProgress() == 100) {
                     if (Util.shouldAutoInstallApk(context)) {
                         //Call the installer
-                        AuroraApplication.getInstaller().install(app);
+                        AppInstaller.getInstance(context)
+                                .getDefaultInstaller()
+                                .installApk(app.getPackageName(), download.getFile());
                     }
                     fetch.removeListener(this);
                 }

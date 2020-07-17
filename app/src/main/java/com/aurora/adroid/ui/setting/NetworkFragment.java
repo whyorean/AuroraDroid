@@ -19,7 +19,6 @@
 
 package com.aurora.adroid.ui.setting;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -34,25 +33,18 @@ import com.aurora.adroid.util.Util;
 
 public class NetworkFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private Context context;
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        getPreferenceManager().setSharedPreferencesName(Constants.SHARED_PREFERENCES_KEY);
         setPreferencesFromResource(R.xml.preferences_network, rootKey);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedPreferences mPrefs = Util.getPrefs(context);
-        mPrefs.registerOnSharedPreferenceChangeListener(this);
+        sharedPreferences = Util.getPrefs(requireContext());
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -62,5 +54,14 @@ public class NetworkFragment extends PreferenceFragmentCompat implements SharedP
                 SettingsActivity.shouldRestart = true;
                 break;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        try {
+            sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        } catch (Exception ignored) {
+        }
+        super.onDestroy();
     }
 }

@@ -30,20 +30,20 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.util.Util;
-import com.aurora.adroid.util.ViewUtil;
 
 public class UIFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        getPreferenceManager().setSharedPreferencesName(Constants.SHARED_PREFERENCES_KEY);
         setPreferencesFromResource(R.xml.preferences_ui, rootKey);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedPreferences sharedPreferences = Util.getPrefs(requireActivity());
+        sharedPreferences = Util.getPrefs(requireActivity());
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -54,5 +54,14 @@ public class UIFragment extends PreferenceFragmentCompat implements SharedPrefer
                 SettingsActivity.shouldRestart = true;
                 break;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        try {
+            sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        } catch (Exception ignored) {
+        }
+        super.onDestroy();
     }
 }

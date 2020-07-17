@@ -19,53 +19,60 @@
 
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <EditTextPreference
+
+    <com.aurora.filepicker.view.FilePickerPreference
+        android:defaultValue="/sdcard:/mnt"
+        android:key="PREFERENCE_DOWNLOAD_DIRECTORY"
         app:dependency="PREFERENCE_DOWNLOAD_INTERNAL"
-        app:key="PREFERENCE_DOWNLOAD_DIRECTORY"
-        app:singleLineTitle="false"
+        app:fallbackDir="/sdcard"
         app:iconSpaceReserved="false"
-        app:title="@string/pref_downloads_path_title" />
+        app:rootDir="/mnt"
+        app:selectionMode="single"
+        app:selectionType="directory"
+        app:summary="Select default download directory"
+        app:title="@string/pref_downloads_path_title"
+        app:txtTitle="Select Directory" />
 
     <SwitchPreferenceCompat
         app:defaultValue="false"
-        app:singleLineTitle="false"
-        app:iconSpaceReserved="false"
         app:disableDependentsState="true"
+        app:iconSpaceReserved="false"
         app:key="PREFERENCE_DOWNLOAD_INTERNAL"
+        app:singleLineTitle="false"
         app:summary="@string/pref_downloader_internal_desc"
         app:title="@string/pref_downloader_internal" />
 
     <SwitchPreferenceCompat
         app:defaultValue="false"
-        app:singleLineTitle="false"
         app:iconSpaceReserved="false"
         app:key="PREFERENCE_DOWNLOAD_WIFI"
+        app:singleLineTitle="false"
         app:title="@string/pref_downloads_wifi_title" />
 
     <SeekBarPreference
         android:defaultValue="3"
-        app:singleLineTitle="false"
-        app:iconSpaceReserved="false"
         android:key="PREFERENCE_DOWNLOAD_ACTIVE"
         android:max="12"
         android:summary="@string/pref_downloads_active_summary"
-        android:title="@string/pref_downloads_active_title" />
+        android:title="@string/pref_downloads_active_title"
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="false" />
 
     <ListPreference
         app:defaultValue="0"
-        app:singleLineTitle="false"
-        app:iconSpaceReserved="false"
         app:entries="@array/pref_download_strategy"
         app:entryValues="@array/pref_download_strategy_values"
+        app:iconSpaceReserved="false"
         app:key="PREFERENCE_DOWNLOAD_STRATEGY"
+        app:singleLineTitle="false"
         app:summary="@string/pref_downloads_strategy_summary"
         app:title="@string/pref_downloads_strategy_title" />
 
     <SwitchPreferenceCompat
         android:summary="@string/pref_downloads_debug_summary"
         app:defaultValue="false"
-        app:singleLineTitle="false"
         app:iconSpaceReserved="false"
         app:key="PREFERENCE_DOWNLOAD_DEBUG"
+        app:singleLineTitle="false"
         app:title="@string/pref_downloads_debug_title" />
 </androidx.preference.PreferenceScreen>

@@ -34,13 +34,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.R;
 import com.aurora.adroid.download.DownloadManager;
 import com.aurora.adroid.download.RequestBuilder;
+import com.aurora.adroid.installer.AppInstaller;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.Package;
-import com.aurora.adroid.model.items.UpdatesItem;
 import com.aurora.adroid.util.CertUtil;
 import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.Log;
@@ -59,6 +58,7 @@ import com.tonyodev.fetch2core.DownloadBlock;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,8 +111,10 @@ public class AppActionDetails extends AbstractDetails {
 
         fetch.getFetchGroup(hashCode, fetchGroup -> {
             if (fetchGroup.getGroupDownloadProgress() == 100) {
-                if (!isInstalled && PathUtil.fileExists(context, app.getPackageName(), app.getPkg().getVersionCode()))
-                    btnPositive.setOnClickListener(installAppListener());
+                final File file = new File(PathUtil.getApkPath(context, app.getPackageName(), app.getPkg().getVersionCode()));
+                if (!isInstalled && file.exists()) {
+                    btnPositive.setOnClickListener(installAppListener(file.getPath()));
+                }
             } else if (fetchGroup.getDownloadingDownloads().size() > 0 || fetchGroup.getQueuedDownloads().size() > 0) {
                 switchViews(true);
                 fetch.addListener(getFetchListener());
@@ -153,17 +155,22 @@ public class AppActionDetails extends AbstractDetails {
         };
     }
 
-    private View.OnClickListener installAppListener() {
+    private View.OnClickListener installAppListener(String filePath) {
         btnPositive.setText(R.string.action_install);
         return v -> {
             btnPositive.setText(R.string.action_installing);
             btnPositive.setEnabled(false);
-            AuroraApplication.getInstaller().install(app);
+
+            AppInstaller.getInstance(context)
+                    .getDefaultInstaller()
+                    .installApk(app.getPackageName(), filePath);
         };
     }
 
     private View.OnClickListener uninstallAppListener() {
-        return v -> AuroraApplication.getUninstaller().uninstall(app);
+        return v -> AppInstaller.getInstance(context)
+                .getDefaultInstaller()
+                .uninstall(app.getPackageName());
     }
 
     private View.OnClickListener resumeAppListener() {
@@ -310,7 +317,7 @@ public class AppActionDetails extends AbstractDetails {
                     ContextUtil.runOnUiThread(() -> {
                         switchViews(false);
                         progressStatus.setText(R.string.download_completed);
-                        btnPositive.setOnClickListener(installAppListener());
+                        btnPositive.setOnClickListener(installAppListener(download.getFile()));
                     });
 
                     if (Util.shouldAutoInstallApk(context)) {
@@ -318,8 +325,9 @@ public class AppActionDetails extends AbstractDetails {
                             btnPositive.setText(R.string.action_installing);
                             btnPositive.setEnabled(false);
                         });
-                        //Call the installer
-                        AuroraApplication.getInstaller().install(app);
+
+                        AppInstaller.getInstance(context).getDefaultInstaller()
+                                .installApk(app.getPackageName(), download.getFile());
                     }
                     fetch.removeListener(this);
                 }

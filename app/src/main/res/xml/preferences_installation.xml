@@ -34,25 +34,22 @@
         app:summary="@string/pref_install_delete_summary"
         app:title="@string/pref_install_delete_title" />
 
-    <SwitchPreferenceCompat
-        app:defaultValue="false"
-        app:singleLineTitle="false"
-        app:iconSpaceReserved="false"
-        app:disableDependentsState="true"
-        app:key="PREFERENCE_INSTALLATION_TYPE"
-        app:summary="@string/pref_install_type_summary"
-        app:title="@string/pref_install_type_title" />
-
     <ListPreference
         app:defaultValue="0"
         app:singleLineTitle="false"
         app:iconSpaceReserved="false"
-        app:dependency="PREFERENCE_INSTALLATION_TYPE"
         app:entries="@array/pref_installation_method"
         app:entryValues="@array/pref_installation_method_values"
         app:key="PREFERENCE_INSTALLATION_METHOD"
         app:summary="@string/pref_install_mode_summary"
         app:title="@string/pref_install_mode_title" />
+
+    <ListPreference
+        app:defaultValue="0"
+        app:iconSpaceReserved="false"
+        app:key="PREFERENCE_INSTALLATION_PROFILE"
+        app:summary="@string/pref_install_profile_summary"
+        app:title="@string/pref_install_profile_title" />
 
     <Preference
         app:key="PREFERENCE_LAUNCH_SERVICES"

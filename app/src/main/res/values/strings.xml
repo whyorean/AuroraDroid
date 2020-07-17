@@ -220,6 +220,8 @@
     <string name="pref_install_mode_root_warn">Root install method requires the apk to be downloaded in app data, in order to install via adb shell, Android Pie +</string>
     <string name="pref_install_mode_no_services">Aurora Services not installed, kindly install services first</string>
     <string name="pref_install_mode_offline_services">Aurora Services not connected, kindly make sure its enabled and you have correct version of app</string>
+    <string name="pref_install_profile_summary">"Select the target profile to install apps to. Only works with the root installation method"</string>
+    <string name="pref_install_profile_title">"Installation profiles"</string>
     <string name="pref_locale_title">"Language"</string>
     <string name="pref_locale_custom_title">"Custom language"</string>
     <string name="pref_locale_custom_summary">"Enforce custom app language"</string>
@@ -284,6 +286,20 @@
     <string name="error_search_not_found">"No matching app found"</string>
     <string name="error_unknown">"Unknown error occurred"</string>
     <string name="error_no_updates">"No updates available"</string>
+
+    <string name="string_install_success">Successfully Installed</string>
+    <string name="string_uninstall_success">Successfully Installed</string>
+    <string name="string_install_failed">Failed to install</string>
+    <string name="string_uninstall_failed">Failed to uninstall</string>
+    <string name="string_no_root">Root access not available</string>
+
+    <string name="cancel_button_label">Cancel</string>
+    <string name="choose_button_label">Select</string>
+    <string name="default_dir" translatable="false">/sdcard</string>
+    <string name="label_parent_directory">Parent Directory</string>
+    <string name="last_edit">Last edited: </string>
+    <string name="error_dir_access">Directory cannot be accessed</string>
+    <string name="label_parent_dir" translatable="false">...</string>
 
     <string name="toast_apk_blacklisted">Blacklisted</string>
     <string name="toast_apk_whitelisted">Whitelisted</string>

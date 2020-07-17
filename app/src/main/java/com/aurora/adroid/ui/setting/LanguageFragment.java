@@ -33,7 +33,6 @@ import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.manager.LocaleManager;
 import com.aurora.adroid.util.PrefUtil;
-import com.aurora.adroid.util.TextUtil;
 import com.aurora.adroid.util.Util;
 
 import org.apache.commons.lang3.StringUtils;
@@ -44,6 +43,7 @@ public class LanguageFragment extends PreferenceFragmentCompat implements Shared
 
     private Context context;
     private LocaleManager localeManager;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -54,31 +54,32 @@ public class LanguageFragment extends PreferenceFragmentCompat implements Shared
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        getPreferenceManager().setSharedPreferencesName(Constants.SHARED_PREFERENCES_KEY);
         setPreferencesFromResource(R.xml.preferences_lang, rootKey);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedPreferences preferences = Util.getPrefs(context);
-        preferences.registerOnSharedPreferenceChangeListener(this);
 
-        ListPreference localeList = findPreference(Constants.PREFERENCE_LOCALE_LIST);
-        assert localeList != null;
-        localeList.setOnPreferenceChangeListener((preference, newValue) -> {
-            String choice = newValue.toString();
-            if (StringUtils.isEmpty(choice)) {
-                PrefUtil.putBoolean(context, Constants.PREFERENCE_LOCALE_CUSTOM, false);
-                localeManager.setNewLocale(Locale.getDefault(), false);
-            } else {
-                String lang = choice.split("-")[0];
-                String country = choice.split("-")[1];
-                Locale locale = new Locale(lang, country);
-                localeManager.setNewLocale(locale, true);
-            }
-            return true;
-        });
+        sharedPreferences = Util.getPrefs(context);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+
+        ListPreference localeListPreference = findPreference(Constants.PREFERENCE_LOCALE_LIST);
+        if (localeListPreference != null) {
+            localeListPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                String choice = newValue.toString();
+                if (StringUtils.isEmpty(choice)) {
+                    PrefUtil.putBoolean(context, Constants.PREFERENCE_LOCALE_CUSTOM, false);
+                    localeManager.setNewLocale(Locale.getDefault(), false);
+                } else {
+                    String lang = choice.split("-")[0];
+                    String country = choice.split("-")[1];
+                    Locale locale = new Locale(lang, country);
+                    localeManager.setNewLocale(locale, true);
+                }
+                return true;
+            });
+        }
     }
 
     @Override
@@ -90,5 +91,14 @@ public class LanguageFragment extends PreferenceFragmentCompat implements Shared
                 break;
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        try {
+            sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        } catch (Exception ignored) {
+        }
+        super.onDestroy();
     }
 }

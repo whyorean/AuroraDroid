@@ -33,10 +33,13 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <uses-permission
@@ -158,6 +161,7 @@
         <receiver android:name=".receiver.DownloadPauseReceiver" />
         <receiver android:name=".receiver.DownloadResumeReceiver" />
         <receiver android:name=".receiver.UpdatesReceiver" />
+
         <receiver
             android:name=".receiver.BootReceiver"
             android:enabled="true"
@@ -166,10 +170,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
-        <service
-            android:name=".installer.InstallerService"
-            android:foregroundServiceType="dataSync" />
         <service
             android:name=".service.SyncService"
             android:foregroundServiceType="dataSync" />
