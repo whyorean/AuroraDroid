@@ -19,19 +19,12 @@
 
 package com.aurora.adroid.ui.generic.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Service;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
@@ -95,9 +88,7 @@ public class SearchActivity extends BaseActivity implements ItemFilterListener<G
     @BindView(R.id.action2)
     ImageView action2;
 
-    private int revealX;
-    private int revealY;
-
+    private boolean imeVisible = false;
     private SearchAppsViewModel model;
     private FastAdapter<GenericItem> fastAdapter;
     private ItemAdapter<GenericItem> itemAdapter;
@@ -119,14 +110,7 @@ public class SearchActivity extends BaseActivity implements ItemFilterListener<G
         setupChip();
 
         model = new ViewModelProvider(this).get(SearchAppsViewModel.class);
-        model.getAppsLiveData().observe(this, appList -> {
-            setupApps(appList);
-        });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+        model.getAppsLiveData().observe(this, this::setupApps);
     }
 
     @Override
@@ -141,16 +125,23 @@ public class SearchActivity extends BaseActivity implements ItemFilterListener<G
     }
 
     @OnClick(R.id.fab_ime)
-    public void toggleKeyBoard() {
-        if (inputMethodManager != null)
-            inputMethodManager.showSoftInput(txtInputSearch, InputMethodManager.SHOW_IMPLICIT);
+    public void toggleKeyBoard(View view) {
+        view.postDelayed(() -> {
+            if (inputMethodManager != null) {
+                if (imeVisible) {
+                    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                } else {
+                    inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                }
+                imeVisible = !imeVisible;
+            }
+        }, 200);
     }
 
     private void setupSearch() {
         action2.setImageDrawable(getDrawable(R.drawable.ic_cancel));
-        action2.setOnClickListener(v -> {
-            txtInputSearch.setText("");
-        });
+        action2.setOnClickListener(v -> txtInputSearch.setText(""));
+
         txtInputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

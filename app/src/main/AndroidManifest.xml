@@ -135,7 +135,9 @@
             android:launchMode="singleTop" />
         <activity android:name=".ui.generic.activity.RepoDetailsActivity" />
         <activity android:name=".ui.generic.activity.GenericAppActivity" />
-        <activity android:name=".ui.generic.activity.SearchActivity" />
+        <activity
+            android:name=".ui.generic.activity.SearchActivity"
+            android:windowSoftInputMode="stateVisible" />
         <activity android:name=".ui.generic.activity.ContainerActivity" />
         <activity android:name=".ui.generic.activity.SplashActivity">
             <intent-filter>
@@ -170,6 +172,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
         <service
             android:name=".service.SyncService"
             android:foregroundServiceType="dataSync" />

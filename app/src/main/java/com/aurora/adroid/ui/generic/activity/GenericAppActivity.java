@@ -22,6 +22,7 @@ package com.aurora.adroid.ui.generic.activity;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.ResultReceiver;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -89,12 +90,13 @@ public class GenericAppActivity extends BaseActivity implements ItemFilterListen
     @BindView(R.id.action2)
     ImageView action2;
 
-    private InputMethodManager inputMethodManager;
-
+    private boolean imeVisible = false;
     private ClusterAppsViewModel model;
     private FastAdapter<GenericItem> fastAdapter;
     private ItemAdapter<GenericItem> itemAdapter;
     private boolean isDataLoaded = false;
+
+    private InputMethodManager inputMethodManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,6 +112,9 @@ public class GenericAppActivity extends BaseActivity implements ItemFilterListen
             int listType = arguments.getIntExtra("LIST_TYPE", 0);
 
             setupRecycler();
+            setupSearch();
+            setupChip();
+
             model = new ViewModelProvider(this).get(ClusterAppsViewModel.class);
 
             switch (listType) {
@@ -133,16 +138,12 @@ public class GenericAppActivity extends BaseActivity implements ItemFilterListen
                     model.getRepoAppsLiveData(repoId).observe(this, this::setupApps);
                     break;
             }
-
-            setupChip();
-            setupSearchBar();
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        txtInputSearch.requestFocus();
     }
 
     @OnClick(R.id.action1)
@@ -151,9 +152,17 @@ public class GenericAppActivity extends BaseActivity implements ItemFilterListen
     }
 
     @OnClick(R.id.fab_ime)
-    public void toggleKeyBoard() {
-        if (inputMethodManager != null)
-            inputMethodManager.showSoftInput(txtInputSearch, InputMethodManager.SHOW_IMPLICIT);
+    public void toggleKeyBoard(View view) {
+        view.postDelayed(() -> {
+            if (inputMethodManager != null) {
+                if (imeVisible) {
+                    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                } else {
+                    inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                }
+                imeVisible = !imeVisible;
+            }
+        }, 200);
     }
 
     private void setupChip() {
@@ -270,7 +279,7 @@ public class GenericAppActivity extends BaseActivity implements ItemFilterListen
                 .build();
     }
 
-    private void setupSearchBar() {
+    private void setupSearch() {
         action2.setImageDrawable(getDrawable(R.drawable.ic_cancel));
         action2.setOnClickListener(v -> txtInputSearch.setText(""));
 
