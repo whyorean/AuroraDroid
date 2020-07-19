@@ -173,5 +173,13 @@
     "repoMirrors": [],
     "repoFingerprint": "",
     "repoDescription": "This repository has the old builds of RetroArch."
+  },
+  {
+    "repoId": "30",
+    "repoName": "Ungoogled Chromium",
+    "repoUrl": "https://www.droidware.info/fdroid/repo",
+    "repoMirrors": [],
+    "repoFingerprint": "21 44 44 9A B1 DD 27 0E C3 1B 60 87 40 9B 5D 0E A3 9A 75 A9 F2 90 DA 62 AC 1B 23 8A 0E AA F8 51",
+    "repoDescription": "Google Chromium, sans dependency on Google web services. It also features some tweaks to enhance privacy, control, and transparency."
   }
 ]
