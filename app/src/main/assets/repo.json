@@ -181,5 +181,13 @@
     "repoMirrors": [],
     "repoFingerprint": "21 44 44 9A B1 DD 27 0E C3 1B 60 87 40 9B 5D 0E A3 9A 75 A9 F2 90 DA 62 AC 1B 23 8A 0E AA F8 51",
     "repoDescription": "Google Chromium, sans dependency on Google web services. It also features some tweaks to enhance privacy, control, and transparency."
+  },
+  {
+    "repoId": "31",
+    "repoName": "Divest OS",
+    "repoUrl": "https://divestos.org/fdroid/official",
+    "repoMirrors": [],
+    "repoFingerprint": "E4 BE 8D 6A BF A4 D9 D4 FE EF 03 CD DA 7F F6 2A 73 FD 64 B7 55 66 F6 DD 4E 5E 57 75 50 BE 84 67",
+    "repoDescription": "Official repo for DivestOS Mobile"
   }
 ]
