@@ -22,18 +22,14 @@ package com.aurora.adroid.model.items;
 import android.content.Context;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.StaticRepo;
 import com.aurora.adroid.task.NetworkTask;
 import com.aurora.adroid.util.Log;
-import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
@@ -44,7 +40,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -94,28 +89,14 @@ public class StaticRepoItem extends AbstractItem<StaticRepoItem.RepoItemHolder> 
         TextView line3;
         @BindView(R.id.checkbox_repo)
         CheckBox checkBox;
-        @BindView(R.id.layout_extra)
-        LinearLayout layoutExtra;
-        @BindView(R.id.img_expand)
-        ImageView imgExpand;
-        @BindView(R.id.txt_fingerprint)
-        TextView txtFingerPrint;
-        @BindView(R.id.txt_description)
-        TextView txtDescription;
-        @BindView(R.id.switch_mirror)
-        SwitchCompat mirrorSwitch;
-        @BindView(R.id.txt_mirror_url)
-        TextView txtMirrorUrl;
 
         private Context context;
-        private ArrayList<String> mirrorCheckedList = new ArrayList<>();
         private CompositeDisposable disposable = new CompositeDisposable();
 
         RepoItemHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
             this.context = view.getContext();
-            this.mirrorCheckedList = Util.getMirrorCheckedList(context);
         }
 
         @Override
@@ -132,6 +113,7 @@ public class StaticRepoItem extends AbstractItem<StaticRepoItem.RepoItemHolder> 
 
             if (item.isSelected()) {
                 line3.setText(context.getString(R.string.list_repo_availability));
+                line3.setVisibility(View.VISIBLE);
                 line3.setTextColor(ViewUtil.getStyledAttribute(context, android.R.attr.textColorSecondary));
                 disposable.add(Observable.fromCallable(() -> new NetworkTask(context)
                         .getStatus(staticRepo.getRepoUrl() + "/" + SIGNED_FILE_NAME))
@@ -145,7 +127,6 @@ public class StaticRepoItem extends AbstractItem<StaticRepoItem.RepoItemHolder> 
                             line3.setTextColor(success
                                     ? context.getResources().getColor(R.color.colorGreen)
                                     : context.getResources().getColor(R.color.colorRed));
-                            line3.setVisibility(View.VISIBLE);
                         }, throwable -> {
                             line3.setText(throwable.getMessage());
                             line3.setTextColor(context.getResources().getColor(R.color.colorRed));
@@ -154,51 +135,13 @@ public class StaticRepoItem extends AbstractItem<StaticRepoItem.RepoItemHolder> 
             } else {
                 line3.setVisibility(View.INVISIBLE);
             }
-
-            imgExpand.setOnClickListener(v -> {
-                boolean isVisible = layoutExtra.getVisibility() == View.VISIBLE;
-                if (isVisible) {
-                    ViewUtil.collapse(layoutExtra);
-                    ViewUtil.rotateView(imgExpand, true);
-                } else {
-                    ViewUtil.rotateView(imgExpand, false);
-                    ViewUtil.expand(layoutExtra);
-                }
-            });
-
-            setupExtra(staticRepo);
-        }
-
-        private void setupExtra(StaticRepo staticRepo) {
-            txtFingerPrint.setText(staticRepo.getRepoFingerprint());
-            txtDescription.setText(staticRepo.getRepoDescription());
-
-            boolean hasMirror = staticRepo.getRepoMirrors() != null && staticRepo.getRepoMirrors().length >= 1;
-            if (hasMirror) {
-                txtMirrorUrl.setVisibility(View.VISIBLE);
-                txtMirrorUrl.setText(staticRepo.getRepoMirrors()[0]);
-                mirrorSwitch.setVisibility(View.VISIBLE);
-
-                if (mirrorCheckedList.contains(staticRepo.getRepoId()))
-                    mirrorSwitch.setChecked(true);
-
-                mirrorSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                    if (mirrorSwitch.isChecked()) {
-                        mirrorCheckedList.add(staticRepo.getRepoId());
-                        Util.putMirrorCheckedList(context, mirrorCheckedList);
-                    } else {
-                        mirrorCheckedList.remove(staticRepo.getRepoId());
-                        Util.putMirrorCheckedList(context, mirrorCheckedList);
-                    }
-                });
-            }
         }
 
         @Override
         public void unbindView(@NotNull StaticRepoItem item) {
             line1.setText(null);
             line2.setText(null);
-            ViewUtil.collapse(layoutExtra);
+            line3.setText(null);
         }
     }
 
