@@ -116,12 +116,11 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_scan_qr"
-                style="@style/Aurora.Button.Primary"
+                style="@style/Aurora.Button.Secondary"
                 android:layout_width="@dimen/intro_btn_width"
                 android:layout_height="@dimen/intro_btn_height"
                 android:layout_gravity="center"
-                android:text="@string/repo_qr_scan"
-                app:backgroundTint="@color/colorGreen" />
+                android:text="@string/repo_qr_scan" />
         </LinearLayout>
     </ScrollView>
 
@@ -142,17 +141,16 @@
             app:srcCompat="@drawable/ic_arrow_back"
             app:tint="?android:textColorPrimary" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/save_return"
-            style="@style/AuroraTextStyle.Subtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/icon_size_small"
+            style="@style/Aurora.Button.Primary"
+            android:layout_width="@dimen/intro_btn_width"
+            android:layout_height="@dimen/height_button"
             android:layout_centerInParent="true"
             android:layout_toStartOf="@id/action2"
             android:layout_toEndOf="@id/action1"
-            android:background="@drawable/custom_ripple_round"
             android:gravity="center"
-            android:text="Save &amp; Return "
+            android:text="@string/action_save_return"
             android:textAlignment="center" />
 
         <androidx.appcompat.widget.AppCompatImageView
