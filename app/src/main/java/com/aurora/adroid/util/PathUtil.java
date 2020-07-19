@@ -96,16 +96,7 @@ public class PathUtil {
         return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid";
     }
 
-    static public String getBaseFavDirectory() {
-        return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid/Files/";
-    }
-
-    public static boolean checkBaseFavDirectory() {
-        boolean success = new File(getBaseFavDirectory()).exists();
-        return success || createBaseFavDirectory();
-    }
-
-    public static boolean createBaseFavDirectory() {
-        return new File(getBaseFavDirectory()).mkdir();
+    static public String getBaseFilesDirectory() {
+        return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid/Files";
     }
 }

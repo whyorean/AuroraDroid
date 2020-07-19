@@ -28,7 +28,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.R;
-import com.aurora.adroid.manager.BlacklistManager;
 import com.aurora.adroid.model.App;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.mikepenz.fastadapter.FastAdapter;
@@ -44,15 +43,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lombok.Getter;
-import lombok.Setter;
 
 public class BlacklistItem extends AbstractItem<BlacklistItem.ViewHolder> {
 
     @Getter
     private App app;
-    @Getter
-    @Setter
-    private boolean checked;
 
     public BlacklistItem(App app) {
         this.app = app;
@@ -98,7 +93,7 @@ public class BlacklistItem extends AbstractItem<BlacklistItem.ViewHolder> {
 
             line1.setText(app.getName());
             line2.setText(app.getPackageName());
-            checkBox.setChecked(new BlacklistManager(context).isBlacklisted(app.getPackageName()));
+            checkBox.setChecked(item.isSelected());
 
             if (item.getApp().getIconDrawable() != null)
                 img.setImageDrawable(item.getApp().getIconDrawable());
@@ -108,6 +103,7 @@ public class BlacklistItem extends AbstractItem<BlacklistItem.ViewHolder> {
         public void unbindView(@NotNull BlacklistItem item) {
             line1.setText(null);
             line2.setText(null);
+            checkBox.setChecked(false);
         }
     }
 
@@ -124,7 +120,6 @@ public class BlacklistItem extends AbstractItem<BlacklistItem.ViewHolder> {
             SelectExtension<BlacklistItem> selectExtension = fastAdapter.getExtension(SelectExtension.class);
             if (selectExtension != null) {
                 selectExtension.toggleSelection(position);
-                item.checked = !item.checked;
             }
         }
     }

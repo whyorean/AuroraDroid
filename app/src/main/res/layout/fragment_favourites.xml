@@ -52,22 +52,11 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/export_list"
-                android:enabled="false"
-                android:text="@string/action_install" />
-
-            <Button
-                android:id="@+id/export_list"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_small"
-                android:text="@string/action_export" />
-
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:enabled="false"
+                android:text="@string/action_install" />
         </RelativeLayout>
 
         <com.aurora.adroid.ui.view.ViewFlipper2
@@ -81,18 +70,12 @@
                 android:layout_height="match_parent"
                 app:progressText="@string/action_loading" />
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_layout"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="vertical"
-                    tools:listitem="@layout/item_favorite" />
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                tools:listitem="@layout/item_favorite" />
 
             <com.aurora.adroid.ui.view.placeholder.EmptyView
                 android:layout_width="match_parent"

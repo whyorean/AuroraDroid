@@ -207,6 +207,7 @@ public class SyncService extends Service {
                         AuroraApplication.rxNotify(new Event(EventType.SYNC_FAILED));
                         Log.e("Error : %s", throwable.getMessage());
                     })
+                    .onErrorResumeNext(Observable.empty())
                     .subscribe();
         }
     }

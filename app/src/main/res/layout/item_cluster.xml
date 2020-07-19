@@ -42,7 +42,8 @@
         android:maxWidth="@dimen/icon_size_large"
         android:maxLines="1"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.Aurora.Line1"
+        android:textAppearance="@style/TextAppearance.Aurora.Line2"
+        android:textColor="?android:textColorPrimary"
         tools:text="Aurora Store" />
 
     <androidx.appcompat.widget.AppCompatTextView

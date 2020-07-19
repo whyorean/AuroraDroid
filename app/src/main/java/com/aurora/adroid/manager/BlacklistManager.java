@@ -27,8 +27,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BlacklistManager {
 
@@ -40,20 +40,22 @@ public class BlacklistManager {
         this.gson = new Gson();
     }
 
+    public void addToBlacklist(Set<String> packageNames) {
+        Set<String> stringList = getBlacklistedPackages();
+        stringList.addAll(packageNames);
+        saveBlacklist(stringList);
+    }
+
     public void addToBlacklist(String packageName) {
-        List<String> stringList = getBlacklistedPackages();
-        if (!stringList.contains(packageName)) {
-            stringList.add(packageName);
-            saveBlacklist(stringList);
-        }
+        Set<String> stringList = getBlacklistedPackages();
+        stringList.add(packageName);
+        saveBlacklist(stringList);
     }
 
     public void removeFromBlacklist(String packageName) {
-        List<String> stringList = getBlacklistedPackages();
-        if (stringList.contains(packageName)) {
-            stringList.remove(packageName);
-            saveBlacklist(stringList);
-        }
+        Set<String> stringList = getBlacklistedPackages();
+        stringList.remove(packageName);
+        saveBlacklist(stringList);
     }
 
     public boolean isBlacklisted(String packageName) {
@@ -61,21 +63,21 @@ public class BlacklistManager {
     }
 
     public void clear() {
-        saveBlacklist(new ArrayList<>());
+        saveBlacklist(new HashSet<>());
     }
 
-    private void saveBlacklist(List<String> stringList) {
+    private void saveBlacklist(Set<String> stringList) {
         PrefUtil.putString(context, Constants.PREFERENCE_BLACKLIST_PACKAGE_LIST, gson.toJson(stringList));
     }
 
-    public List<String> getBlacklistedPackages() {
+    public Set<String> getBlacklistedPackages() {
         String rawList = PrefUtil.getString(context, Constants.PREFERENCE_BLACKLIST_PACKAGE_LIST);
-        Type type = new TypeToken<List<String>>() {
+        Type type = new TypeToken<Set<String>>() {
         }.getType();
-        List<String> stringList = gson.fromJson(rawList, type);
+        Set<String> stringList = gson.fromJson(rawList, type);
 
         if (stringList == null)
-            return new ArrayList<>();
+            return new HashSet<>();
         else
             return stringList;
     }

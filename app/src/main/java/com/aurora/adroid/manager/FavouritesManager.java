@@ -22,6 +22,7 @@ package com.aurora.adroid.manager;
 import android.content.Context;
 
 import com.aurora.adroid.Constants;
+import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.PrefUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -40,49 +41,49 @@ public class FavouritesManager {
         this.gson = new Gson();
     }
 
-    public void addToFavourites(String packageName) {
-        List<String> stringList = getFavouritePackages();
-        if (!stringList.contains(packageName)) {
-            stringList.add(packageName);
+    public void addToFavourites(App app) {
+        final List<App> stringList = getFavouriteApps();
+        if (!stringList.contains(app)) {
+            stringList.add(app);
             saveFavourites(stringList);
         }
     }
 
-    public void addToFavourites(List<String> packageNameList) {
-        List<String> stringList = getFavouritePackages();
-        for (String packageName : packageNameList) {
-            if (!stringList.contains(packageName)) {
-                stringList.add(packageName);
+    public void addToFavourites(List<App> appList) {
+        final List<App> favouriteApps = getFavouriteApps();
+        for (App app : appList) {
+            if (!favouriteApps.contains(app)) {
+                favouriteApps.add(app);
             }
         }
-        saveFavourites(stringList);
+        saveFavourites(favouriteApps);
     }
 
-    public void removeFromFavourites(String packageName) {
-        List<String> stringList = getFavouritePackages();
-        if (stringList.contains(packageName)) {
-            stringList.remove(packageName);
-            saveFavourites(stringList);
+    public void removeFromFavourites(App app) {
+        final List<App> favouriteApps = getFavouriteApps();
+        if (favouriteApps.contains(app)) {
+            favouriteApps.remove(app);
+            saveFavourites(favouriteApps);
         }
     }
 
-    public boolean isFavourite(String packageName) {
-        return getFavouritePackages().contains(packageName);
+    public boolean isFavourite(App app) {
+        return getFavouriteApps().contains(app);
     }
 
     public void clear() {
         saveFavourites(new ArrayList<>());
     }
 
-    private void saveFavourites(List<String> stringList) {
-        PrefUtil.putString(context, Constants.PREFERENCE_FAVOURITE_PACKAGE_LIST, gson.toJson(stringList));
+    private void saveFavourites(List<App> appList) {
+        PrefUtil.putString(context, Constants.PREFERENCE_FAVOURITE_APPS, gson.toJson(appList));
     }
 
-    public List<String> getFavouritePackages() {
-        String rawList = PrefUtil.getString(context, Constants.PREFERENCE_FAVOURITE_PACKAGE_LIST);
-        Type type = new TypeToken<List<String>>() {
+    public List<App> getFavouriteApps() {
+        String rawList = PrefUtil.getString(context, Constants.PREFERENCE_FAVOURITE_APPS);
+        Type type = new TypeToken<List<App>>() {
         }.getType();
-        List<String> stringList = gson.fromJson(rawList, type);
+        List<App> stringList = gson.fromJson(rawList, type);
 
         if (stringList == null)
             return new ArrayList<>();

@@ -71,6 +71,7 @@
     <string name="action_pause">Pause</string>
     <string name="action_recheck">Recheck</string>
     <string name="action_remove">Remove</string>
+    <string name="action_remove_all">Remove all</string>
     <string name="action_reset">Reset</string>
     <string name="action_restart">Restart</string>
     <string name="action_resume">Resume</string>
@@ -265,8 +266,11 @@
     <string name="repo_list_select">Select the repositories you wish to sync</string>
     <string name="repo_name">Repository Name</string>
     <string name="repo_qr_scan">Scan QR code</string>
-
     <string name="repo_unable_to_reach">Unable to reach</string>
+
+    <string name="string_export_failed">Failed to export list</string>
+    <string name="string_export_to">List exported</string>
+    <string name="string_import_failed">Failed to import list</string>
     <string name="string_install_failed">Failed to install</string>
     <string name="string_install_success">Successfully Installed</string>
     <string name="string_no_root">Root access not available</string>

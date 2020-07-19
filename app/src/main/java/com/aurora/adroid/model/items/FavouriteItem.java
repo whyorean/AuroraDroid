@@ -53,7 +53,6 @@ import lombok.Setter;
 public class FavouriteItem extends AbstractItem<FavouriteItem.ViewHolder> {
     private App app;
     private String packageName;
-    private boolean checked;
 
     public FavouriteItem(App app) {
         this.app = app;
@@ -86,23 +85,27 @@ public class FavouriteItem extends AbstractItem<FavouriteItem.ViewHolder> {
         @BindView(R.id.checkbox)
         MaterialCheckBox checkBox;
 
-        private Context context;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            context = itemView.getContext();
         }
 
         @Override
         public void bindView(@NotNull FavouriteItem item, @NotNull List<?> list) {
             final App app = item.getApp();
+            final Context context = itemView.getContext();
 
             line1.setText(app.getName());
             line2.setText(context.getText(PackageUtil.isInstalled(context, app.getPackageName())
                     ? R.string.list_installed
                     : R.string.list_not_installed));
-            checkBox.setChecked(item.checked);
+
+            checkBox.setChecked(item.isSelected());
+
+            if (app.isInstalled()){
+                checkBox.setChecked(true);
+                checkBox.setEnabled(false);
+            }
 
             if (app.getIcon() == null)
                 img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_placeholder));
@@ -136,7 +139,6 @@ public class FavouriteItem extends AbstractItem<FavouriteItem.ViewHolder> {
             SelectExtension<FavouriteItem> selectExtension = fastAdapter.getExtension(SelectExtension.class);
             if (selectExtension != null) {
                 selectExtension.toggleSelection(position);
-                item.checked = !item.checked;
             }
         }
     }

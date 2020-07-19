@@ -172,7 +172,6 @@ public class DetailsActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem menuItem) {
-
         switch (menuItem.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
@@ -182,11 +181,11 @@ public class DetailsActivity extends BaseActivity {
                 return true;
             case R.id.action_favourites:
                 if (StringUtils.isNotEmpty(packageName)) {
-                    if (favouritesManager.isFavourite(packageName)) {
-                        favouritesManager.removeFromFavourites(packageName);
+                    if (favouritesManager.isFavourite(app)) {
+                        favouritesManager.removeFromFavourites(app);
                         menuItem.setIcon(R.drawable.ic_fav);
                     } else {
-                        favouritesManager.addToFavourites(packageName);
+                        favouritesManager.addToFavourites(app);
                         menuItem.setIcon(R.drawable.ic_favourite_red);
                     }
                 }
@@ -212,7 +211,7 @@ public class DetailsActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        getMenuInflater().inflate(R.menu.details_main, menu);
+        getMenuInflater().inflate(R.menu.menu_details, menu);
         final MenuItem blackListMenu = menu.findItem(R.id.action_blacklist);
         if (StringUtils.isNotEmpty(packageName)) {
             blackListMenu.setTitle(blacklistManager.isBlacklisted(packageName)

@@ -21,58 +21,105 @@ package com.aurora.adroid.ui.generic.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.manager.BlacklistManager;
 import com.aurora.adroid.model.items.BlacklistItem;
 import com.aurora.adroid.ui.view.ViewFlipper2;
 import com.aurora.adroid.util.Log;
-import com.aurora.adroid.util.ViewUtil;
+import com.aurora.adroid.util.PathUtil;
 import com.aurora.adroid.viewmodel.BlackListedAppsModel;
+import com.google.gson.reflect.TypeToken;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.select.SelectExtension;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import me.zhanghai.android.fastscroll.FastScrollerBuilder;
 
 
-public class BlacklistFragment extends Fragment {
+public class BlacklistFragment extends BaseFragment {
 
     @BindView(R.id.viewFlipper)
     ViewFlipper2 viewFlipper;
-    @BindView(R.id.swipe_layout)
-    SwipeRefreshLayout swipeLayout;
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
-    @BindView(R.id.btn_clear_all)
-    Button btnClearAll;
     @BindView(R.id.txt_blacklist)
     TextView txtBlacklist;
 
     private BlacklistManager blacklistManager;
     private BlackListedAppsModel model;
+
     private FastItemAdapter<BlacklistItem> fastItemAdapter;
     private SelectExtension<BlacklistItem> selectExtension;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_generic_list, menu);
+        menu.findItem(R.id.action_remove_all).setVisible(false);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_import:
+                importList();
+                break;
+            case R.id.action_export:
+                exportList();
+                break;
+            case R.id.action_select_all:
+                if (fastItemAdapter != null && selectExtension != null) {
+                    for (int i = 0; i < fastItemAdapter.getAdapterItemCount(); i++) {
+                        selectExtension.select(i);
+                    }
+                }
+                break;
+            case R.id.action_clear_all:
+                if (fastItemAdapter != null && selectExtension != null) {
+                    for (int i = 0; i < fastItemAdapter.getAdapterItemCount(); i++) {
+                        selectExtension.deselect(i);
+                    }
+                }
+                break;
+        }
+        return false;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,40 +130,25 @@ public class BlacklistFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         setupRecycler();
 
-        //Fetch Blacklisted Items
         model = new ViewModelProvider(this).get(BlackListedAppsModel.class);
-        model.getBlacklistedItems().observe(getViewLifecycleOwner(), blacklistItems -> {
-            final List<BlacklistItem> sortedList = sortBlackListedApps(blacklistItems);
-            fastItemAdapter.add(sortedList);
-            updatePageData();
-            updateCount();
-            swipeLayout.setRefreshing(false);
-        });
-
-        swipeLayout.setOnRefreshListener(() -> model.fetchBlackListedApps());
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
+        model.getBlacklistedItems().observe(getViewLifecycleOwner(), this::dispatchToAdapter);
+        model.fetchBlackListedApps();
     }
 
     @Override
     public void onPause() {
-        swipeLayout.setRefreshing(false);
         super.onPause();
     }
 
-    @OnClick(R.id.btn_clear_all)
-    public void clearAll() {
-        blacklistManager.clear();
-        fastItemAdapter.notifyAdapterDataSetChanged();
+    private void dispatchToAdapter(List<BlacklistItem> blacklistItems) {
+        fastItemAdapter.set(sortBlackListedApps(blacklistItems));
         updateCount();
+        updatePageData();
     }
 
     /*
@@ -166,13 +198,15 @@ public class BlacklistFragment extends Fragment {
 
         selectExtension.setMultiSelect(true);
         selectExtension.setSelectionListener((item, selected) -> {
-            if (blacklistManager.isBlacklisted(item.getApp().getPackageName())) {
-                blacklistManager.removeFromBlacklist(item.getApp().getPackageName());
-                Log.d("Whitelisted : %s", item.getApp().getName());
+            String packageName = item.getApp().getPackageName();
+            if (selected) {
+                blacklistManager.addToBlacklist(packageName);
+                Log.d("Blacklisted : %s", packageName);
             } else {
-                blacklistManager.addToBlacklist(item.getApp().getPackageName());
-                Log.d("Blacklisted : %s", item.getApp().getName());
+                blacklistManager.removeFromBlacklist(packageName);
+                Log.d("Whitelisted : %s", packageName);
             }
+
             updateCount();
         });
 
@@ -187,6 +221,52 @@ public class BlacklistFragment extends Fragment {
         final int count = blacklistManager.getBlacklistedPackages().size();
         final String txtCount = StringUtils.joinWith(" : ", getString(R.string.list_blacklist), count);
         txtBlacklist.setText(count > 0 ? txtCount : getString(R.string.list_blacklist_none));
-        ViewUtil.setVisibility(btnClearAll, count > 0, true);
+    }
+
+    private void exportList() {
+        try {
+            final Set<String> packageList = blacklistManager.getBlacklistedPackages();
+            final File baseDir = new File(PathUtil.getBaseFilesDirectory());
+
+            /*Create base directory if it doesn't exist*/
+            if (!baseDir.exists())
+                baseDir.mkdir();
+
+            final File file = new File(baseDir.getPath() + Constants.FILE_BLACKLIST);
+            final FileWriter fileWriter = new FileWriter(file);
+
+            fileWriter.write(gson.toJson(packageList));
+            fileWriter.close();
+            Toast.makeText(requireContext(), StringUtils.joinWith(StringUtils.SPACE,
+                    getString(R.string.string_export_to),
+                    file.getPath()), Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Toast.makeText(requireContext(), R.string.string_export_failed, Toast.LENGTH_LONG).show();
+            Log.e(e.getMessage());
+        }
+    }
+
+    private void importList() {
+        final File file = new File(PathUtil.getBaseFilesDirectory() + Constants.FILE_BLACKLIST);
+        try {
+            final InputStream inputStream = new FileInputStream(file);
+            final byte[] bytes = IOUtils.toByteArray(inputStream);
+            final String rawFavourites = new String(bytes);
+
+            if (StringUtils.isNotEmpty(rawFavourites)) {
+                Type type = new TypeToken<Set<String>>() {
+                }.getType();
+                Set<String> packageList = gson.fromJson(rawFavourites, type);
+                if (packageList != null && !packageList.isEmpty()) {
+                    new BlacklistManager(requireContext()).addToBlacklist(packageList);
+                    model.fetchBlackListedApps(packageList);
+                } else {
+                    Toast.makeText(requireContext(), R.string.string_import_failed, Toast.LENGTH_LONG).show();
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), R.string.string_import_failed, Toast.LENGTH_LONG).show();
+            Log.e(e.getMessage());
+        }
     }
 }

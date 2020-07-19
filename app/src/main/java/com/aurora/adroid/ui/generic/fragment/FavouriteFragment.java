@@ -22,6 +22,9 @@ package com.aurora.adroid.ui.generic.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -52,36 +55,33 @@ import com.aurora.adroid.util.PathUtil;
 import com.aurora.adroid.util.ViewUtil;
 import com.aurora.adroid.viewmodel.FavouriteAppsModel;
 import com.google.android.material.button.MaterialButton;
+import com.google.gson.reflect.TypeToken;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.select.SelectExtension;
 import com.mikepenz.fastadapter.swipe.SimpleSwipeCallback;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
 import me.zhanghai.android.fastscroll.FastScrollerBuilder;
 
-public class FavouriteFragment extends BaseFragment implements SimpleSwipeCallback.ItemSwipeCallback{
+public class FavouriteFragment extends BaseFragment implements SimpleSwipeCallback.ItemSwipeCallback {
 
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
-    @BindView(R.id.export_list)
-    MaterialButton btnAction;
     @BindView(R.id.install_list)
     MaterialButton btnInstall;
     @BindView(R.id.count_selection)
@@ -104,8 +104,50 @@ public class FavouriteFragment extends BaseFragment implements SimpleSwipeCallba
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         favouritesManager = new FavouritesManager(requireContext());
     }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_generic_list, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_import:
+                importList();
+                break;
+            case R.id.action_export:
+                exportList();
+                break;
+            case R.id.action_select_all:
+                if (fastItemAdapter != null && selectExtension != null) {
+                    for (int i = 0; i < fastItemAdapter.getAdapterItemCount(); i++) {
+                        selectExtension.select(i);
+                    }
+                }
+                break;
+            case R.id.action_clear_all:
+                if (fastItemAdapter != null && selectExtension != null) {
+                    for (int i = 0; i < fastItemAdapter.getAdapterItemCount(); i++) {
+                        selectExtension.deselect(i);
+                    }
+                }
+                break;
+            case R.id.action_remove_all:
+                if (favouritesManager != null && fastItemAdapter != null) {
+                    favouritesManager.clear();
+                    fastItemAdapter.clear();
+                    updatePageData();
+                }
+                break;
+        }
+        return false;
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -116,78 +158,87 @@ public class FavouriteFragment extends BaseFragment implements SimpleSwipeCallba
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         setupRecycler();
-
         model = new ViewModelProvider(this).get(FavouriteAppsModel.class);
-        model.getFavouriteApps().observe(getViewLifecycleOwner(), favouriteItems -> {
-            fastItemAdapter.add(favouriteItems);
-            updatePageData();
-        });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
+        model.getFavouriteApps().observe(getViewLifecycleOwner(), this::dispatchToAdapter);
+        model.fetchFavoriteApps();
     }
 
     private View.OnClickListener bulkInstallListener() {
         return v -> {
             btnInstall.setText(getString(R.string.action_installing));
             btnInstall.setEnabled(false);
-            Observable
-                    .fromIterable(selectedAppSet)
-                    .subscribeOn(Schedulers.io())
-                    .doOnNext(app -> new LiveUpdate(requireContext(), app).enqueueUpdate())
-                    .doOnError(throwable -> {
-                        throwable.printStackTrace();
-                    })
-                    .subscribe();
+            initDownload();
         };
+    }
+
+    private void initDownload() {
+        for (App app : selectedAppSet) {
+            try {
+                new LiveUpdate(requireContext(), app).enqueueUpdate();
+            } catch (Exception e) {
+                Log.e("Failed to download : %s", app.getName());
+            }
+        }
     }
 
     private void exportList() {
         try {
-            final List<String> packageList = favouritesManager.getFavouritePackages();
-            final File file = new File(PathUtil.getBaseApkDirectory(requireContext()) + "/Favourite.txt");
+            final List<App> packageList = favouritesManager.getFavouriteApps();
+            final File baseDir = new File(PathUtil.getBaseFilesDirectory());
+
+            /*Create base directory if it doesn't exist*/
+            if (!baseDir.exists())
+                baseDir.mkdir();
+
+            final File file = new File(baseDir.getPath() + Constants.FILE_FAVOURITES);
             final FileWriter fileWriter = new FileWriter(file);
-            for (String packageName : packageList)
-                fileWriter.write((packageName + System.lineSeparator()));
+
+            fileWriter.write(gson.toJson(packageList));
             fileWriter.close();
-            Toast.makeText(requireContext(), "List exported to" + file.getPath(), Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), StringUtils.joinWith(StringUtils.SPACE,
+                    getString(R.string.string_export_to),
+                    file.getPath()), Toast.LENGTH_LONG).show();
         } catch (IOException e) {
-            Toast.makeText(requireContext(), "Failed to export list", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), R.string.string_export_failed, Toast.LENGTH_LONG).show();
             Log.e(e.getMessage());
         }
     }
 
     private void importList() {
-        final ArrayList<String> packageList = new ArrayList<>();
-        final File file = new File(PathUtil.getBaseApkDirectory(requireContext()) + "/Favourite.txt");
+        final File file = new File(PathUtil.getBaseFilesDirectory() + Constants.FILE_FAVOURITES);
         try {
             final InputStream inputStream = new FileInputStream(file);
-            final Scanner scanner = new Scanner(inputStream);
-            while (scanner.hasNext()) {
-                packageList.add(scanner.nextLine());
+            final byte[] bytes = IOUtils.toByteArray(inputStream);
+            final String rawFavourites = new String(bytes);
+
+            if (StringUtils.isNotEmpty(rawFavourites)) {
+                Type type = new TypeToken<List<App>>() {
+                }.getType();
+                List<App> appList = gson.fromJson(rawFavourites, type);
+                if (appList != null && !appList.isEmpty()) {
+                    new FavouritesManager(requireContext()).addToFavourites(appList);
+                    model.fetchFavouriteApps(appList);
+                } else {
+                    Toast.makeText(requireContext(), R.string.string_import_failed, Toast.LENGTH_LONG).show();
+                }
             }
-            if (packageList.isEmpty()) {
-                Toast.makeText(requireContext(), "Failed to import list", Toast.LENGTH_LONG).show();
-            } else {
-                favouritesManager.addToFavourites(packageList);
-                model.fetchFavouriteApps();
-            }
-        } catch (FileNotFoundException e) {
-            Toast.makeText(requireContext(), "Failed to import list", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), R.string.string_import_failed, Toast.LENGTH_LONG).show();
             Log.e(e.getMessage());
         }
     }
 
+    private void dispatchToAdapter(List<FavouriteItem> favouriteItems) {
+        fastItemAdapter.set(favouriteItems);
+        updatePageData();
+    }
+
     private void updatePageData() {
-        updateText();
+        updateSelectionText();
         updateButtons();
-        updateActions();
 
         if (fastItemAdapter != null && fastItemAdapter.getAdapterItems().size() > 0) {
             viewFlipper.switchState(ViewFlipper2.DATA);
@@ -196,7 +247,7 @@ public class FavouriteFragment extends BaseFragment implements SimpleSwipeCallba
         }
     }
 
-    private void updateText() {
+    private void updateSelectionText() {
         final int size = selectExtension.getSelectedItems().size();
         final StringBuilder countString = new StringBuilder()
                 .append(requireContext().getResources().getString(R.string.list_selected))
@@ -206,19 +257,9 @@ public class FavouriteFragment extends BaseFragment implements SimpleSwipeCallba
     }
 
     private void updateButtons() {
-        int size = selectExtension.getSelectedItems().size();
-        btnInstall.setEnabled(size > 0);
-    }
-
-    private void updateActions() {
+        int selectionSize = selectExtension.getSelectedItems().size();
+        btnInstall.setEnabled(selectionSize > 0);
         btnInstall.setOnClickListener(bulkInstallListener());
-        btnAction.setOnClickListener(v -> {
-            if (fastItemAdapter.getAdapterItems().size() == 0) {
-                importList();
-            } else {
-                exportList();
-            }
-        });
     }
 
     private void setupRecycler() {
@@ -268,7 +309,7 @@ public class FavouriteFragment extends BaseFragment implements SimpleSwipeCallba
     @Override
     public void itemSwiped(int position, int direction) {
         final FavouriteItem item = fastItemAdapter.getAdapterItem(position);
-        new FavouritesManager(requireContext()).removeFromFavourites(item.getPackageName());
+        new FavouritesManager(requireContext()).removeFromFavourites(item.getApp());
         fastItemAdapter.remove(position);
         fastItemAdapter.notifyAdapterItemChanged(position);
         updatePageData();

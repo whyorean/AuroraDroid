@@ -25,10 +25,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.aurora.adroid.database.AppPackageRepository;
 import com.aurora.adroid.database.AppRepository;
 import com.aurora.adroid.manager.FavouritesManager;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.model.Package;
 import com.aurora.adroid.model.items.FavouriteItem;
+import com.aurora.adroid.model.v2.AppPackage;
+import com.aurora.adroid.util.PackageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,48 +43,64 @@ import io.reactivex.schedulers.Schedulers;
 
 public class FavouriteAppsModel extends BaseViewModel {
 
+
     private AppRepository appRepository;
+    private AppPackageRepository appPackageRepository;
 
     private MutableLiveData<List<FavouriteItem>> data = new MutableLiveData<>();
 
     public FavouriteAppsModel(@NonNull Application application) {
         super(application);
         appRepository = new AppRepository(application);
-        fetchFavouriteApps();
+        appPackageRepository = new AppPackageRepository(application);
     }
 
     public LiveData<List<FavouriteItem>> getFavouriteApps() {
         return data;
     }
 
-    public void fetchFavouriteApps() {
+    public void fetchFavoriteApps() {
         final FavouritesManager favouritesManager = new FavouritesManager(getApplication());
-        final List<String> packageList1 = favouritesManager.getFavouritePackages();
-        if (packageList1.size() > 0) {
-            disposable.add(Observable.fromCallable(() -> new FavouritesManager(getApplication())
-                    .getFavouritePackages())
-                    .subscribeOn(Schedulers.io())
-                    .map(packageList -> {
-                        List<App> appList = new ArrayList<>();
-                        for (String packageName : packageList) {
-
-                            final App app = appRepository.getAppByPackageName(packageName);
-
-                            if (app == null) //Filter non-existing apps in current synced repos
-                                continue;
-
-                            appList.add(app);
-                        }
-                        return appList;
-                    })
-                    .map(apps -> sortList(apps))
-                    .flatMap(apps -> Observable.fromIterable(apps).map(FavouriteItem::new))
-                    .toList()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(favouriteItems -> data.setValue(favouriteItems), throwable -> throwable.printStackTrace()));
+        final List<App> appList = favouritesManager.getFavouriteApps();
+        if (appList != null && !appList.isEmpty()) {
+            fetchFavouriteApps(appList);
         } else {
             data.setValue(new ArrayList<>());
         }
+    }
+
+    public void fetchFavouriteApps(List<App> favApps) {
+        disposable.add(Observable.fromCallable(() -> favApps)
+                .subscribeOn(Schedulers.io())
+                .map(appList -> {
+                    List<App> processedAppList = new ArrayList<>();
+                    for (App app : appList) {
+                        if (appRepository.isAvailable(app.getPackageName())) {
+
+                            final AppPackage appPackage = appPackageRepository.getAppPackage(app.getPackageName(), app.getRepoId());
+
+                            //Get all packages in the app-package
+                            List<Package> packageList = appPackage.getPackageList();
+                            List<Package> compatiblePackages = new ArrayList<>();
+
+                            if (packageList != null && !packageList.isEmpty()) {
+                                //Find best matching app package for the app
+                                compatiblePackages = PackageUtil.markCompatiblePackages(packageList, null, true);
+                                if (compatiblePackages != null) {
+                                    app.setPkg(compatiblePackages.get(0));
+                                }
+
+                                app.setInstalled(PackageUtil.isInstalled(getApplication(), app.getPackageName()));
+                                processedAppList.add(app);
+                            }
+                        }
+                    }
+                    return processedAppList;
+                })
+                .flatMap(apps -> Observable.fromIterable(apps).map(FavouriteItem::new))
+                .toList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(favouriteItems -> data.setValue(favouriteItems), throwable -> throwable.printStackTrace()));
     }
 
     @Override

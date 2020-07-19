@@ -92,7 +92,7 @@ public class AppMenuSheet extends BaseBottomSheet {
         final BlacklistManager blacklistManager = new BlacklistManager(requireContext());
         //final IgnoreListManager ignoreListManager = new IgnoreListManager(requireContext());
 
-        final boolean isFavourite = favouritesManager.isFavourite(app.getPackageName());
+        final boolean isFavourite = favouritesManager.isFavourite(app);
         final boolean isBlacklisted = blacklistManager.isBlacklisted(app.getPackageName());
         //final boolean isIgnored = ignoreListManager.isIgnored(app.getPackageName(), app.getVersionCode());
 
@@ -118,9 +118,9 @@ public class AppMenuSheet extends BaseBottomSheet {
             switch (item.getItemId()) {
                 case R.id.action_fav:
                     if (isFavourite) {
-                        favouritesManager.removeFromFavourites(app.getPackageName());
+                        favouritesManager.removeFromFavourites(app);
                     } else {
-                        favouritesManager.addToFavourites(app.getPackageName());
+                        favouritesManager.addToFavourites(app);
                     }
                     break;
                 case R.id.action_blacklist:

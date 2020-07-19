@@ -20,15 +20,19 @@
 package com.aurora.adroid.viewmodel;
 
 import android.app.Application;
+import android.content.pm.PackageManager;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.aurora.adroid.manager.BlacklistManager;
 import com.aurora.adroid.model.items.BlacklistItem;
-import com.aurora.adroid.task.InstalledAppsTask;
+import com.aurora.adroid.util.PackageUtil;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -40,7 +44,6 @@ public class BlackListedAppsModel extends BaseViewModel {
 
     public BlackListedAppsModel(@NonNull Application application) {
         super(application);
-        fetchBlackListedApps();
     }
 
     public LiveData<List<BlacklistItem>> getBlacklistedItems() {
@@ -48,15 +51,29 @@ public class BlackListedAppsModel extends BaseViewModel {
     }
 
     public void fetchBlackListedApps() {
-        disposable.add(Observable.fromCallable(() -> new InstalledAppsTask(getApplication())
-                .getAllLocalApps())
+        fetchBlackListedApps(new HashSet<>());
+    }
+
+    public void fetchBlackListedApps(Set<String> packageNames) {
+        PackageManager packageManager = getApplication().getPackageManager();
+        BlacklistManager blacklistManager = new BlacklistManager(getApplication());
+        disposable.add(Observable.fromCallable(() -> getInstalledPackages(true))
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(apps -> Observable
-                        .fromIterable(apps)
-                        .map(BlacklistItem::new))
+                .flatMap(stringList -> Observable.fromIterable(stringList)
+                        .map(s -> PackageUtil.getAppFromPackageName(packageManager, s, true))
+                        .map(app -> {
+                            BlacklistItem blacklistItem = new BlacklistItem(app);
+                            blacklistItem.setSelected(blacklistManager.isBlacklisted(app.getPackageName()));
+
+                            //Blacklist imported packages
+                            if (packageNames.contains(app.getPackageName()))
+                                blacklistItem.setSelected(true);
+
+                            return blacklistItem;
+                        }))
                 .toList()
-                .subscribe(blacklistItems -> data.setValue(blacklistItems), throwable -> throwable.printStackTrace()));
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(blacklistItems -> data.setValue(blacklistItems), Throwable::printStackTrace));
     }
 
     @Override
