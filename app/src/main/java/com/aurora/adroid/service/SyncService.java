@@ -189,10 +189,9 @@ public class SyncService extends Service {
             Observable.fromIterable(Arrays.asList(files))
                     .subscribeOn(Schedulers.io())
                     .filter(file -> FilenameUtils.getExtension(file.getName()).equals(Constants.JAR))//Filter JAR files
-                    .flatMap(file -> Observable.fromCallable(() -> new ExtractRepoTask(this, file).extract()))//Extract the JAR
-                    .flatMap(file -> Observable.fromCallable(() -> new JsonParserTask(this, file).parse()))//Add RawJSON to database
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnNext(repoBundle -> {
+                    .map(file -> new ExtractRepoTask(this, file).extract())//Extract the JAR
+                    .map(file -> new JsonParserTask(this, file).parse())//Add RawJSON to database
+                    .map(repoBundle -> {
                         final StaticRepo staticRepo = repoBundle.getStaticRepo();
                         if (repoBundle.isSynced()) {
                             AuroraApplication.rxNotify(new LogEvent(staticRepo.getRepoName() + " - " + getString(R.string.sync_completed)));
@@ -201,7 +200,9 @@ public class SyncService extends Service {
                             AuroraApplication.rxNotify(new LogEvent(staticRepo.getRepoName() + " - " + getString(R.string.sync_failed)));
                         }
                         PathUtil.deleteRepoFiles(this, staticRepo.getRepoId());
+                        return repoBundle.isSynced();
                     })
+                    .observeOn(AndroidSchedulers.mainThread())
                     .doOnComplete(this::notifyCompleted)
                     .doOnError(throwable -> {
                         AuroraApplication.rxNotify(new Event(EventType.SYNC_FAILED));
@@ -260,13 +261,12 @@ public class SyncService extends Service {
     }
 
     private NotificationCompat.Builder getNotificationBuilder() {
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this, Constants.NOTIFICATION_CHANNEL_GENERAL)
+        return new NotificationCompat.Builder(this, Constants.NOTIFICATION_CHANNEL_GENERAL)
                 .setContentTitle(getString(R.string.sync_service))
                 .setContentIntent(getContentIntent())
                 .setOngoing(true)
                 .setColor(getResources().getColor(R.color.colorAccent))
-                .setSmallIcon(R.drawable.ic_notification_outlined);
-        return builder;
+                .setSmallIcon(android.R.drawable.stat_sys_download);
     }
 
     @Override
