@@ -79,8 +79,8 @@ public class InstalledFragment extends BaseFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         setupRecycler();
 
         switchSystem.setChecked(PrefUtil.getBoolean(requireContext(), Constants.PREFERENCE_INCLUDE_SYSTEM));
@@ -125,11 +125,6 @@ public class InstalledFragment extends BaseFragment {
             itemAdapter.remove(adapterPosition);
         }
         updatePageData();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override

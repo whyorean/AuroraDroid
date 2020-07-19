@@ -28,10 +28,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.aurora.adroid.manager.BlacklistManager;
-import com.aurora.adroid.model.App;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -42,11 +40,6 @@ public class BaseViewModel extends AndroidViewModel {
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
-    }
-
-    public List<App> sortList(List<App> appList) {
-        Collections.sort(appList, (App1, App2) -> App1.getName().compareToIgnoreCase(App2.getName()));
-        return appList;
     }
 
     public List<String> getInstalledPackages() {
@@ -62,9 +55,12 @@ public class BaseViewModel extends AndroidViewModel {
         for (PackageInfo packageInfo : packageManager.getInstalledPackages(PackageManager.GET_META_DATA)) {
             final String packageName = packageInfo.packageName;
 
-            if (packageInfo.applicationInfo != null && !packageInfo.applicationInfo.enabled //Filter Disabled Apps
-                    || (packageManager.getLaunchIntentForPackage(packageName)) == null //Filter Non-Launchable Apps
-                    || ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) && !includeSystem) //Filter System-Apps
+            if (packageName == null || packageInfo.applicationInfo == null)
+                continue;
+
+            if (!packageInfo.applicationInfo.enabled
+                    || ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0)
+                    && !includeSystem) //Filter System-Apps
                 continue;
 
             packageList.add(packageName);

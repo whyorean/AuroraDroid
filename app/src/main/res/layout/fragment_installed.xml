@@ -70,7 +70,8 @@
                     android:id="@+id/recycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scrollbars="vertical"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
                     tools:listitem="@layout/item_updates" />
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

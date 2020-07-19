@@ -21,19 +21,18 @@ package com.aurora.adroid.viewmodel;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.database.AppRepository;
-import com.aurora.adroid.model.App;
 import com.aurora.adroid.model.items.InstalledItem;
-import com.aurora.adroid.task.InstalledAppsTask;
+import com.aurora.adroid.util.PackageUtil;
 import com.aurora.adroid.util.PrefUtil;
 import com.aurora.adroid.util.Util;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -52,8 +51,8 @@ public class InstalledAppsViewModel extends BaseViewModel implements SharedPrefe
         super(application);
         sharedPreferences = Util.getPrefs(getApplication());
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-        userOnly = PrefUtil.getBoolean(application, Constants.PREFERENCE_INCLUDE_SYSTEM);
 
+        userOnly = PrefUtil.getBoolean(application, Constants.PREFERENCE_INCLUDE_SYSTEM);
         appRepository = new AppRepository(application);
 
         fetchInstalledApps(userOnly);
@@ -64,30 +63,17 @@ public class InstalledAppsViewModel extends BaseViewModel implements SharedPrefe
     }
 
     public void fetchInstalledApps(boolean userOnly) {
-        disposable.add(Observable.fromCallable(() -> new InstalledAppsTask(getApplication())
-                .getInstalledApps())
+        PackageManager packageManager = getApplication().getPackageManager();
+        disposable.add(Observable.fromCallable(() -> getInstalledPackages(!userOnly))
                 .subscribeOn(Schedulers.io())
-                .map(apps -> filterList(apps, userOnly))
-                .map(apps -> sortList(apps))
-                .flatMap(apps -> Observable
-                        .fromIterable(apps)
+                .flatMap(packageNames -> Observable.fromIterable(packageNames)
+                        .filter(packageName -> appRepository.isAvailable(packageName))
+                        .map(packageName -> PackageUtil.getAppFromPackageName(packageManager, packageName, true))
+                        .sorted((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()))
                         .map(InstalledItem::new))
                 .toList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(installedItems -> data.setValue(installedItems), Throwable::printStackTrace));
-    }
-
-    private List<App> filterList(List<App> appList, boolean userOnly) {
-        List<App> filteredList = new ArrayList<>();
-        for (App app : appList) {
-
-            if (userOnly && app.isSystemApp()) //Filter system apps
-                continue;
-
-            if (appRepository.isAvailable(app.getPackageName()))
-                filteredList.add(app);
-        }
-        return filteredList;
     }
 
     @Override
