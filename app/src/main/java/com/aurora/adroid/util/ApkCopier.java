@@ -24,70 +24,61 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.aurora.adroid.model.App;
-
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 
 public class ApkCopier {
 
-    Context context;
+    private Context context;
 
     public ApkCopier(Context context) {
         this.context = context;
     }
 
-    public boolean copy(App app) {
-        File destination = PathUtil.getApkCopyPath(app.getPackageName());
-
+    public boolean copy(String packageName) {
+        final File destination = PathUtil.getApkCopyPath(packageName);
         if (destination.exists()) {
-            Log.i("%s exists", destination.toString());
+            Log.i("Ignored, local copy already exists", destination.toString());
             return true;
+        } else {
+            final File currentApk = getCurrentApk(packageName);
+            if (currentApk == null || !currentApk.exists()) {
+                Log.e("No associated APK(s) found");
+                return false;
+            } else {
+                return copy(currentApk, destination);
+            }
         }
-
-        File currentApk = getCurrentApk(app);
-        if (null == currentApk) {
-            Log.e("applicationInfo.sourceDir is empty");
-            return false;
-        }
-
-        if (!currentApk.exists()) {
-            Log.e("%s does not exist", currentApk);
-            return false;
-        }
-        return copy(currentApk, destination);
     }
 
     private boolean copy(File input, File output) {
-        File dir = output.getParentFile();
+        final File dir = output.getParentFile();
+
+        /*Create parent directory, if not existing*/
         if (!dir.exists()) {
             dir.mkdirs();
         }
+
         try {
-            IOUtils.copy(new FileInputStream(input), new FileOutputStream(output));
+            FileUtils.copyFile(input, output);
             return true;
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e("Error copying APK : %s", e.getMessage());
             return false;
         }
     }
 
-    private File getCurrentApk(App app) {
+    private File getCurrentApk(String packageName) {
         try {
-            final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(app.getPackageName(),
-                    PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS);
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(packageName, 0);
             if (packageInfo != null && packageInfo.applicationInfo != null) {
                 return new File(packageInfo.applicationInfo.sourceDir);
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 }

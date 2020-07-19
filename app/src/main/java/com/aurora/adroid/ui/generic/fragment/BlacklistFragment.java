@@ -230,7 +230,7 @@ public class BlacklistFragment extends BaseFragment {
 
             /*Create base directory if it doesn't exist*/
             if (!baseDir.exists())
-                baseDir.mkdir();
+                baseDir.mkdirs();
 
             final File file = new File(baseDir.getPath() + Constants.FILE_BLACKLIST);
             final FileWriter fileWriter = new FileWriter(file);

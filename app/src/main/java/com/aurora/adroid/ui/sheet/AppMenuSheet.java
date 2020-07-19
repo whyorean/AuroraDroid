@@ -49,6 +49,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class AppMenuSheet extends BaseBottomSheet {
@@ -59,10 +60,7 @@ public class AppMenuSheet extends BaseBottomSheet {
     NavigationView navigationView;
 
     private App app;
-
-
-    public AppMenuSheet() {
-    }
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     @Nullable
     @Override
@@ -136,27 +134,15 @@ public class AppMenuSheet extends BaseBottomSheet {
                                     requireContext().getString(R.string.toast_apk_blacklisted),
                             Toast.LENGTH_SHORT).show();
                     break;
-               /* case R.id.action_ignore:
-                    if (isIgnored)
-                        ignoreListManager.removeFromIgnoreList(app.getPackageName());
-                    else
-                        ignoreListManager.addToIgnoreList(app.getPackageName(), app.getVersionCode());
-                    break;*/
                 case R.id.action_local:
-                    Observable.fromCallable(() -> new ApkCopier(requireContext())
-                            .copy(app))
+                    disposable.add(Observable.fromCallable(() -> new ApkCopier(requireContext())
+                            .copy(app.getPackageName()))
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .doOnNext(result -> {
-                                Toast.makeText(requireContext(), result
-                                        ? requireContext().getString(R.string.toast_apk_copy_success)
-                                        : requireContext().getString(R.string.toast_apk_copy_failure), Toast.LENGTH_SHORT)
-                                        .show();
-                            })
-                            .doOnError(throwable -> {
-                                Log.e("Failed to copy app to local directory");
-                            })
-                            .subscribe();
+                            .subscribe(result -> Toast.makeText(requireContext(), result
+                                    ? requireContext().getString(R.string.toast_apk_copy_success)
+                                    : requireContext().getString(R.string.toast_apk_copy_failure), Toast.LENGTH_SHORT)
+                                    .show(), error -> Log.e("Failed to copy app to local directory")));
                     break;
                 case R.id.action_uninstall:
                     AppInstaller.getInstance(requireContext())

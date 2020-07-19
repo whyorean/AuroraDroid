@@ -184,53 +184,6 @@ public class FavouriteFragment extends BaseFragment implements SimpleSwipeCallba
         }
     }
 
-    private void exportList() {
-        try {
-            final List<App> packageList = favouritesManager.getFavouriteApps();
-            final File baseDir = new File(PathUtil.getBaseFilesDirectory());
-
-            /*Create base directory if it doesn't exist*/
-            if (!baseDir.exists())
-                baseDir.mkdir();
-
-            final File file = new File(baseDir.getPath() + Constants.FILE_FAVOURITES);
-            final FileWriter fileWriter = new FileWriter(file);
-
-            fileWriter.write(gson.toJson(packageList));
-            fileWriter.close();
-            Toast.makeText(requireContext(), StringUtils.joinWith(StringUtils.SPACE,
-                    getString(R.string.string_export_to),
-                    file.getPath()), Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            Toast.makeText(requireContext(), R.string.string_export_failed, Toast.LENGTH_LONG).show();
-            Log.e(e.getMessage());
-        }
-    }
-
-    private void importList() {
-        final File file = new File(PathUtil.getBaseFilesDirectory() + Constants.FILE_FAVOURITES);
-        try {
-            final InputStream inputStream = new FileInputStream(file);
-            final byte[] bytes = IOUtils.toByteArray(inputStream);
-            final String rawFavourites = new String(bytes);
-
-            if (StringUtils.isNotEmpty(rawFavourites)) {
-                Type type = new TypeToken<List<App>>() {
-                }.getType();
-                List<App> appList = gson.fromJson(rawFavourites, type);
-                if (appList != null && !appList.isEmpty()) {
-                    new FavouritesManager(requireContext()).addToFavourites(appList);
-                    model.fetchFavouriteApps(appList);
-                } else {
-                    Toast.makeText(requireContext(), R.string.string_import_failed, Toast.LENGTH_LONG).show();
-                }
-            }
-        } catch (Exception e) {
-            Toast.makeText(requireContext(), R.string.string_import_failed, Toast.LENGTH_LONG).show();
-            Log.e(e.getMessage());
-        }
-    }
-
     private void dispatchToAdapter(List<FavouriteItem> favouriteItems) {
         fastItemAdapter.set(favouriteItems);
         updatePageData();
@@ -313,5 +266,52 @@ public class FavouriteFragment extends BaseFragment implements SimpleSwipeCallba
         fastItemAdapter.remove(position);
         fastItemAdapter.notifyAdapterItemChanged(position);
         updatePageData();
+    }
+
+    private void exportList() {
+        try {
+            final List<App> packageList = favouritesManager.getFavouriteApps();
+            final File baseDir = new File(PathUtil.getBaseFilesDirectory());
+
+            /*Create base directory if it doesn't exist*/
+            if (!baseDir.exists())
+                baseDir.mkdirs();
+
+            final File file = new File(baseDir.getPath() + Constants.FILE_FAVOURITES);
+            final FileWriter fileWriter = new FileWriter(file);
+
+            fileWriter.write(gson.toJson(packageList));
+            fileWriter.close();
+            Toast.makeText(requireContext(), StringUtils.joinWith(StringUtils.SPACE,
+                    getString(R.string.string_export_to),
+                    file.getPath()), Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Toast.makeText(requireContext(), R.string.string_export_failed, Toast.LENGTH_LONG).show();
+            Log.e(e.getMessage());
+        }
+    }
+
+    private void importList() {
+        final File file = new File(PathUtil.getBaseFilesDirectory() + Constants.FILE_FAVOURITES);
+        try {
+            final InputStream inputStream = new FileInputStream(file);
+            final byte[] bytes = IOUtils.toByteArray(inputStream);
+            final String rawFavourites = new String(bytes);
+
+            if (StringUtils.isNotEmpty(rawFavourites)) {
+                Type type = new TypeToken<List<App>>() {
+                }.getType();
+                List<App> appList = gson.fromJson(rawFavourites, type);
+                if (appList != null && !appList.isEmpty()) {
+                    new FavouritesManager(requireContext()).addToFavourites(appList);
+                    model.fetchFavouriteApps(appList);
+                } else {
+                    Toast.makeText(requireContext(), R.string.string_import_failed, Toast.LENGTH_LONG).show();
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), R.string.string_import_failed, Toast.LENGTH_LONG).show();
+            Log.e(e.getMessage());
+        }
     }
 }

@@ -88,15 +88,15 @@ public class PathUtil {
         return PrefUtil.getString(context, Constants.PREFERENCE_DOWNLOAD_DIRECTORY);
     }
 
-    static public String getBaseCopyDirectory() {
-        return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid/Copy/APK";
-    }
-
     static public String getExtBaseDirectory() {
-        return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid";
+        return Environment.getExternalStorageDirectory().getPath() + "/Aurora/Droid";
     }
 
     static public String getBaseFilesDirectory() {
-        return Environment.getExternalStorageDirectory().getPath() + "/AuroraDroid/Files";
+        return getExtBaseDirectory() + "/Files";
+    }
+
+    static public String getBaseCopyDirectory() {
+        return getBaseFilesDirectory() + "/APK";
     }
 }
