@@ -205,12 +205,6 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
             return false;
         });
-        fastItemAdapterIndices.setOnLongClickListener((view, adapter, item, position) -> {
-           /* RepoDetailsSheet.index = item.getIndex();
-            RepoDetailsSheet repoDetailsSheet = new RepoDetailsSheet();
-            repoDetailsSheet.show(requireActivity().getSupportFragmentManager(), "REPO_DETAILS_SHEET");*/
-            return true;
-        });
         recyclerViewIndices.setAdapter(fastItemAdapterIndices);
         recyclerViewIndices.setLayoutManager(new LinearLayoutManager(requireContext(),
                 RecyclerView.HORIZONTAL, false));
