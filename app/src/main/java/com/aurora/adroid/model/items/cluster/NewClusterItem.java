@@ -34,6 +34,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
@@ -105,9 +106,9 @@ public class NewClusterItem extends BaseClusterItem {
                                 if (resource.getPixel(0, 0) != Color.TRANSPARENT) {
                                     RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), resource);
                                     roundedBitmapDrawable.setCornerRadius(ViewUtil.pxToDp(context, 18));
-                                    img.setImageDrawable(roundedBitmapDrawable);
+                                    ContextUtil.runOnUiThread(() -> img.setImageDrawable(roundedBitmapDrawable));
                                 } else {
-                                    img.setImageBitmap(resource);
+                                    ContextUtil.runOnUiThread(() -> img.setImageBitmap(resource));
                                 }
                                 return false;
                             }

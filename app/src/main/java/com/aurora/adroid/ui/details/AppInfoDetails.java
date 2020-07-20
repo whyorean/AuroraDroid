@@ -33,6 +33,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
+import com.aurora.adroid.util.ContextUtil;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.LocalizationUtil;
 import com.aurora.adroid.util.PackageUtil;
@@ -91,9 +92,9 @@ public class AppInfoDetails extends AbstractDetails {
                             if (resource.getPixel(0, 0) != Color.TRANSPARENT) {
                                 RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), resource);
                                 roundedBitmapDrawable.setCornerRadius(ViewUtil.pxToDp(context, 18));
-                                imgIcon.setImageDrawable(roundedBitmapDrawable);
+                                ContextUtil.runOnUiThread(() -> imgIcon.setImageDrawable(roundedBitmapDrawable));
                             } else {
-                                imgIcon.setImageBitmap(resource);
+                                ContextUtil.runOnUiThread(() -> imgIcon.setImageBitmap(resource));
                             }
                             return false;
                         }
