@@ -32,7 +32,6 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
 import androidx.core.view.GravityCompat;
@@ -53,7 +52,6 @@ import com.aurora.adroid.ui.generic.activity.DownloadsActivity;
 import com.aurora.adroid.ui.generic.activity.SearchActivity;
 import com.aurora.adroid.ui.intro.IntroActivity;
 import com.aurora.adroid.ui.setting.SettingsActivity;
-import com.aurora.adroid.ui.view.Floaty;
 import com.aurora.adroid.ui.view.MultiTextLayout;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.PrefUtil;
@@ -62,6 +60,7 @@ import com.aurora.adroid.util.ViewUtil;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import org.apache.commons.lang3.StringUtils;
@@ -84,7 +83,7 @@ public class AuroraActivity extends BaseActivity {
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     @BindView(R.id.floaty)
-    Floaty floaty;
+    FloatingActionButton fab;
 
 
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -170,6 +169,7 @@ public class AuroraActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        fab.show();
         Util.toggleSoftInput(this, false);
         //Check & start notification service
         Util.startNotificationService(this);
@@ -198,11 +198,10 @@ public class AuroraActivity extends BaseActivity {
     }
 
     private void setupSearch() {
-        floaty.setClickListener(view -> {
-            ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation(this, view, "transition");
+        fab.setOnClickListener(view -> {
             Intent intent = new Intent(this, SearchActivity.class);
-            ActivityCompat.startActivity(this, intent, options.toBundle());
+            ActivityCompat.startActivity(this, intent, ViewUtil.getEmptyActivityBundle(this));
+            fab.post(() -> fab.hide());
         });
     }
 
