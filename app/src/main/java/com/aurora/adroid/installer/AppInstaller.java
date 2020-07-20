@@ -37,14 +37,14 @@ public abstract class AppInstaller {
                         public InstallerBase getDefaultInstaller() {
                             String prefValue = PrefUtil.getString(context, Constants.PREFERENCE_INSTALLATION_METHOD);
                             switch (prefValue) {
+                                case "0":
+                                    return new NativeInstaller(context);
                                 case "1":
                                     return new RootInstaller(context);
                                 case "2":
                                     return new ServiceInstaller(context);
-                                case "3":
-                                    return new SessionInstaller(context);
                                 default:
-                                    return new NativeInstaller(context);
+                                    return new SessionInstaller(context);
                             }
 
                         }

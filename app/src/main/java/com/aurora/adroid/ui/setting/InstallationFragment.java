@@ -28,6 +28,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -53,9 +54,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class InstallationFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private static final String ROOT = "1";
-    private static final String SERVICES = "2";
-
     private CompositeDisposable disposable = new CompositeDisposable();
     private SharedPreferences sharedPreferences;
 
@@ -75,27 +73,36 @@ public class InstallationFragment extends PreferenceFragmentCompat implements Sh
         if (listInstallMethod != null) {
             listInstallMethod.setOnPreferenceChangeListener((preference, newValue) -> {
                 String installMethod = (String) newValue;
-                if (installMethod.equals(ROOT)) {
-                    if (Shell.getShell().isRoot()) {
+                switch (installMethod) {
+                    case "1":
+                        if (Shell.getShell().isRoot()) {
+                            PrefUtil.putString(requireContext(), Constants.PREFERENCE_INSTALLATION_METHOD, installMethod);
+                            //showDownloadDialog();
+                            return true;
+                        } else {
+                            showWarningDialog(R.string.pref_install_mode_no_root);
+                            return false;
+                        }
+                    case "2":
+                        if (PackageUtil.isInstalled(requireContext(), Constants.SERVICE_PACKAGE)) {
+                            PrefUtil.putString(requireContext(), Constants.PREFERENCE_INSTALLATION_METHOD, installMethod);
+                            //PrefUtil.putString(requireContext(), Constants.PREFERENCE_DOWNLOAD_DIRECTORY, PathUtil.getExtBaseDirectory());
+                            return true;
+                        } else {
+                            showServicesDialog();
+                            return false;
+                        }
+                    case "3":
+                        if (Util.isMiui(requireContext()) && Util.isMiuiOptimizationDisabled()) {
+                            PrefUtil.putString(requireContext(), Constants.PREFERENCE_INSTALLATION_METHOD, installMethod);
+                            return true;
+                        } else {
+                            showWarningDialog(R.string.pref_install_mode_miui);
+                            return false;
+                        }
+                    default:
                         PrefUtil.putString(requireContext(), Constants.PREFERENCE_INSTALLATION_METHOD, installMethod);
-                        //showDownloadDialog();
                         return true;
-                    } else {
-                        showNoRootDialog();
-                        return false;
-                    }
-                } else if (installMethod.equals(SERVICES)) {
-                    if (PackageUtil.isInstalled(requireContext(), Constants.SERVICE_PACKAGE)) {
-                        PrefUtil.putString(requireContext(), Constants.PREFERENCE_INSTALLATION_METHOD, installMethod);
-                        //PrefUtil.putString(requireContext(), Constants.PREFERENCE_DOWNLOAD_DIRECTORY, PathUtil.getExtBaseDirectory());
-                        return true;
-                    } else {
-                        showNoServicesDialog();
-                        return false;
-                    }
-                } else {
-                    PrefUtil.putString(requireContext(), Constants.PREFERENCE_INSTALLATION_METHOD, installMethod);
-                    return true;
                 }
             });
         }
@@ -106,15 +113,20 @@ public class InstallationFragment extends PreferenceFragmentCompat implements Sh
                 servicePreference.setEnabled(true);
                 servicePreference.setOnPreferenceClickListener(preference -> {
                     Intent intent = requireContext().getPackageManager().getLaunchIntentForPackage(Constants.SERVICE_PACKAGE);
-                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                    requireContext().startActivity(intent);
+                    if (intent != null) {
+                        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        requireContext().startActivity(intent);
+                    }
                     return false;
                 });
             } else {
                 servicePreference.setSummary(getString(R.string.pref_services_desc_alt));
                 servicePreference.setOnPreferenceClickListener(preference -> {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://gitlab.com/AuroraOSS/AuroraServices"));
-                    startActivity(intent);
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://gitlab.com/AuroraOSS/AuroraServices"));
+                        startActivity(intent);
+                    } catch (Exception ignored) {
+                    }
                     return false;
                 });
             }
@@ -189,23 +201,32 @@ public class InstallationFragment extends PreferenceFragmentCompat implements Sh
         }
     }
 
-    private void showNoRootDialog() {
+    private void showWarningDialog(@StringRes int message) {
         int backGroundColor = ViewUtil.getStyledAttribute(requireContext(), android.R.attr.colorBackground);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
+        builder.setIcon(R.drawable.ic_undraw_unicorn);
         builder.setTitle(R.string.action_installations);
-        builder.setMessage(R.string.pref_install_mode_no_root);
+        builder.setMessage(message);
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss());
         builder.setBackground(new ColorDrawable(backGroundColor));
         builder.create();
         builder.show();
     }
 
-    private void showNoServicesDialog() {
+    private void showServicesDialog() {
         int backGroundColor = ViewUtil.getStyledAttribute(requireContext(), android.R.attr.colorBackground);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
+        builder.setIcon(R.drawable.ic_undraw_unicorn);
         builder.setTitle(R.string.action_installations);
         builder.setMessage(R.string.pref_install_mode_no_services);
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss());
+        builder.setNeutralButton(R.string.action_more, (dialog, which) -> {
+            try {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://gitlab.com/AuroraOSS/AuroraServices"));
+                startActivity(intent);
+            } catch (Exception ignored) {
+            }
+        });
         builder.setBackground(new ColorDrawable(backGroundColor));
         builder.create();
         builder.show();

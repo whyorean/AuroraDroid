@@ -35,12 +35,13 @@
         app:title="@string/pref_install_delete_title" />
 
     <ListPreference
-        app:defaultValue="0"
+        app:defaultValue="3"
         app:singleLineTitle="false"
         app:iconSpaceReserved="false"
         app:entries="@array/pref_installation_method"
         app:entryValues="@array/pref_installation_method_values"
         app:key="PREFERENCE_INSTALLATION_METHOD"
+        app:useSimpleSummaryProvider="true"
         app:summary="@string/pref_install_mode_summary"
         app:title="@string/pref_install_mode_title" />
 

@@ -56,6 +56,7 @@ import com.aurora.adroid.ui.setting.SettingsActivity;
 import com.aurora.adroid.ui.view.Floaty;
 import com.aurora.adroid.ui.view.MultiTextLayout;
 import com.aurora.adroid.util.DatabaseUtil;
+import com.aurora.adroid.util.PrefUtil;
 import com.aurora.adroid.util.Util;
 import com.aurora.adroid.util.ViewUtil;
 import com.bumptech.glide.Glide;
@@ -115,6 +116,10 @@ public class AuroraActivity extends BaseActivity {
         setupNavigation();
 
         checkPermissions();
+
+        if (Util.isMiui(this) && !Util.isMiuiOptimizationDisabled()) {
+            PrefUtil.putString(this, Constants.PREFERENCE_INSTALLATION_METHOD, "0");
+        }
 
         onNewIntent(getIntent());
     }

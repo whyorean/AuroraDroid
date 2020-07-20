@@ -19,6 +19,7 @@
 
 package com.aurora.adroid.util;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ClipData;
@@ -324,10 +325,6 @@ public class Util {
         }
     }
 
-    public static boolean isNotificationEnabled(Context context) {
-        return Util.getPrefs(context).getBoolean(Constants.PREFERENCE_NOTIFICATION_TOGGLE, true);
-    }
-
     public static Proxy getNetworkProxy(Context context) {
         String proxyHost = getPrefs(context).getString(Constants.PREFERENCE_PROXY_HOST, "127.0.0.1");
         String proxyPort = getPrefs(context).getString(Constants.PREFERENCE_PROXY_PORT, "8118");
@@ -337,14 +334,9 @@ public class Util {
 
     public static Downloader.FileDownloaderType getDownloadStrategy(Context context) {
         String prefValue = getPrefs(context).getString(Constants.PREFERENCE_DOWNLOAD_STRATEGY, "");
-        switch (prefValue) {
-            case "0":
-                return Downloader.FileDownloaderType.SEQUENTIAL;
-            case "1":
-                return Downloader.FileDownloaderType.PARALLEL;
-            default:
-                return Downloader.FileDownloaderType.PARALLEL;
-        }
+        return prefValue.equals("0")
+                ? Downloader.FileDownloaderType.SEQUENTIAL
+                : Downloader.FileDownloaderType.PARALLEL;
     }
 
     public static String getStatus(Status status) {
@@ -426,6 +418,38 @@ public class Util {
                 context.startService(new Intent(context, NotificationService.class));
         } catch (IllegalStateException e) {
             Log.e(e.getMessage());
+        }
+    }
+
+
+    public static boolean isMiui(Context context) {
+        return StringUtils.isNotEmpty(getSystemProperty("ro.miui.ui.version.name"));
+    }
+
+    @SuppressLint("PrivateApi")
+    public static boolean isMiuiOptimizationDisabled() {
+        if ("0".equals(getSystemProperty("persist.sys.miui_optimization")))
+            return true;
+
+        try {
+            return (boolean) Class.forName("android.miui.AppOpsUtils")
+                    .getDeclaredMethod("isXOptMode")
+                    .invoke(null);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @SuppressLint("PrivateApi")
+    @Nullable
+    public static String getSystemProperty(String key) {
+        try {
+            return (String) Class.forName("android.os.SystemProperties")
+                    .getDeclaredMethod("get", String.class)
+                    .invoke(null, key);
+        } catch (Exception e) {
+            Log.e("Unable to read SystemProperties", e);
+            return null;
         }
     }
 }
