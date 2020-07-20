@@ -21,10 +21,13 @@ package com.aurora.adroid.installer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInstaller;
 import android.net.Uri;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
+
+import com.aurora.adroid.R;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -38,6 +41,31 @@ public abstract class InstallerBase implements IInstaller {
 
     public InstallerBase(Context context) {
         this.context = context;
+    }
+
+    public static String getStatusString(Context context, int status) {
+        switch (status) {
+            case PackageInstaller.STATUS_FAILURE:
+                return context.getString(R.string.installer_status_failure);
+            case PackageInstaller.STATUS_FAILURE_ABORTED:
+                return context.getString(R.string.installer_status_failure_aborted);
+            case PackageInstaller.STATUS_FAILURE_BLOCKED:
+                return context.getString(R.string.installer_status_failure_blocked);
+            case PackageInstaller.STATUS_FAILURE_CONFLICT:
+                return context.getString(R.string.installer_status_failure_conflict);
+            case PackageInstaller.STATUS_FAILURE_INCOMPATIBLE:
+                return context.getString(R.string.installer_status_failure_incompatible);
+            case PackageInstaller.STATUS_FAILURE_INVALID:
+                return context.getString(R.string.installer_status_failure_invalid);
+            case PackageInstaller.STATUS_FAILURE_STORAGE:
+                return context.getString(R.string.installer_status_failure_storage);
+            case PackageInstaller.STATUS_PENDING_USER_ACTION:
+                return context.getString(R.string.installer_status_user_action);
+            case PackageInstaller.STATUS_SUCCESS:
+                return context.getString(R.string.installer_status_success);
+            default:
+                return context.getString(R.string.installer_status_unknown);
+        }
     }
 
     @Override

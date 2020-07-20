@@ -32,7 +32,6 @@ public class Event {
 
     private String stringExtra;
     private int intExtra;
-    private int status;
     private EventType type;
 
     public Event(EventType type) {
@@ -44,10 +43,10 @@ public class Event {
         this.stringExtra = stringExtra;
     }
 
-    public Event(EventType type, String stringExtra, int status) {
+    public Event(EventType type, String stringExtra, int intExtra) {
         this.type = type;
         this.stringExtra = stringExtra;
-        this.status = status;
+        this.intExtra = intExtra;
     }
 
     public EventType getType() {

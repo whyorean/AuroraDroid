@@ -176,9 +176,11 @@
         <service
             android:name=".service.SyncService"
             android:foregroundServiceType="dataSync" />
+
         <service
             android:name=".service.NotificationService"
             android:foregroundServiceType="dataSync" />
         <service android:name=".service.BulkUpdateService" />
+        <service android:name=".installer.InstallerService" />
     </application>
 </manifest>

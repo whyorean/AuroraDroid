@@ -214,6 +214,7 @@
     <string name="pref_install_delete_summary">On devices running Android Pie + with root install method, APKs get deleted by default</string>
     <string name="pref_install_delete_title">Delete apk post-install</string>
     <string name="pref_install_mode_native">Native</string>
+    <string name="pref_install_mode_session">Session</string>
     <string name="pref_install_mode_no_root">Root access not available, make sure your device is rooted</string>
     <string name="pref_install_mode_no_services">Aurora Services not installed, kindly install services first</string>
     <string name="pref_install_mode_offline_services">Aurora Services not connected, kindly make sure its enabled and you have correct version of app</string>

@@ -36,6 +36,7 @@ import com.aurora.adroid.AuroraApplication;
 import com.aurora.adroid.Constants;
 import com.aurora.adroid.R;
 import com.aurora.adroid.event.EventType;
+import com.aurora.adroid.installer.InstallerBase;
 import com.aurora.adroid.manager.BlacklistManager;
 import com.aurora.adroid.manager.FavouritesManager;
 import com.aurora.adroid.model.App;
@@ -130,6 +131,16 @@ public class DetailsActivity extends BaseActivity {
                                 if (event.getStringExtra().equals(app.getPackageName()))
                                     drawButtons(app);
                                 break;
+                            case SESSION: {
+                                if (event.getStringExtra().equals(app.getPackageName())) {
+                                    int status = event.getIntExtra();
+                                    String statusString = InstallerBase.getStatusString(this, status);
+                                    if (StringUtils.isNotEmpty(statusString))
+                                        ContextUtil.toastShort(this, statusString);
+                                    drawButtons(app);
+                                }
+                            }
+                            break;
                         }
                     }
                 }));

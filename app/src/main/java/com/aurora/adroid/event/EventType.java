@@ -38,6 +38,7 @@ public enum EventType {
     /*Package Manger Events*/
     INSTALLED,
     UNINSTALLED,
+    SESSION,
     /*Misc*/
     LOG,
     BULK_UPDATE_NOTIFY,

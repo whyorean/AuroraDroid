@@ -41,6 +41,8 @@ public abstract class AppInstaller {
                                     return new RootInstaller(context);
                                 case "2":
                                     return new ServiceInstaller(context);
+                                case "3":
+                                    return new SessionInstaller(context);
                                 default:
                                     return new NativeInstaller(context);
                             }
