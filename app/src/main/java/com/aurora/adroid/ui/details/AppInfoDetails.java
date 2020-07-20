@@ -21,8 +21,14 @@ package com.aurora.adroid.ui.details;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.aurora.adroid.GlideApp;
 import com.aurora.adroid.R;
@@ -30,7 +36,11 @@ import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.LocalizationUtil;
 import com.aurora.adroid.util.PackageUtil;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
+import com.aurora.adroid.util.ViewUtil;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.material.button.MaterialButton;
 
 import org.apache.commons.lang3.StringUtils;
@@ -65,11 +75,30 @@ public class AppInfoDetails extends AbstractDetails {
         if (app.getIcon() == null)
             imgIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_placeholder));
         else
-            GlideApp.with(context)
+            GlideApp
+                    .with(context)
                     .asBitmap()
                     .load(DatabaseUtil.getImageUrl(app))
-                    .transition(new BitmapTransitionOptions().crossFade())
-                    .into(imgIcon);
+                    .placeholder(R.drawable.ic_placeholder)
+                    .addListener(new RequestListener<Bitmap>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                            if (resource.getPixel(0, 0) != Color.TRANSPARENT) {
+                                RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                                roundedBitmapDrawable.setCornerRadius(ViewUtil.pxToDp(context, 18));
+                                imgIcon.setImageDrawable(roundedBitmapDrawable);
+                            } else {
+                                imgIcon.setImageBitmap(resource);
+                            }
+                            return false;
+                        }
+                    })
+                    .submit();
 
         txtName.setText(app.getName());
         setText(txtPackageName, app.getPackageName());

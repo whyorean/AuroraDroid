@@ -20,11 +20,15 @@
 package com.aurora.adroid.model.items;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aurora.adroid.GlideApp;
@@ -32,6 +36,11 @@ import com.aurora.adroid.R;
 import com.aurora.adroid.model.App;
 import com.aurora.adroid.util.DatabaseUtil;
 import com.aurora.adroid.util.PackageUtil;
+import com.aurora.adroid.util.ViewUtil;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
@@ -102,7 +111,7 @@ public class FavouriteItem extends AbstractItem<FavouriteItem.ViewHolder> {
 
             checkBox.setChecked(item.isSelected());
 
-            if (app.isInstalled()){
+            if (app.isInstalled()) {
                 checkBox.setChecked(true);
                 checkBox.setEnabled(false);
             }
@@ -115,7 +124,25 @@ public class FavouriteItem extends AbstractItem<FavouriteItem.ViewHolder> {
                         .asBitmap()
                         .load(DatabaseUtil.getImageUrl(app))
                         .placeholder(R.drawable.ic_placeholder)
-                        .into(img);
+                        .addListener(new RequestListener<Bitmap>() {
+                            @Override
+                            public boolean onLoadFailed(@androidx.annotation.Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                if (resource.getPixel(0, 0) != Color.TRANSPARENT) {
+                                    RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                                    roundedBitmapDrawable.setCornerRadius(ViewUtil.pxToDp(context, 18));
+                                    img.setImageDrawable(roundedBitmapDrawable);
+                                } else {
+                                    img.setImageBitmap(resource);
+                                }
+                                return false;
+                            }
+                        })
+                        .submit();
 
         }
 
@@ -123,6 +150,8 @@ public class FavouriteItem extends AbstractItem<FavouriteItem.ViewHolder> {
         public void unbindView(@NotNull FavouriteItem item) {
             line1.setText(null);
             line2.setText(null);
+            img.setImageDrawable(null);
+            img.setImageBitmap(null);
         }
     }
 
