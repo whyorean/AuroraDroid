@@ -220,6 +220,7 @@
     <string name="toast_apk_whitelisted">"ಅನಿರ್ಬಂಧಿತ"</string>
     <string name="toast_apk_copy_success">"ಎ.ಪಿ.ಕೆ ನಕಲಿಸುವಲ್ಲಿ ಸಫಲ"</string>
     <string name="toast_apk_copy_failure">"ಎ.ಪಿ.ಕೆ ನಕಲಿಸುವಲ್ಲಿ ವಿಫಲ"</string>
+    <string name="action_ignore">"ಈ ಆವೃತ್ತಿಯನ್ನು ನಿರ್ಲಕ್ಷಿಸು"</string>
     <string name="action_save">"ಉಳಿಸು"</string>
     <string name="action_sortBy">"ಜೋಡಣೆ"</string>
     <string name="details_apk_suggested">"ಸೂಚಿಸಲಾದ"</string>
@@ -227,5 +228,10 @@
     <string name="menu_repository">"ಭಂಡಾರ"</string>
     <string name="menu_setting">"ಸಿದ್ಧತೆಗಳು"</string>
     <string name="menu_about">"ಬಗ್ಗೆ"</string>
+    <string name="sync_init">"ನವೀಕರಣಗಳಿಗಾಗಿ ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ"</string>
     <string name="title_installed">"ನನ್ನ ಅನ್ವಯ ಹಾಗೂ ಆಟಗಳು"</string>
+    <string name="about_bhim">"ಭೀಮ್ - ಯುಪಿಐ"</string>
+    <string name="about_bhim_summary">"ಯುಪಿಐ ಇಂದ ದಾನ"</string>
+    <string name="about_telegram_summary">"ಚರ್ಚೆಗಳು ಅಥವಾ ಸಲಹೆಗಳಿಗಾಗಿ ಅರೋರಾ ಸಹಾಯ ಗುಂಪಿಗೆ ಸೇರಿ."</string>
+    <string name="action_about">"ಬಗ್ಗೆ"</string>
 </resources>
