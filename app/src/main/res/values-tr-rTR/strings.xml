@@ -17,15 +17,15 @@
     <string name="action_favourite_add">"Sevilenlere ekle"</string>
     <string name="action_favourite_remove">"Sevilenlerden kaldır"</string>
     <string name="action_get_local_apk">"Yerel APK'yı getir"</string>
-    <string name="action_home">"Ev"</string>
+    <string name="action_home">"Ana Sayfa"</string>
     <string name="action_import">"İçe aktar"</string>
     <string name="action_info">"Uyuglama Bilgisi"</string>
     <string name="action_install">"Kur"</string>
     <string name="action_installing">"Kuruluyor"</string>
     <string name="action_installed">"Kuruldu"</string>
-    <string name="action_installations">"Kurulumlar"</string>
+    <string name="action_installations">"Kurulum"</string>
     <string name="action_later">"Sonra"</string>
-    <string name="action_more">"Daha"</string>
+    <string name="action_more">"Daha fazla"</string>
     <string name="action_next">"İleri"</string>
     <string name="action_open">"Aç"</string>
     <string name="action_pause">"Duraklat"</string>
@@ -36,7 +36,7 @@
     <string name="action_retry">"Yeniden dene"</string>
     <string name="action_settings">"Ayarlar"</string>
     <string name="action_share">"Paylaş"</string>
-    <string name="action_sync">"Eşzamanla"</string>
+    <string name="action_sync">"Eşitle"</string>
     <string name="action_uninstall">"Kaldır"</string>
     <string name="action_update">"Güncelle"</string>
     <string name="action_updates">"Güncellemeler"</string>
@@ -50,15 +50,11 @@
     <string name="details_no_description">"Geliştirici tarafından yapılan açıklama yok"</string>
     <string name="details_no_permissions">"Hiçbir izin kullanılmıyor."</string>
     <string name="details_permissions">"Uygulama izinleri"</string>
-
-    <!-- Fuzzy -->
-    <string name="details_permissions_desc">"Aurora Mağazası aşağıdaki izinleri kullanır"</string>
-
-    <!-- Fuzzy -->
-    <string name="details_repo_desc">"Eşzamanlamak için F-Droid depolarını seçin"</string>
+    <string name="details_permissions_desc">"Aurora Droid aşağıdaki izinleri kullanır"</string>
+    <string name="details_repo_desc">"Eşitlemek için F-Droid depolarını seçin"</string>
     <string name="dialog_sync_title">"Depo Güncellemeleri"</string>
     <string name="dialog_sync_desc">"Uygulamaları depolardan güncellemek ister misiniz?"</string>
-    <string name="dialog_sync_desc_alt">"Eski veriler algılandı, yeni güncellemeler olabilir, tüm depoları eşzamanlamak ister misiniz?"</string>
+    <string name="dialog_sync_desc_alt">"Eski veriler algılandı, yeni güncellemeler olabilir, tüm depoları eşitlemek ister misiniz?"</string>
     <string name="dialog_sync_completed_desc">"Tüm depolar güncellendi, güncellemelerden sonra uygulamayı yeniden başlatmanız önerilir."</string>
     <string name="dialog_sync_positive">"Evet"</string>
     <string name="dialog_sync_negative">"Hayır"</string>
@@ -70,8 +66,6 @@
     <string name="download_canceled">"İptal edildi"</string>
     <string name="download_clear_completed">"Temizleme tamamlandı"</string>
     <string name="download_completed">"İndirildi"</string>
-
-    <!-- Fuzzy -->
     <string name="download_failed">"İndirme Başarısız"</string>
     <string name="download_force_clear_all">"Hepsini zorla temizle"</string>
     <string name="download_none">"İndirme yok"</string>
@@ -90,13 +84,9 @@
     <string name="installer_status_failure">"Kurulum başarısız"</string>
     <string name="installer_status_failure_aborted">"Kurulum iptal edildi"</string>
     <string name="installer_status_failure_blocked">"Kurulum engellendi"</string>
-
-    <!-- Fuzzy -->
     <string name="installer_status_failure_conflict">"Çakışan paket var"</string>
     <string name="installer_status_failure_incompatible">"Uyumsuz uygulama"</string>
     <string name="installer_status_failure_invalid">"Geçersiz veya bozuk APK"</string>
-
-    <!-- Fuzzy -->
     <string name="installer_status_failure_storage">"Yetersiz hafıza alanı"</string>
     <string name="installer_status_success">"Başarıyla kuruldu"</string>
     <string name="installer_status_unknown">"Bilinmeyen"</string>
@@ -108,14 +98,12 @@
     <string name="list_installed">"Kuruldu"</string>
     <string name="list_selected">"Seçilen uygulamalar"</string>
     <string name="list_update_all">"Hepsini güncelle"</string>
-    <string name="list_update_all_txt">"güncelleme(ler) mevcut"</string>
+    <string name="list_update_all_txt">"güncelleme mevcut"</string>
     <string name="list_updating">"Güncelleniyor"</string>
-    <string name="sync_completed">"Eşzamanlandı"</string>
-    <string name="sync_completed_all">"Tüm depolar eşzamanlandı"</string>
-    <string name="sync_progress">"Depolar eşzamanlanıyor"</string>
-    <string name="sync_failed">"Eşzamanlama başarısız"</string>
-
-    <!-- Fuzzy -->
+    <string name="sync_completed">"Eşitlendi"</string>
+    <string name="sync_completed_all">"Tüm depolar eşitlendi"</string>
+    <string name="sync_progress">"Depolar eşitleniyor"</string>
+    <string name="sync_failed">"Eşitleme başarısız"</string>
     <string name="title_home">"Aurora Droid"</string>
     <string name="title_apps_new">"Yeni Uygulamalar"</string>
     <string name="title_categories">"Kategoriler"</string>
@@ -124,21 +112,17 @@
     <string name="title_perm">"İzinler"</string>
     <string name="title_repositories">"Depolar"</string>
     <string name="title_search">"Uygulamaları ve oyunları ara"</string>
-    <string name="title_sync_repo">"Depoları Eşzamanla"</string>
+    <string name="title_sync_repo">"Depoları Eşitle"</string>
     <string name="title_update_all">"Tüm Uygulamaları Güncelle"</string>
     <string name="title_welcome">"Hoşgeldiniz"</string>
     <string name="title_url">"URL"</string>
     <string name="title_fingerprint">"Parmak izi"</string>
     <string name="title_desc">"Açıklama"</string>
-
-    <!-- Fuzzy -->
     <string name="pref_dialog_to_apply_restart">"Uygulamayı yeniden başlattıktan sonra bu ayar uygulanacaktır"</string>
-    <string name="pref_installations">"Kurulumlar"</string>
+    <string name="pref_installations">"Kurulum"</string>
     <string name="pref_install_auto_summary">"Uygulamalar indirme tamamlandıktan sonra anında kurulur"</string>
     <string name="pref_install_auto_title">"İndirme sonrası APK'ları kendiliğinden kur"</string>
     <string name="pref_install_delete_summary">"Kök yükleme yöntemi ile Android Pie + çalıştıran cihazlarda, APK'lar varsayılan olarak silinir"</string>
-
-    <!-- Fuzzy -->
     <string name="pref_install_delete_title">"Kurulum sonrası apk'yı sil"</string>
 
     <!-- Fuzzy -->
@@ -150,14 +134,8 @@
     <string name="pref_install_mode_root">"Kök"</string>
     <string name="pref_install_mode_services">"Aurora Hizmetleri"</string>
     <string name="pref_install_mode_no_root">"Kök erişimi mevcut değil, cihazınızın kök erişimli olduğundan emin olun"</string>
-
-    <!-- Fuzzy -->
-    <string name="pref_install_mode_root_warn">"Kök kurulum yöntemi, adb kabuğu, Android Pie + ile kurmak için apk'nin uygulama verilerinde indirilmesini gerektirir"</string>
-
-    <!-- Fuzzy -->
+    <string name="pref_install_mode_root_warn">"Kök kurulum yöntemi, apk'nin uygulama verilerine indirilmesini gerektirir, adb kabuğu kullanarak yüklemek için, Android Pie ve üstü gerekir"</string>
     <string name="pref_install_mode_no_services">"Aurora Hizmetleri kurulu değil, lütfen önce hizmetleri kurun"</string>
-
-    <!-- Fuzzy -->
     <string name="pref_install_mode_offline_services">"Aurora Hizmetleri bağlı değil, etkin olduğundan ve uygulamanın doğru sürümüne sahip olduğunuzdan emin olun"</string>
     <string name="pref_ui">"Kullanıcı Arayüzü"</string>
     <string name="pref_ui_theme_title">"Tema"</string>
@@ -192,18 +170,16 @@
     <string name="pref_updates_3days">"3 gün"</string>
     <string name="pref_updates_7days">"7 gün"</string>
     <string name="pref_services_title">"Aurora Hizmetleri"</string>
-
-    <!-- Fuzzy -->
     <string name="pref_services_desc">"Aurora hizmetlerini başlat"</string>
     <string name="pref_services_desc_alt">"Aurora hizmetleri kullanılamıyor. Daha fazla bilgi edinmek üzere servis deposuna gitmek için tıklayın."</string>
     <string name="repo_list">"Depo listesi"</string>
-    <string name="repo_list_select">"Eşzamanlamak istediğiniz depoları seçin"</string>
+    <string name="repo_list_select">"Eşitlemek istediğiniz depoları seçin"</string>
     <string name="repo_qr_scan">"Karekodu tara"</string>
     <string name="repo_id">"Depo Kimliği"</string>
     <string name="repo_name">"Depo Adı"</string>
     <string name="repo_addr">"Depo Adresi"</string>
     <string name="repo_fingerprint">"Depo Parmak İzi"</string>
-    <string name="sys_log">"Eşzamanlama Günlüğü"</string>
+    <string name="sys_log">"Eşitleme Günlüğü"</string>
     <string name="toast_no_repo_selected">"Depo seçilmedi"</string>
     <string name="error_app_not_found">"Uygulama bulunamadı"</string>
     <string name="error_app_not_installed">"Kurulu uygulama yok"</string>
@@ -211,8 +187,6 @@
     <string name="error_search_not_found">"Eşleşen uygulama bulunamadı"</string>
     <string name="error_unknown">"Bilinmeyen hata oluştu"</string>
     <string name="error_no_updates">"Güncelleme yok"</string>
-
-    <!-- Fuzzy -->
     <string name="notification_installation_auto">"İndirildi, kurmak için tıklayın"</string>
     <string name="toast_apk_blacklisted">"Kara listeye alındı"</string>
     <string name="toast_apk_whitelisted">"Beyaz listeye alındı"</string>
@@ -276,5 +250,7 @@
     <string name="pref_locale_title">"Dil"</string>
     <string name="pref_locale_custom_title">"Özel dil"</string>
     <string name="pref_locale_custom_summary">"Özel uygulama dilini zorunlu kıl"</string>
+
+    <!-- Fuzzy -->
     <string name="pref_locale_list_title">"Yereli seç"</string>
 </resources>
