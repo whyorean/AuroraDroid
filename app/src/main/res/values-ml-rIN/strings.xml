@@ -66,9 +66,9 @@
     <string name="dialog_repo_title">"റിപ്പോസിറ്ററി ചേർക്കുക"</string>
 
     <!-- Example of usage..
-This staticRepo ചേർക്കാൻ നിങ്ങൾ ശരിക്കും ആഗ്രഹിക്കുന്നുണ്ടോ?
+This repo ചേർക്കാൻ നിങ്ങൾ ശരിക്കും ആഗ്രഹിക്കുന്നുണ്ടോ?
 In English...
-Do you really wish to add this staticRepo? -->
+Do you really wish to add this repo? -->
     <string name="dialog_repo_desc">"ചേർക്കാൻ നിങ്ങൾ ശരിക്കും ആഗ്രഹിക്കുന്നുണ്ടോ?"</string>
     <string name="menu_downloads">"ഡൗൺലോഡുകൾ"</string>
     <string name="download_cancel_all">"എല്ലാം റദ്ദാക്കുക"</string>
