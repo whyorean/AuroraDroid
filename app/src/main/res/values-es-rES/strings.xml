@@ -50,7 +50,7 @@
     <string name="details_no_description">"No hay descripción proporcionada por el desarrollador"</string>
     <string name="details_no_permissions">"No se utilizan permisos."</string>
     <string name="details_permissions">"Permisos de la aplicación"</string>
-    <string name="details_permissions_desc">"Aurora Droid usa los siguientes permisos"</string>
+    <string name="details_permissions_desc">"Aurora Droid utiliza los siguientes permisos"</string>
     <string name="details_repo_desc">"Selecciona los repositorios a sincronizar"</string>
     <string name="dialog_sync_title">"Actualizaciones de repositorios"</string>
     <string name="dialog_sync_desc">"¿Desea actualizar las aplicaciones desde los repositorios?"</string>
@@ -101,13 +101,13 @@
     <string name="list_update_all_txt">"Actualización disponible"</string>
     <string name="list_updating">"Actualizando"</string>
     <string name="sync_completed">"Sincronizado"</string>
-    <string name="sync_completed_all">"Todos los repositorios sincronizados"</string>
+    <string name="sync_completed_all">"Todos los repositorios han sido sincronizados"</string>
     <string name="sync_progress">"Sincronizando repositorios"</string>
     <string name="sync_failed">"La sincronización falló"</string>
     <string name="title_home">"Aurora Droid"</string>
     <string name="title_apps_new">"Nuevas aplicaciones"</string>
     <string name="title_categories">"Categorías"</string>
-    <string name="title_latest_updated">"Última actualización"</string>
+    <string name="title_latest_updated">"Últimas actualizaciones"</string>
     <string name="title_repo_add">"Añadir nuevo repositorio"</string>
     <string name="title_perm">"Permisos"</string>
     <string name="title_repositories">"Repositorios"</string>
@@ -199,7 +199,7 @@
     <string name="dialog_repo_list">"Lista de repositorios"</string>
     <string name="menu_repository">"Repositorio"</string>
     <string name="menu_setting">"Configuración"</string>
-    <string name="menu_about">"Sobre"</string>
+    <string name="menu_about">"Acerca de"</string>
     <string name="download_metadata">"Obteniendo metadatos"</string>
     <string name="list_update_all_txt_one">"actualización disponible"</string>
     <string name="list_update_selected">"Actualizar el seleccionado"</string>
@@ -214,7 +214,7 @@
     <string name="details_new_changes">"Qué hay de nuevo"</string>
     <string name="pref_downloader_internal">"Descargar aplicaciones en almacenamiento interno"</string>
     <string name="pref_downloader_internal_desc">"Si está habilitado, no podrá instalar aplicaciones a través de los servicios de Aurora"</string>
-    <string name="action_reset">"Restablecer a valores predeterminados"</string>
+    <string name="action_reset">"Restablecer valores predeterminados"</string>
     <string name="action_select_all">"Seleccionar todo"</string>
     <string name="list_not_installed">"No instalado"</string>
     <string name="list_repo_availability">"Comprobando disponibilidad"</string>
@@ -242,5 +242,11 @@
     <string name="about_telegram_summary">"Únase al grupo de Soporte Aurora para discusiones o sugerencias."</string>
     <string name="about_xda">"Hilo de desarrollo"</string>
     <string name="about_xda_summary">"Vea el hilo de Aurora Droid en XDA para discusiones o sugerencias."</string>
-    <string name="action_about">"Sobre"</string>
+    <string name="action_about">"Acerca de"</string>
+    <string name="action_loading">"Cargando"</string>
+    <string name="pref_default">"Por defecto"</string>
+    <string name="pref_locale_title">"Idioma"</string>
+    <string name="pref_locale_custom_title">"Idioma personalizado"</string>
+    <string name="pref_locale_custom_summary">"Fuerza el idioma personalizado de la aplicación"</string>
+    <string name="pref_locale_list_title">"Selección de idioma"</string>
 </resources>
