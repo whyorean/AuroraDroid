@@ -1,3 +1,15 @@
+Changelog : v1.0.6
+
+* New revamped UI
+* Improved repo sync mechanism
+* Added new installer module, fixed all related issues
+* Added new repo DivestOs & Ungoogled Chromium
+* Improve Favourites & Blacklists, added import  & export
+* Other bug fixes & improvements
+* Updated translations
+
+# An upgrade to 1.0.6 will reset all your old preferences
+
 Changelog : v1.0.5
 
 * UI overhaul

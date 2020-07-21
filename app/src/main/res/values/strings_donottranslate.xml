@@ -35,6 +35,13 @@
     <string name="default_dir" translatable="false">/sdcard</string>
 
     <string name="app_changelog" translatable="false">
+        \n Changelog : v1.0.6
+        \n • New improved UI
+        \n • Added new installer module
+        \n • Added new repos
+        \n • Bug fixes &amp; improvements
+        \n • Updated translations
+        \n
         \n Changelog : v1.0.5
         \n • UI Overhaul
         \n • Bug fixes and improvements
