@@ -117,7 +117,7 @@
 
     <!-- Fuzzy -->
     <string name="title_home">"Aurora Store"</string>
-    <string name="title_apps_new">"Apl. noas"</string>
+    <string name="title_apps_new">"Aplicatziones noas"</string>
     <string name="title_categories">"Categorias"</string>
     <string name="title_latest_updated">"Agiornadas dae pagu"</string>
     <string name="title_repo_add">"Annanghe unu depòsitu nou"</string>
@@ -142,7 +142,7 @@
     <string name="pref_install_delete_title">"Iscantzella sos apk a pustis de s'installatzione"</string>
 
     <!-- Fuzzy -->
-    <string name="pref_install_type_summary">"IMprea s'installadore nativu pro installare sos pachetes, truncat sas installatziones de apks agrupados"</string>
+    <string name="pref_install_type_summary">"Imprea s'installadore nativu pro installare sos pachetes, truncat sas installatziones de apks agrupados"</string>
     <string name="pref_install_type_title">"Fortza s'installadore nativu"</string>
     <string name="pref_install_mode_summary">"Ischerta sa manera de installatzione de sos APK"</string>
     <string name="pref_install_mode_title">"Manera de installatzione"</string>
@@ -252,4 +252,29 @@
     <string name="toast_repo_sync_empty">"Ischerta a su mancu unu depòsitu de sincronizare"</string>
     <string name="toast_repo_sync_completed">"Totu sos depòsitos sunt agiornados"</string>
     <string name="toast_repo_sync_no_updates">"Perunu agiornamentu disponìbile"</string>
+    <string name="about_libera">"Libera Pay"</string>
+    <string name="about_libera_summary">"Diveni sustenidore cun Libera Pay"</string>
+    <string name="about_bitcoin_btc">"Bitcoin"</string>
+    <string name="about_bitcoin_btc_summary">"Dona pro mèdiu de Bitcoin (BTC)"</string>
+    <string name="about_bitcoin_bch">"Bitcoin Cash"</string>
+    <string name="about_bitcoin_bch_summary">"Dona pro mèdiu de Bitcoin Cash (BCH)"</string>
+    <string name="about_bitcoin_eth">"Ethereum"</string>
+    <string name="about_bitcoin_eth_summary">"Dona pro mèdiu de Ethereum (ETH)"</string>
+    <string name="about_bhim">"BHIM - UPI"</string>
+    <string name="about_bhim_summary">"Dona pro mèdiu de UPI"</string>
+    <string name="about_paypal">"Paypal"</string>
+    <string name="about_paypal_summary">"Dona pro mèdiu de PayPal"</string>
+    <string name="about_gitlab">"GitLab"</string>
+    <string name="about_gitlab_summary">"Otene su còdighe mitza de Aurora Droid dae Aurora OSS in GitLab."</string>
+    <string name="about_telegram">"Telegram"</string>
+    <string name="about_telegram_summary">"Auni·ti a su grupu de suportu de Aurora Droid pro arresonos e impòsitos."</string>
+    <string name="about_xda">"Discussione Isvilupadores"</string>
+    <string name="about_xda_summary">"Pòmpia·ti sa discussione de Aurora Droid in XDA pro arresonos o impòsitos."</string>
+    <string name="action_about">"Informatziones"</string>
+    <string name="action_loading">"Carrighende"</string>
+    <string name="pref_default">"Predefinidu"</string>
+    <string name="pref_locale_title">"Limba"</string>
+    <string name="pref_locale_custom_title">"Limba personalidada"</string>
+    <string name="pref_locale_custom_summary">"Àplica sa limba personalizada de s'apl."</string>
+    <string name="pref_locale_list_title">"Ischerta sa limba"</string>
 </resources>
