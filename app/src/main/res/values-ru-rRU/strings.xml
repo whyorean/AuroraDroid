@@ -221,4 +221,13 @@
     <string name="toast_apk_whitelisted">"Белый список"</string>
     <string name="toast_apk_copy_success">"APK успешно скопирован"</string>
     <string name="toast_apk_copy_failure">"Ошибка копирования APK"</string>
+    <string name="action_ignore">"Игнорировать версию"</string>
+    <string name="action_save">"Сохранить"</string>
+    <string name="action_show_user_only">"Только польз. приложения"</string>
+    <string name="action_sortBy">"Сортировать по"</string>
+    <string name="dialog_sync_completed_desc_alt">"Нет обновлений"</string>
+    <string name="dialog_repo_list">"Список репозиториев"</string>
+    <string name="menu_repository">"Репозитории"</string>
+    <string name="menu_setting">"Установки"</string>
+    <string name="menu_about">"\"О\""</string>
 </resources>
