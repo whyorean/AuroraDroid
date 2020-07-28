@@ -196,6 +196,6 @@
     "repoUrl": "https://archive.newpipe.net/fdroid/repo",
     "repoMirrors": [],
     "repoFingerprint": "E2 40 2C 78 F9 B9 7C 6C 89 E9 7D B9 14 A2 75 1F DA 1D 02 FE 20 39 CC 08 97 A4 62 BD B5 7E 75 01",
-    "repoDescription": "Repository for Newpipe app. Builds here may be newer than on F-Droid"
+    "repoDescription": "Repository for Newpipe app. Builds here may be newer than on F-Droid."
   }
 ]
