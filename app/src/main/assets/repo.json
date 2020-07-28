@@ -189,5 +189,13 @@
     "repoMirrors": [],
     "repoFingerprint": "E4 BE 8D 6A BF A4 D9 D4 FE EF 03 CD DA 7F F6 2A 73 FD 64 B7 55 66 F6 DD 4E 5E 57 75 50 BE 84 67",
     "repoDescription": "Official repo for DivestOS Mobile"
+  },
+  {
+    "repoId": "32",
+    "repoName": "Newpipe",
+    "repoUrl": "https://archive.newpipe.net/fdroid/repo",
+    "repoMirrors": [],
+    "repoFingerprint": "E2 40 2C 78 F9 B9 7C 6C 89 E9 7D B9 14 A2 75 1F DA 1D 02 FE 20 39 CC 08 97 A4 62 BD B5 7E 75 01",
+    "repoDescription": "Repository for Newpipe app. Builds here may be newer than on F-Droid"
   }
 ]
