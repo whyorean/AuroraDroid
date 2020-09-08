@@ -116,7 +116,7 @@ public class AuroraActivity extends BaseActivity {
 
         checkPermissions();
 
-        if (Util.isMiui(this) && !Util.isMiuiOptimizationDisabled()) {
+        if (Util.isMiui(this) && !Util.isMiuiOptimizationDisabled() && !Util.isRootInstallEnabled(this)) {
             PrefUtil.putString(this, Constants.PREFERENCE_INSTALLATION_METHOD, "0");
         }
 
