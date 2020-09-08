@@ -32,7 +32,7 @@ android {
         versionCode 6
         versionName "1.0.6"
 
-        resConfigs "ar-rSA", "de-rDE", "et-rEE", "fr-rFR", "hi-rIN", "kn-rIN", "ml-rIN", "pa-rIN", "pl-rPL", "pt-rPT", "ro-rRO", "ru-rRU", "sc-rIT", "tr-rTR", "es-rES", "in-rID", "it-rIT"
+        resConfigs "ar-rSA", "de-rDE", "et-rEE", "fr-rFR", "hi-rIN", "kn-rIN", "ml-rIN", "pa-rIN", "pl-rPL", "pt-rBR","pt-rPT", "ro-rRO", "ru-rRU", "sc-rIT", "tr-rTR", "es-rES", "in-rID", "it-rIT"
 
         vectorDrawables.useSupportLibrary = true
 

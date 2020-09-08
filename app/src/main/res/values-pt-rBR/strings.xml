@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Aurora Droid
+  ~ Copyright (C) 2019-20, Rahul Kumar Patel <whyorean@gmail.com>
+  ~
+  ~ Aurora Droid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Aurora Droid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Aurora Droid.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<resources>
+    <string name="about_bhim">"BHIM - UPI"</string>
+    <string name="about_bhim_summary">"Doar via UPI"</string>
+    <string name="about_bitcoin_bch">"Bitcoin Cash"</string>
+    <string name="about_bitcoin_bch_summary">"Doar via Bitcoin Cash (BCH)"</string>
+    <string name="about_bitcoin_btc">"Bitcoin"</string>
+    <string name="about_bitcoin_btc_summary">"Doar via Bitcoin (BTC)"</string>
+    <string name="about_bitcoin_eth">"Ethereum"</string>
+    <string name="about_bitcoin_eth_summary">"Doar via Ethereum (ETH)"</string>
+    <string name="about_gitlab">"GitLab"</string>
+    <string name="about_gitlab_summary">"Obtenha o Aurora Droid código fonte de Aurora OSS no GitLab."</string>
+    <string name="about_libera">"Libera Pay"</string>
+    <string name="about_libera_summary">"Torne-se patrocinador por Libera Pay"</string>
+    <string name="about_paypal">"Paypal"</string>
+    <string name="about_paypal_summary">"Doar via PayPal"</string>
+    <string name="about_telegram">"Telegram"</string>
+    <string name="about_telegram_summary">"Junte-se ao grupo de apoio da Aurora App para discussões ou sugestões."</string>
+    <string name="about_xda">"Fórum para Devs"</string>
+    <string name="about_xda_summary">"Veja o Aurora Droid XDA fórum para discussões ou sugestões."</string>
+    <string name="action_about">Sobre</string>
+    <string name="action_add">Adicionar</string>
+    <string name="action_ask">Perguntar</string>
+    <string name="action_blacklist">Lista Negra</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_clear">Excluir</string>
+    <string name="action_clear_all">Excluir todo</string>
+    <string name="action_close">Encerrar </string>
+    <string name="action_copied">Link copiado para clipboard</string>
+    <string name="action_copy">Copiar Link</string>
+    <string name="action_download">Download</string>
+    <string name="action_downloads">Downloads</string>
+    <string name="action_export">Exportar</string>
+    <string name="action_favourite_add">Adicionar aos favoritos</string>
+    <string name="action_favourite_remove">Excluir dos favoritos</string>
+    <string name="action_favourites">Aplicativos favoritos</string>
+    <string name="action_finish">Terminar</string>
+    <string name="action_get_local_apk">Obter local APK</string>
+    <string name="action_grant">Permitir</string>
+    <string name="action_home">Início</string>
+    <string name="action_ignore">"Ignorar esta versão"</string>
+    <string name="action_import">Importar</string>
+    <string name="action_info">Sobre o App</string>
+    <string name="action_install">Instalar</string>
+    <string name="action_installations">Instalações</string>
+    <string name="action_installed">Instalado</string>
+    <string name="action_installing">Instalando</string>
+    <string name="action_later">Mais tarde</string>
+    <string name="action_loading">Carregando</string>
+    <string name="action_more">Mais</string>
+    <string name="action_next">Próximo</string>
+    <string name="action_open">Abrir</string>
+    <string name="action_pause">Pausar</string>
+    <string name="action_recheck">Verifique de novo</string>
+    <string name="action_remove">Excluir</string>
+    <string name="action_remove_all">Excluir tudo</string>
+    <string name="action_reset">Resetar</string>
+    <string name="action_restart">Reiniciar</string>
+    <string name="action_resume">Resumir</string>
+    <string name="action_retry">Tentar de novo</string>
+    <string name="action_save">Salvar</string>
+    <string name="action_save_return">Salvar &amp; Retornar</string>
+    <string name="action_select_all">Selecionar tudo</string>
+    <string name="action_settings">Configurações</string>
+    <string name="action_share">Compartilhar</string>
+    <string name="action_show_user_only">Exibir somente aplicativos do usuário</string>
+    <string name="action_sortBy">Ordenar por</string>
+    <string name="action_sync">Sincronizar</string>
+    <string name="action_syncing">Sincronizado</string>
+    <string name="action_uninstall">Desinstalar</string>
+    <string name="action_unsupported">Aplicativos incompatíveis</string>
+    <string name="action_update">Atualização </string>
+    <string name="action_updates">Atualizações</string>
+    <string name="action_use_mirror">Use URL Mirror</string>
+    <string name="action_whitelist">Lista branca</string>
+
+    <string name="cancel_button_label">Cancelar</string>
+    <string name="choose_button_label">Selecionar</string>
+
+
+    <string name="details_anti_features">Elementos não desejados</string>
+    <string name="details_apk_suggested">Sugerido</string>
+    <string name="details_more">Leia mais</string>
+    <string name="details_more_apps_dev">Mais aplicativos do desenvolvedor</string>
+    <string name="details_more_apps_similar">Aplicativos da categoria semelhante</string>
+    <string name="details_new_changes">"Novidades"</string>
+    <string name="details_no_anti_features">Sem elementos não desejados</string>
+    <string name="details_no_changes">"Nenhum ChangeLog fornecido pelo desenvolvedor"</string>
+    <string name="details_no_description">Nenhuma descrição fornecida pelo desenvolvedor</string>
+    <string name="details_no_handler">Não existe nenhum aplicativo que possa abrir %s.</string>
+    <string name="details_no_permissions">Nenhuma permissão é utilizada.</string>
+    <string name="details_other">Outras versões</string>
+    <string name="details_permissions">Permissões do aplicativo</string>
+    <string name="details_permissions_desc">Aurora Droid usa as seguintes permissões</string>
+    <string name="details_repo_desc">Selecione os repositórios para sincronizar</string>
+
+    <string name="dialog_repo_desc">Realmente quer adicionar</string>
+    <string name="dialog_repo_list">Lista de Repositório</string>
+    <string name="dialog_repo_title">Adicionar Repositório</string>
+    <string name="dialog_sync_complete_positive">Reiniciar agora</string>
+    <string name="dialog_sync_completed_desc">Todos os repositórios atualizados, é recomendável reiniciar Aurora após as atualizações.</string>
+    <string name="dialog_sync_completed_desc_alt">Não há novas atualizações disponíveis</string>
+    <string name="dialog_sync_desc">Deseja atualizar os aplicativos dos repositórios ?</string>
+    <string name="dialog_sync_desc_alt">Dados antigos detectados, pode haver novas atualizações, você deseja sincronizar todos os repositórios ?</string>
+    <string name="dialog_sync_negative">Não</string>
+    <string name="dialog_sync_positive">Sim</string>
+    <string name="dialog_sync_title">Atualizações dos repositórios</string>
+
+    <string name="download_cancel_all">Cancelar tudo</string>
+    <string name="download_canceled">Cancelado</string>
+    <string name="download_clear_completed">Tudo excluido</string>
+    <string name="download_completed">Baixado</string>
+    <string name="download_failed">Falha ao baixar</string>
+    <string name="download_force_clear_all">Excluir tudo de qualquer maneira</string>
+    <string name="download_metadata">Obtendo metadata</string>
+    <string name="download_none">Sem downloads</string>
+    <string name="download_pause_all">Pausar tudo</string>
+    <string name="download_paused">Pausado</string>
+    <string name="download_progress">Baixando</string>
+    <string name="download_queued">Na fila de espera</string>
+    <string name="download_resume">Retomar</string>
+    <string name="download_resume_all">Retomar tudo</string>
+
+    <string name="error_app_not_found">"Aplicativo não encontrado"</string>
+    <string name="error_app_not_installed">"Nenhum aplicativo instalado"</string>
+    <string name="error_dir_access">A pasta não pode ser acessada</string>
+    <string name="error_no_network">"Nenhuma conexão de Internet"</string>
+    <string name="error_no_updates">"Não há atualizações disponíveis"</string>
+    <string name="error_search_not_found">"Nenhum aplicativo correspondente encontrado"</string>
+    <string name="error_unknown">"Ocorreu um erro desconhecido"</string>
+
+    <string name="filter_date_added">Data adicionada</string>
+    <string name="filter_date_updated">Data atualizada</string>
+    <string name="filter_name_az">Nome A-Z</string>
+    <string name="filter_name_za">Nome Z-A</string>
+    <string name="filter_size_max">Tamanho Max</string>
+    <string name="filter_size_min">Tamanho Min</string>
+
+    <string name="installer_status_failure">Instalação falhou</string>
+    <string name="installer_status_failure_aborted">Instalação cancelada</string>
+    <string name="installer_status_failure_blocked">A instalação foi bloqueada</string>
+    <string name="installer_status_failure_conflict">Existe um arquivo divergente</string>
+    <string name="installer_status_failure_incompatible">Aplicativo incompatível</string>
+    <string name="installer_status_failure_invalid">APK inválido ou corrompido</string>
+    <string name="installer_status_failure_storage">Espaço de memória insuficiente</string>
+    <string name="installer_status_success">Instalado com êxito</string>
+    <string name="installer_status_unknown">Desconhecido</string>
+    <string name="installer_status_user_action">Aguardando a confirmação do usuário</string>
+
+    <string name="label_parent_dir" translatable="false">...</string>
+    <string name="label_parent_directory">Directório Principal</string>
+    <string name="last_edit">Última edição: </string>
+
+    <string name="list_blacklist">Aplicativos na lista negra</string>
+    <string name="list_blacklist_none">Nenhum aplicativo na lista negra</string>
+    <string name="list_empty_fav">Ainda não tem favoritos</string>
+    <string name="list_empty_updates">Não há atualizações disponíveis</string>
+    <string name="list_installed">Instalados</string>
+    <string name="list_not_installed">Não instalados</string>
+    <string name="list_repo_availability">"Verificando disponibilidade"</string>
+    <string name="list_repo_available">"Disponível"</string>
+    <string name="list_repo_unavailable">"Não disponível"</string>
+    <string name="list_selected">Apps selecionados</string>
+    <string name="list_update_all">Atualizar todos</string>
+    <string name="list_update_all_txt">"atualizações disponíveis"</string>
+    <string name="list_update_all_txt_one">"atualização disponível"</string>
+    <string name="list_update_selected">"Atualização selecionada"</string>
+    <string name="list_updating">Atualizando</string>
+
+    <string name="menu_about">"Sobre"</string>
+    <string name="menu_downloads">Downloads</string>
+    <string name="menu_repository">Repositórios</string>
+    <string name="menu_setting">"Configurações"</string>
+
+    <string name="notification_channel_alert">"Notificação rápida"</string>
+    <string name="notification_channel_general">"Notificação global"</string>
+    <string name="notification_installation_auto">"Aperte para instalar"</string>
+
+    <string name="pref_default">"Predefinido"</string>
+    <string name="pref_dialog_to_apply_restart">"Esta configuração será aplicada após reiniciar o aplicativo"</string>
+    <string name="pref_downloader_internal">"Baixar aplicativos para armazenamento interno"</string>
+    <string name="pref_downloader_internal_desc">"Se ativado, você não poderá instalar aplicativos via Aurora App"</string>
+    <string name="pref_downloads">Downloads</string>
+    <string name="pref_downloads_active_summary">Número máximo de downloads ativos</string>
+    <string name="pref_downloads_active_title">Agora baixando</string>
+    <string name="pref_downloads_debug_summary">Ativar a depuração de download para obter registros detalhados</string>
+    <string name="pref_downloads_debug_title">Depuração de download</string>
+    <string name="pref_downloads_path_title">Directório de Download</string>
+    <string name="pref_downloads_strategy_parallel">Download paralelo (Divididos)</string>
+    <string name="pref_downloads_strategy_sequential">Download seqüencial</string>
+    <string name="pref_downloads_strategy_summary">Selecione a estratégia de download predefinido, a paralela é recomendada para o download mais rápido</string>
+    <string name="pref_downloads_strategy_title">Estratégia de download</string>
+    <string name="pref_downloads_wifi_title">Download usando somente WiFi</string>
+    <string name="pref_install_auto_summary">Os aplicativos são instalados imediatamente após a conclusão do download</string>
+    <string name="pref_install_auto_title">Após baixar instalar APKs automaticamente</string>
+    <string name="pref_install_delete_summary">Nos dispositivos rodando Android Pie + com método de instalação root, os APKs são excluídos automaticamente</string>
+    <string name="pref_install_delete_title">Excluir apk após instalação</string>
+    <string name="pref_install_mode_native">Nativo</string>
+    <string name="pref_install_mode_session">Sessão</string>
+    <string name="pref_install_mode_miui">Você parece estar usando MIUI, instalador de sessão não funciona nos dispositivos rodando MIUI. Por favor, desative as Otimizações MIUI ou use outros métodos para instalar.</string>
+    <string name="pref_install_mode_no_root">Acesso Root não disponível, certifique-se de que seu dispositivo está Rooted e que o acesso Root é concedido a Aurora Droid.</string>
+    <string name="pref_install_mode_no_services">Serviços de Aurora não instalados, instale os serviços primeiro.</string>
+    <string name="pref_install_mode_offline_services">Serviço não conectado, certifique-se de que está ativado e que você tem a versão requerida (>=1.0.5) dos serviços instalados.</string>
+    <string name="pref_install_mode_root">Root</string>
+    <string name="pref_install_mode_root_warn">O método de instalação Root requer que o Apk seja baixado nos dados do aplicativo, para poder instalar via adb shell, Android Pie +</string>
+    <string name="pref_install_mode_services">Serviços de Aurora</string>
+    <string name="pref_install_mode_summary">Selecione o modo de instalação do APK</string>
+    <string name="pref_install_mode_title">Modo de instalação</string>
+    <string name="pref_install_profile_summary">"Selecione o perfil desejado para instalar os aplicativos. Funciona apenas com o método de instalação Root"</string>
+    <string name="pref_install_profile_title">"Perfis de instalação"</string>
+    <string name="pref_install_type_summary">Use instalador nativo para instalar arquivos, quebra instalações de apk agrupados (bundled)</string>
+    <string name="pref_install_type_title">Aplicar o instalador nativo</string>
+    <string name="pref_installations">Instalações</string>
+    <string name="pref_locale_custom_summary">"Aplicar idioma do aplicativo personalizado"</string>
+    <string name="pref_locale_custom_title">"Idioma personalizado"</string>
+    <string name="pref_locale_list_title">"Configurações regionais"</string>
+    <string name="pref_locale_title">"Idioma"</string>
+    <string name="pref_network">Redes</string>
+    <string name="pref_proxy_enable">Ativar Proxy</string>
+    <string name="pref_proxy_host">Servidor Proxy</string>
+    <string name="pref_proxy_port">Porta de Proxy</string>
+    <string name="pref_proxy_type">Tipo de Proxy</string>
+    <string name="pref_services_desc">Iniciar serviços Aurora</string>
+    <string name="pref_services_desc_alt">Serviços Aurora indisponível. Clique para ir ao repositório de serviços para saber mais.</string>
+    <string name="pref_services_title">Serviços de Aurora</string>
+    <string name="pref_ui">Interface do usuário</string>
+    <string name="pref_ui_theme_black">Preto</string>
+    <string name="pref_ui_theme_dark">Oscuro</string>
+    <string name="pref_ui_theme_light">Claro</string>
+    <string name="pref_ui_theme_title">Tema</string>
+    <string name="pref_ui_transparent">Estilo transparente</string>
+    <string name="pref_ui_transparent_summary">Use o estilo de cartão transparente para visualizar categorias e links</string>
+    <string name="pref_updates_2days">2 dias</string>
+    <string name="pref_updates_3days">3 dias</string>
+    <string name="pref_updates_7days">7 dias</string>
+    <string name="pref_updates_app_experimental">Permitir atualizações experimentais</string>
+    <string name="pref_updates_app_experimental_desc">Se ativado, os Builds beta/alfa substituirão as Builds estáveis.</string>
+    <string name="pref_updates_app_suggested">Somente atualizações sugeridas</string>
+    <string name="pref_updates_app_suggested_desc">Se ativado, somente as atualizações sugeridas estarão disponíveis</string>
+    <string name="pref_updates_app_title">Atualizações dos aplicativos</string>
+    <string name="pref_updates_daily">1 dia</string>
+    <string name="pref_updates_manual">Manual</string>
+    <string name="pref_updates_repo_interval">Intervalo de atualizações</string>
+    <string name="pref_updates_repo_title">Atualizações do Repositório</string>
+    <string name="pref_updates_title">Atualizações</string>
+
+    <string name="repo_addr">Endereço do Repositório</string>
+    <string name="repo_fingerprint">Repositório de impressões digitais</string>
+    <string name="repo_id">ID do Repositório</string>
+    <string name="repo_list">Lista de Repositório</string>
+    <string name="repo_list_select">Selecione os repositórios que você deseja sincronizar</string>
+    <string name="repo_name">Nome do Repositório</string>
+    <string name="repo_qr_scan">Escaneie Código QR</string>
+    <string name="repo_unable_to_reach">Impossível conectar</string>
+
+    <string name="string_export_failed">Falha ao exportar a lista</string>
+    <string name="string_export_to">Lista exportada</string>
+    <string name="string_import_failed">Falha ao importar a lista</string>
+    <string name="string_install_failed">Falha ao instalar</string>
+    <string name="string_install_success">Instalado com êxito</string>
+    <string name="string_no_root">Acesso Root indisponível</string>
+    <string name="string_uninstall_failed">Falha ao desinstalar</string>
+    <string name="string_uninstall_success">Desinstalado com êxito</string>
+
+    <string name="sync_completed">Sincronizado</string>
+    <string name="sync_completed_all">Todos os repositórios sincronizados</string>
+    <string name="sync_downloading">Baixando repositórios</string>
+    <string name="sync_failed">Falha ao sincronizar</string>
+    <string name="sync_init">Verificando atualizações</string>
+    <string name="sync_progress">Sincronizado repositórios</string>
+    <string name="sync_service">Serviço de Sincronização do Repositório em execução</string>
+    <string name="sys_log">Sincronizado registro</string>
+
+    <string name="title_apps_new">Novos Aplicativos</string>
+    <string name="title_categories">Categorias</string>
+    <string name="title_desc">Descrição</string>
+    <string name="title_fingerprint">Impressão digital</string>
+    <string name="title_home">Aurora Droid</string>
+    <string name="title_installed">Meus aplicativos &amp; jogos</string>
+    <string name="title_latest_updated">Últimas atualizações</string>
+    <string name="title_perm">Permissões</string>
+    <string name="title_repo_add">Adicionar novo repositório</string>
+    <string name="title_repo_add_desc">Adicionar um repositório personalizado para sincronizar</string>
+    <string name="title_repositories">Repositórios</string>
+    <string name="title_search">Busca aplicativos &amp; jogos</string>
+    <string name="title_sync_repo">Sincronizar Repositórios</string>
+    <string name="title_update_all">Atualizar todos os aplicativos</string>
+    <string name="title_url">URL</string>
+    <string name="title_welcome">Bem-vindo</string>
+
+    <string name="toast_apk_blacklisted">Na lista Negra</string>
+    <string name="toast_apk_copy_failure">Falha ao copiar APK</string>
+    <string name="toast_apk_copy_success">APK copiado com êxito</string>
+    <string name="toast_apk_whitelisted">Na lista Branca</string>
+    <string name="toast_no_repo_selected">Nenhum repositório selecionado</string>
+    <string name="toast_repo_sync_completed">Todos os repositórios atualizados</string>
+    <string name="toast_repo_sync_empty">Selecione pelo menos um repositório estável para sincronizar</string>
+    <string name="toast_repo_sync_no_updates">Não há atualizações disponíveis</string>
+</resources>
