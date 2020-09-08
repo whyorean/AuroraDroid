@@ -211,6 +211,7 @@ public class SearchActivity extends BaseActivity implements ItemFilterListener<G
         Observable.fromIterable(apps)
                 .subscribeOn(Schedulers.io())
                 .map(GenericItem::new)
+                .sorted((App1, App2) -> App2.getApp().getLastUpdated().compareTo(App1.getApp().getLastUpdated()))
                 .toList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess(genericItems -> {

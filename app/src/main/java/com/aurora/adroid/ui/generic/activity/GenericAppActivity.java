@@ -213,6 +213,7 @@ public class GenericAppActivity extends BaseActivity implements ItemFilterListen
     private void setupApps(List<App> apps) {
         Observable.fromIterable(apps)
                 .map(GenericItem::new)
+                .sorted((App1, App2) -> App2.getApp().getLastUpdated().compareTo(App1.getApp().getLastUpdated()))
                 .toList()
                 .doOnSuccess(genericItems -> {
                     itemAdapter.add(genericItems);

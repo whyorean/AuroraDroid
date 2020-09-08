@@ -30,7 +30,7 @@
         android:layout_height="match_parent"
         android:paddingStart="@dimen/margin_normal"
         android:paddingEnd="@dimen/margin_normal"
-        app:checkedChip="@id/sort_name_az"
+        app:checkedChip="@id/sort_date_updated"
         app:singleLine="true"
         app:singleSelection="true">
 
