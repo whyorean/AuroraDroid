@@ -63,8 +63,8 @@ public class DownloaderFragment extends PreferenceFragmentCompat implements Shar
         FilePickerPreference filePickerPreference = findPreference(Constants.PREFERENCE_DOWNLOAD_DIRECTORY);
         if (filePickerPreference != null)
             filePickerPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                String value = (String) newValue;
-                String[] selections = value.split(":");
+                String value = String.valueOf(newValue);
+                String[] selections = value.split(FilePickerPreference.SEPARATOR);
                 String selectedDir = selections[0];
                 if (StringUtils.isNotEmpty(selectedDir)) {
                     boolean success = checkIfValid(selectedDir);

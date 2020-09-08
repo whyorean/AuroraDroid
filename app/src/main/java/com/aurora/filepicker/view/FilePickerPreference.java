@@ -34,6 +34,8 @@ import java.io.File;
 
 public class FilePickerPreference extends Preference implements DialogSelectionListener, Preference.OnPreferenceClickListener {
 
+    public static final String SEPARATOR = ":";
+
     private FilePickerDialog filePickerDialog;
     private DialogProperties properties;
 
@@ -103,7 +105,7 @@ public class FilePickerPreference extends Preference implements DialogSelectionL
         StringBuilder stringBuilder = new StringBuilder();
 
         for (String path : files) {
-            stringBuilder.append(path).append(":");
+            stringBuilder.append(path).append(FilePickerPreference.SEPARATOR);
         }
 
         String dirFiles = stringBuilder.toString();
