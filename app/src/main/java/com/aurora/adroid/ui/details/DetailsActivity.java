@@ -144,7 +144,6 @@ public class DetailsActivity extends BaseActivity {
                         }
                     }
                 }));
-
         onNewIntent(getIntent());
     }
 
@@ -228,6 +227,15 @@ public class DetailsActivity extends BaseActivity {
             blackListMenu.setTitle(blacklistManager.isBlacklisted(packageName)
                     ? R.string.action_whitelist
                     : R.string.action_blacklist);
+        }
+
+        final MenuItem favMenu = menu.findItem(R.id.action_favourites);
+        if (favMenu != null && app != null) {
+            if (favouritesManager.isFavourite(app)) {
+                favMenu.setIcon(R.drawable.ic_favourite_red);
+            } else {
+                favMenu.setIcon(R.drawable.ic_fav);
+            }
         }
         return true;
     }
